@@ -22,7 +22,7 @@ async def on_plug_in_callback_query_handler(event):
             else:
                 reply_pop_up_alert = "⌯︙عـذرا هذه الهـمسة ليست مخصصة لـك"
         except KeyError:
-            reply_pop_up_alert = "⌯︙عـذرا هذه الهمسة لم تعد موجوده في سيـرفرات جـيبثون"
+            reply_pop_up_alert = "⌯︙عـذرا هذه الهمسة لم تعد موجوده في سيـرفرات الساحر"
     else:
         reply_pop_up_alert = "⌯︙عـذرا هذه الهمسة لم تعد موجوده  "
     await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
