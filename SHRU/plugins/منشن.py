@@ -1,5 +1,5 @@
-# By Reda for SHRU
-# Tel: @rd0r0
+# By RIO for SHRU
+# Tel: @SX9OO
 # شعندك داخل للملف تريد تخمطة ههههههههه اخمط ونسبة لنفسك ماوصيك :*
 from SHRU import l313l
 import asyncio
