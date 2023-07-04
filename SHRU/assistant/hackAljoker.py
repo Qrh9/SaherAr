@@ -216,7 +216,7 @@ keyboard = [
     Button.inline("N", data="N"),
     ],
   [
-    Button.url("سورس الساحر 🤡", "https://t.me/SXYO3")
+    Button.url("سورس الساحر ✨", "https://t.me/SXYO3")
     ]
 ]
 if Config.TG_BOT_USERNAME is not None and tgbot is not None:
@@ -230,7 +230,7 @@ if Config.TG_BOT_USERNAME is not None and tgbot is not None:
         if query.startswith("هاك") and event.query.user_id == bot.uid:
             buttons = Button.url(" اضغط هنا عزيزي ", f"https://t.me/{joker}?start=hack")
             result = builder.article(
-                title="Aljoker 🤡",
+                title="ALsaher✨",
                 description="اضغط على الزر لعرض الأوامر.",
                 text="**᯽︙ قم بالضغط على زر ادناه لأستخدام امر اختراق عبر كود التيرمكس",
                 buttons=buttons

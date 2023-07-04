@@ -78,7 +78,7 @@ async def gben(SHRU):
     except:
         pass
     if me == user:
-       l313l = await razan.edit("▾∮ لا استطيع رفع نفسي 🧸🤍،")
+       l313l = await razan.edit("▾∮ لا استطيع رفع نفسي ،")
        return
     try:
         if not rank:
