@@ -1,0 +1,8 @@
+name: Arabic
+natively: العربية
+
+authors:
+  - Syed Hussein
+
+# اوامر الوقتي
+cmd_1: "**تم تفعيل اسم الوقتي بنجاح**"
