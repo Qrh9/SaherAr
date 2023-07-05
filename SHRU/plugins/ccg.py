@@ -26,4 +26,3 @@ async def send_id_command(event):
     user_id = event.sender_id
     if user_id in allowed_users:
         await event.respond("ايدي")
-
