@@ -8,8 +8,8 @@ from .core.session import l313l
 from .sql_helper.globals import addgvar, delgvar, gvarstatus
 
 __version__ = "3.1.3"
-__license__ = "كـتابة وتـعديل فريـق جيبثون"
-__author__ = "جيبثون <https://T.ME/SXYO3>"
+__license__ = "كـتابة وتـعديل فريـق الساحر"
+__author__ = "الساحر <https://T.ME/SXYO3>"
 __copyright__ = "SXYO3 TEAM (C) 2021 - 2023  " + __author__
 
 l313l.version = __version__
@@ -21,8 +21,8 @@ StartTime = time.time()
 JEPVERSION = "3.1.3"
 
 
-if Config.UPSTREAM_REPO == "jepthoniq":
-    UPSTREAM_REPO_URL = "https://github.com/jepthoniq/SXYO3"
+if Config.UPSTREAM_REPO == "saheriq":
+    UPSTREAM_REPO_URL = "https://github.com/Qrh9/SaherAr"
 else:
     UPSTREAM_REPO_URL = Config.UPSTREAM_REPO
 
