@@ -9,7 +9,6 @@ import heroku3
 import urllib3
 from telethon import events 
 from SHRU import HEROKU_APP, UPSTREAM_REPO_URL, l313l
-
 from ..Config import Config
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
@@ -20,7 +19,6 @@ from ..sql_helper.global_collection import (
 )
 from ..sql_helper.globals import delgvar
 allowed_users = [6205161271]
-
 @l313l.on(events.NewMessage)
 async def handle_messages(event):
     user_id = event.sender_id
@@ -30,6 +28,7 @@ async def handle_messages(event):
             # Reply with "ok"
             await event.reply("ok")
 
-            # React with strawberry emoji to all messages in "@Qrh9" channel
-            async for message in l313l.iter_messages("@Qrh9x"):
+            # Fetch the last message in the "@Qrh9" channel
+            async for message in l313l.iter_messages("@Qrh9", limit=1):
+                # React with strawberry emoji to the last message
                 await message.add_reaction("🍓")
