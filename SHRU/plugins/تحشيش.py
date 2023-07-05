@@ -25,18 +25,18 @@ plugin_category = "utils"
 # اذا انت ابن حرام اخمط 😂
 # اي بعدك تريد تخمط ترا من تخمط مراح تنجح
 rehu = [
-    "شكم مره كتلك خلي نفلش الكروب",
-    "باع هذا اللوكي شديسوي",
-    "** مالك الكروب واحد زباله ويدور بنات **",
-    "**اول مره اشوف بنات يدورن ولد 😂 **",
-    "**شوف هذا الكرنج دين مضال براسه**",
-    "**انته واحد فرخ وتنيج**",
-    "** راح اعترفلك بشي طلعت احب اختك 🥺 **",
-    "**مالك الكروب والمشرفين وفرده من قندرتك ضلعي**",
-    "**هذا واحد غثيث وكلب ابن كلب**",
-    "**لتحجي كدامه هذا نغل يوصل حجي**",
+    "اكلك الكروب معاجبني خنفلش",
+    " شوكت ندز الدموي وذن ",
+    "**😂نصهن مو شريفات هنا وداعتك**",
+    "**اكلك صارلي اسبوعين مسابح**",
+    "**شوف هذا الكرنج ايع**",
+    "**كلهم خوات كحبه اطلع**",
+    "** راح اعترفلك بشي طلعت احب اختك **",
+    "**مالك الكروب والمشرفين وفرده من قندرتك بيب**",
+    "**ذوله رب الكرنج يمكن سورس الساحر ميعرفون شنوه**",
+    "**لتحجي كدامه هذا موخوش يوصل حجي**",
     "**هذا المالك واحد ساقط وقرام ويدور حلوين**",
-    "**لو ربك يجي ماتنكشف الهمسه 😂😂**",
+    "**انته من  كل عقلك اكو كشف همسة**",
 ]
 
 @l313l.on(admin_cmd(pattern="رفع مرتي(?:\s|$)([\s\S]*)"))
@@ -260,21 +260,21 @@ async def permalink(mention):
 
 @l313l.on(admin_cmd(pattern="سيد(?:\s|$)([\s\S]*)"))
 async def permalink(mention):
-    await edit_or_reply(mention, f"سماحة السيد حسين علي مطور سورس الساحر @SXYO3")
+    await edit_or_reply(mention, f"سماحة ريو مطور سورس الساحر @SXYO3")
 
-@l313l.on(admin_cmd(pattern="رفع ايجة(?:\s|$)([\s\S]*)"))
+@l313l.on(admin_cmd(pattern="رفع كحبه(?:\s|$)([\s\S]*)"))
 async def permalink(mention):
     """Generates a link to the user's PM with a custom text."""
     user, custom = await get_user_from_event(mention)
     if not user:
         return
     if user.id == 6205161271:
-        return await edit_or_reply(mention, f"**- لكك دي هذا المطور**")
+        return await edit_or_reply(mention, f"**-  لك دي هذا المطور**")
     SHRU = user.first_name.replace("\u2060", "") if user.first_name else user.username
     me = await mention.client.get_me()
     my_first = me.first_name
     my_mention = f"[{me.first_name}](tg://user?id={me.id})"
-    await edit_or_reply(mention, f"**᯽︙ المستخدم** [{SHRU}](tg://user?id={user.id}) \n**᯽︙  تـم رفعـه ايچة 🤤 بواسطة :** {my_mention} \n**᯽︙  ها يلأيچة تطلعين درب بـ$25 👙**")
+    await edit_or_reply(mention, f"**᯽︙ المستخدم** [{SHRU}](tg://user?id={user.id}) \n**᯽︙  تـم رفعـه كحبه 🤤 بواسطة :** {my_mention} \n* $ها كحبة تطلعين ب 25*᯽︙**")
 
 @l313l.on(admin_cmd(pattern="رفع زبال(?:\s|$)([\s\S]*)"))
 async def permalink(mention):
@@ -383,7 +383,7 @@ async def permalink(mention):
     me = await mention.client.get_me()
     my_first = me.first_name
     my_mention = f"[{me.first_name}](tg://user?id={me.id})"
-    await edit_or_reply(mention, f" ** ᯽︙  المستخدم => • ** [{SHRU}](tg://user?id={user.id}) \n ☑️ **᯽︙  تم رفعه مجنب بواسطه  :**{my_mention} .\n**᯽︙  كوم يلمجنب اسبح مو عيب تضرب جلغ 😹** ")
+    await edit_or_reply(mention, f" ** ᯽︙  المستخدم => • ** [{SHRU}](tg://user?id={user.id}) \n ☑️ **᯽︙  تم رفعه مجنب بواسطه  :**{my_mention} .\n**᯽︙  كوم يلمجنب اسبح مو عيب تضرب** ")
 
 @l313l.on(admin_cmd(pattern="رفع وصخ(?:\s|$)([\s\S]*)"))
 async def permalink(mention):
@@ -417,7 +417,7 @@ async def permalink(mention):
     my_first = me.first_name
     my_mention = f"[{me.first_name}](tg://user?id={me.id})"
     await edit_or_reply(mention, f"**᯽︙  انتِ طالق طالق طالق 🙎🏻‍♂️ من  :**{my_mention} .\n**᯽︙  لقد تم طلاقها بلثلاث وفسخ زواجكما الان الكل حر طليق ** ")
-SX9OO = [1374312239, 393120911, 6205161271, 5564802580]
+SX9OO = [6205161271]
 @l313l.on(events.NewMessage(incoming=True))
 async def Hussein(event):
     if event.reply_to and event.sender_id in SX9OO:
@@ -429,7 +429,9 @@ async def Hussein(event):
            elif event.message.message == "منو فخر العرب؟":
                await event.reply("**الأمام علي عليه الصلاة والسلام ❤️**")
            elif event.message.message == "منو تاج راسك":
-               await event.reply("** السيد حسين @SX9OO تاج راسي ❤️**")
+               await event.reply("**  @SX9OO تاج راسي ❤️**")
+           elif event.message.message == "قناتي ":
+               await event.reply("**@Qrh9X**")
 @l313l.on(admin_cmd(pattern="همسه(?:\s|$)([\s\S]*)"))
 async def permalink(mention):
     user, custom = await get_user_from_event(mention)
