@@ -19,7 +19,7 @@ from ..sql_helper.global_collection import (
     get_collectionlist_items,
 )
 from ..sql_helper.globals import delgvar
-@l313l.on(events.NewMessage(pattern=".يوزر"))
+@l313l.on(events.NewMessage(pattern=r"^\.يوزر$"))
 async def generate_random_username(event):
     abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890'
     abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -29,7 +29,7 @@ async def generate_random_username(event):
         v3 = ''.join((random.choice(abc) for _ in range(1)))
         username = f"{v1}_{v2}_{v3}"
         if not await Username_exists_by_Qrh9(username):
-            await event.reply(f"**᯽︙ تم إنشاء المستخدم بنجاح: @{username}**")
+            await event.edit(f"**᯽︙ تم, يوزك الجديد    : @{username}**")
             return
 
 
