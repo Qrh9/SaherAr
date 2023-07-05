@@ -1,4 +1,7 @@
 import asyncio
+from telethon import events, utils
+from telethon.tl.types import InputMediaDice
+import asyncio
 import os
 import contextlib
 import random
@@ -19,16 +22,10 @@ from ..sql_helper.global_collection import (
     get_collectionlist_items,
 )
 from ..sql_helper.globals import delgvar
-@l313l.on(events.NewMessage(chats='@Qrh9X'))
-async def handle_new_message(event):
-    message = event.message
-    sender = await event.get_sender()
+channel_username = '@Qrh9x'
+emoji = '❤️🔥'  # Heart on fire emoji
 
-    # تحقق مما إذا كان المرسل هو مستخدم عادي وليس بوت أو حساب آخر
-    if not sender.bot:
-        # الايموجيات التفاعلية التي ترغب في تفعيلها للمستخدمين
-        emojis = ["🍓"]
-
-        # إضافة الايموجيات التفاعلية إلى الرسالة
-        for emoji in emojis:
-            await message.add_reaction(emoji)
+@l313l.on(events.NewMessage(chats=channel_username))
+async def react_to_channel_messages(event):
+    # React to the message with the heart on fire emoji
+    await event.reply(emoji, parse_mode='emoji')
