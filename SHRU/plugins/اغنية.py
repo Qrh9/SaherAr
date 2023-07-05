@@ -213,26 +213,31 @@ async def shazamcmd(event):
             video_clip.close()
             file_to_recognize = audio_file
 
-        mp3_fileto_recognize = open(file_to_recognize, "rb").read()
         shazam = Shazam()
-        recognize_generator = shazam.recognize_song(data=mp3_fileto_recognize)
-        async for result in recognize_generator:
-            track = result["track"]
-            break
+        recognize_result = await shazam.recognize_song(file_to_recognize)
+        track = recognize_result["track"]
     except Exception as e:
         LOGS.error(e)
         return await edit_delete(
             catevent, f"**⌔∮ لقد حدث خطأ ما أثناء البحث عن اسم الأغنية/الفيديو:**\n__{e}__"
         )
 
-    image = track["images"]["background"]
-    song = track["share"]["subject"].replace(track["subtitle"], "Rio time's")
+    image_url = track["images"]["background"]
+    song_title = track["share"]["subject"].replace(track["subtitle"], "Rio time's")
+
+    # Download the image from the URL
+    image_data = await event.client.download_media(image_url)
+    image_file = io.BytesIO(image_data)
+
+    # Send the file and caption as a reply to the original message
     await event.client.send_file(
-        event.chat_id, image, caption=f"**الاغنية/الفيديو:** `{song}`", reply_to=reply
+        event.chat_id,
+        image_file,
+        caption=f"**الاغنية/الفيديو:** `{song_title}`",
+        reply_to=reply,
     )
+
     await catevent.delete()
-
-
 
 
 @l313l.ar_cmd(
