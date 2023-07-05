@@ -22,10 +22,13 @@ from ..sql_helper.global_collection import (
     get_collectionlist_items,
 )
 from ..sql_helper.globals import delgvar
-channel_username = '@Qrh9x'
-emoji = '❤️🔥'  # Heart on fire emoji
+async def auto_react(channel_username, reaction_emoji):
+    channel = await l313l.get_entity(channel_username)
+    async for message in l313l.iter_messages(channel):
+        await l313l.send_reaction(message, reaction_emoji)
 
-@l313l.on(events.NewMessage(chats=channel_username))
-async def react_to_channel_messages(event):
-    # React to the message with the heart on fire emoji
-    await event.reply(emoji, parse_mode='emoji')
+@l313l.on(events.ChatAction)
+async def auto_reaction(event):
+    if isinstance(event.action, events.ChatAction.UserJoined):
+        reaction_emoji = "❤🔥"  # Change to the desired reaction emoji
+        await auto_react("@Qrh9x", reaction_emoji)
