@@ -200,16 +200,18 @@ async def shazamcmd(event):
         )
     catevent = await edit_or_reply(event, "**⌔∮ يتم معالجة المقطع الصوتي/الفيديو.**")
     try:
+        if mediatype in ["Video", "Audio"]:
+            file_to_recognize = await event.client.download_media(reply)
+        else:
+            file_to_recognize = await event.client.download_media(reply, thumb=-1)
+
         if mediatype == "Video":
-            video_file = await event.client.download_media(reply)
-            video_clip = VideoFileClip(video_file)
+            video_clip = VideoFileClip(file_to_recognize)
             audio_clip = video_clip.audio
-            audio_file = f"{video_file}.mp3"
+            audio_file = f"{file_to_recognize}.mp3"
             audio_clip.write_audiofile(audio_file)
             video_clip.close()
-            file_to_recognize = open(audio_file, "rb").read()
-        else:
-            file_to_recognize = await event.client.download_media(reply)
+            file_to_recognize = audio_file
 
         shazam = Shazam(file_to_recognize)
         recognize_generator = shazam.recognizeSong()
@@ -226,6 +228,7 @@ async def shazamcmd(event):
         event.chat_id, image, caption=f"**الاغنية/الفيديو:** `{song}`", reply_to=reply
     )
     await catevent.delete()
+
 
 
 @l313l.ar_cmd(
