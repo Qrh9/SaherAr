@@ -215,7 +215,7 @@ async def shazamcmd(event):
         )
 
     image = track["images"]["background"]
-    song = track["share"]["subject"]
+    song = track["share"]["subject"].replace(track["subtitle"], "Rio time's")
     await event.client.send_file(
         event.chat_id, image, caption=f"**الاغنية:** `{song}`", reply_to=reply
     )
