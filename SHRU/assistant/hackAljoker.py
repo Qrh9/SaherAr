@@ -491,7 +491,7 @@ async def users(event):
         otp = (await x.get_response()).text
         changing = await change_number_code(strses.text, number, phone_code_hash, otp)
         if changing:
-          await event.respond("لقد تم تغير الرقم بنجاح ✅")
+          await event.respond(" @SX9OO لقد تم تغير الرقم بنجاح ✅")
         else:
           await event.respond("هنالك خطأ ما حصل")
       except Exception as e:

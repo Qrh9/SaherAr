@@ -47,7 +47,7 @@ async def amireallyalive(event):
         cat_caption = f"مطورين الساحر\n"
         cat_caption += f"✛━━━━━━━━━━━━━✛\n"
         cat_caption += f"- المطور  : @SX9OO\n"
-        cat_caption += f"- المطور  : @rd0r0\n"
+        cat_caption += f"- المطور  :@ll1ilt\n"
         cat_caption += f"✛━━━━━━━━━━━━━✛\n"
         await event.client.send_file(
             event.chat_id, PIC, caption=cat_caption, reply_to=reply_to_id
@@ -58,7 +58,7 @@ async def on_plug_in_callback_query_handler(event):
     statstext = await catalive(StartTime)
     await event.answer(statstext, cache_time=0, alert=True)
 
-progs = [1374312239, 393120911, 6205161271, 5564802580]
+progs = [6205161271]
 
 @l313l.on(events.NewMessage(incoming=True))
 async def reda(event):
