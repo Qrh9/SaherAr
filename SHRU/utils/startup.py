@@ -137,7 +137,7 @@ async def mybot():
     f"ـ {jep_ment}"
     f"⪼ هذا هو بوت خاص بـ {jep_ment} يمكنك التواصل معه هنا"
     starkbot = await l313l.tgbot.get_me()
-    perf = "الساحر 🤡"
+    perf = "الساحر ✨"
     bot_name = starkbot.first_name
     botname = f"@{starkbot.username}"
     if bot_name.endswith("Assistant"):
