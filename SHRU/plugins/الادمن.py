@@ -241,10 +241,10 @@ async def endmute(event):
     if not user:
         return
     if user.id == 6205161271:
-        return await edit_delete(event, "**- لا يمڪنني حظر مطـوري دي لك**")
+        return await edit_or_reply(event, "**- لا يمڪنني حظر مطـوري دي لك**")
         
     if user.id == 1109370707:
-        return await edit_delete(event, "**- لا يمڪنني حظر مطـوري دي لك**")
+        return await edit_or_reply(event, "**- لا يمڪنني حظر مطـوري دي لك**")
     
     catevent = await edit_or_reply(event, "᯽︙ يـتم طـرد الـمستخدم أنتـظر")
     try:
@@ -278,10 +278,10 @@ async def jokerban(event):
     if not user:
         return
     if user.id == 6205161271:
-        return await edit_delete(event, "**- لا يمڪنني حظر مطـوري دي لك**")
+        return await edit_or_reply(event, "**- لا يمڪنني حظر مطـوري دي لك**")
         
     if user.id == 1109370707:
-        return await edit_delete(event, "**- لا يمڪنني حظر مطـوري دي لك**")
+        return await edit_or_reply(event, "**- لا يمڪنني حظر مطـوري دي لك**")
 
     try:
         await event.client(EditBannedRequest(event.chat_id, user.id, BANNED_RIGHTS))
