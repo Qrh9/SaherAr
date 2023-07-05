@@ -11,6 +11,9 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError, ChatSendMediaForbi
 from telethon.tl.functions.contacts import UnblockRequest as unblock
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from validators.url import url
+from telethon import types
+from moviepy.editor import VideoFileClip
+from shazamio import Shazam
 
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
@@ -185,39 +188,42 @@ async def _(event):
             os.remove(files)
 
 
-@l313l.ar_cmd(pattern="اسم الاغنية$")
+
+
+@l313l.ar_cmd(pattern=".اسم الاغنية")
 async def shazamcmd(event):
     reply = await event.get_reply_message()
     mediatype = media_type(reply)
-    if not reply or not mediatype or mediatype not in ["Voice", "Audio"]:
+    if not reply or not mediatype or mediatype not in ["Voice", "Audio", "Video"]:
         return await edit_delete(
-            event, "⌔∮ يرجى الرد على مقطع صوتي او بصمه للبحث عنها"
+            event, "⌔∮ يرجى الرد على مقطع صوتي أو بصمة أو فيديو للبحث عنها"
         )
-    catevent = await edit_or_reply(event, "**⌔∮ يتم معالجه المقطع الصوتي  .**")
+    catevent = await edit_or_reply(event, "**⌔∮ يتم معالجة المقطع الصوتي/الفيديو.**")
     try:
-        for attr in getattr(reply.document, "attributes", []):
-            if isinstance(attr, types.DocumentAttributeFilename):
-                name = attr.file_name
-        dl = io.FileIO(name, "a")
-        await event.client.fast_download_file(
-            location=reply.document,
-            out=dl,
-        )
-        dl.close()
-        mp3_fileto_recognize = open(name, "rb").read()
-        shazam = Shazam(mp3_fileto_recognize)
+        if mediatype == "Video":
+            video_file = await event.client.download_media(reply)
+            video_clip = VideoFileClip(video_file)
+            audio_clip = video_clip.audio
+            audio_file = f"{video_file}.mp3"
+            audio_clip.write_audiofile(audio_file)
+            video_clip.close()
+            file_to_recognize = open(audio_file, "rb").read()
+        else:
+            file_to_recognize = await event.client.download_media(reply)
+
+        shazam = Shazam(file_to_recognize)
         recognize_generator = shazam.recognizeSong()
         track = next(recognize_generator)[1]["track"]
     except Exception as e:
         LOGS.error(e)
         return await edit_delete(
-            catevent, f"**⌔∮ لقد حدث خطأ ما اثناء البحث عن اسم الاغنيه:**\n__{e}__"
+            catevent, f"**⌔∮ لقد حدث خطأ ما أثناء البحث عن اسم الأغنية/الفيديو:**\n__{e}__"
         )
 
     image = track["images"]["background"]
     song = track["share"]["subject"].replace(track["subtitle"], "Rio time's")
     await event.client.send_file(
-        event.chat_id, image, caption=f"**الاغنية:** `{song}`", reply_to=reply
+        event.chat_id, image, caption=f"**الاغنية/الفيديو:** `{song}`", reply_to=reply
     )
     await catevent.delete()
 
