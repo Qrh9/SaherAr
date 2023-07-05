@@ -20,7 +20,7 @@ def receive_api_info(update, context):
         update.message.reply_text("Invalid input. Please enter your API ID and API hash in the correct format: API_ID API_HASH")
 
 def main():
-    updater = Updater('your_bot_token', use_context=True)
+    updater = Updater('6294500168:AAEPVtqQBcA1PPA6nT0NzOw1hCMIP6P2cfM', use_context=True)
     dispatcher = updater.dispatcher
 
     # Register the command handler
