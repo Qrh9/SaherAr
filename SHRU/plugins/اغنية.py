@@ -214,9 +214,9 @@ async def shazamcmd(event):
             file_to_recognize = audio_file
 
         mp3_fileto_recognize = open(file_to_recognize, "rb").read()
-        shazam = Shazam(mp3_fileto_recognize)
-        recognize_generator = shazam.recognize_song()
-        track = next(recognize_generator)[1]["track"]
+        shazam = Shazam()
+        recognize_generator = shazam.recognize_song(data=mp3_fileto_recognize)
+        track = next(recognize_generator)["track"]
     except Exception as e:
         LOGS.error(e)
         return await edit_delete(
