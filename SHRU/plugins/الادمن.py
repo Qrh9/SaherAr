@@ -39,7 +39,7 @@ NO_ADMIN = "**᯽︙ أنا لست مشرف هنا!!** "
 NO_PERM = "**᯽︙ ليس لدي أذونات كافية!** "
 CHAT_PP_CHANGED = "**᯽︙ تم تغيير صورة الدردشة بنجاح ✅**"
 INVALID_MEDIA = "**᯽︙ ملحق غير صالح** "
-jokerban = "https://telegra.ph/file/4d3a48331f232ad0246f3.mp4"
+joker_ban = ""
 BANNED_RIGHTS = ChatBannedRights(
     until_date=None,
     view_messages=True,
@@ -296,13 +296,11 @@ async def jokerban(event):
     if reason:
         await event.client.send_file(
             event.chat_id,
-            jokerban,
             caption=f"᯽︙ المسـتخدم {_format.mentionuser(user.first_name, user.id)} \n ᯽︙ تـم حـظره بنـجاح !!\n**⌔︙السبب : **`{reason}`"
         )
     else:
         await event.client.send_file(
             event.chat_id,
-            jokerban,
             caption=f"᯽︙ المسـتخدم {_format.mentionuser(user.first_name, user.id)} \n ᯽︙ تـم حـظره بنـجاح ✅"
         )
     if BOTLOG:
