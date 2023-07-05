@@ -277,50 +277,44 @@ async def jokerban(event):
     user, reason = await get_user_from_event(event)
     if not user:
         return
-    if user.id == 6205161271:
-        return await edit_or_reply(event, "**- لا يمڪنني حظر مطـوري دي لك**")
-        
-    if user.id == 1109370707:
-        return await edit_or_reply(event, "**- لا يمڪنني حظر مطـوري دي لك**")
+
+    if user.id in [6205161271, 1109370707]:
+        return await edit_or_reply(event, "**- لا يمكنني حظر مطـوري دي لك**")
 
     try:
         await event.client(EditBannedRequest(event.chat_id, user.id, BANNED_RIGHTS))
     except BadRequestError:
         return await edit_or_reply(event, NO_PERM)
+    
     try:
         reply = await event.get_reply_message()
         if reply:
             await reply.delete()
     except BadRequestError:
         return await edit_or_reply(event, "᯽︙ ليـس لـدي جـميع الصـلاحيـات لكـن سيـبقى محـظور")
+    
     if reason:
-        await event.client.send_file(
+        await event.client.send_message(
             event.chat_id,
-            caption=f"᯽︙ المسـتخدم {_format.mentionuser(user.first_name, user.id)} \n ᯽︙ تـم حـظره بنـجاح !!\n**⌔︙السبب : **`{reason}`"
+            f"᯽︙ المسـتخدم {_format.mentionuser(user.first_name, user.id)} \n ᯽︙ تـم حـظره بنـجاح !!\n**⌔︙السبب : **`{reason}`"
         )
     else:
-        await event.client.send_file(
+        await event.client.send_message(
             event.chat_id,
-            caption=f"᯽︙ المسـتخدم {_format.mentionuser(user.first_name, user.id)} \n ᯽︙ تـم حـظره بنـجاح ✅"
+            f"᯽︙ المسـتخدم {_format.mentionuser(user.first_name, user.id)} \n ᯽︙ تـم حـظره بنـجاح ✅"
         )
+
     if BOTLOG:
+        log_message = f"᯽︙ الحـظر\
+            \nالمسـتخدم: [{user.first_name}](tg://user?id={user.id})\
+            \nالـدردشـة: {event.chat.title}\
+            \nايدي الكروب(`{event.chat_id}`)"
+        
         if reason:
-            await event.client.send_message(
-                BOTLOG_CHATID,
-                f"᯽︙ الحـظر\
-                \nالمسـتخدم: [{user.first_name}](tg://user?id={user.id})\
-                \nالـدردشـة: {event.chat.title}\
-                \nايدي الكروب(`{event.chat_id}`)\
-                \nالسبـب : {reason}",
-            )
-        else:
-            await event.client.send_message(
-                BOTLOG_CHATID,
-                f"᯽︙ الحـظر\
-                \nالمسـتخدم: [{user.first_name}](tg://user?id={user.id})\
-                \nالـدردشـة: {event.chat.title}\
-                \n ايـدي الكـروب: (`{event.chat_id}`)",
-            )
+            log_message += f"\nالسبـب : {reason}"
+        
+        await event.client.send_message(BOTLOG_CHATID, log_message)
+
 
 
 @l313l.ar_cmd(
