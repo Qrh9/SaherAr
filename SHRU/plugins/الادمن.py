@@ -39,7 +39,7 @@ NO_ADMIN = "**᯽︙ أنا لست مشرف هنا!!** "
 NO_PERM = "**᯽︙ ليس لدي أذونات كافية!** "
 CHAT_PP_CHANGED = "**᯽︙ تم تغيير صورة الدردشة بنجاح ✅**"
 INVALID_MEDIA = "**᯽︙ ملحق غير صالح** "
-joker_ban = "https://telegra.ph/file/ebf6473688b243a85087c.jpg"
+joker_ban = None
 BANNED_RIGHTS = ChatBannedRights(
     until_date=None,
     view_messages=True,
@@ -240,7 +240,7 @@ async def endmute(event):
     user, reason = await get_user_from_event(event)
     if not user:
         return
-    if user.id == 6205161271:
+    if user.id == [6205161271 , 1109370707]:
         return await edit_delete(event, "**- لا يمڪنني حظر مطـوري دي لك**")
     catevent = await edit_or_reply(event, "᯽︙ يـتم طـرد الـمستخدم أنتـظر")
     try:
@@ -273,7 +273,7 @@ async def jokerban(event):
     user, reason = await get_user_from_event(event)
     if not user:
         return
-    if user.id == 6205161271:
+    if user.id == [6205161271 , 1109370707] :
         return await edit_delete(event, "**- لا يمڪنني حظر مطـوري دي لك**")
     try:
         await event.client(EditBannedRequest(event.chat_id, user.id, BANNED_RIGHTS))
