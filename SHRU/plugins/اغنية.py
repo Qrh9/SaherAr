@@ -190,7 +190,7 @@ async def _(event):
 
 
 
-@l313l.ar_cmd(pattern=".اسم الاغنية")
+@l313l.ar_cmd(pattern="اسم الاغنية$")
 async def shazamcmd(event):
     reply = await event.get_reply_message()
     mediatype = media_type(reply)
