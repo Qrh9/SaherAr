@@ -18,8 +18,8 @@ from . import BOTLOG, BOTLOG_CHATID, admin_groups, get_user_from_event
 
 plugin_category = "admin"
 
-joker_mute = "https://telegra.ph/file/c5ef9550465a47845c626.jpg"
-joker_unmute = "https://telegra.ph/file/e9473ddef0b58cdd7f9e7.jpg"
+joker_mute = "https://telegra.ph/file/56a3dd726306259beded6.jpg"
+joker_unmute = "https://telegra.ph/file/56a3dd726306259beded6.jpg"
 #=================== الكـــــــــــــــتم  ===================  #
 
 @l313l.ar_cmd(pattern=f"كتم(?:\s|$)([\s\S]*)")
