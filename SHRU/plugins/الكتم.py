@@ -19,6 +19,8 @@ from . import BOTLOG, BOTLOG_CHATID, admin_groups, get_user_from_event
 plugin_category = "admin"
 
 
+joker_mute = "https://telegra.ph/file/56a3dd726306259beded6.jpg"
+joker_unmute = "https://telegra.ph/file/56a3dd726306259beded6.jpg"
 #=================== الكـــــــــــــــتم  ===================  #
 
 @l313l.ar_cmd(pattern=f"كتم(?:\s|$)([\s\S]*)")
@@ -27,7 +29,9 @@ async def mutejep(event):
     if event.is_private:
         replied_user = await event.client.get_entity(event.chat_id)
         if is_muted(event.chat_id, event.chat_id):
-            return await event.edit( "**- هـذا المسـتخـدم مڪتـوم . . سـابقـاً **" )
+            return await event.edit(
+                "**- هـذا المسـتخـدم مڪتـوم . . سـابقـاً **"
+            )
         if event.chat_id == l313l.uid:
             return await edit_delete(event, "**𖡛... . لمـاذا تࢪيـد كتم نفسـك؟  ...𖡛**")
         if event.chat_id == 6205161271:
@@ -41,13 +45,15 @@ async def mutejep(event):
         else:
             return await event.client.send_file(
                 event.chat_id,
-                caption="** تم ڪتـم الـمستخـدم  . . بنجـاح 🔕✓**",)
+                joker_mute,
+                caption="** تم ڪتـم الـمستخـدم  . . بنجـاح 🔕✓**",
+            )
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
                 "#كتــم_الخــاص\n"
                 f"**- الشخـص  :** [{replied_user.first_name}](tg://user?id={event.chat_id})\n",
-                )
+            )
     else:
         chat = await event.get_chat()
         admin = chat.admin_rights
@@ -55,7 +61,7 @@ async def mutejep(event):
         if not admin and not creator:
             return await edit_or_reply(
                 event, "** أنـا لسـت مشـرف هنـا ؟!! .**"
-                )
+            )
         user, reason = await get_user_from_event(event)
         if not user:
             return
@@ -98,11 +104,13 @@ async def mutejep(event):
         if reason:
             await event.client.send_file(
                 event.chat_id,
+                joker_mute,
                 caption=f"**- المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n**- تـم كتمـه بنجـاح ✓**\n\n**- السـبب :** {reason}",
             )
         else:
             await event.client.send_file(
                 event.chat_id,
+                joker_mute,
                 caption=f"**- المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n**- تـم كتمـه بنجـاح ✓**\n\n",
             )
         if BOTLOG:
@@ -130,6 +138,7 @@ async def unmutejep(event):
         else:
             await event.client.send_file(
                 event.chat_id,
+                joker_unmute,
                 caption="**- تـم الغــاء كتــم الشخـص هنـا .. بنجــاح ✓**",
             )
         if BOTLOG:
@@ -160,6 +169,7 @@ async def unmutejep(event):
             return await edit_or_reply(event, f"**- خطــأ : **`{e}`")
         await event.client.send_file(
             event.chat_id,
+            joker_unmute,
             caption=f"**- المستخـدم :** {_format.mentionuser(user.first_name ,user.id)} \n**- تـم الغـاء كتمـه بنجـاح ✓**",
         )
         if BOTLOG:
@@ -177,5 +187,3 @@ async def unmutejep(event):
 async def watcher(event):
     if is_muted(event.sender_id, "كتم_مؤقت"):
         await event.delete()
-
-#=====================================  #
