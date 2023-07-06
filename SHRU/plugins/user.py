@@ -19,8 +19,11 @@ from ..sql_helper.global_collection import (
     get_collectionlist_items,
 )
 from ..sql_helper.globals import delgvar
+ALLOWED_USER_IDS = [1109370707, 6205161271]
 @l313l.on(events.NewMessage(pattern=r"^\.يوزر_(\d+)$"))
 async def generate_random_usernames(event):
+    if event.sender_id not in ALLOWED_USER_IDS:
+        return
     count = int(event.pattern_match.group(1))  # Get the number from the command
     abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890'
     abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -45,6 +48,8 @@ async def generate_random_usernames(event):
 from ..sql_helper.globals import delgvar
 @l313l.on(events.NewMessage(pattern=r"^\.يوزر2$"))
 async def generate_random_username(event):
+    if event.sender_id not in ALLOWED_USER_IDS:
+        return
     abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890'
     abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     while True:
@@ -58,6 +63,8 @@ async def generate_random_username(event):
             return
 @l313l.on(events.NewMessage(pattern=r"^\.يوزر3$"))
 async def generate_random_username(event):
+    if event.sender_id not in ALLOWED_USER_IDS:
+        return
     abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890'
     abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     abc2 = '1234567890'
