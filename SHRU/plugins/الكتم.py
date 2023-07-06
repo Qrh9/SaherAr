@@ -41,14 +41,13 @@ async def mutejep(event):
         else:
             return await event.client.send_file(
                 event.chat_id,
-                caption="** تم ڪتـم الـمستخـدم  . . بنجـاح 🔕✓**",
-            )
+                caption="** تم ڪتـم الـمستخـدم  . . بنجـاح 🔕✓**",)
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
                 "#كتــم_الخــاص\n"
                 f"**- الشخـص  :** [{replied_user.first_name}](tg://user?id={event.chat_id})\n",
-            )
+                )
     else:
         chat = await event.get_chat()
         admin = chat.admin_rights
@@ -56,7 +55,7 @@ async def mutejep(event):
         if not admin and not creator:
             return await edit_or_reply(
                 event, "** أنـا لسـت مشـرف هنـا ؟!! .**"
-            )
+                )
         user, reason = await get_user_from_event(event)
         if not user:
             return
