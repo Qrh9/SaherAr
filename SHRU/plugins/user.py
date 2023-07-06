@@ -27,11 +27,26 @@ async def generate_random_username(event):
         v1 = ''.join((random.choice(abc1) for _ in range(1)))
         v2 = ''.join((random.choice(abc) for _ in range(1)))
         v3 = ''.join((random.choice(abc) for _ in range(1)))
+
         username = f"{v1}_{v2}_{v3}"
         if not await Username_exists_by_Qrh9(username):
             await event.edit(f"**᯽︙ تم, يوزك الجديد    : @{username}**")
             return
 
+from ..sql_helper.globals import delgvar
+@l313l.on(events.NewMessage(pattern=r"^\.يوزر2$"))
+async def generate_random_username(event):
+    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890'
+    abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    while True:
+        v1 = ''.join((random.choice(abc1) for _ in range(1)))
+        v2 = ''.join((random.choice(abc) for _ in range(1)))
+        v3 = ''.join((random.choice(abc) for _ in range(1)))
+        v4 = ''.join((random.choice(abc) for _ in range(1)))
+        username = f"{v1}_{v2}_{v3}_{v4}"
+        if not await Username_exists_by_Qrh9(username):
+            await event.edit(f"**᯽︙ تم, يوزك الجديد    : @{username}**")
+            return
 
 async def Username_exists_by_Qrh9(username):
     try:

@@ -1,5 +1,4 @@
-
-#Reda
+# Qrh9
 import asyncio 
 import shutil
 import requests
@@ -14,7 +13,7 @@ import math
 import base64
 from SHRU import l313l 
 #from ..Config import Config
-#By Reda
+## Qrh9
 @l313l.ar_cmd(pattern="تك")
 async def tiktok_dl(event):
     ms = event.message.message
@@ -43,7 +42,7 @@ async def tiktok_dl(event):
                 except Exception as er:
                     if 'video_no_watermark' in str(er):
                         return await a.edit("**رابط الفيديو غير صحيح تأكد منه واعد المحاولة**")
-                    return await a.edit(f"حدث خطأ قم بتوجيه الرسالة الى مطوري @rd0r0\n{er}")
+                    return await a.edit(f"حدث خطأ قم بتوجيه الرسالة الى مطوري @SX9OO\n{er}")
             
             
                 

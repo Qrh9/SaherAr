@@ -42,7 +42,7 @@ if Config.PLUGIN_CHANNEL:
             if BOTLOG:
                 await l313l.send_message(
                     BOTLOG_CHATID,
-                    f"᯽︙ تـم تـنصـيب المـلف `{os.path.basename(downloaded_file_name)}` بـناج ✅.",
+                    f"᯽︙ تـم تـنصـيب المـلف `{os.path.basename(downloaded_file_name)}` بـناجح ✅.",
                 )
 
     l313l.loop.create_task(install())

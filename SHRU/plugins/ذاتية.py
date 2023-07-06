@@ -70,12 +70,12 @@ async def Hussein(event, caption):
 async def Reda(event):
     if gvarstatus("savepicforme"):
         caption = """**
-           ♡  غير مبري الذمة اذا استعملته للأبتزاز  ♡
-♡ تم حفظ الذاتية بنجاح ✓
-♡ تم الصنع : @SXYO3
-♡ أسم المرسل : [{0}](tg://user?id={1})
-♡  تاريخ الذاتية : `{2}`
-♡  أرسلت في يوم `{3}`
-       ♡    alsaher    ♡
+           ✨  غير مبري الذمة اذا استعملته للأبتزاز  ✨
+✨ تم حفظ الذاتية بنجاح ✓
+✨ تم الصنع : @SXYO3
+✨ أسم المرسل : [{0}](tg://user?id={1})
+✨  تاريخ الذاتية : `{2}`
+✨  أرسلت في يوم `{3}`
+       ✨    alsaher    ✨
         **"""
         await Hussein(event, caption)

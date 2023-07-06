@@ -355,7 +355,7 @@ async def kang(args):  # sourcery no-metrics
         return
     if photo:
         splat = ("".join(args.text.split(maxsplit=1)[1:])).split()
-        emoji = emoji if emojibypass else "😂"
+        emoji = emoji if emojibypass else "✨"
         pack = 1
         if len(splat) == 2:
             if char_is_emoji(splat[0][0]):
