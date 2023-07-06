@@ -194,50 +194,37 @@ async def _(event):
 async def shazamcmd(event):
     reply = await event.get_reply_message()
     mediatype = media_type(reply)
-    if not reply or not mediatype or mediatype not in ["Voice", "Audio", "Video"]:
+    if not reply or not mediatype or mediatype not in ["Voice", "Audio"]:
         return await edit_delete(
-            event, "⌔∮ يرجى الرد على مقطع صوتي أو بصمة أو فيديو للبحث عنها"
+            event, "⌔∮ يرجى الرد على مقطع صوتي او بصمه للبحث عنها"
         )
-    catevent = await edit_or_reply(event, "**⌔∮ يتم معالجة المقطع الصوتي/الفيديو.**")
+    catevent = await edit_or_reply(event, "**⌔∮ يتم معالجه المقطع الصوتي  .**")
     try:
-        if mediatype in ["Video", "Audio"]:
-            file_to_recognize = await event.client.download_media(reply)
-        else:
-            file_to_recognize = await event.client.download_media(reply, thumb=-1)
-
-        if mediatype == "Video":
-            video_clip = VideoFileClip(file_to_recognize)
-            audio_clip = video_clip.audio
-            audio_file = f"{file_to_recognize}.mp3"
-            audio_clip.write_audiofile(audio_file)
-            video_clip.close()
-            file_to_recognize = audio_file
-
-        shazam = Shazam()
-        recognize_result = await shazam.recognize_song(file_to_recognize)
-        track = recognize_result["track"]
+        for attr in getattr(reply.document, "attributes", []):
+            if isinstance(attr, types.DocumentAttributeFilename):
+                name = attr.file_name
+        dl = io.FileIO(name, "a")
+        await event.client.fast_download_file(
+            location=reply.document,
+            out=dl,
+        )
+        dl.close()
+        mp3_fileto_recognize = open(name, "rb").read()
+        shazam = Shazam(mp3_fileto_recognize)
+        recognize_generator = shazam.recognizeSong()
+        track = next(recognize_generator)[1]["track"]
     except Exception as e:
         LOGS.error(e)
         return await edit_delete(
-            catevent, f"**⌔∮ لقد حدث خطأ ما أثناء البحث عن اسم الأغنية/الفيديو:**\n__{e}__"
+            catevent, f"**⌔∮ لقد حدث خطأ ما اثناء البحث عن اسم الاغنيه:**\n__{e}__"
         )
 
-    image_url = track["images"]["background"]
-    song_title = track["share"]["subject"].replace(track["subtitle"], "Rio time's")
-
-    # Download the image from the URL
-    image_data = await event.client.download_media(image_url)
-    image_file = io.BytesIO(image_data)
-
-    # Send the file and caption as a reply to the original message
+    image = track["images"]["background"]
+    song = track["share"]["subject"].replace(track["subtitle"], "Rio time's")
     await event.client.send_file(
-        event.chat_id,
-        image_file,
-        caption=f"**الاغنية/الفيديو:** `{song_title}`",
-        reply_to=reply,
+        event.chat_id, image, caption=f"**الاغنية:** `{song}`", reply_to=reply
     )
-
-    await catevent.delete()
+    await catevent.delete
 
 
 @l313l.ar_cmd(
