@@ -20,7 +20,7 @@ plugin_category = "admin"
 
 
 joker_mute = "https://telegra.ph/file/56a3dd726306259beded6.jpg"
-joker_unmute = "https://telegra.ph/file/56a3dd726306259beded6.jpg"
+joker_unmute = "https://telegra.ph/file/e207affb10bf06d943ddf.jpg"
 #=================== الكـــــــــــــــتم  ===================  #
 
 @l313l.ar_cmd(pattern=f"كتم(?:\s|$)([\s\S]*)")
