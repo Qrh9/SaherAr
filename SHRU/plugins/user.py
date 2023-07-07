@@ -81,7 +81,8 @@ async def generate_random_username(event):
             return
 @l313l.on(events.NewMessage(pattern=r"^\.يوزر2_(\w)$"))
 async def generate_random_username_starts_with(event):
-    start_letter = event.pattern_match.group(1).upper()  # Get the starting letter from the command
+    if event.sender_id not in ALLOWED_USER_IDS:
+        start_letter = event.pattern_match.group(1).upper()  # Get the starting letter from the command
     abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890'
     abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     while True:
@@ -93,8 +94,21 @@ async def generate_random_username_starts_with(event):
         if not await Username_exists_by_Qrh9(username):
             await event.edit(f"**᯽︙ تم, يوزك الجديد    : @{username}**")
             return
-
-
+@l313l.on(events.NewMessage(pattern=r"^\.يوزر3_(\w)$"))
+async def generate_random_username_starts_with(event):
+    if event.sender_id not in ALLOWED_USER_IDS:
+        start_letter = event.pattern_match.group(1).upper()  # Get the starting letter from the command
+    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890'
+    abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    abc2 = '1234567890'
+    while True:
+        W1 = start_letter
+        W2 = ''.join((random.choice(abc1) for _ in range(1)))
+        W3 = ''.join((random.choice(abc1) for _ in range(1)))
+        W4 = ''.join((random.choice(abc2) for _ in range(1)))
+        W5 = ''.join((random.choice(abc1) for _ in range(1)))
+        W6 = ''.join((random.choice(abc1) for _ in range(1)))
+        username = f"{W1}{W2}{W4}{W5}{W6}"
 
 async def Username_exists_by_Qrh9(username):
     try:
