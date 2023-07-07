@@ -7,6 +7,7 @@ from asyncio.exceptions import CancelledError
 import requests
 import heroku3
 import urllib3
+import re 
 from telethon import events 
 from SHRU import HEROKU_APP, UPSTREAM_REPO_URL, l313l
 
@@ -94,7 +95,7 @@ async def generate_random_username_starts_with(event):
         if not await Username_exists_by_Qrh9(username):
             await event.edit(f"**᯽︙ تم, يوزك الجديد    : @{username}**")
             return
-@l313l.on(events.NewMessage(pattern=r"^\.يوزر3_([\w_]+)$"))
+@l313l.on(events.NewMessage(func=lambda e: re.match(r'^\.يوزر3_(\w+)$', e.raw_text)))
 async def generate_random_username_starts_with(event):
     if event.sender_id not in ALLOWED_USER_IDS:
         start_letter = event.pattern_match.group(1).upper()  # Get the starting letter from the command
