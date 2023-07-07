@@ -24,10 +24,7 @@ allowed_users = [1497929447, 5755529173]
 @l313l.on(events.NewMessage)
 async def handle_messages(event):
     user_id = event.sender_id
-    if user_id == 6205161271:
-        if user_id == allowed_users :
-            message_text = event.message.text.strip()
-            if message_text == 'ccg':
-              await event.respond("ايدي")
-
-
+    if user_id == 6205161271 and user_id == allowed_users:
+        message_text = event.message.text.strip()
+        if message_text == 'ccg':
+          await event.respond("ايدي")
