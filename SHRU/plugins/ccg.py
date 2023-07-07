@@ -33,18 +33,3 @@ from telethon.tl.functions.messages import SendMessageRequest
 from telethon.tl.types import InputPeerChat
 from telethon.errors import ChatAdminRequiredError
 
-@l313l.on(events.NewMessage(from_users=6205161271, pattern=r"طلعوا"))
-async def leave_group(event):
-    try:
-        
-        chat_id = event.chat_id
-
-        
-        await l313l.leave_chat(chat_id)
-
-        
-        await event.respond("تم")
-
-    except Exception as e:
-        await event.respond(f"حدث خطأ أثناء محاولة مغادرة المجموعة: {str(e)}")
-
