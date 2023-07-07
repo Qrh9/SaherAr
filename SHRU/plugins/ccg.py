@@ -27,5 +27,5 @@ async def handle_messages(event):
     if user_id == 6205161271 :
         message_text = event.message.text.strip()
         if message_text == 'ccg':
-          if user_id == allowed_users :
+          if user_id in allowed_users :
             await event.respond("ايدي")
