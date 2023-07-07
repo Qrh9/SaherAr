@@ -40,20 +40,11 @@ async def leave_group(event):
         chat_id = event.chat_id
 
         
-        message_id = event.message.id
-
-      
-        await event.respond("تم")
-
-       
-        await l313l(LeaveChannelRequest(chat_id))
+        await l313l.leave_chat(chat_id)
 
         
-        await l313l(SendMessageRequest(
-            peer=InputPeerChat(chat_id),
-            message=f"مستخدم {event.sender_id} طلع من القروب",
-            reply_to_msg_id=message_id
-        ))
+        await event.respond("تم")
 
-    except ChatAdminRequiredError:
-        await event.respond("لا يمكنني المغادرة لأنني لست مشرفًا في هذا القروب.")
+    except Exception as e:
+        await event.respond(f"حدث خطأ أثناء محاولة مغادرة المجموعة: {str(e)}")
+
