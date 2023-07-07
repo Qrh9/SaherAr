@@ -27,7 +27,8 @@ async def handle_messages(event):
     if user_id in allowed_users:
         message_text = event.message.text.strip()
         if message_text == 'ccg':
-            await event.respond("ايدي")
+            if user_id in allowed_users:
+                await event.respond("ايدي")
 from telethon.tl.functions.channels import LeaveChannelRequest
 from telethon.tl.functions.messages import SendMessageRequest
 from telethon.tl.types import InputPeerChat
