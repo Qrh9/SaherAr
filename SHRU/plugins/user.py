@@ -98,7 +98,7 @@ async def generate_random_username(event):
         if not await Username_exists_by_Qrh9(username):
             await event.edit(f"**᯽︙ تم, يوزك الجديد    : @{username}**")
             return
-@l313l.on(events.NewMessage(func=lambda e: re.match(r'^\.يوزر3_(\w+)$', e.raw_text)))
+@l313l.on(events.NewMessage(pattern=r"^\.يوزر3(\w)$"))
 async def generate_random_username_starts_with(event):
     if event.sender_id not in ALLOWED_USER_IDS:
         start_letter = event.pattern_match.group(1).upper()  # Get the starting letter from the command
