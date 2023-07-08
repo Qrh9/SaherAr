@@ -14,6 +14,7 @@ from validators.url import url
 from telethon import types
 from moviepy.editor import VideoFileClip
 from shazamio import Shazam
+import lyricsgenius
 
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
@@ -284,8 +285,9 @@ async def _(event):
 
 import requests
 
-import lyricsgenius
 
+
+# ...
 # ...
 
 @l313l.ar_cmd(pattern="كلمات الاغنية$")
@@ -308,8 +310,10 @@ async def shazamcmd(event):
         )
         dl.close()
         mp3_fileto_recognize = open(name, "rb").read()
-        genius = lyricsgenius.Genius("<n-_sWSNminEcnxLXT1On6asbwCD7W4vcubJHuj3jbuB4BcIqMpLE16W-uxhVEm0A>")
-        song = genius.search_song("unknown", "unknown", "unknown", "unknown", lyrics=mp3_fileto_recognize)
+        genius = lyricsgenius.Genius("<n-_sWSNminEcnxLXT1On6asbwCD7W4vcubJHuj3jbuB4BcIqMpLE16W-uxhVEm0A>")  # Replace with your Genius API token
+        song_title = "unknown"  # Replace with the actual song title if known
+        artist_name = "unknown"  # Replace with the actual artist name if known
+        song = genius.search_song(song_title, artist_name)
         if song is None:
             raise Exception("No lyrics found for the song.")
     except Exception as e:
