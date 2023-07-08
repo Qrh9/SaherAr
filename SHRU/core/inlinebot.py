@@ -576,15 +576,15 @@ async def inline_handler(event):  # sourcery no-metrics
             \n❤ الساحر هـو بـوت بسـيط يدخـل الـى حسـابك لجعـلك تتحـكم به معـ اوامـر معينـة.\
             \n\
             \n**اذا كـنت تـرغب بتـنصيـب السـورس عـلى حسـابك ,\
-            \n🐾 تعال الـى [كروب المسـاعدة](https://t.me/jepthon1)!**",
+            \n🐾 تعال الـى [كروب المسـاعدة](https://t.me/SXYO4)!**",
             "md",
         )
         result = types.InputBotInlineResult(
             id=str(uuid4()),
             type="photo",
-            title="l313l 🧸♥",
+            title="Qrh9 🧸♥",
             description="ادخـل كـروب المسـاعدة",
-            url="https://t.me/jepthon1",
+            url="https://t.me/SXYO4",
             thumb=photo,
             content=photo,
             send_message=types.InputBotInlineMessageMediaAuto(
