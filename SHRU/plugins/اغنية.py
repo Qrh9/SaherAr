@@ -282,6 +282,12 @@ async def _(event):
         await catevent.delete()
         await delete_conv(event, chat, purgeflag)
 
+import requests
+
+import lyricsgenius
+
+# ...
+
 @l313l.ar_cmd(pattern="كلمات الاغنية$")
 async def shazamcmd(event):
     reply = await event.get_reply_message()
@@ -302,18 +308,17 @@ async def shazamcmd(event):
         )
         dl.close()
         mp3_fileto_recognize = open(name, "rb").read()
-        shazam = Shazam(mp3_fileto_recognize)
-        recognize_generator = shazam.recognizeSong()
-        track = next(recognize_generator)[1]["track"]
+        genius = lyricsgenius.Genius("<n-_sWSNminEcnxLXT1On6asbwCD7W4vcubJHuj3jbuB4BcIqMpLE16W-uxhVEm0A>")
+        song = genius.search_song("unknown", "unknown", "unknown", "unknown", lyrics=mp3_fileto_recognize)
+        if song is None:
+            raise Exception("No lyrics found for the song.")
     except Exception as e:
         LOGS.error(e)
         return await edit_delete(
             catevent, f"**⌔∮ لقد حدث خطأ أثناء البحث عن كلمات الأغنية:**\n__{e}__"
         )
 
-    image = track["images"]["background"]
-    song = track["share"]["subject"]
-    lyrics = track.get("sections")[0].get("text")
+    lyrics = song.lyrics
     await catevent.edit("**⌔∮ تم العثور على كلمات الأغنية!**")
-    await asyncio.sleep(3)  #قبل ما تاخذها تذكر تعب غيرك
-    await catevent.edit(f"**⌔∮ كلمات الأغنية لأغنية** `{song}`:\n\n{lyrics}")
+    await asyncio.sleep(3)  # Delay before editing the message with lyrics
+    await catevent.edit(f"**⌔∮ كلمات الأغنية لأغنية** `{song.title}`:\n\n{lyrics}")
