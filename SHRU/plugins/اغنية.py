@@ -281,3 +281,39 @@ async def _(event):
         )
         await catevent.delete()
         await delete_conv(event, chat, purgeflag)
+
+@l313l.ar_cmd(pattern="كلمات الاغنية$")
+async def shazamcmd(event):
+    reply = await event.get_reply_message()
+    mediatype = media_type(reply)
+    if not reply or not mediatype or mediatype not in ["Voice", "Audio"]:
+        return await edit_delete(
+            event, "⌔∮ يرجى الرد على مقطع صوتي او بصمة للبحث عن كلمات الأغنية"
+        )
+    catevent = await edit_or_reply(event, "**⌔∮ جارٍ تحميل الكلمات...**")
+    try:
+        for attr in getattr(reply.document, "attributes", []):
+            if isinstance(attr, types.DocumentAttributeFilename):
+                name = attr.file_name
+        dl = io.FileIO(name, "a")
+        await event.client.fast_download_file(
+            location=reply.document,
+            out=dl,
+        )
+        dl.close()
+        mp3_fileto_recognize = open(name, "rb").read()
+        shazam = Shazam(mp3_fileto_recognize)
+        recognize_generator = shazam.recognizeSong()
+        track = next(recognize_generator)[1]["track"]
+    except Exception as e:
+        LOGS.error(e)
+        return await edit_delete(
+            catevent, f"**⌔∮ لقد حدث خطأ أثناء البحث عن كلمات الأغنية:**\n__{e}__"
+        )
+
+    image = track["images"]["background"]
+    song = track["share"]["subject"]
+    lyrics = track.get("sections")[0].get("text")
+    await catevent.edit("**⌔∮ تم العثور على كلمات الأغنية!**")
+    await asyncio.sleep(3)  #قبل ما تاخذها تذكر تعب غيرك
+    await catevent.edit(f"**⌔∮ كلمات الأغنية لأغنية** `{song}`:\n\n{lyrics}")
