@@ -3,6 +3,7 @@ import base64
 import io
 import urllib.parse
 import os
+import mutagen
 from pathlib import Path
 
 from ShazamAPI import Shazam
@@ -290,6 +291,9 @@ import requests
 # ...
 # ...
 
+
+# ...
+
 @l313l.ar_cmd(pattern="كلمات الاغنية$")
 async def shazamcmd(event):
     reply = await event.get_reply_message()
@@ -309,10 +313,17 @@ async def shazamcmd(event):
             out=dl,
         )
         dl.close()
+        audio = mutagen.File(name)
+        if "title" in audio:
+            song_title = audio["title"][0]
+        else:
+            song_title = "unknown"
+        if "artist" in audio:
+            artist_name = audio["artist"][0]
+        else:
+            artist_name = "unknown"
         mp3_fileto_recognize = open(name, "rb").read()
-        genius = lyricsgenius.Genius("<n-_sWSNminEcnxLXT1On6asbwCD7W4vcubJHuj3jbuB4BcIqMpLE16W-uxhVEm0A>")  # Replace with your Genius API token
-        song_title = "unknown"  # Replace with the actual song title if known
-        artist_name = "unknown"  # Replace with the actual artist name if known
+        genius = lyricsgenius.Genius("<your-genius-api-token>")  # Replace with your Genius API token
         song = genius.search_song(song_title, artist_name)
         if song is None:
             raise Exception("No lyrics found for the song.")
@@ -324,5 +335,5 @@ async def shazamcmd(event):
 
     lyrics = song.lyrics
     await catevent.edit("**⌔∮ تم العثور على كلمات الأغنية!**")
-    await asyncio.sleep(3)  # Delay before editing the message with lyrics
+    await asyncio.sleep(1)  
     await catevent.edit(f"**⌔∮ كلمات الأغنية لأغنية** `{song.title}`:\n\n{lyrics}")
