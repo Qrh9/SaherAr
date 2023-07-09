@@ -284,15 +284,6 @@ async def _(event):
         await catevent.delete()
         await delete_conv(event, chat, purgeflag)
 
-import requests
-
-
-
-# ...
-# ...
-
-
-# ...
 
 @l313l.ar_cmd(pattern="كلمات الاغنية$")
 async def shazamcmd(event):
@@ -300,7 +291,7 @@ async def shazamcmd(event):
     mediatype = media_type(reply)
     if not reply or not mediatype or mediatype not in ["Voice", "Audio"]:
         return await edit_delete(
-            event, "⌔∮ يرجى الرد على مقطع صوتي او بصمة للبحث عن كلمات الأغنية"
+            event, "⌔∮ يرجى الرد على الاغنية للبحث عن كلماتها"
         )
     catevent = await edit_or_reply(event, "**⌔∮ جارٍ تحميل الكلمات...**")
     try:
@@ -314,19 +305,19 @@ async def shazamcmd(event):
         )
         dl.close()
         audio = mutagen.File(name)
-        if "title" in audio:
-            song_title = audio["title"][0]
+        if "title" in audio.tags:
+            song_title = audio.tags["title"][0]
         else:
             song_title = "unknown"
-        if "artist" in audio:
-            artist_name = audio["artist"][0]
+        if "artist" in audio.tags:
+            artist_name = audio.tags["artist"][0]
         else:
             artist_name = "unknown"
         mp3_fileto_recognize = open(name, "rb").read()
-        genius = lyricsgenius.Genius("<your-genius-api-token>")  # Replace with your Genius API token
-        song = genius.search_song(song_title, artist_name)
+        genius = lyricsgenius.Genius("<n-_sWSNminEcnxLXT1On6asbwCD7W4vcubJHuj3jbuB4BcIqMpLE16W-uxhVEm0A>")  # Replace with your Genius API token
+        song = genius.search_song(song_title.replace("<artist name>", "Rio time's"), artist_name)
         if song is None:
-            raise Exception("No lyrics found for the song.")
+            raise Exception("لم يتم العثور على الاغنية")
     except Exception as e:
         LOGS.error(e)
         return await edit_delete(
