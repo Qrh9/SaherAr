@@ -292,6 +292,8 @@ async def _(event):
 
 # ...
 
+
+
 @l313l.ar_cmd(pattern="كلمات الاغنية$")
 async def lyrics_cmd(event):
     reply = await event.get_reply_message()
@@ -300,14 +302,33 @@ async def lyrics_cmd(event):
             event, "⌔∮ يرجى الرد على رسالة تحتوي على اسم الأغنية"
         )
     song_name = reply.message.strip()
-    search_url = f"https://www.azlyrics.com/lyrics/{song_name.lower().replace(' ', '')}.html"
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"}
-    response = requests.get(search_url, headers=headers)
+    search_url = "https://www.azlyrics.com/search.php"
+    params = {
+        "q": song_name,
+        "w": "songs",
+    }
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
+    }
+    response = requests.get(search_url, params=params, headers=headers)
     soup = BeautifulSoup(response.text, "html.parser")
-    lyrics_div = soup.find("div", class_=None, id=None)
-    
-    if lyrics_div:
-        lyrics = lyrics_div.text.strip()
-        await event.reply(f"⌔∮ كلمات الأغنية لـ `{song_name}`:\n\n{lyrics}")
-    else:
-        await event.reply(f"⌔∮ لا يمكن العثور على كلمات الأغنية لـ `{song_name}`")
+    results = soup.find_all("div", class_="listalbum-item")
+
+    if not results:
+        return await edit_or_reply(
+            event, f"⌔∮ لا يمكن العثور على نتائج للأغنية `{song_name}`"
+        )
+
+    first_result = results[0]
+    song_url = first_result.find("a", href=True)["href"]
+    song_response = requests.get(song_url, headers=headers)
+    song_soup = BeautifulSoup(song_response.text, "html.parser")
+    lyrics_div = song_soup.find("div", class_=None, id=None)
+
+    if not lyrics_div:
+        return await edit_or_reply(
+            event, f"⌔∮ لا يمكن العثور على كلمات الأغنية لـ `{song_name}`"
+        )
+
+    lyrics = lyrics_div.text.strip()
+    await event.reply(f"⌔∮ كلمات الأغنية لـ `{song_name}`:\n\n{lyrics}")
