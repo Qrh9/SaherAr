@@ -300,17 +300,16 @@ async def lyrics_cmd(event):
             event, "⌔∮ يرجى الرد على رسالة تحتوي على اسم الأغنية"
         )
     song_name = reply.message.strip()
-    url = f"https://www.azlyrics.com/search.php?q={song_name}"
+    search_url = f"https://www.azlyrics.com/lyrics/{song_name.lower().replace(' ', '')}.html"
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"}
-    response = requests.get(url, headers=headers)
+    response = requests.get(search_url, headers=headers)
     soup = BeautifulSoup(response.text, "html.parser")
-    first_result = soup.find("div", class_="sen")
-
-    if not first_result:
+    lyrics_div = soup.find("div", class_=None, id=None)
+    
+    if not lyrics_div:
         return await edit_or_reply(
             event, f"⌔∮ لا يمكن العثور على كلمات الأغنية لـ `{song_name}`"
         )
 
-    lyrics = first_result.text.strip()
-
+    lyrics = lyrics_div.text.strip()
     await event.reply(f"⌔∮ كلمات الأغنية لـ `{song_name}`:\n\n{lyrics}")
