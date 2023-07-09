@@ -286,25 +286,52 @@ async def _(event):
         await catevent.delete()
         await delete_conv(event, chat, purgeflag)
 
-@l313l.ar_cmd(pattern="كلمات الاغنية$")
-async def lyrics_cmd(event):
-    reply = await event.get_reply_message()
-    if not reply or not reply.message:
-        return await edit_or_reply(
-            event, "⌔∮ يرجى الرد على رسالة تحتوي على اسم الأغنية"
-        )
-    song_name = reply.message.strip()
-    song_url = f"https://genius.com/{song_name}-lyrics"
+import requests
+from bs4 import BeautifulSoup
 
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
-    }
-    response = requests.get(song_url, headers=headers)
+GENIUS_SEARCH_URL = "https://genius.com/search?q="
+
+async def search_lyrics(song_name):
+    search_query = song_name.replace(" ", "+")
+    url = GENIUS_SEARCH_URL + search_query
+
+    response = requests.get(url)
     soup = BeautifulSoup(response.text, "html.parser")
-    lyrics_div = soup.find("div", class_="lyrics")
-    if not lyrics_div:
-        return await edit_or_reply(
-            event, f"⌔∮ لا يمكن العثور على كلمات الأغنية لـ `{song_name}`"
-        )
-    lyrics = lyrics_div.get_text(strip=True)
-    await event.reply(f"⌔∮ كلمات الأغنية لـ `{song_name}`:\n\n{lyrics}")
+    search_results = soup.find_all(class_="mini_card-title")
+    if search_results:
+        result = search_results[0]
+        song_url = result.find("a")["href"]
+
+      
+        response = requests.get(song_url)
+        soup = BeautifulSoup(response.text, "html.parser")
+
+       
+        lyrics_div = soup.find(class_="lyrics")
+        if lyrics_div:
+            lyrics = lyrics_div.get_text()
+            return lyrics.strip()
+
+    return None
+
+
+@l313l.ar_cmd(
+    pattern="كلمات الاغنية$",
+    command=("كلمات الاغنية", plugin_category),
+    info={
+        "header": "Search for lyrics of a song on Genius",
+        "usage": "{tr}كلمات الاغنية <song name>",
+        "examples": "{tr}كلمات الاغنية memories",
+    },
+)
+async def get_lyrics(event):
+    song_name = event.pattern_match.group(1)
+    if not song_name:
+        return await edit_or_reply(event, "⌔∮ يرجى تحديد اسم الأغنية.")
+
+    lyrics = await search_lyrics(song_name)
+    if lyrics:
+        await event.edit(f"<b>كلمات الأغنية:</b>\n\n{lyrics}", parse_mode="html")
+    else:
+        await event.edit("⌔∮ لم يتم العثور على كلمات الأغنية.")
+
