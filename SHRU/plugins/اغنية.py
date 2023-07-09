@@ -286,10 +286,13 @@ async def _(event):
         await catevent.delete()
         await delete_conv(event, chat, purgeflag)
 
+
+
 GENIUS_SEARCH_URL = "https://genius.com/search?q="
 ALTERNATIVE_LYRICS_SEARCH_URL = "https://www.lyrics.com/lyrics/"
-ANOTHER_METHOD_1_SEARCH_URL = "https://www.metrolyrics.com/search.html?search="
-ANOTHER_METHOD_2_SEARCH_URL = "https://www.azlyrics.com/lyrics.html?search="
+METHOD_1_SEARCH_URL = "https://www.metrolyrics.com/search.html?search="
+METHOD_2_SEARCH_URL = "https://www.azlyrics.com/lyrics.html?search="
+METHOD_3_SEARCH_URL = "https://www.lyricsmode.com/lyrics/"
 
 async def search_lyrics_genius(song_name):
     search_query = song_name.replace(" ", "+")
@@ -325,9 +328,9 @@ async def search_lyrics_alternative(song_name):
 
     return None
 
-async def search_lyrics_another_method_1(song_name):
+async def search_lyrics_method_1(song_name):
     search_query = song_name.replace(" ", "+")
-    url = ANOTHER_METHOD_1_SEARCH_URL + search_query
+    url = METHOD_1_SEARCH_URL + search_query
 
     try:
         response = requests.get(url)
@@ -341,9 +344,9 @@ async def search_lyrics_another_method_1(song_name):
 
     return None
 
-async def search_lyrics_another_method_2(song_name):
+async def search_lyrics_method_2(song_name):
     search_query = song_name.replace(" ", "+")
-    url = ANOTHER_METHOD_2_SEARCH_URL + search_query
+    url = METHOD_2_SEARCH_URL + search_query
 
     try:
         response = requests.get(url)
@@ -356,6 +359,23 @@ async def search_lyrics_another_method_2(song_name):
         pass
 
     return None
+
+async def search_lyrics_method_3(song_name):
+    search_query = song_name.replace(" ", "+")
+    url = METHOD_3_SEARCH_URL + search_query
+
+    try:
+        response = requests.get(url)
+        soup = BeautifulSoup(response.text, "html.parser")
+        lyrics_div = soup.find(class_="lyrics")
+        if lyrics_div:
+            lyrics = lyrics_div.get_text()
+            return lyrics.strip()
+    except (requests.exceptions.RequestException, ConnectionError):
+        pass
+
+    return None
+
 
 @l313l.ar_cmd(
     pattern="كلمات الاغنية(?:\s|$)([\s\S]*)",
@@ -375,9 +395,12 @@ async def get_lyrics(event):
     if not lyrics:
         lyrics = await search_lyrics_alternative(song_name)
     if not lyrics:
-        lyrics = await search_lyrics_another_method_1(song_name)
+        lyrics = await search_lyrics_method_1(song_name)
     if not lyrics:
-        lyrics = await search_lyrics_another_method_2(song_name)
+        lyrics = await search_lyrics_method_2(song_name)
+    if not lyrics:
+        lyrics = await search_lyrics_method_3(song_name)
+    # Add more method calls...
 
     if lyrics:
         await event.edit(f"<b>كلمات الأغنية:</b>\n\n{lyrics}", parse_mode="html")
