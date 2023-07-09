@@ -285,6 +285,7 @@ async def _(event):
         await delete_conv(event, chat, purgeflag)
 
 
+
 @l313l.ar_cmd(pattern="كلمات الاغنية$")
 async def shazamcmd(event):
     reply = await event.get_reply_message()
@@ -315,7 +316,7 @@ async def shazamcmd(event):
             artist_name = "unknown"
         mp3_fileto_recognize = open(name, "rb").read()
         genius = lyricsgenius.Genius("<n-_sWSNminEcnxLXT1On6asbwCD7W4vcubJHuj3jbuB4BcIqMpLE16W-uxhVEm0A>")  # Replace with your Genius API token
-        song = genius.search_song(song_title.replace("<artist name>", "Rio time's"), artist_name)
+        song = genius.search_song(song_title, artist_name, get_full_info=False)
         if song is None:
             raise Exception("لم يتم العثور على الاغنية")
     except Exception as e:
@@ -327,4 +328,4 @@ async def shazamcmd(event):
     lyrics = song.lyrics
     await catevent.edit("**⌔∮ تم العثور على كلمات الأغنية!**")
     await asyncio.sleep(1)  
-    await catevent.edit(f"**⌔∮ كلمات الأغنية لأغنية** `{song.title}`:\n\n{lyrics}")
+    await catevent.edit(f"**⌔∮ كلمات الأغنية لأغنية** `{song_title}`:\n\n{lyrics}")
