@@ -286,7 +286,6 @@ async def _(event):
         await catevent.delete()
         await delete_conv(event, chat, purgeflag)
 
-
 GENIUS_SEARCH_URL = "https://genius.com/search?q="
 
 async def search_lyrics(song_name):
@@ -329,7 +328,7 @@ async def get_lyrics(event):
         await event.edit(f"<b>كلمات الأغنية:</b>\n\n{lyrics}", parse_mode="html")
     else:
         await event.edit("⌔∮ لم يتم العثور على كلمات الأغنية.")
-async def get_top_result_url(song_name):
+
     search_query = song_name.replace(" ", "+")
     url = GENIUS_SEARCH_URL + search_query
 
@@ -343,7 +342,7 @@ async def get_top_result_url(song_name):
 
     return None
 
-
+# Modify the get_lyrics function to use the top result URL
 @l313l.ar_cmd(
     pattern="كلمات الاغنية(?:\s|$)([\s\S]*)",
     command=("كلمات الاغنية", plugin_category),
@@ -365,7 +364,7 @@ async def get_lyrics(event):
 
         lyrics_div = soup.find(class_="lyrics")
         if lyrics_div:
-            lyrics = lyrics_div.get_text()
+            lyrics = lyrics_div.get_text().strip()
             await event.edit(f"<b>كلمات الأغنية:</b>\n\n{lyrics}", parse_mode="html")
         else:
             await event.edit("⌔∮ لم يتم العثور على كلمات الأغنية.")
