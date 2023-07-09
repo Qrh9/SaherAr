@@ -4,6 +4,8 @@ import io
 import urllib.parse
 import os
 import mutagen
+import requests
+from bs4 import BeautifulSoup
 from pathlib import Path
 
 from ShazamAPI import Shazam
@@ -286,46 +288,36 @@ async def _(event):
 
 
 
-@l313l.ar_cmd(pattern="كلمات الاغنية$")
-async def shazamcmd(event):
-    reply = await event.get_reply_message()
-    mediatype = media_type(reply)
-    if not reply or not mediatype or mediatype not in ["Voice", "Audio"]:
-        return await edit_delete(
-            event, "⌔∮ يرجى الرد على الاغنية للبحث عن كلماتها"
-        )
-    catevent = await edit_or_reply(event, "**⌔∮ جارٍ تحميل الكلمات...**")
-    try:
-        for attr in getattr(reply.document, "attributes", []):
-            if isinstance(attr, types.DocumentAttributeFilename):
-                name = attr.file_name
-        dl = io.FileIO(name, "a")
-        await event.client.fast_download_file(
-            location=reply.document,
-            out=dl,
-        )
-        dl.close()
-        audio = mutagen.File(name)
-        if "title" in audio.tags:
-            song_title = audio.tags["title"][0]
-        else:
-            song_title = "unknown"
-        if "artist" in audio.tags:
-            artist_name = audio.tags["artist"][0]
-        else:
-            artist_name = "unknown"
-        mp3_fileto_recognize = open(name, "rb").read()
-        genius = lyricsgenius.Genius("<n-_sWSNminEcnxLXT1On6asbwCD7W4vcubJHuj3jbuB4BcIqMpLE16W-uxhVEm0A>")  # Replace with your Genius API token
-        song = genius.search_song(song_title, artist_name, get_full_info=False)
-        if song is None:
-            raise Exception("لم يتم العثور على الاغنية")
-    except Exception as e:
-        LOGS.error(e)
-        return await edit_delete(
-            catevent, f"**⌔∮ لقد حدث خطأ أثناء البحث عن كلمات الأغنية:**\n__{e}__"
-        )
 
-    lyrics = song.lyrics
-    await catevent.edit("**⌔∮ تم العثور على كلمات الأغنية!**")
-    await asyncio.sleep(1)  
-    await catevent.edit(f"**⌔∮ كلمات الأغنية لأغنية** `{song_title}`:\n\n{lyrics}")
+
+# ...
+
+@l313l.ar_cmd(
+    pattern="كلمات الاغنية$",
+    command=("كلمات الاغنية", plugin_category),
+)
+async def get_lyrics(event):
+    reply = await event.get_reply_message()
+    if not reply or not reply.message:
+        return await edit_or_reply(event, "⌔∮ يرجى الرد على رسالة تحتوي على اسم الأغنية")
+    
+    song_name = reply.message.strip()
+    search_url = f"https://www.azlyrics.com/lyrics/{song_name.lower().replace(' ', '')}.html"
+
+    try:
+        response = requests.get(search_url)
+        response.raise_for_status()
+        soup = BeautifulSoup(response.content, "html.parser")
+        lyrics_div = soup.find("div", class_="col-xs-12 col-lg-8 text-center")
+        
+        if lyrics_div:
+            lyrics = lyrics_div.get_text().strip()
+            await event.reply(f"⌔∮ كلمات الأغنية لـ `{song_name}`:\n\n{lyrics}")
+        else:
+            await event.reply("⌔∮ عذرًا، لم يتم العثور على كلمات الأغنية.")
+
+    except requests.HTTPError as e:
+        await event.reply(f"⌔∮ حدث خطأ أثناء البحث عن كلمات الأغنية:\n{e}")
+    
+    except Exception as e:
+        await event.reply(f"⌔∮ حدث خطأ غير متوقع:\n{e}")
