@@ -292,32 +292,25 @@ async def _(event):
 
 # ...
 
-@l313l.ar_cmd(
-    pattern="كلمات الاغنية$",
-    command=("كلمات الاغنية", plugin_category),
-)
-async def get_lyrics(event):
+@l313l.ar_cmd(pattern="كلمات الاغنية$")
+async def lyrics_cmd(event):
     reply = await event.get_reply_message()
     if not reply or not reply.message:
-        return await edit_or_reply(event, "⌔∮ يرجى الرد على رسالة تحتوي على اسم الأغنية")
-    
+        return await edit_or_reply(
+            event, "⌔∮ يرجى الرد على رسالة تحتوي على اسم الأغنية"
+        )
     song_name = reply.message.strip()
-    search_url = f"https://www.azlyrics.com/lyrics/{song_name.lower().replace(' ', '')}.html"
+    url = f"https://www.azlyrics.com/search.php?q={song_name}"
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"}
+    response = requests.get(url, headers=headers)
+    soup = BeautifulSoup(response.text, "html.parser")
+    first_result = soup.find("div", class_="sen")
 
-    try:
-        response = requests.get(search_url)
-        response.raise_for_status()
-        soup = BeautifulSoup(response.content, "html.parser")
-        lyrics_div = soup.find("div", class_="col-xs-12 col-lg-8 text-center")
-        
-        if lyrics_div:
-            lyrics = lyrics_div.get_text().strip()
-            await event.reply(f"⌔∮ كلمات الأغنية لـ `{song_name}`:\n\n{lyrics}")
-        else:
-            await event.reply("⌔∮ عذرًا، لم يتم العثور على كلمات الأغنية.")
+    if not first_result:
+        return await edit_or_reply(
+            event, f"⌔∮ لا يمكن العثور على كلمات الأغنية لـ `{song_name}`"
+        )
 
-    except requests.HTTPError as e:
-        await event.reply(f"⌔∮ حدث خطأ أثناء البحث عن كلمات الأغنية:\n{e}")
-    
-    except Exception as e:
-        await event.reply(f"⌔∮ حدث خطأ غير متوقع:\n{e}")
+    lyrics = first_result.text.strip()
+
+    await event.reply(f"⌔∮ كلمات الأغنية لـ `{song_name}`:\n\n{lyrics}")
