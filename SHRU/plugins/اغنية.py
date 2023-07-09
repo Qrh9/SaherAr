@@ -287,6 +287,7 @@ async def _(event):
         await delete_conv(event, chat, purgeflag)
 
 
+
 @l313l.ar_cmd(pattern="كلمات الاغنية$")
 async def lyrics_cmd(event):
     reply = await event.get_reply_message()
@@ -295,28 +296,22 @@ async def lyrics_cmd(event):
             event, "⌔∮ يرجى الرد على رسالة تحتوي على اسم الأغنية"
         )
     song_name = reply.message.strip()
-    search_url = "https://www.azlyrics.com/search.html"
-    params = {"q": song_name}
+
+    # Search for the song lyrics
+    search_url = f"https://findmusicbylyrics.com/search?q={song_name}"
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
     }
-    response = requests.get(search_url, params=params, headers=headers)
+    response = requests.get(search_url, headers=headers)
     soup = BeautifulSoup(response.text, "html.parser")
-    song_results = soup.find_all("td", class_="text-left visitedlyr")
-    if not song_results:
-        return await edit_or_reply(
-            event, f"⌔∮ لا يمكن العثور على نتائج للأغنية `{song_name}`"
-        )
 
-    song_url = song_results[0].find("a")["href"]
-    response = requests.get(song_url, headers=headers)
-    soup = BeautifulSoup(response.text, "html.parser")
-    lyrics_div = soup.find("div", class_=None, id=None)
-
+    # Check if the song lyrics are found
+    lyrics_div = soup.find("div", class_="search-results")
     if not lyrics_div:
         return await edit_or_reply(
             event, f"⌔∮ لا يمكن العثور على كلمات الأغنية لـ `{song_name}`"
         )
 
-    lyrics = lyrics_div.text.strip()
+    # Extract the lyrics from the search results
+    lyrics = lyrics_div.get_text(strip=True)
     await event.reply(f"⌔∮ كلمات الأغنية لـ `{song_name}`:\n\n{lyrics}")
