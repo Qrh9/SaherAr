@@ -286,102 +286,28 @@ async def _(event):
         await catevent.delete()
         await delete_conv(event, chat, purgeflag)
 
+import requests
 
+LYRICS_API_URL = "https://api.lyrics.ovh/v1/"
 
-GENIUS_SEARCH_URL = "https://genius.com/search?q="
-ALTERNATIVE_LYRICS_SEARCH_URL = "https://www.lyrics.com/lyrics/"
-METHOD_1_SEARCH_URL = "https://www.metrolyrics.com/search.html?search="
-METHOD_2_SEARCH_URL = "https://www.azlyrics.com/lyrics.html?search="
-METHOD_3_SEARCH_URL = "https://www.lyricsmode.com/lyrics/"
-
-async def search_lyrics_genius(song_name):
-    search_query = song_name.replace(" ", "+")
-    url = GENIUS_SEARCH_URL + search_query
+async def search_lyrics(song_name):
+    search_query = song_name.replace(" ", "%20")
+    url = LYRICS_API_URL + search_query
 
     response = requests.get(url)
-    soup = BeautifulSoup(response.text, "html.parser")
-    search_results = soup.find_all(class_="mini_card-title")
-    if search_results:
-        result = search_results[0]
-        song_url = result.find("a")["href"]
-
-        response = requests.get(song_url)
-        soup = BeautifulSoup(response.text, "html.parser")
-
-        lyrics_div = soup.find(class_="lyrics")
-        if lyrics_div:
-            lyrics = lyrics_div.get_text()
+    if response.status_code == 200:
+        data = response.json()
+        lyrics = data.get("lyrics")
+        if lyrics:
             return lyrics.strip()
 
     return None
-
-async def search_lyrics_alternative(song_name):
-    search_query = song_name.replace(" ", "-")
-    url = ALTERNATIVE_LYRICS_SEARCH_URL + search_query
-
-    response = requests.get(url)
-    soup = BeautifulSoup(response.text, "html.parser")
-    lyrics_div = soup.find(class_="lyric-body")
-    if lyrics_div:
-        lyrics = lyrics_div.get_text()
-        return lyrics.strip()
-
-    return None
-
-async def search_lyrics_method_1(song_name):
-    search_query = song_name.replace(" ", "+")
-    url = METHOD_1_SEARCH_URL + search_query
-
-    try:
-        response = requests.get(url)
-        soup = BeautifulSoup(response.text, "html.parser")
-        lyrics_div = soup.find(class_="results-body")
-        if lyrics_div:
-            lyrics = lyrics_div.get_text()
-            return lyrics.strip()
-    except (requests.exceptions.RequestException, ConnectionError):
-        pass
-
-    return None
-
-async def search_lyrics_method_2(song_name):
-    search_query = song_name.replace(" ", "+")
-    url = METHOD_2_SEARCH_URL + search_query
-
-    try:
-        response = requests.get(url)
-        soup = BeautifulSoup(response.text, "html.parser")
-        lyrics_div = soup.find(class_="container main-page")
-        if lyrics_div:
-            lyrics = lyrics_div.get_text()
-            return lyrics.strip()
-    except (requests.exceptions.RequestException, ConnectionError):
-        pass
-
-    return None
-
-async def search_lyrics_method_3(song_name):
-    search_query = song_name.replace(" ", "+")
-    url = METHOD_3_SEARCH_URL + search_query
-
-    try:
-        response = requests.get(url)
-        soup = BeautifulSoup(response.text, "html.parser")
-        lyrics_div = soup.find(class_="lyrics")
-        if lyrics_div:
-            lyrics = lyrics_div.get_text()
-            return lyrics.strip()
-    except (requests.exceptions.RequestException, ConnectionError):
-        pass
-
-    return None
-
 
 @l313l.ar_cmd(
     pattern="كلمات الاغنية(?:\s|$)([\s\S]*)",
     command=("كلمات الاغنية", plugin_category),
     info={
-        "header": "Search for lyrics of a song using multiple methods",
+        "header": "Search for lyrics of a song using Lyrics.ovh API",
         "usage": "{tr}كلمات الاغنية <song name>",
         "examples": "{tr}كلمات الاغنية memories",
     },
@@ -391,16 +317,7 @@ async def get_lyrics(event):
     if not song_name:
         return await edit_or_reply(event, "⌔∮ يرجى تحديد اسم الأغنية.")
 
-    lyrics = await search_lyrics_genius(song_name)
-    if not lyrics:
-        lyrics = await search_lyrics_alternative(song_name)
-    if not lyrics:
-        lyrics = await search_lyrics_method_1(song_name)
-    if not lyrics:
-        lyrics = await search_lyrics_method_2(song_name)
-    if not lyrics:
-        lyrics = await search_lyrics_method_3(song_name)
-    # Add more method calls...
+    lyrics = await search_lyrics(song_name)
 
     if lyrics:
         await event.edit(f"<b>كلمات الأغنية:</b>\n\n{lyrics}", parse_mode="html")
