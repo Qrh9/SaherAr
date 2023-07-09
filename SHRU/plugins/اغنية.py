@@ -286,8 +286,6 @@ async def _(event):
         await catevent.delete()
         await delete_conv(event, chat, purgeflag)
 
-import requests
-from bs4 import BeautifulSoup
 
 GENIUS_SEARCH_URL = "https://genius.com/search?q="
 
@@ -302,18 +300,15 @@ async def search_lyrics(song_name):
         result = search_results[0]
         song_url = result.find("a")["href"]
 
-      
         response = requests.get(song_url)
         soup = BeautifulSoup(response.text, "html.parser")
 
-       
         lyrics_div = soup.find(class_="lyrics")
         if lyrics_div:
             lyrics = lyrics_div.get_text()
             return lyrics.strip()
 
     return None
-
 
 @l313l.ar_cmd(
     pattern="كلمات الاغنية(?:\s|$)([\s\S]*)",
@@ -334,3 +329,46 @@ async def get_lyrics(event):
         await event.edit(f"<b>كلمات الأغنية:</b>\n\n{lyrics}", parse_mode="html")
     else:
         await event.edit("⌔∮ لم يتم العثور على كلمات الأغنية.")
+async def get_top_result_url(song_name):
+    search_query = song_name.replace(" ", "+")
+    url = GENIUS_SEARCH_URL + search_query
+
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, "html.parser")
+    search_results = soup.find_all(class_="mini_card-title")
+    if search_results:
+        result = search_results[0]
+        song_url = result.find("a")["href"]
+        return song_url
+
+    return None
+
+
+@l313l.ar_cmd(
+    pattern="كلمات الاغنية(?:\s|$)([\s\S]*)",
+    command=("كلمات الاغنية", plugin_category),
+    info={
+        "header": "Search for lyrics of a song on Genius",
+        "usage": "{tr}كلمات الاغنية <song name>",
+        "examples": "{tr}كلمات الاغنية memories",
+    },
+)
+async def get_lyrics(event):
+    song_name = event.pattern_match.group(1)
+    if not song_name:
+        return await edit_or_reply(event, "⌔∮ يرجى تحديد اسم الأغنية.")
+
+    song_url = await get_top_result_url(song_name)
+    if song_url:
+        response = requests.get(song_url)
+        soup = BeautifulSoup(response.text, "html.parser")
+
+        lyrics_div = soup.find(class_="lyrics")
+        if lyrics_div:
+            lyrics = lyrics_div.get_text()
+            await event.edit(f"<b>كلمات الأغنية:</b>\n\n{lyrics}", parse_mode="html")
+        else:
+            await event.edit("⌔∮ لم يتم العثور على كلمات الأغنية.")
+    else:
+        await event.edit("⌔∮ لم يتم العثور على الأغنية.")
+
