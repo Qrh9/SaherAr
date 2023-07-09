@@ -288,6 +288,10 @@ async def _(event):
 
 
 
+import requests
+from bs4 import BeautifulSoup
+
+
 
 @l313l.ar_cmd(pattern="كلمات الاغنية$")
 async def lyrics_cmd(event):
@@ -297,22 +301,17 @@ async def lyrics_cmd(event):
             event, "⌔∮ يرجى الرد على رسالة تحتوي على اسم الأغنية"
         )
     song_name = reply.message.strip()
-
-   
-    search_url = f"https://www.google.com/search?q={song_name}+lyrics+site:findmusicbylyrics.com"
+    search_url = "https://findmusicbylyrics.com/search"
+    data = {"q": song_name}
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
     }
-    response = requests.get(search_url, headers=headers)
+    response = requests.post(search_url, data=data, headers=headers)
     soup = BeautifulSoup(response.text, "html.parser")
-
-    
-    lyrics_div = soup.find("div", class_="s")
+    lyrics_div = soup.find("div", class_="search-results")
     if not lyrics_div:
         return await edit_or_reply(
             event, f"⌔∮ لا يمكن العثور على كلمات الأغنية لـ `{song_name}`"
         )
-
-   
     lyrics = lyrics_div.get_text(strip=True)
     await event.reply(f"⌔∮ كلمات الأغنية لـ `{song_name}`:\n\n{lyrics}")
