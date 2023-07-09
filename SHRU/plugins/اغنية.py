@@ -286,13 +286,6 @@ async def _(event):
         await catevent.delete()
         await delete_conv(event, chat, purgeflag)
 
-
-
-import requests
-from bs4 import BeautifulSoup
-
-
-
 @l313l.ar_cmd(pattern="كلمات الاغنية$")
 async def lyrics_cmd(event):
     reply = await event.get_reply_message()
@@ -301,14 +294,14 @@ async def lyrics_cmd(event):
             event, "⌔∮ يرجى الرد على رسالة تحتوي على اسم الأغنية"
         )
     song_name = reply.message.strip()
-    search_url = "https://findmusicbylyrics.com/search"
-    data = {"q": song_name}
+    song_url = f"https://genius.com/{song_name}-lyrics"
+
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
     }
-    response = requests.post(search_url, data=data, headers=headers)
+    response = requests.get(song_url, headers=headers)
     soup = BeautifulSoup(response.text, "html.parser")
-    lyrics_div = soup.find("div", class_="search-results")
+    lyrics_div = soup.find("div", class_="lyrics")
     if not lyrics_div:
         return await edit_or_reply(
             event, f"⌔∮ لا يمكن العثور على كلمات الأغنية لـ `{song_name}`"
