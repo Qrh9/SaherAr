@@ -306,10 +306,8 @@ async def lyrics_cmd(event):
     soup = BeautifulSoup(response.text, "html.parser")
     lyrics_div = soup.find("div", class_=None, id=None)
     
-    if not lyrics_div:
-        return await edit_or_reply(
-            event, f"⌔∮ لا يمكن العثور على كلمات الأغنية لـ `{song_name}`"
-        )
-
-    lyrics = lyrics_div.text.strip()
-    await event.reply(f"⌔∮ كلمات الأغنية لـ `{song_name}`:\n\n{lyrics}")
+    if lyrics_div:
+        lyrics = lyrics_div.text.strip()
+        await event.reply(f"⌔∮ كلمات الأغنية لـ `{song_name}`:\n\n{lyrics}")
+    else:
+        await event.reply(f"⌔∮ لا يمكن العثور على كلمات الأغنية لـ `{song_name}`")
