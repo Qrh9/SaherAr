@@ -316,7 +316,7 @@ async def search_lyrics(song_name):
 
 
 @l313l.ar_cmd(
-    pattern="كلمات الاغنية$",
+    pattern="كلمات الاغنية(?:\s|$)([\s\S]*)",
     command=("كلمات الاغنية", plugin_category),
     info={
         "header": "Search for lyrics of a song on Genius",
@@ -334,4 +334,3 @@ async def get_lyrics(event):
         await event.edit(f"<b>كلمات الأغنية:</b>\n\n{lyrics}", parse_mode="html")
     else:
         await event.edit("⌔∮ لم يتم العثور على كلمات الأغنية.")
-
