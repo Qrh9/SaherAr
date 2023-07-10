@@ -17,6 +17,7 @@ from telethon import events
 from ..helpers.functions import edit_delete
 from telethon.utils import get_display_name
 plugin_category = "utils"
+blacklisted_words = {"عير", "كس", "عير"}
 
 
 @l313l.ar_cmd(
@@ -36,8 +37,6 @@ async def count_lines(event):
     await edit_or_reply(event, f"⌔∮ عدد الأسطر في الرسالة: {count}")
 
 
-plugin_category = "utils"
-blacklisted_words = ["عير"]
 
 @l313l.ar_cmd(
     pattern="قفل_السب$",
@@ -45,19 +44,12 @@ blacklisted_words = ["عير"]
     info={
         "header": "Add words to a blacklist.",
         "description": "Add the specified word(s) to the blacklist. Messages containing these words will be deleted.",
-        "usage": "{tr}قفل_السب <word(s)>",
-        "examples": ["{tr}قفل_السب fuck", "{tr}قفل_السب fuck\nsex"],
+        "usage": "{tr}قفل_السب",
     },
     groups_only=True,
     require_admin=True,
 )
 async def lock_words(event):
-    global blacklisted_words
-    words = event.pattern_match.group(1).split("\n")
-    for word in words:
-        word = word.strip()
-        if word:
-            blacklisted_words.append(word.lower())
     await edit_or_reply(event, "⌔∮ تم قفل الكلمات بنجاح.")
 
 @l313l.ar_cmd(
@@ -66,19 +58,12 @@ async def lock_words(event):
     info={
         "header": "Remove words from the blacklist.",
         "description": "Remove the specified word(s) from the blacklist.",
-        "usage": "{tr}فتح_السب <word(s)>",
-        "examples": ["{tr}فتح_السب fuck", "{tr}فتح_السب fuck\nsex"],
+        "usage": "{tr}فتح_السب",
     },
     groups_only=True,
     require_admin=True,
 )
 async def unlock_words(event):
-    global blacklisted_words
-    words = event.pattern_match.group(1).split("\n")
-    for word in words:
-        word = word.strip()
-        if word and word.lower() in blacklisted_words:
-            blacklisted_words.remove(word.lower())
     await edit_or_reply(event, "⌔∮ تم فتح الكلمات بنجاح.")
 
 @l313l.ar_bot_cmd(incoming=True)
