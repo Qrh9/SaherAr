@@ -25,7 +25,8 @@ async def is_admin(event, user_id):
         if participant.id == user_id:
             return True
     return False
-swear_words = ["كلمة1", "كلمة2", "كلمة3"]  # قائمة الكلمات النابية
+
+swear_words = ["كلمة1", "عير", "كلمة3"]  # قائمة الكلمات النابية
 
 @l313l.ar_cmd(
     pattern="قفل_السب$",
@@ -51,5 +52,11 @@ async def block_swearing(event):
             return await edit_or_reply(
                 event, f"⌔∮ لا يمكن قفل السب بسبب الخطأ التالي: {e}"
             )
+    
+    async for message in event.client.iter_messages(chat, search=" ".join(swear_words)):
+        try:
+            await event.client.delete_messages(chat, [message])
+        except Exception as e:
+            pass
     
     await edit_or_reply(event, "⌔∮ تم قفل الكلمات النابية وحذف الرسائل المحتوية عليها.")
