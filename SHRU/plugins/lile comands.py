@@ -45,7 +45,7 @@ from telethon.tl.types import ChannelParticipantsAdmins
 from ..core.logger import logging
 from ..helpers.functions import edit_or_reply
 
-plugin_category = "admin"
+
 blacklist = ["عير", "word2", "word3"]  # List of words to be blacklisted
 LOGS = logging.getLogger(__name__)
 
