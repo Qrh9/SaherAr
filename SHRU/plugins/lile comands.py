@@ -57,8 +57,7 @@ async def lock_and_delete_msgs(event):
         send_polls=True,
         invite_users=True,
         pin_messages=True,
-        change_info=True,
-        send_other_messages=False, 
+        change_info=True, 
     )
     lock_words = ["كسمك", "فرخ", "نيج"]  
 
