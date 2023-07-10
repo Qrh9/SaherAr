@@ -40,10 +40,12 @@ async def count_lines(event):
     await edit_or_reply(event, f"⌔∮ عدد الأسطر في الرسالة: {count}")
 
 
-
+from telethon import events
+from telethon.tl import types
+from ..helpers.functions import edit_or_reply
 
 swearing_blocklist = ["badword1"]
-swearing_enabled = True  
+swearing_enabled = True 
 
 @l313l.ar_cmd(
     pattern="قفل_السب$",
