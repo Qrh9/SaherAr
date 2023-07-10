@@ -20,7 +20,7 @@ from telethon.tl import types
 
 from telethon.utils import get_display_name
 plugin_category = "utils"
-blacklisted_words = {"عير", "كس", "عير"}
+
 
 
 @l313l.ar_cmd(
@@ -41,8 +41,10 @@ async def count_lines(event):
 
 
 
-swearing_blocklist = ["badword1", "badword2"]  
+
+swearing_blocklist = ["badword1"]
 swearing_enabled = True  
+
 @l313l.ar_cmd(
     pattern="قفل_السب$",
     command=("قفل_السب", plugin_category),
