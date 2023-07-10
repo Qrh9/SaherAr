@@ -33,38 +33,57 @@ async def count_lines(event):
     await edit_or_reply(event, f"⌔∮ عدد الأسطر في الرسالة: {count}")
 
 
+from telethon import events
+
 @l313l.ar_cmd(
-    pattern="اغلاق السب$",
-    command=("اغلاق السب", plugin_category),
+    pattern="قفل_السب$",
+    command=("قفل_السب", plugin_category),
     info={
-        "header": "To lock and delete messages containing bad words.",
-        "usage": "{tr}اغلاق السب",
+        "header": "قفل الرسائل التي تحتوي على كلمات غير مرغوب فيها.",
+        "usage": "{tr}قفل_السب",
     },
     groups_only=True,
     require_admin=True,
 )
-async def lock_and_delete_msgs(event):
-    chat_id = event.chat_id
-    banned_rights = ChatBannedRights(
-        until_date=None,
-        view_messages=True,
-        send_messages=True,
-        send_media=True,
-        send_stickers=True,
-        send_gifs=True,
-        send_games=True,
-        send_inline=True,
-        send_polls=True,
-        invite_users=True,
-        pin_messages=True,
-        change_info=True,
-    )
+async def lock_bad_words(event):
     lock_words = ["كسمك", "فرخ", "نيج"]
+    await event.edit("تم قفل السب")
 
+    @events.register(events.NewMessage(incoming=True, chats=event.chat_id))
     async def lock_and_delete_messages(event):
+        if event.sender_id == event.client.uid or not event.is_group:
+            return
+
         if any(word.lower() in event.raw_text.lower() for word in lock_words):
             await event.delete()
 
-    await event.client.edit_permissions(chat_id, event.client.uid, banned_rights)
-    await event.client.add_event_handler(lock_and_delete_messages, NewMessage(chats=[chat_id]))
-    await event.edit("تـم اغلاق السب بنجـاح!")
+    await event.client.add_event_handler(lock_and_delete_messages)
+
+
+@l313l.ar_cmd(
+    pattern="فتح_السب$",
+    command=("فتح_السب", plugin_category),
+    info={
+        "header": "إلغاء قفل الرسائل التي تحتوي على كلمات غير مرغوب فيها.",
+        "usage": "{tr}فتح السب",
+    },
+    groups_only=True,
+    require_admin=True,
+)
+async def unlock_bad_words(event):
+    await event.edit("تم إلغاء قفل_السب.")
+    await event.client.remove_event_handler(lock_and_delete_messages)
+
+
+async def lock_and_delete_messages(event):
+    if event.is_group and event.text.startswith(".قفل_السب"):
+        lock_words = ["كسمك", "فرخ", "نيج"]
+        sender_id = event.sender_id
+
+        if not await event.client.is_chat_admin(event.chat_id, sender_id):
+            await event.reply("ليس لديك صلاحية حذف الرسائل.")
+            return
+
+        async for message in event.client.iter_messages(event.chat_id):
+            if message.sender_id != event.client.uid and any(word.lower() in message.raw_text.lower() for word in lock_words):
+                await message.delete()
