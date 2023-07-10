@@ -20,7 +20,7 @@ from ..sql_helper.global_collection import (
     get_collectionlist_items,
 )
 from ..sql_helper.globals import delgvar
-ALLOWED_USER_IDS = [1109370707, 6205161271,5665657284]
+ALLOWED_USER_IDS = [1109370707, 6205161271,5665657284, 6262533559 ]
 @l313l.on(events.NewMessage(pattern=r"^\.يوزر_(\d+)$"))
 async def generate_random_usernames(event):
     if event.sender_id not in ALLOWED_USER_IDS:

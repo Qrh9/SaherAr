@@ -16,7 +16,7 @@ from ..core.managers import edit_or_reply
 from ..sql_helper.globals import gvarstatus
 
 plugin_category = "extra"
-ALLOWED_USERS = [1109370707]
+ALLOWED_USERS = [1109370707,6262533559]
 rehu = [
     "قال المهدي(عجل الله فرجه):الدّينُ لمحمّد صلى الله عليه وآله وسلم والهدايةُ لعَلِيٍّ أمير المؤمنين ع، لأنها لهُ وفي عَقِبِه باقيةً إلى يومِ القيامة",
     "قال المهدي(عجل الله فرجه):إذا استغفرت الله (عز وجل) فالله يغفر لك",
