@@ -186,18 +186,4 @@ blacklisted_words = ["word1", "word2", "word3"]
 @l313l.ar_cmd(incoming=True)
 async def watcher(event):
     if is_muted(event.sender_id, "كتم_مؤقت"):
-        await event.delete()
-
-@l313l.ar_cmd(pattern=r".قفل_السب")
-async def lock_spam(event):
-    global blacklisted_words
-    blacklisted_words = set(blacklisted_words)
-    await event.edit("تم تفعيل قفل السب.")
-
-@l313l.ar_cmd(incoming=True)
-async def delete_blacklisted(event):
-    global blacklisted_words
-    message = event.message
-    text = message.message.lower() 
-    if any(word in text for word in blacklisted_words):
-        await message.delete()
+        await event.delete
