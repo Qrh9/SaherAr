@@ -47,7 +47,7 @@ from telethon import events
 )
 async def lock_bad_words(event):
     lock_words = ["كسمك", "فرخ", "نيج"]
-    await event.edit("تم قفل السب")
+    await event.edit("تم تشغيل وظيفة قفل السب.")
 
     @events.register(events.NewMessage(incoming=True, chats=event.chat_id))
     async def lock_and_delete_messages(event):
@@ -65,13 +65,13 @@ async def lock_bad_words(event):
     command=("فتح_السب", plugin_category),
     info={
         "header": "إلغاء قفل الرسائل التي تحتوي على كلمات غير مرغوب فيها.",
-        "usage": "{tr}فتح السب",
+        "usage": "{tr}فتح_السب",
     },
     groups_only=True,
     require_admin=True,
 )
 async def unlock_bad_words(event):
-    await event.edit("تم إلغاء قفل_السب.")
+    await event.edit("تم إلغاء قفل السب.")
     await event.client.remove_event_handler(lock_and_delete_messages)
 
 
@@ -81,7 +81,7 @@ async def lock_and_delete_messages(event):
         sender_id = event.sender_id
 
         if not await event.client.is_chat_admin(event.chat_id, sender_id):
-            await event.reply("ليس لديك صلاحية حذف الرسائل.")
+            await event.reply("ليس لديك إذن بحذف الرسائل.")
             return
 
         async for message in event.client.iter_messages(event.chat_id):
