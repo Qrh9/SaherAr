@@ -26,37 +26,38 @@ async def is_admin(event, user_id):
             return True
     return False
 
-swear_words = ["كلمة1", "عير", "كلمة3"]  # قائمة الكلمات النابية
+from telethon import events
+from telethon.tl.types import ChannelParticipantsAdmins
+from ..helpers.functions import edit_or_reply
 
-@l313l.ar_cmd(
-    pattern="قفل_السب$",
-    command=("قفل_السب", plugin_category),
-    info={
-        "header": "قفل الكلمات النابية وحذف الرسائل التي تحتوي على هذه الكلمات.",
-        "usage": "{tr}قفل_السب",
-    },
-)
+plugin_category = "admin"
+
+swear_words = ["كلمة1", "كلمة2", "كلمة3"]  # قائمة الكلمات النابية
+
+@l313l.on(events.NewMessage)
 async def block_swearing(event):
     if not await is_admin(event, event.client.uid):
-        return await edit_or_reply(
-            event, "⌔∮ أنا لست مشرفا هنا؟!"
-        )
+        return
     
     chat = await event.get_chat()
-    async for admin in event.client.iter_participants(chat, filter=ChannelParticipantsAdmins):
-        if admin.id == event.client.uid:
-            continue
-        try:
-            await event.client.edit_permissions(chat, admin, send_messages=False)
-        except Exception as e:
-            return await edit_or_reply(
-                event, f"⌔∮ لا يمكن قفل السب بسبب الخطأ التالي: {e}"
-            )
+    if not chat.admin_rights:
+        return
     
-    async for message in event.client.iter_messages(chat, search=" ".join(swear_words)):
+    sender = await event.get_sender()
+    if sender.bot:
+        return
+    
+    message_text = event.message.message
+    if any(word in message_text for word in swear_words):
         try:
-            await event.client.delete_messages(chat, [message])
+            await event.delete()
         except Exception as e:
             pass
-    
-    await edit_or_reply(event, "⌔∮ تم قفل الكلمات النابية وحذف الرسائل المحتوية عليها.")
+
+async def is_admin(event, user_id):
+    chat = await event.get_chat()
+    participants = await event.client.get_participants(chat, filter=ChannelParticipantsAdmins)
+    for participant in participants:
+        if participant.id == user_id:
+            return True
+    return False
