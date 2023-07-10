@@ -38,36 +38,48 @@ async def count_lines(event):
     lines = reply.message.split("\n")
     count = len(lines)
     await edit_or_reply(event, f"⌔∮ عدد الأسطر في الرسالة: {count}")
-import re
 
+import re
 from telethon import events
+from telethon.tl.types import ChannelParticipantsAdmins
+from ..core.logger import logging
 from ..helpers.functions import edit_or_reply
 
-blacklist_words = ["نيج"]  # List of blocked words
+plugin_category = "admin"
+blacklist = ["عير", "word2", "word3"]  # List of words to be blacklisted
+LOGS = logging.getLogger(__name__)
 
 @l313l.ar_cmd(
-    pattern="قفل_الكريس$",
-    command=("قفل_الكريس", plugin_category),
+    pattern="قفل_كلمات$",
+    command=("قفل_كلمات", plugin_category),
     info={
-        "header": "Lock specific words using a blacklist.",
-        "usage": "{tr}قفل_الكريس",
+        "header": "Track and delete messages containing blacklisted words.",
+        "usage": "{tr}قفل_كلمات",
     },
 )
-async def lock_words(event):
-    global blacklist_words
-    blacklist_words = ["نيج"]  # Add the words you want to block here
-    await edit_or_reply(event, "تم قفل الكريس بنجاح")
+async def track_delete_messages(event):
+    chat = await event.get_chat()
+    if not chat.admin_rights:
+        return await edit_or_reply(event, "⌔∮ أنا لست مشرفًا في هذه المجموعة.")
+    if not chat.admin_rights.delete_messages:
+        return await edit_or_reply(event, "⌔∮ ليس لدي صلاحيات حذف الرسائل في هذه المجموعة.")
+    reply = await event.get_reply_message()
+    if not reply or not reply.message:
+        return await edit_or_reply(event, "⌔∮ يرجى الرد على الرسالة للبدء في تتبع الكلمات.")
+    await edit_or_reply(event, "⌔∮ تم تنشيط تتبع الكلمات. سيتم حذف الرسائل التي تحتوي على الكلمات المحظورة.")
 
-@l313l.ar_cmd(
+@l313l.ar_bot(
     pattern=".*",
-    incoming=True,
-    disable_errors=True
+    from_users=ChannelParticipantsAdmins,
+    func=lambda e: e.is_group
 )
-async def block_words(event):
-    global blacklist_words
-    if isinstance(event.message, events.Message):
-        msg_text = event.message.message.lower()
-        for word in blacklist_words:
-            if re.search(r"\b" + re.escape(word) + r"\b", msg_text, re.IGNORECASE):
-                await event.message.delete()
-                break
+async def delete_blacklisted_messages(event):
+    if not event.message or not event.message.message:
+        return
+    message_text = event.message.message
+    for word in blacklist:
+        if re.search(rf"\b{re.escape(word)}\b", message_text, re.I):
+            try:
+                await event.client.delete_messages(event.chat_id, event.message.id)
+            except Exception as e:
+                LOGS.error(f"Error deleting message: {e}")
