@@ -37,7 +37,7 @@ async def count_lines(event):
 
 
 plugin_category = "utils"
-blacklisted_words = [عير]
+blacklisted_words = ["عير"]
 
 @l313l.ar_cmd(
     pattern="قفل_السب$",
