@@ -6,7 +6,7 @@ from ..helpers.functions import edit_or_reply
 from SHRU import l313l
 blacklist = ["عير", "word2", "word3"]  # List of words to be blacklisted
 LOGS = logging.getLogger(__name__)
-plugin_category = "aadmin"
+plugin_category = "admin"
 @l313l.ar_cmd(
     pattern="قفل_كلمات$",
     command=("قفل_كلمات", plugin_category),
