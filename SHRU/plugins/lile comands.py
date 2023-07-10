@@ -14,7 +14,10 @@ from SHRU import HEROKU_APP, UPSTREAM_REPO_URL, l313l
 from ..core.managers import edit_delete, edit_or_reply
 from telethon.events import NewMessage
 from telethon import events
-from ..helpers.functions import edit_delete
+
+
+from telethon.tl import types
+
 from telethon.utils import get_display_name
 plugin_category = "utils"
 blacklisted_words = {"عير", "كس", "عير"}
@@ -38,40 +41,44 @@ async def count_lines(event):
 
 
 
+swearing_blocklist = ["badword1", "badword2"]  
+swearing_enabled = True  
 @l313l.ar_cmd(
     pattern="قفل_السب$",
     command=("قفل_السب", plugin_category),
     info={
-        "header": "Add words to a blacklist.",
-        "description": "Add the specified word(s) to the blacklist. Messages containing these words will be deleted.",
+        "header": "Lock swearing in the group chat.",
         "usage": "{tr}قفل_السب",
     },
-    groups_only=True,
-    require_admin=True,
 )
-async def lock_words(event):
-    await edit_or_reply(event, "⌔∮ تم قفل الكلمات بنجاح.")
+async def lock_swearing(event):
+    global swearing_enabled
+    swearing_enabled = True
+    await edit_or_reply(event, "تم قفل السب بنجاح")
 
 @l313l.ar_cmd(
     pattern="فتح_السب$",
     command=("فتح_السب", plugin_category),
     info={
-        "header": "Remove words from the blacklist.",
-        "description": "Remove the specified word(s) from the blacklist.",
+        "header": "Unlock swearing in the group chat.",
         "usage": "{tr}فتح_السب",
     },
-    groups_only=True,
-    require_admin=True,
 )
-async def unlock_words(event):
-    await edit_or_reply(event, "⌔∮ تم فتح الكلمات بنجاح.")
+async def unlock_swearing(event):
+    global swearing_enabled
+    swearing_enabled = False
+    await edit_or_reply(event, "تم فتح السب بنجاح")
 
-@l313l.ar_bot_cmd(incoming=True)
-async def delete_spam(event):
-    global blacklisted_words
-    message = event.message
-    text = message.message.lower()
-    for word in blacklisted_words:
-        if word in text:
-            await message.delete()
-            break
+@l313l.ar_cmd(
+    pattern=".*",
+    incoming=True,
+    disable_errors=True
+)
+async def block_swearing(event):
+    global swearing_enabled
+    if swearing_enabled and isinstance(event.message, types.Message):
+        msg_text = event.message.message.lower()
+        for word in swearing_blocklist:
+            if word in msg_text:
+                await event.message.delete()
+                break
