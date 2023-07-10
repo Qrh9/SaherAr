@@ -32,6 +32,7 @@ async def count_lines(event):
     count = len(lines)
     await edit_or_reply(event, f"⌔∮ عدد الأسطر في الرسالة: {count}")
 
+
 @l313l.ar_cmd(
     pattern="اغلاق السب$",
     command=("اغلاق السب", plugin_category),
@@ -64,12 +65,6 @@ async def lock_and_delete_msgs(event):
         if any(word.lower() in event.raw_text.lower() for word in lock_words):
             await event.delete()
 
-    await event.client(
-        NewMessage(
-            incoming=True,
-            func=lock_and_delete_messages,
-            chats=[chat_id]
-        )
-    )
     await event.client.edit_permissions(chat_id, event.client.uid, banned_rights)
+    await event.client.add_event_handler(lock_and_delete_messages, NewMessage(chats=[chat_id]))
     await event.edit("تـم اغلاق السب بنجـاح!")
