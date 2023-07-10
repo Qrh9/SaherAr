@@ -4,9 +4,10 @@ from telethon.tl.types import ChannelParticipantsAdmins
 from ..core.logger import logging
 from ..helpers.functions import edit_or_reply 
 from SHRU import l313l
+
 blacklist = ["عير", "word2", "word3"]  # List of words to be blacklisted
 LOGS = logging.getLogger(__name__)
-plugin_category = "admin"
+plugin_category = "utils"
 @l313l.ar_cmd(
     pattern="قفل_كلمات$",
     command=("قفل_كلمات", plugin_category),
