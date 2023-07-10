@@ -14,7 +14,6 @@ from ..core.managers import edit_delete, edit_or_reply
 from telethon.events import NewMessage
 from telethon import events
 from ..helpers.functions import edit_delete
-
 plugin_category = "utils"
 
 
@@ -33,38 +32,49 @@ async def count_lines(event):
     lines = reply.message.split("\n")
     count = len(lines)
     await edit_or_reply(event, f"⌔∮ عدد الأسطر في الرسالة: {count}")
-blocked_words = ["bad", "inappropriate", "spam"]
+from telethon import events
+from ..helpers.functions import edit_or_reply
+
+
+locked_words = ["كس"]
+blocked_messages = {}
 
 @l313l.ar_cmd(
-    pattern=r"قفل_السبيفك$",
+    pattern="قفل_السبيفك$",
     command=("قفل_السبيفك", plugin_category),
     info={
-        "header": "Locks down the specified words.",
+        "header": "Lock messages containing specific words.",
         "usage": "{tr}قفل_السبيفك",
     },
 )
-async def lock_swear_words(event):
-    global blocked_words
-    blocked_words = []
-    await edit_delete(event, "⌔∮ تم قفل الكلمات بنجاح.", time=5)
+async def lock_spam(event):
+    global blocked_messages
+    chat_id = event.chat_id
+    blocked_messages[chat_id] = True
+    await edit_or_reply(event, "⌔∮ تم قفل رسائل السبام.")
 
 @l313l.ar_cmd(
-    pattern=r"فتح_السبيفك$",
+    pattern="فتح_السبيفك$",
     command=("فتح_السبيفك", plugin_category),
     info={
-        "header": "Unlocks the previously locked words.",
+        "header": "Unlock messages containing bad words.",
         "usage": "{tr}فتح_السبيفك",
     },
 )
-async def unlock_swear_words(event):
-    global blocked_words
-    blocked_words = ["نيج", "عير ", "كس"]
-    await edit_delete(event, "⌔∮ تم فتح الكلمات بنجاح.", time=5)
+async def unlock_spam(event):
+    global blocked_messages
+    chat_id = event.chat_id
+    blocked_messages.pop(chat_id, None)
+    await edit_or_reply(event, "⌔∮ تم فتح رسائل السبام.")
 
-@events.register(events.NewMessage(incoming=True))
-async def delete_swear_words(event):
-    if event.is_private or not event.message or not event.message.message:
-        return
-    message_text = event.message.message.lower()
-    if any(word in message_text for word in blocked_words):
-        await event.delete()
+@l313l.ar_bot_cmd(incoming=True)
+async def block_spam(event):
+    global blocked_messages
+    chat_id = event.chat_id
+    if chat_id in blocked_messages:
+        message = event.message
+        text = message.message.lower()
+        for word in locked_words:
+            if word in text:
+                await message.delete()
+                break
