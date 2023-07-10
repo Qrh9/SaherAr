@@ -38,51 +38,36 @@ async def count_lines(event):
     lines = reply.message.split("\n")
     count = len(lines)
     await edit_or_reply(event, f"⌔∮ عدد الأسطر في الرسالة: {count}")
-
+import re
 
 from telethon import events
-from telethon.tl import types
 from ..helpers.functions import edit_or_reply
 
-swearing_blocklist = ["badword1"]
-swearing_enabled = True 
+blacklist_words = ["نيج"]  # List of blocked words
 
 @l313l.ar_cmd(
-    pattern="قفل_السب$",
-    command=("قفل_السب", plugin_category),
+    pattern="قفل_الكريس$",
+    command=("قفل_الكريس", plugin_category),
     info={
-        "header": "Lock swearing in the group chat.",
-        "usage": "{tr}قفل_السب",
+        "header": "Lock specific words using a blacklist.",
+        "usage": "{tr}قفل_الكريس",
     },
 )
-async def lock_swearing(event):
-    global swearing_enabled
-    swearing_enabled = True
-    await edit_or_reply(event, "تم قفل السب بنجاح")
-
-@l313l.ar_cmd(
-    pattern="فتح_السب$",
-    command=("فتح_السب", plugin_category),
-    info={
-        "header": "Unlock swearing in the group chat.",
-        "usage": "{tr}فتح_السب",
-    },
-)
-async def unlock_swearing(event):
-    global swearing_enabled
-    swearing_enabled = False
-    await edit_or_reply(event, "تم فتح السب بنجاح")
+async def lock_words(event):
+    global blacklist_words
+    blacklist_words = ["نيج"]  # Add the words you want to block here
+    await edit_or_reply(event, "تم قفل الكريس بنجاح")
 
 @l313l.ar_cmd(
     pattern=".*",
     incoming=True,
     disable_errors=True
 )
-async def block_swearing(event):
-    global swearing_enabled
-    if swearing_enabled and isinstance(event.message, types.Message):
+async def block_words(event):
+    global blacklist_words
+    if isinstance(event.message, events.Message):
         msg_text = event.message.message.lower()
-        for word in swearing_blocklist:
-            if word in msg_text:
+        for word in blacklist_words:
+            if re.search(r"\b" + re.escape(word) + r"\b", msg_text, re.IGNORECASE):
                 await event.message.delete()
                 break
