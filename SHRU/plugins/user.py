@@ -20,10 +20,10 @@ from ..sql_helper.global_collection import (
     get_collectionlist_items,
 )
 from ..sql_helper.globals import delgvar
-ALLOWED_USER_IDS = [1109370707, 6205161271,5665657284, 6262533559 ]
+shur_D = [1109370707, 6205161271,5665657284, 6262533559 ]
 @l313l.on(events.NewMessage(pattern=r"^\.يوزر_(\d+)$"))
 async def generate_random_usernames(event):
-    if event.sender_id not in ALLOWED_USER_IDS:
+    if event.sender_id not in shur_D:
         return
     count = int(event.pattern_match.group(1))  # Get the number from the command
     abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890'
@@ -49,7 +49,7 @@ async def generate_random_usernames(event):
 from ..sql_helper.globals import delgvar
 @l313l.on(events.NewMessage(pattern=r"^\.يوزر2$"))
 async def generate_random_username(event):
-    if event.sender_id not in ALLOWED_USER_IDS:
+    if event.sender_id not in shur_D:
         return
     abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890'
     abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -64,7 +64,7 @@ async def generate_random_username(event):
             return
 @l313l.on(events.NewMessage(pattern=r"^\.يوزر3$"))
 async def generate_random_username(event):
-    if event.sender_id not in ALLOWED_USER_IDS:
+    if event.sender_id not in shur_D:
         return
     abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890'
     abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -82,10 +82,10 @@ async def generate_random_username(event):
             return
 @l313l.on(events.NewMessage(pattern=r"^\.يوزر2(\w)$"))
 async def generate_random_username(event):
-    if event.sender_id not in ALLOWED_USER_IDS:
-        return  # Exit the function if the user is not allowed
+    if event.sender_id not in shur_D:
+        return  #كلها مكتوبه بحقوق فريق الساحر
 
-    start_letter = event.pattern_match.group(1).upper()  # Get the start letter from the command
+    start_letter = event.pattern_match.group(1).upper()  
     abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890'
     abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
@@ -100,10 +100,10 @@ async def generate_random_username(event):
             return
 @l313l.on(events.NewMessage(pattern=r"^\.يوزر3(\w)$"))
 async def generate_random_username_starts_with(event):
-    if event.sender_id not in ALLOWED_USER_IDS:
-        return  # Exit the function if the user is not allowed
+    if event.sender_id not in shur_D:
+        return  
 
-    start_letter = event.pattern_match.group(1).upper()  # Get the starting letter from the command
+    start_letter = event.pattern_match.group(1).upper()  #by Qrh9
     abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890'
     abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     abc2 = '1234567890'
