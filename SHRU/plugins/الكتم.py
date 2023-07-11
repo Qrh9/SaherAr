@@ -197,29 +197,27 @@ Mn3_sb = [
     "عريض", "خنيث", "بلاع", "عيوره", "طيزك", "المنيوج", "المنيوك", "تناحه",
     "الديوث", "قريخ", "كحاب", "كحبه"
 ]
-
-delete_enabled = True
+Mn3_sb = ["ينعل امك", "ابن المطي"]
+addgvar("delete_enabled", True)
 
 @l313l.on(events.NewMessage)
 async def Hussein(event):
-    if delete_enabled and any(word in event.raw_text for word in Mn3_sb):
-        await event.edit("انا لست مشرفا؟")
-
-@l313l.ar_cmd(pattern=r"السب تفعيل$")
-async def sbt36el(event):
-    global delete_enabled
-    if delete_enabled:
-        await event.edit("⌔∮ الأمر مفعل بالفعل")
-    else:
-        delete_enabled = True
-        await event.edit("⌔∮ تم منع السب بنجاح ✓")
+    if gvarstatus("delete_enabled") and any(word in event.raw_text for word in Mn3_sb):
+        await event.edit()
 
 @l313l.ar_cmd(pattern=r"السب تعطيل$")
-async def sbtf3el(event):
-    global delete_enabled
-    if not delete_enabled:
-        await event.edit("⌔∮ الأمر معطل بالفعل")
+async def sbt36el(event):
+    if gvarstatus("delete_enabled"):
+        await event.edit("᯽︙ الأمر مفعل بالفعل")
     else:
-        delete_enabled = False
-        await event.edit("⌔∮ تم السماح بالسب هنا ✓")
+        addgvar("delete_enabled", True)
+        await edit.reply("᯽︙ تم منع السب بنجاح ✓")
+
+@l313l.ar_cmd(pattern=r"السب تفعيل$")
+async def sbtf3el(event):
+    if not gvarstatus("delete_enabled"):
+        await event.edit("᯽︙ الأمر معطل بالفعل")
+    else:
+        delgvar("delete_enabled")
+        await event.edit("᯽︙ تم السماح بالسب هنا ✓")
 
