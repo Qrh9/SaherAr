@@ -197,7 +197,6 @@ Mn3_sb = [
     "عريض", "خنيث", "بلاع", "عيوره", "طيزك", "المنيوج", "المنيوك", "تناحه",
     "الديوث", "قريخ", "كحاب", "كحبه"
 ]
-Mn3_sb = ["ينعل امك", "ابن المطي"]
 addgvar("delete_enabled", True)
 
 @l313l.on(events.NewMessage)
@@ -211,7 +210,7 @@ async def sbt36el(event):
         await event.edit("᯽︙ الأمر مفعل بالفعل")
     else:
         addgvar("delete_enabled", True)
-        await edit.reply("᯽︙ تم منع السب بنجاح ✓")
+        await event.edit("᯽︙ تم منع السب بنجاح ✓")
 
 @l313l.ar_cmd(pattern=r"السب تفعيل$")
 async def sbtf3el(event):
