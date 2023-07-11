@@ -182,38 +182,41 @@ async def unmutejep(event):
             )
 
 
-# ===================================== # 
+
 @l313l.ar_cmd(incoming=True)
 async def watcher(event):
     if is_muted(event.sender_id, "كتم_مؤقت"):
         await event.delete
+# ===================================== # 
 from telethon.tl.types import ChannelParticipantsAdmins
 from telethon import events
-Mn3_sb = ["كس",]
+from ..core.managers import edit_or_reply
+
+Mn3_sb = ["كس"]
 delete_enabled = True
 
 @l313l.on(events.NewMessage)
 async def Hussein(event):
     if delete_enabled and any(word in event.raw_text for word in Mn3_sb):
-        if await is_admin(event.sender_id, event.chat_id) and await has_delete_permission(event.sender_id, event.chat_id):
-            await event.delete()
+        if not await is_admin(event, event.sender_id):
+            await event.edit("انا لست مشرفا؟")
 
-async def is_admin(user_id, chat_id):
-    participant = await client.get_participant(chat_id, user_id)
-    return participant.admin
-
-async def has_delete_permission(user_id, chat_id):
-    permissions = await client.get_permissions(chat_id, user_id)
-    return permissions.delete_messages
+async def is_admin(event, user_id):
+    chat = await event.get_chat()
+    participants = await event.client.get_participants(chat, filter=ChannelParticipantsAdmins)
+    for participant in participants:
+        if participant.id == user_id:
+            return True
+    return False
 
 @l313l.on(events.NewMessage(pattern="تعطيل السب"))
 async def sbt36el(event):
     global delete_enabled
-    delete_enabled = True
-    await event.reply(" ᯽︙ تم منع السب بنجاح ✓  ")
+    delete_enabled = False
+    await event.edit("⌔∮ تم منع السب بنجاح ✓")
 
 @l313l.on(events.NewMessage(pattern="تفعيل السب"))
 async def sbtf3el(event):
     global delete_enabled
-    delete_enabled = False
-    await event.edit(" ᯽︙ تم السماح  بالسب هنا ✓ ")
+    delete_enabled = True
+    await event.edit("⌔∮ تم السماح بالسب هنا ✓")
