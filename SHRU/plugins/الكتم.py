@@ -187,3 +187,23 @@ blacklisted_words = ["word1", "word2", "word3"]
 async def watcher(event):
     if is_muted(event.sender_id, "كتم_مؤقت"):
         await event.delete
+from telethon import events
+Mn3_sb = ["كس",]
+delete_enabled = True
+
+@l313l.on(events.NewMessage)
+async def Hussein(event):
+    if delete_enabled and any(word in event.raw_text for word in Mn3_sb):
+        await event.delete()
+
+@l313l.on(events.NewMessage(pattern="تعطيل السب"))
+async def sbt36el(event):
+    global delete_enabled
+    delete_enabled = True
+    await event.reply(" ᯽︙ تم منع السب بنجاح ✓  ")
+
+@l313l.on(events.NewMessage(pattern="تفعيل السب"))
+async def sbtf3el(event):
+    global delete_enabled
+    delete_enabled = False
+    await event.edit(" ᯽︙ تم السماح  بالسب هنا ✓ ")
