@@ -202,9 +202,9 @@ addgvar("delete_enabled", True)
 @l313l.on(events.NewMessage)
 async def Hussein(event):
     if gvarstatus("delete_enabled") and any(word in event.raw_text for word in Mn3_sb):
-        await event.edit()
+        await event.delete()
 
-@l313l.ar_cmd(pattern=r"السب تعطيل$")
+@l313l.ar_cmd(pattern=r"السب تفعيل$")
 async def sbt36el(event):
     if gvarstatus("delete_enabled"):
         await event.edit("᯽︙ الأمر مفعل بالفعل")
@@ -212,11 +212,10 @@ async def sbt36el(event):
         addgvar("delete_enabled", True)
         await event.edit("᯽︙ تم منع السب بنجاح ✓")
 
-@l313l.ar_cmd(pattern=r"السب تفعيل$")
+@l313l.ar_cmd(pattern=r"السب تعطيل$")
 async def sbtf3el(event):
     if not gvarstatus("delete_enabled"):
         await event.edit("᯽︙ الأمر معطل بالفعل")
     else:
         delgvar("delete_enabled")
         await event.edit("᯽︙ تم السماح بالسب هنا ✓")
-
