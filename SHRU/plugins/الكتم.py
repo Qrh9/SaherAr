@@ -7,6 +7,7 @@ from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import ChatBannedRights
 from telethon.utils import get_display_name
+from telethon.tl.types import ChannelParticipantsAdmins
 
 from SHRU import l313l
 
@@ -191,19 +192,29 @@ from telethon import events
 Mn3_sb = ["كس",]
 delete_enabled = True
 
+async def mshref(event, user_id):
+    chat = await event.get_chat()
+    participants = await event.client.get_participants(chat, filter=ChannelParticipantsAdmins)
+    for participant in participants:
+        if participant.id == user_id:
+            return True
+    return False
+
 @l313l.on(events.NewMessage)
 async def Hussein(event):
-    if delete_enabled and any(word in event.raw_text for word in Mn3_sb):
+    if delete_enabled and await mshref(event, event.sender_id) and any(word in event.raw_text for word in Mn3_sb):
         await event.delete()
+    elif not await mshref(event, event.sender_id):
+        await event.edit("انا لست مشرفا؟")
 
 @l313l.on(events.NewMessage(pattern="تعطيل السب"))
 async def sbt36el(event):
     global delete_enabled
-    delete_enabled = True
-    await event.reply(" ᯽︙ تم منع السب بنجاح ✓  ")
+    delete_enabled = False
+    await event.edit("⌔∮ تم منع السب بنجاح ✓")
 
 @l313l.on(events.NewMessage(pattern="تفعيل السب"))
 async def sbtf3el(event):
     global delete_enabled
-    delete_enabled = False
-    await event.edit(" ᯽︙ تم السماح  بالسب هنا ✓ ")
+    delete_enabled = True
+    await event.edit("⌔∮ تم السماح بالسب هنا ✓")
