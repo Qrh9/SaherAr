@@ -4,7 +4,7 @@ from telethon import events
 from ..core.managers import edit_or_reply
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 Mn3_sb = [
-    " عير ", " كس ", "كواد", "تنيج", "كسمك", " فرخ", "خنجه", "استنياج", "سرسري",
+    "عير", "كس ", "كواد", "تنيج", "كسمك", " فرخ", "خنجه", "استنياج", "سرسري",
     " عريض ", "خنيث", "بلاع", "عيوره", "طيزك", "المنيوج", "المنيوك", "تناحه",
     "الديوث", "قريخ", "كحاب", "كحبه"
 ]
