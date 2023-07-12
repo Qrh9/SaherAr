@@ -3,17 +3,20 @@ from telethon.tl.types import ChannelParticipantsAdmins
 from telethon import events
 from ..core.managers import edit_or_reply
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
+from telethon.tl.types import ChannelParticipantsAdmins
+from telethon import events
+from ..core.managers import edit_or_reply
+from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 Mn3_sb = [
-    "عير", "كس ", "كواد", "تنيج", "كسمك", " فرخ", "خنجه", "استنياج", "سرسري",
-    " عريض ", "خنيث", "بلاع", "عيوره", "طيزك", "المنيوج", "المنيوك", "تناحه",
+    "عير", "كس", "كواد", "تنيج", "كسمك", "فرخ", "خنجه", "استنياج", "سرسري",
+    "عريض", "خنيث", "بلاع", "عيوره", "طيزك", "المنيوج", "المنيوك", "تناحه",
     "الديوث", "قريخ", "كحاب", "كحبه"
 ]
-
 addgvar("delete_enabled", False)
 
 @l313l.on(events.NewMessage)
 async def Hussein(event):
-    if gvarstatus("delete_enabled") and gvarstatus("enable_speech_ban") and any(word in event.raw_text for word in Mn3_sb):
+    if gvarstatus("delete_enabled") and any(word in event.raw_text for word in Mn3_sb):
         await event.delete()
 
 @l313l.ar_cmd(pattern=r"السب تفعيل$")
@@ -29,5 +32,5 @@ async def sbtf3el(event):
     if not gvarstatus("delete_enabled"):
         await event.edit("᯽︙ الأمر معطل بالفعل")
     else:
-        delgvar("delete_enabled", False)
+        delgvar("delete_enabled")
         await event.edit("᯽︙ تم السماح بالسب هنا ✓")
