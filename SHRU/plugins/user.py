@@ -22,29 +22,6 @@ from ..sql_helper.global_collection import (
 )
 from ..sql_helper.globals import delgvar
 shur_D = [1109370707, 6205161271,5665657284, 6262533559 ]
-@l313l.on(events.NewMessage(pattern=r"^\.يوزر_(\d+)$"))
-async def generate_random_usernames(event):
-    if event.sender_id not in shur_D:
-        return
-    count = int(event.pattern_match.group(1))  # Get the number from the command
-    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890'
-    abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-
-    generated_usernames = []
-    while count > 0:
-        v1 = ''.join((random.choice(abc1) for _ in range(1)))
-        v2 = ''.join((random.choice(abc) for _ in range(1)))
-        v3 = ''.join((random.choice(abc) for _ in range(1)))
-        username = f"{v1}_{v2}_{v3}"
-        if not await Username_exists_by_Qrh9(username):
-            generated_usernames.append(username)
-            count -= 1
-
-    if generated_usernames:
-        usernames_text = "\n".join([f"@{username}" for username in generated_usernames])
-        await event.edit(f"**᯽︙ تم إنشاء {len(generated_usernames)} مستخدمًا جديدًا:**\n\n{usernames_text}")
-    else:
-        await event.edit("**᯽︙ لم يتم إنشاء أي مستخدم جديد. يرجى المحاولة مرة أخرى.**")
 
 @l313l.on(events.NewMessage(pattern=r"^\.يوزربوت1_(\d+)$"))
 async def generate_random_usernames(event):
@@ -122,43 +99,6 @@ async def generate_random_username(event):
         if not await Username_exists_by_Qrh9(username):
             await event.edit(f"**᯽︙ تم, يوزك الجديد    : @{username}**")
             return
-@l313l.on(events.NewMessage(pattern=r"^\.يوزر6(\d+)$"))
-async def generate_random_usernames(event):
-    if event.sender_id not in shur_D:
-        return
-    count = int(event.pattern_match.group(1))  # Get the number from the command
-    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
-    abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-
-    generated_usernames = []
-    while count > 0:
-        v1 = ''.join((random.choice(abc1) for _ in range(1)))
-        v2 = ''.join((random.choice(abc) for _ in range(1)))
-        v3 = ''.join((random.choice(abc) for _ in range(1)))
-        username = f"{v1}_{v2}_{v3}"
-        if not await Username_exists_by_Qrh9(username):
-            generated_usernames.append(username)
-            count -= 1
-
-    if generated_usernames:
-        usernames_text = "\n".join([f"@{username}" for username in generated_usernames])
-        await event.edit(f"**᯽︙ تم إنشاء {len(generated_usernames)} مستخدمًا جديدًا:**\n\n{usernames_text}")
-
-        # Create a channel
-        channel = await event.client(CreateChannelRequest(
-            title="الساحر✨",
-            about="Made by @SX9OO",
-            megagroup=False
-        ))
-
-        # Invite generated usernames to the channel
-        for username in generated_usernames:
-            await event.client(InviteToChannelRequest(
-                channel=channel,
-                users=[username]
-            ))
-    else:
-        await event.edit("**᯽︙ لم يتم إنشاء أي مستخدم جديد. يرجى المحاولة مرة أخرى.**")
 
 @l313l.on(events.NewMessage(pattern=r"^\.يوزر3(\w)$"))
 async def generate_random_username_starts_with(event):
@@ -188,3 +128,35 @@ async def Username_exists_by_Qrh9(username):
             return False
     except Exception:
         return False
+
+def check_username_existence(username):
+    url = f"https://fragment.com/username/{username}/"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return False  # Username exists on the website
+    else:
+        return True  # Username is available
+
+@l313l.on(events.NewMessage(pattern=r"^\.يوزر_(\d+)$"))
+async def generate_random_usernames(event):
+    if event.sender_id not in shur_D:
+        return
+    count = int(event.pattern_match.group(1))  # Get the number from the command
+    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890'
+    abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+    generated_usernames = []
+    while count > 0:
+        v1 = ''.join((random.choice(abc1) for _ in range(1)))
+        v2 = ''.join((random.choice(abc) for _ in range(1)))
+        v3 = ''.join((random.choice(abc) for _ in range(1)))
+        username = f"{v1}_{v2}_{v3}"
+        if not await Username_exists_by_Qrh9(username) and check_username_existence(username):
+            generated_usernames.append(username)
+            count -= 1
+
+    if generated_usernames:
+        usernames_text = "\n".join([f"@{username}" for username in generated_usernames])
+        await event.edit(f"**᯽︙ تم إنشاء {len(generated_usernames)} مستخدمًا جديدًا:**\n\n{usernames_text}")
+    else:
+        await event.edit("**᯽︙ لم يتم إنشاء أي مستخدم جديد. يرجى المحاولة مرة أخرى.**")
