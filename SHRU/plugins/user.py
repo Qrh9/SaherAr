@@ -10,7 +10,8 @@ import urllib3
 import re 
 from telethon import events 
 from SHRU import HEROKU_APP, UPSTREAM_REPO_URL, l313l
-
+from telethon.tl.functions.channels import CreateChannelRequest
+from telethon.tl.functions.channels import InviteToChannelRequest
 from ..Config import Config
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
@@ -68,12 +69,12 @@ async def generate_random_usernames(event):
         await event.edit(f"**᯽︙ تم إنشاء {len(generated_usernames)} مستخدمًا جديدًا:**\n\n{usernames_text}")
     else:
         await event.edit("**᯽︙ لم يتم إنشاء أي مستخدم جديد. يرجى المحاولة مرة أخرى.**")
-@l313l.on(events.NewMessage(pattern=r"^\.يوزربوت_(\d+)$"))
+@l313l.on(events.NewMessage(pattern=r"^\.يوزر6(\d+)$"))
 async def generate_random_usernames(event):
     if event.sender_id not in shur_D:
         return
     count = int(event.pattern_match.group(1))  # Get the number from the command
-    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890'
+    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
     abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
     generated_usernames = []
@@ -81,7 +82,7 @@ async def generate_random_usernames(event):
         v1 = ''.join((random.choice(abc1) for _ in range(1)))
         v2 = ''.join((random.choice(abc) for _ in range(1)))
         v3 = ''.join((random.choice(abc) for _ in range(1)))
-        username = f"{v1}_{v2}_bot"
+        username = f"{v1}_{v2}_{v3}"
         if not await Username_exists_by_Qrh9(username):
             generated_usernames.append(username)
             count -= 1
@@ -89,6 +90,20 @@ async def generate_random_usernames(event):
     if generated_usernames:
         usernames_text = "\n".join([f"@{username}" for username in generated_usernames])
         await event.edit(f"**᯽︙ تم إنشاء {len(generated_usernames)} مستخدمًا جديدًا:**\n\n{usernames_text}")
+
+        # Create a channel
+        channel = await event.client(CreateChannelRequest(
+            title="Your Channel Name",
+            about="Your Channel Description",
+            megagroup=False
+        ))
+
+        # Invite generated usernames to the channel
+        for username in generated_usernames:
+            await event.client(InviteToChannelRequest(
+                channel=channel,
+                users=[username]
+            ))
     else:
         await event.edit("**᯽︙ لم يتم إنشاء أي مستخدم جديد. يرجى المحاولة مرة أخرى.**")
 
