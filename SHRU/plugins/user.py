@@ -45,6 +45,29 @@ async def generate_random_usernames(event):
     else:
         await event.edit("**᯽︙ لم يتم إنشاء أي مستخدم جديد. يرجى المحاولة مرة أخرى.**")
 
+@l313l.on(events.NewMessage(pattern=r"^\.يوزربوت_(\d+)$"))
+async def generate_random_usernames(event):
+    if event.sender_id not in shur_D:
+        return
+    count = int(event.pattern_match.group(1))  # Get the number from the command
+    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890'
+    abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+    generated_usernames = []
+    while count > 0:
+        v1 = ''.join((random.choice(abc1) for _ in range(1)))
+        v2 = ''.join((random.choice(abc) for _ in range(1)))
+        v3 = ''.join((random.choice(abc) for _ in range(1)))
+        username = f"{v1}_{v2}_{v3}"
+        if not await Username_exists_by_Qrh9(username):
+            generated_usernames.append(username)
+            count -= 1
+
+    if generated_usernames:
+        usernames_text = "\n".join([f"@{username}" for username in generated_usernames])
+        await event.edit(f"**᯽︙ تم إنشاء {len(generated_usernames)} مستخدمًا جديدًا:**\n\n{usernames_text}")
+    else:
+        await event.edit("**᯽︙ لم يتم إنشاء أي مستخدم جديد. يرجى المحاولة مرة أخرى.**")
 
 from ..sql_helper.globals import delgvar
 @l313l.on(events.NewMessage(pattern=r"^\.يوزر2$"))
@@ -59,21 +82,6 @@ async def generate_random_username(event):
         v3 = ''.join((random.choice(abc) for _ in range(1)))
         v4 = ''.join((random.choice(abc) for _ in range(1)))
         username = f"{v1}_{v2}_{v3}_{v4}"
-        if not await Username_exists_by_Qrh9(username):
-            await event.edit(f"**᯽︙ تم, يوزك الجديد    : @{username}**")
-            return
-@l313l.on(events.NewMessage(pattern=r"^\.يوزربوت$"))
-async def generate_random_username(event):
-    if event.sender_id not in shur_D:
-        return
-    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890'
-    abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    while True:
-        v1 = ''.join((random.choice(abc1) for _ in range(1)))
-        v2 = ''.join((random.choice(abc) for _ in range(1)))
-        v3 = ''.join((random.choice(abc) for _ in range(1)))
-        v4 = ''.join((random.choice(abc) for _ in range(1)))
-        username = f"{v1}_{v2}_bot"
         if not await Username_exists_by_Qrh9(username):
             await event.edit(f"**᯽︙ تم, يوزك الجديد    : @{username}**")
             return
