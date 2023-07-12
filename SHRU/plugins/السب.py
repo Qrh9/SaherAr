@@ -9,7 +9,7 @@ Mn3_sb = [
     "الديوث", "قريخ", "كحاب", "كحبه"
 ]
 
-
+addgvar("delete_enabled", False)
 
 @l313l.on(events.NewMessage)
 async def Hussein(event):
@@ -29,6 +29,6 @@ async def sbtf3el(event):
     if not gvarstatus("delete_enabled"):
         await event.edit("᯽︙ الأمر معطل بالفعل")
     else:
-        delgvar("delete_enabled")
+        delgvar("delete_enabled", False)
         await event.edit("᯽︙ تم السماح بالسب هنا ✓")
 
