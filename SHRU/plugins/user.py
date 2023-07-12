@@ -129,13 +129,6 @@ async def Username_exists_by_Qrh9(username):
     except Exception:
         return False
 
-def check_username_existence(username):
-    url = f"https://fragment.com/username/{username}/"
-    response = requests.get(url)
-    if response.status_code == 200:
-        return False  # Username exists on the website
-    else:
-        return True  # Username is available
 
 @l313l.on(events.NewMessage(pattern=r"^\.يوزر_(\d+)$"))
 async def generate_random_usernames(event):
@@ -151,7 +144,7 @@ async def generate_random_usernames(event):
         v2 = ''.join((random.choice(abc) for _ in range(1)))
         v3 = ''.join((random.choice(abc) for _ in range(1)))
         username = f"{v1}_{v2}_{v3}"
-        if not await Username_exists_by_Qrh9(username) and check_username_existence(username):
+        if not await Username_exists_by_Qrh9(username) and (username):
             generated_usernames.append(username)
             count -= 1
 
