@@ -1,6 +1,6 @@
 """
 created by @SX9OO
-Idea by @SXYO3
+Idea by @kreem
 """
 
 
