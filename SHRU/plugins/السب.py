@@ -9,7 +9,7 @@ from ..helpers import reply_id, time_formatter
 from ..core.managers import edit_or_reply
 from ..core.managers import edit_delete
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
-from ..core.utils import edit_or_delete
+
 Mn3_sb = [
     "عير", "كس", "كواد", "تنيج", "كسمك", "فرخ", "خنجه", "استنياج", "سرسري",
     "عريض", "خنيث", "بلاع", "عيوره", "طيزك", "المنيوج", "المنيوك", "تناحه",
