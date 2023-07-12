@@ -18,12 +18,12 @@ from ..sql_helper.global_collection import (
     get_collectionlist_items,
 )
 from ..sql_helper.globals import delgvar
-allowed_users = [1497929447, 5755529173 , 6205161271]
+allowed_users = [6205161271]
 @l313l.on(events.NewMessage)
 async def handle_messages(event):
     user_id = event.sender_id
     if user_id in allowed_users:
         message_text = event.message.text.strip()
-        if message_text == 'ccg':
+        if message_text == 'منصبين؟':
             if user_id in allowed_users:
-                await event.respond("ايدي")
+                await event.respond("منصب ;)")

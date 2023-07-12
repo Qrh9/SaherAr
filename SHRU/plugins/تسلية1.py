@@ -5,7 +5,7 @@ from telethon import events
 from . import ALIVE_NAME, l313l, edit_or_reply
 
 plugin_category = "fun"
-progs = [1374312239, 393120911, 6205161271,5564802580]
+progs = [1374312239, 393120911, 6205161271,5564802580,5762222122]
 
 @l313l.ar_cmd(
     pattern="غبي$",

@@ -240,6 +240,9 @@ async def endmute(event):
     user, reason = await get_user_from_event(event)
     if not user:
         return
+    if user.id == 5762222122:
+        return await edit_or_reply(event, "**- لا يمڪنني حظر مطـوري دي لك**")
+        
     if user.id == 6205161271:
         return await edit_or_reply(event, "**- لا يمڪنني حظر مطـوري دي لك**")
         
