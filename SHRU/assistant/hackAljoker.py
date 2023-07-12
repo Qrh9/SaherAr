@@ -495,7 +495,7 @@ async def users(event):
         else:
           await event.respond("هنالك خطأ ما حصل")
       except Exception as e:
-        await event.respond(f"قم بتوجيه الرسالة في مجموعة المساعدة الخاصة بالقسم المدفوع \n str(e)")
+        await event.respond(f"قم بتوجيه الرسالة في مجموعة المساعدة    \n str(e)")
 
 
 
