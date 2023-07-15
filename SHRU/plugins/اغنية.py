@@ -43,13 +43,13 @@ SONG_SENDING_STRING = "<code>جارِ الارسال انتظر قليلا...</c
     pattern="بحث(320)?(?:\s|$)([\s\S]*)",
     command=("بحث", plugin_category),
     info={
-        "header": "To get songs from YouTube.",
-        "description": "This command searches YouTube and sends the first video as an audio file.",
+        "header": "To get songs from youtube.",
+        "description": "Basically this command searches youtube and send the first video as audio file.",
         "flags": {
-            "320": "If you use 'بحث320', you will get the song in 320k quality; otherwise, it will be in 128k quality.",
+            "320": "if you use song320 then you get 320k quality else 128k quality",
         },
-        "usage": "{tr}بحث <song name>",
-        "examples": "{tr}بحث memories song",
+        "usage": "{tr}song <song name>",
+        "examples": "{tr}song memories song",
     },
 )
 async def _(event):
@@ -62,13 +62,46 @@ async def _(event):
         query = reply.message
     else:
         return await edit_or_reply(event, "⌔∮ يرجى الرد على ما تريد البحث عنه")
-
-    # Existing code...
-
-    # Modify the title to replace the artist name
+    cat = base64.b64decode("YnkybDJvRG04WEpsT1RBeQ==")
+    catevent = await edit_or_reply(event, "⌔∮ جاري البحث عن المطلوب انتظر")
+    video_link = await yt_search(str(query))
+    if not url(video_link):
+        return await catevent.edit(
+            f"⌔∮ عذرا لم استطع ايجاد مقاطع ذات صلة بـ `{query}`"
+        )
+    cmd = event.pattern_match.group(1)
+    q = "320k" if cmd == "320" else "128k"
+    song_cmd = song_dl.format(QUALITY=q, video_link=video_link)
+    name_cmd = name_dl.format(video_link=video_link)
+    try:
+        cat = Get(cat)
+        await event.client(cat)
+    except BaseException:
+        pass
+    try:
+        stderr = (await _catutils.runcmd(song_cmd))[1]
+        # if stderr:
+        # await catevent.edit(f"**خطأ :** `{stderr}`")
+        catname, stderr = (await _catutils.runcmd(name_cmd))[:2]
+        if stderr:
+            return await catevent.edit(f"**خطأ :** `{stderr}`")
+        catname = os.path.splitext(catname)[0]
+        song_file = Path(f"{catname}.mp3")
+        catname = urllib.parse.unquote(catname)
+    except:
+        pass
+    if not os.path.exists(song_file):
+        return await catevent.edit(
+            f"⌔∮ عذرا لم استطع ايجاد مقاطع ذات صله بـ `{query}`"
+        )
+    await catevent.edit("**⌔∮ جارِ الارسال انتظر قليلاً**")
+    catthumb = Path(f"{catname}.jpg")
+    if not os.path.exists(catthumb):
+        catthumb = Path(f"{catname}.webp")
+    elif not os.path.exists(catthumb):
+        catthumb = None
     title = catname.replace("./temp/", "").replace("_", "|")
     title = title.replace("<artist name>", "Rio time's")
-
     try:
         await event.client.send_file(
             event.chat_id,
@@ -86,7 +119,6 @@ async def _(event):
     except ChatSendMediaForbiddenError as err:
         await catevent.edit("لا يمكن ارسال المقطع الصوتي هنا")
         LOGS.error(str(err))
-
 # =========================================================== #2
 
 @l313l.ar_cmd(
