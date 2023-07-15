@@ -28,7 +28,7 @@ async def generate_random_usernames(event):
     if event.sender_id not in shur_D:
         return
     count = int(event.pattern_match.group(1))  # اذا تخمط انت فرخ😆
-    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890'
+    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
     abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
     generated_usernames = []
@@ -52,7 +52,7 @@ from ..sql_helper.globals import delgvar
 async def generate_random_username(event):
     if event.sender_id not in shur_D:
         return
-    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890'
+    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
     abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     while True:
         v1 = ''.join((random.choice(abc1) for _ in range(1)))
@@ -67,7 +67,7 @@ async def generate_random_username(event):
 async def generate_random_username(event):
     if event.sender_id not in shur_D:
         return
-    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890'
+    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
     abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     abc2 = '1234567890'
     while True:
@@ -87,7 +87,7 @@ async def generate_random_username(event):
         return  #كلها مكتوبه بحقوق فريق الساحر
 
     start_letter = event.pattern_match.group(1).upper()  
-    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890'
+    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
     abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
     while True:
@@ -104,7 +104,7 @@ async def generate_random_usernames(event):
     if event.sender_id not in shur_D:
         return
     count = int(event.pattern_match.group(1))  # Get the number from the command
-    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890'
+    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
     abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
     generated_usernames = []
@@ -129,7 +129,7 @@ async def generate_random_username_starts_with(event):
         return  
 
     start_letter = event.pattern_match.group(1).upper()  #by Qrh9
-    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_1234567890'
+    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
     abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     abc2 = '1234567890'
     while True:
