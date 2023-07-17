@@ -67,7 +67,7 @@ async def cancel_collection(event):
     await l313l.send_message('@zmmbot', '/start')
     await event.edit("** ᯽︙ تم الغاء التجميع من بوت المليار **")
     
-@l313l.on(admin_cmd(pattern="(تجميع الساحر|تجميع جوكر)"))
+@l313l.on(admin_cmd(pattern="(تجميع الجوكر|تجميع جوكر)"))
 async def _(event):
     if SHRU[0] == "yes":
         await event.edit("**᯽︙سيتم تجميع النقاط من بوت الساحر , قبل كل شي تأكد من انك قمت بلانظمام الى القنوات الاشتراك الاجباري للبوت لعدم حدوث اخطاء**")
