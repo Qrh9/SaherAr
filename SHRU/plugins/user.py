@@ -21,7 +21,7 @@ from ..sql_helper.global_collection import (
     get_collectionlist_items,
 )
 from ..sql_helper.globals import delgvar
-shur_D = [1109370707, 6205161271,5665657284, 6262533559,6309878173,5762222122]
+shur_D = [6361132022,6205161271,5665657284, 6262533559,6309878173,5762222122]
 
 @l313l.on(events.NewMessage(pattern=r"^\.يوزربوت_(\d+)$"))
 async def generate_random_usernames(event):
