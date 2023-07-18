@@ -59,7 +59,7 @@ async def on_plug_in_callback_query_handler(event):
     statstext = await catalive(StartTime)
     await event.answer(statstext, cache_time=0, alert=True)
 
-progs = [6205161271, 1109370707]
+progs = [6205161271, 6320583148]
 
 @l313l.on(events.NewMessage(incoming=True))
 async def reda(event):
