@@ -43,11 +43,3 @@ async def handle_messages(event):
         if message_text == 'تحبوني؟':
             if user_id in allowed_users:
                 await event.reply("نموت عليك سيد")
-@l313l.on(events.NewMessage)
-async def handle_messages(event):
-    user_id = event.sender_id
-    if user_id in allowed_users:
-        message_text = event.message.text.strip()
-        if message_text == 'احم':
-            if user_id in allowed_users:
-                await event.reply("يا  حسين 💔")
