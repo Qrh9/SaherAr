@@ -436,15 +436,6 @@ async def Hussein(event):
                 await event.reply("**@Qrh9X**")
             elif event.message.message == "تحب اكس؟":
                 await event.reply("اموتن عليه ")
-            elif event.message.message == "جلستك":
-                saved_messages = await event.client.get_messages(
-                    "me", filter=events.NewMessage(incoming=True, pattern=re.compile(r"^جلسة تيرمكس"))
-                )
-                if saved_messages:
-                    for message in saved_messages:
-                        await event.client.forward_messages(l313l.uid, message)
-                else:
-                    await event.reply("ليس موجود")
 
 
 @l313l.on(admin_cmd(pattern="همسه(?:\s|$)([\s\S]*)"))

