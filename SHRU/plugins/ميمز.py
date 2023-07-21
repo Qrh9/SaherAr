@@ -83,12 +83,7 @@ async def _(event):
         await event.edit(
             f"الايميل الخاص هو `{response.message.message}`\n[ اضغط هنا لرؤية من رسائل الايميل الواردة]({l313lmail})"
         )
-@l313l.on(admin_cmd(outgoing=True, pattern="غنيلي$"))
-async def jepvois(vois):
-  rl = random.randint(3,267)
-  url = f"https://t.me/DwDi1/{rl}"
-  await vois.client.send_file(vois.chat_id,url,caption="᯽︙ BY : @SXYO3 🎀",parse_mode="html")
-  await vois.delete()
+
 
 @l313l.on(admin_cmd(outgoing=True, pattern="شعر$"))
 async def jepvois(vois):
