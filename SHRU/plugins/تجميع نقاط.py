@@ -1,7 +1,7 @@
 #by Hussein For SHRU-SHRU
-# IDK
+#   IDK
 # يمنع منعاً باتاً تخمط الملف خلي عندك كرامه ولتسرقة
-# Added some f. by Reda
+# Added some f. by ريو
 from SHRU import l313l
 from telethon.tl.functions.messages import GetHistoryRequest
 from telethon.tl.functions.channels import JoinChannelRequest
@@ -17,6 +17,7 @@ bot_username = '@zmmbot'
 bot_username2 = '@A_MAN9300BOT'
 bot_username3 = '@MARKTEBOT'
 bot_username4 = '@qweqwe1919bot'
+bot_username5 = '@xnsex21bot'
 SHRU = ['yes']
 its_Reham = False
 @l313l.on(admin_cmd(pattern="(تجميع مليار|تجميع المليار)"))
@@ -193,7 +194,50 @@ async def _(event):
 
     else:
         await event.edit("يجب الدفع لاستعمال هذا الامر !")
+################################
+@l313l.on(admin_cmd(pattern="(تجميع عرب|تجميع العرب)"))
+async def _(event):
+    if SHRU[0] == "yes":
+        await event.edit("**᯽︙سيتم تجميع نقاط بوت المليار، قبل كل شيء تأكد من أنك قمت بالانضمام إلى القنوات الاشتراك الاجباري للبوت لتجنب حدوث أخطاء.**")
+        channel_entity = await l313l.get_entity(bot_username)
+        await l313l.send_message('@xnsex21bot', '/start')
+        await asyncio.sleep(5)
+        msg0 = await l313l.get_messages('@xnsex21bot', limit=1)
+        await msg0[0].click(2)
+        await asyncio.sleep(5)
+        msg1 = await l313l.get_messages('@xnsex21bot', limit=1)
+        await msg1[0].click(0)
 
+        chs = 1
+        for i in range(100):
+            if SHRU[0] == 'no':
+                break
+            await asyncio.sleep(5)
+
+            list = await l313l(GetHistoryRequest(peer=channel_entity, limit=1, offset_date=None, offset_id=0, max_id=0, min_id=0, add_offset=0, hash=0))
+            msgs = list.messages[0]
+            if msgs.message.find('لا يوجد قنوات في الوقت الحالي، قم بتجميع النقاط بطريقة مختلفة') != -1:
+                await l313l.send_message(event.chat_id, "**لا توجد قنوات للبوت.**")
+                break
+            url = msgs.reply_markup.rows[0].buttons[0].url
+            try:
+                try:
+                    await l313l(JoinChannelRequest(url))
+                except:
+                    bott = url.split('/')[-1]
+                    await l313l(ImportChatInviteRequest(bott))
+                msg2 = await l313l.get_messages('@xnsex21bot', limit=1)
+                await msg2[0].click(text='تحقق')
+                chs += 1
+                await l313l.send_message("me", f"تم الاشتراك في {chs} قناة")
+            except:
+                await l313l.send_message(event.chat_id, "**خطأ، قد يكون تم حظرك.**")
+                break
+        await l313l.send_message(event.chat_id, "**تم الانتهاء من التجميع!**")
+    else:
+        await event.edit("يجب الدفع لاستخدام هذا الأمر!")
+
+################################
 @l313l.ar_cmd(pattern="راتب وعد(?:\s|$)([\s\S]*)")
 async def hussein(event):
     if event.is_group:
