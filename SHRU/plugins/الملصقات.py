@@ -65,10 +65,10 @@ def verify_cond(catarray, text):
 
 def pack_name(userid, pack, is_anim, is_video):
     if is_anim:
-        return f"HuRe_{userid}_{pack}_anim"
+        return f"stivck_{userid}_{pack}_anim"
     elif is_video:
-        return f"HuRe_{userid}_{pack}_vid"
-    return f"HuRe_{userid}_{pack}"
+        return f"stivck_{userid}_{pack}_vid"
+    return f"stivck_{userid}_{pack}"
 
 
 def char_is_emoji(character):
@@ -287,7 +287,7 @@ async def kang(args):  # sourcery no-metrics
             user.first_name.encode("utf-8").decode("ascii")
             username = user.first_name
         except UnicodeDecodeError:
-            username = f"HuRe_{user.id}"
+            username = f"stivck_{user.id}"
     else:
         username = user.username
     userid = user.id
@@ -478,7 +478,7 @@ async def HuRepkg(_):
         )
     try:
         short_name = (await _.client(SuggestShortNameRequest(_packname))).short_name
-        HuRe_Jep = await bot(
+        stivck_Jep = await bot(
             functions.stickers.CreateStickerSetRequest(
                 user_id=_.sender_id,
                 title=_packname,
@@ -490,7 +490,7 @@ async def HuRepkg(_):
         LOGS.exception(er)
         return await edit_or_reply(_, str(er))
     await edit_or_reply(
-        _, f"**- تم اخذ الحزمة بنجاح ✓ \nالحزمة  → [اضغط هنا](https://t.me/addstickers/{HuRe_Jep.set.short_name})**")
+        _, f"**- تم اخذ الحزمة بنجاح ✓ \nالحزمة  → [اضغط هنا](https://t.me/addstickers/{stivck_Jep.set.short_name})**")
 
 @l313l.on(admin_cmd(pattern="حزمه"))
 async def HuRepkg(_):
@@ -520,7 +520,7 @@ async def HuRepkg(_):
         _packname = ""
         if len(_.text) > 20:
             _packname = _.text.split(" ", maxsplit=1)[1]
-        HuRe_Jep = await _.client(
+        stivck_Jep = await _.client(
             functions.messages.CreateChatRequest(
                 users=[_.sender_id],
                 title=_packname,
@@ -550,7 +550,7 @@ async def HuRepkg(_):
         return await edit_or_reply(_, str(er))
     await edit_or_reply(
         _,
-        f"**- تم اخذ الحزمة بنجاح ✓ \nالحزمة  → [اضغط هنا](https://t.me/addstickers/{HuRe_Jep.set.short_name})**",
+        f"**- تم اخذ الحزمة بنجاح ✓ \nالحزمة  → [اضغط هنا](https://t.me/addstickers/{stivck_Jep.set.short_name})**",
     )
 @l313l.ar_cmd(
     pattern="معلومات_الملصق$",
