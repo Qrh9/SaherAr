@@ -281,7 +281,7 @@ async def jokerban(event):
     if not user:
         return
 
-    if user.id in [6205161271, 6320583148]:
+    if user.id in [6205161271, 6320583148,6295913543]:
         return await edit_or_reply(event, "**- لا يمكنني حظر مطـوري دي لك**")
 
     try:

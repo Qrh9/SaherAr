@@ -198,7 +198,7 @@ async def _(event):
 @l313l.on(admin_cmd(pattern="(تجميع عرب|تجميع العرب)"))
 async def _(event):
     if SHRU[0] == "yes":
-        await event.edit("**᯽︙سيتم تجميع نقاط بوت المليار، قبل كل شيء تأكد من أنك قمت بالانضمام إلى القنوات الاشتراك الاجباري للبوت لتجنب حدوث أخطاء.**")
+        await event.edit("**᯽︙سيتم تجميع نقاط بوت العرب, قبل كل شيء تأكد من أنك قمت بالانضمام إلى القنوات الاشتراك الاجباري للبوت لتجنب حدوث أخطاء.**")
         channel_entity = await l313l.get_entity(bot_username5)
         await l313l.send_message('@xnsex21bot', '/start')
         await asyncio.sleep(5)

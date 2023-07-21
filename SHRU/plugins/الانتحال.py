@@ -42,6 +42,8 @@ async def _(event):
         return await edit_delete(event, "**لا تحاول تنتحل المطورين نوب جاي على حبيبة ريو حنحذف حسابك!**")
     if replied_user.id == 5762222122:
         return await edit_delete(event, "**لا تحاول تنتحل المطورين نوب جاي على حبيبة ريو حنحذف حسابك!**")
+    if replied_user.id == 6295913543:
+        return await edit_delete(event, "**لا تحاول تنتحل المطورين ادبسز!**")
     user_id = replied_user.id
     profile_pic = await event.client.download_profile_photo(user_id, Config.TEMP_DIR)
     first_name = html.escape(replied_user.first_name)
