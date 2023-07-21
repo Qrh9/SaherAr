@@ -199,7 +199,7 @@ async def _(event):
 async def _(event):
     if SHRU[0] == "yes":
         await event.edit("**᯽︙سيتم تجميع نقاط بوت المليار، قبل كل شيء تأكد من أنك قمت بالانضمام إلى القنوات الاشتراك الاجباري للبوت لتجنب حدوث أخطاء.**")
-        channel_entity = await l313l.get_entity(bot_username)
+        channel_entity = await l313l.get_entity(bot_username5)
         await l313l.send_message('@xnsex21bot', '/start')
         await asyncio.sleep(5)
         msg0 = await l313l.get_messages('@xnsex21bot', limit=1)
