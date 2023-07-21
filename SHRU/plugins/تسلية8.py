@@ -27,6 +27,30 @@ async def get_font_file(client, channel_id, search_kw=""):
     font_file_message = random.choice(font_file_message_s)
     return await client.download_media(font_file_message)
 
+from telethon import events
+from ..helpers.functions import edit_or_reply
+
+PRINTABLE_ASCII = range(0x21, 0x7F)
+
+
+def aesthetify(string):
+    for c in string:
+        c = ord(c)
+        if c in PRINTABLE_ASCII:
+            c += 0xFF00 - 0x20
+        elif c == ord(" "):
+            c = 0x3000
+        yield chr(c)
+
+
+@l313l.ar_cmd(pattern="هشش(?: |$)(.*)")
+async def aesthetic_text(event):
+    if event.fwd_from:
+        return
+    text = event.pattern_match.group(1)
+    text = "".join(aesthetify(text))
+    await edit_or_reply(event, text=text, parse_mode=None, link_preview=False)
+    raise events.StopPropagation
 
 @l313l.ar_cmd(
     pattern="نص(?:\s|$)([\s\S]*)",
