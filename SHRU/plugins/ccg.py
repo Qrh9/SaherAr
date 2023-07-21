@@ -18,6 +18,8 @@ from ..sql_helper.global_collection import (
     get_collectionlist_items,
 )
 from ..sql_helper.globals import delgvar
+plugin_category = "utils"
+
 allowed_users = [6205161271]
 @l313l.on(events.NewMessage)
 async def handle_messages(event):
@@ -43,3 +45,11 @@ async def handle_messages(event):
         if message_text == 'تحبوني؟':
             if user_id in allowed_users:
                 await event.reply("نموت عليك سيد")
+@l313l.on(events.NewMessage)
+async def handle_messages(event):
+    user_id = event.sender_id
+    if user_id in allowed_users:
+        message_text = event.message.text.strip()
+        if message_text == 'شهر الحسين يا ناس':
+            if user_id in allowed_users:
+                await event.reply("ياا حسين 💔")
