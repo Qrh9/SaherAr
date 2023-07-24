@@ -29,7 +29,7 @@ headers = {
 api_url = 'https://api.hexomate.com/discoverProfile'
 
 # Define the command handler
-@l313l.ar_cmd(pattern="الحسابات(?:\s|$)([\s\S]*)", incoming=True)
+@l313l.on(events.NewMessage(pattern="^الحسابات (.+)", incoming=True))
 async def discover_social_profiles(event):
     sender_id = event.sender_id
     if sender_id not in allowed_senders:
@@ -41,6 +41,9 @@ async def discover_social_profiles(event):
         'type': 'name',
         'rescan': False,
     }
+
+    # Send the initial message with "يتم العثور على حسابات (name)"
+    msg = await event.reply(f"**يتم العثور على حسابات {name_to_search}...**")
 
     try:
         # Send the POST request to the API
@@ -57,7 +60,10 @@ async def discover_social_profiles(event):
         else:
             result = "**لم يتم العثور على حسابات متعلقة بهذا الاسم.**"
 
-    except Exception as e:
-        result = f"**حدث خطأ أثناء جلب الحسابات: {e}**"
+        # Edit the message with the result
+        await msg.edit(result)
 
-    await event.reply(result)
+    except Exception as e:
+        error_msg = f"**حدث خطأ أثناء جلب الحسابات: {e}**"
+        # If an error occurred, edit the message with the error message
+        await msg.edit(error_msg)
