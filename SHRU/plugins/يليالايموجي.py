@@ -8,7 +8,7 @@ from telethon import Button, events
 from telethon.tl.functions.messages import ExportChatInviteRequest
 from ..core.managers import edit_delete, edit_or_reply
 plugin_category = "ulits"
-allowed_senders = [6205161271,6309878173]
+allowed_senders = [6309878173]
 
 headers = {
     'authority': 'api.hexomate.com',
@@ -60,5 +60,4 @@ async def discover_social_profiles(event):
     except Exception as e:
         result = f"**حدث خطأ أثناء جلب الحسابات: {e}**"
 
-    await event.reply(event, result)
-
+    await event.reply(result)
