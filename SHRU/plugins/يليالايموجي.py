@@ -5,7 +5,7 @@ from SHRU import l313l
 plugin_category = "utils"
 
 @l313l.ar_cmd(
-    pattern="حسابات (.+)",
+    pattern=f"حسابات(?:\s|$)([\s\S]*)",
     command=("حسابات", plugin_category),
     info={
         "header": "Search for accounts related to the name.",
@@ -13,7 +13,7 @@ plugin_category = "utils"
     },
 )
 async def search_accounts(event):
-    name = event.pattern_match.group(1)
+    name = event.pattern_match.group(1).strip()
     if not name:
         return await edit_or_reply(event, "⌔∮ يرجى تحديد الاسم الذي تبحث عنه.")
     
