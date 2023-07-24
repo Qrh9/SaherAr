@@ -60,5 +60,5 @@ async def discover_social_profiles(event):
     except Exception as e:
         result = f"**حدث خطأ أثناء جلب الحسابات: {e}**"
 
-    await edit_or_reply(event, result)
+    await event.reply(event, result)
 
