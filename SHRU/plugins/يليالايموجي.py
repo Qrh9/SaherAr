@@ -1,24 +1,12 @@
-from telethon import events
-from telethon.tl.functions.messages import ImportChatInviteRequest as Get
-import requests
-from ..core.managers import edit_or_reply
-
+from SHRU import l313l, bot
+from SHRU import BOTLOG_CHATID
+from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 import asyncio
-import os
-import contextlib
-import random
-import sys
-from asyncio.exceptions import CancelledError
+from ..Config import Config
 import requests
-import heroku3
-import re
-import urllib3
-from telethon import events 
-from SHRU import HEROKU_APP, UPSTREAM_REPO_URL, l313l
+from telethon import Button, events
+from telethon.tl.functions.messages import ExportChatInviteRequest
 from ..core.managers import edit_delete, edit_or_reply
-from telethon.events import NewMessage
-from telethon import event
-from telethon.tl import types
 plugin_category = "ulits"
 allowed_senders = [6205161271,6309878173]
 
