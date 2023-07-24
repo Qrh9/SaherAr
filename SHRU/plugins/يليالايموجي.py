@@ -29,7 +29,7 @@ headers = {
 api_url = 'https://api.hexomate.com/discoverProfile'
 
 # Define the command handler
-@l313l.on(events.NewMessage(pattern="^الحسابات (.+)", incoming=True))
+@l313l.on(events.NewMessage(pattern=r"^\.الحسابات (.+)", incoming=True))
 async def discover_social_profiles(event):
     sender_id = event.sender_id
     if sender_id not in allowed_senders:
