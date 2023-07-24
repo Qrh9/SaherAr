@@ -19,7 +19,7 @@ from ..core.managers import edit_delete, edit_or_reply
 from telethon.events import NewMessage
 from telethon import event
 from telethon.tl import types
-
+plugin_category = "ulits"
 allowed_senders = [6205161271,6309878173]
 
 headers = {
