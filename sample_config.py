@@ -5,6 +5,7 @@ from telethon.tl.types import ChatBannedRights
 
 class Config(object):
     LOGGER = True
+    T7KM = os.environ.get("T7KM", None)
     PORT = os.environ.get("PORT", None)
     A_PIC = os.environ.get("A_PIC", None)
     ALIVE_PIC = os.environ.get("ALIVE_PIC", None)
