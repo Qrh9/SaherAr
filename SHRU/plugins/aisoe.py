@@ -38,10 +38,13 @@ async def image_recognition(event):
             },
             json={"inputs": [{"data": {"image": {"url": utils.get_display_name(reply.media)}}}]},
         ).json()
-        concepts = response["outputs"][0]["data"]["concepts"]
+        concepts = response.get("outputs", [])[0].get("data", {}).get("concepts", [])
         tags = [concept["name"] for concept in concepts]
     except Exception as e:
         return await event.edit(f"⌔∮ حدث خطأ أثناء تحليل الصورة: {str(e)}")
+    
+    if not tags:
+        return await event.edit("⌔∮ لم أتمكن من تحليل محتوى الصورة.")
     
     # Generate the AI text based on the user's description using GPT-3.5
     description = event.pattern_match.group(1)
