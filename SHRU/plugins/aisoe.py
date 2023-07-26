@@ -7,7 +7,7 @@ from SHRU import l313l
 openai.api_key = "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"
 
 # Set your clarifai API key here
-clarifai_api_key = "a5987016426644ef81de76dee40ff5f0"
+clarifai_api_key = "5b6e9ead4aa24c7d9419e404827b9630"
 
 plugin_category = "utils"
 
