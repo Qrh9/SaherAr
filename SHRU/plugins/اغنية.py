@@ -289,8 +289,6 @@ async def _(event):
         await delete_conv(event, chat, purgeflag)
 import requests
 import tempfile
-import requests
-import tempfile
 def isolate_vocals(song_file):
     """
     This function isolates the vocals from a song file.
@@ -323,6 +321,7 @@ def isolate_vocals(song_file):
 
     # Return the paths to the isolated vocals and instrumental files.
     return vocals_file.name, instrumental_file.name
+
 @l313l.ar_cmd(
     pattern="عزل$",
     command=("عزل", plugin_category),
@@ -331,20 +330,31 @@ def isolate_vocals(song_file):
         "usage": "{tr}عزل (بالرد على ملف الصوتي للأغنية)",
     },
 )
-def isolate_vocals_cmd(message):
+async def isolate_vocals_cmd(event):
     """
     This command isolates the vocals from a song file and sends the isolated vocals and instrumental to the user.
 
     Args:
-        message: The message from the user.
+        event: The event from the user.
     """
-    # Get the song file from the user's message.
-    song_file = message.attachments[0].file_id
+    reply = await event.get_reply_message()
+    if not reply or not reply.media or not hasattr(reply.media, "document"):
+        return await event.edit("⌔∮ يرجى الرد على ملف الصوتي للأغنية")
 
-    # Isolate the vocals from the song file.
-    vocals_file, instrumental_file = isolate_vocals(song_file)
+    # Download the song file.
+    song_file = await event.client.download_media(reply)
 
-    # Send the isolated vocals and instrumental to the user.
-    l313l.send_file(message.chat.id, vocals_file)
-    l313l.send_file(message.chat.id, instrumental_file)
+    try:
+        # Isolate the vocals from the song file.
+        vocals_file, instrumental_file = isolate_vocals(song_file)
 
+        # Send the isolated vocals and instrumental to the user.
+        await event.client.send_file(event.chat_id, vocals_file)
+        await event.client.send_file(event.chat_id, instrumental_file)
+    except Exception as e:
+        await event.edit(f"⌔∮ حدث خطأ أثناء عزل الصوت: {str(e)}")
+    finally:
+        # Delete the temporary files.
+        for file_path in (vocals_file, instrumental_file):
+            if file_path and os.path.exists(file_path):
+                os.remove(file_path)
