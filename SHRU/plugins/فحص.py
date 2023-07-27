@@ -24,7 +24,7 @@ from . import mention
  
 plugin_category = "utils"
 
-#كتـابة وتعـديل:  @SX9OO
+#كتـابة وعـديل:  @SX9OOت
 file_path = "installation_date.txt"
 if os.path.exists(file_path) and os.path.getsize(file_path) > 0:
     with open(file_path, "r") as file:
