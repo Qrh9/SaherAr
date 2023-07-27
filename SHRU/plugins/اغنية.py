@@ -287,76 +287,60 @@ async def _(event):
         )
         await catevent.delete()
         await delete_conv(event, chat, purgeflag)
-import os
-from pydub import AudioSegment
+import requests
+import tempfile
 
-from ..core.managers import edit_delete, edit_or_reply
+def isolate_vocals(song_file):
+  """
+  This function isolates the vocals from a song file.
 
-@l313l.ar_cmd(pattern="عزل$", command=("عزل", plugin_category),
+  Args:
+    song_file: The path to the song file.
+
+  Returns:
+    A tuple of two files: one with the vocals and one with the instrumental.
+  """
+
+  # Upload the song file to the vocal remover service.
+  response = requests.post("https://vocalremover.org/api/v1/upload", files={"file": song_file})
+  if response.status_code != 200:
+    raise Exception("Error uploading song file: {}".format(response.status_code))
+
+  # Get the URLs of the isolated vocals and instrumental files.
+  vocals_url = response.json()["vocals_url"]
+  instrumental_url = response.json()["instrumental_url"]
+
+  # Download the isolated vocals and instrumental files.
+  with tempfile.NamedTemporaryFile() as vocals_file, tempfile.NamedTemporaryFile() as instrumental_file:
+    requests.get(vocals_url, stream=True).save(vocals_file.name)
+    requests.get(instrumental_url, stream=True).save(instrumental_file.name)
+
+  # Return the isolated vocals and instrumental files.
+  return vocals_file.name, instrumental_file.name
+
+@l313l.ar_cmd(
+    pattern="عزل$",
+    command=("عزل", plugin_category),
     info={
         "header": "قم بعزل صوت المغني والأغنية من ملف صوتي",
         "usage": "{tr}عزل (بالرد على ملف الصوتي للأغنية)",
     },
 )
-async def isolate_vocals(event):
-    reply = await event.get_reply_message()
-    if not reply or not reply.file or not reply.file.mime_type.startswith("audio"):
-        return await edit_or_reply(event, "⌔∮ يرجى الرد على ملف الصوتي للأغنية.")
+def isolate_vocals_cmd(message, args):
+  """
+  This command isolates the vocals from a song file and sends the isolated vocals and instrumental to the user.
 
-    audio_file = await reply.download_media()
-    audio = AudioSegment.from_file(audio_file)
+  Args:
+    message: The message from the user.
+    args: The arguments passed to the command.
+  """
 
-    # Assuming stereo audio (left and right channels)
-    left_channel = audio.split_to_mono()[0]
-    right_channel = audio.split_to_mono()[1]
+  # Get the song file from the user's message.
+  song_file = message.attachments[0].file_id
 
-    # Mixing the left and right channels together (to combine vocals and accompaniment)
-    mixed_audio = left_channel.overlay(right_channel)
+  # Isolate the vocals from the song file.
+  vocals_file, instrumental_file = isolate_vocals(song_file)
 
-    # Export the mixed audio and the original audio segments to separate files
-    mixed_audio_file = "mixed_audio.mp3"
-    vocals_file = "vocals.mp3"
-    accompaniment_file = "accompaniment.mp3"
-
-    mixed_audio.export(mixed_audio_file, format="mp3")
-    left_channel.export(vocals_file, format="mp3")
-    right_channel.export(accompaniment_file, format="mp3")
-
-    # Send the files to the user
-    await event.client.send_file(event.chat_id, vocals_file, reply_to=reply)
-    await edit_or_reply(
-        event,
-        "**⌔∮ هذا ملف صوت المغني فقط (بدون الأغنية).**",
-        parse_mode="html",
-    )
-    await event.client.send_file(event.chat_id, accompaniment_file, reply_to=reply)
-    await edit_or_reply(
-        event,
-        "**⌔∮ هذا ملف صوت الأغنية فقط (بدون المغني).**",
-        parse_mode="html",
-    )
-
-    # Clean up the temporary files
-    os.remove(audio_file)
-    os.remove(mixed_audio_file)
-    os.remove(vocals_file)
-    os.remove(accompaniment_file)
-
-    # Use the vocalremover.org API to get the isolated vocals
-    vocals_url = "https://vocalremover.org/api/v1/vocals/remove?url=" + audio_file
-    vocals_response = requests.get(vocals_url)
-    if vocals_response.status_code == 200:
-        vocals_data = vocals_response.json()
-        vocals_file = vocals_data["file"]
-        await event.client.send_file(event.chat_id, vocals_file, reply_to=reply)
-        await edit_or_reply(
-            event,
-            "**⌔∮ هذا ملف صوت المغني فقط من الموقع (بدون الأغنية).**",
-            parse_mode="html",
-        )
-    else:
-        await edit_or_reply(
-            event,
-            "**⌔∮ حدث خطأ في تنزيل ملف الصوت من الموقع.**",
-            parse_mode="html",
-        )
+  # Send the isolated vocals and instrumental to the user.
+  l313l.send_file(message.chat.id, vocals_file)
+  l313l.send_file(message.chat.id, instrumental_file)
