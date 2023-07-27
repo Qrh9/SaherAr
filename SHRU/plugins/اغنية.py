@@ -287,7 +287,6 @@ async def _(event):
         )
         await catevent.delete()
         await delete_conv(event, chat, purgeflag)
-
 import os
 from pydub import AudioSegment
 
