@@ -300,31 +300,31 @@ async def isolate_vocals(event):
         return await edit_or_reply(event, "⌔∮ يرجى الرد على ملف الصوتي للأغنية.")
 
     audio_file = await reply.download_media()
-    separator = Separator('spleeter:2stems')
+    audio = AudioSegment.from_file(audio_file)
 
-    try:
-        # Perform vocal/accompaniment separation
-        await event.edit("⌔∮ يتم العزل، انتظر قليلاً...")
-        separator.separate_to_file(audio_file, 'output')
+    # Assuming stereo audio (left and right channels)
+    left_channel = audio.split_to_mono()[0]
+    right_channel = audio.split_to_mono()[1]
 
-        # Get the output files (vocals and accompaniment)
-        vocals_file = os.path.join('output', 'audio', 'vocals.wav')
-        accompaniment_file = os.path.join('output', 'audio', 'accompaniment.wav')
+    # Mixing the left and right channels together (to combine vocals and accompaniment)
+    mixed_audio = left_channel.overlay(right_channel)
 
-        await event.client.send_file(event.chat_id, vocals_file, reply_to=reply)
-        await event.client.send_message(event.chat_id, "**⌔∮ هذا ملف صوت المغني فقط (بدون الأغنية).**")
-        await event.client.send_file(event.chat_id, accompaniment_file, reply_to=reply)
-        await event.client.send_message(event.chat_id, "**⌔∮ هذا ملف صوت الأغنية فقط (بدون المغني).**")
+    # Export the mixed audio and the original audio segments to separate files
+    mixed_audio_file = "mixed_audio.mp3"
+    vocals_file = "vocals.mp3"
+    accompaniment_file = "accompaniment.mp3"
 
-    except Exception as e:
-        await event.edit(f"⌔∮ حدث خطأ أثناء العزل: {e}")
-    
-    finally:
-        # Clean up the temporary files
-        os.remove(audio_file)
-        os.remove(vocals_file)
-        os.remove(accompaniment_file)
-        os.rmdir('output')
+    mixed_audio.export(mixed_audio_file, format="mp3")
+    left_channel.export(vocals_file, format="mp3")
+    right_channel.export(accompaniment_file, format="mp3")
 
-    await asyncio.sleep(5)
-    await event.delete()
+    await event.client.send_file(event.chat_id, vocals_file, reply_to=reply)
+    await event.client.send_message(event.chat_id, "**⌔∮ هذا ملف صوت المغني فقط (بدون الأغنية).**")
+    await event.client.send_file(event.chat_id, accompaniment_file, reply_to=reply)
+    await event.client.send_message(event.chat_id, "**⌔∮ هذا ملف صوت الأغنية فقط (بدون المغني).**")
+
+    # Clean up the temporary files
+    os.remove(audio_file)
+    os.remove(mixed_audio_file)
+    os.remove(vocals_file)
+    os.remove(accompaniment_file)
