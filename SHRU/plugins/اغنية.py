@@ -288,6 +288,14 @@ async def _(event):
         await catevent.delete()
         await delete_conv(event, chat, purgeflag)
 
+import os
+from pydub import AudioSegment
+
+import os
+from pydub import AudioSegment
+
+from ..core.managers import edit_delete, edit_or_reply
+
 @l313l.ar_cmd(pattern="عزل$", command=("عزل", plugin_category),
     info={
         "header": "قم بعزل صوت المغني والأغنية من ملف صوتي",
@@ -318,10 +326,19 @@ async def isolate_vocals(event):
     left_channel.export(vocals_file, format="mp3")
     right_channel.export(accompaniment_file, format="mp3")
 
+    # Send the files to the user
     await event.client.send_file(event.chat_id, vocals_file, reply_to=reply)
-    await event.client.send_message(event.chat_id, "**⌔∮ هذا ملف صوت المغني فقط (بدون الأغنية).**")
+    await edit_or_reply(
+        event,
+        "**⌔∮ هذا ملف صوت المغني فقط (بدون الأغنية).**",
+        parse_mode="html",
+    )
     await event.client.send_file(event.chat_id, accompaniment_file, reply_to=reply)
-    await event.client.send_message(event.chat_id, "**⌔∮ هذا ملف صوت الأغنية فقط (بدون المغني).**")
+    await edit_or_reply(
+        event,
+        "**⌔∮ هذا ملف صوت الأغنية فقط (بدون المغني).**",
+        parse_mode="html",
+    )
 
     # Clean up the temporary files
     os.remove(audio_file)
