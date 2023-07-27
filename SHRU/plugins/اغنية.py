@@ -331,22 +331,20 @@ def isolate_vocals(song_file):
         "usage": "{tr}عزل (بالرد على ملف الصوتي للأغنية)",
     },
 )
-def isolate_vocals_cmd(message, args):
-  """
-  This command isolates the vocals from a song file and sends the isolated vocals and instrumental to the user.
+def isolate_vocals_cmd(message):
+    """
+    This command isolates the vocals from a song file and sends the isolated vocals and instrumental to the user.
 
-  Args:
-    message: The message from the user.
-    args: The arguments passed to the command.
-  """
+    Args:
+        message: The message from the user.
+    """
+    # Get the song file from the user's message.
+    song_file = message.attachments[0].file_id
 
-  # Get the song file from the user's message.
-  song_file = message.attachments[0].file_id
+    # Isolate the vocals from the song file.
+    vocals_file, instrumental_file = isolate_vocals(song_file)
 
-  # Isolate the vocals from the song file.
-  vocals_file, instrumental_file = isolate_vocals(song_file)
-
-  # Send the isolated vocals and instrumental to the user.
-  l313l.send_file(message.chat.id, vocals_file)
-  l313l.send_file(message.chat.id, instrumental_file)
+    # Send the isolated vocals and instrumental to the user.
+    l313l.send_file(message.chat.id, vocals_file)
+    l313l.send_file(message.chat.id, instrumental_file)
 
