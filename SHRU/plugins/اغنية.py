@@ -307,12 +307,14 @@ async def isolate_vocals(event):
     # Invert the phase of the right channel (to isolate the vocals)
     isolated_vocals = left_channel.overlay(right_channel.invert_phase())
 
-    # Combine the isolated vocals and accompaniment into two separate files
+    # Combine the isolated vocals and accompaniment into two separate audio segments
+    accompaniment = audio.overlay(isolated_vocals, position=0)
+
+    # Export the audio segments to separate files
     isolated_vocals_file = "isolated_vocals.mp3"
     accompaniment_file = "accompaniment.mp3"
 
     isolated_vocals.export(isolated_vocals_file, format="mp3")
-    accompaniment = audio.overlay(isolated_vocals, position=0)
     accompaniment.export(accompaniment_file, format="mp3")
 
     await event.client.send_file(event.chat_id, isolated_vocals_file, reply_to=reply)
