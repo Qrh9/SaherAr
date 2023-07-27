@@ -321,6 +321,5 @@ async def isolate_vocals(event):
     os.remove(accompaniment_file)
     os.rmdir("./output")
 
-    # Give some time for the files to be sent before deleting the waiting message
     await asyncio.sleep(5)
     await event.delete()
