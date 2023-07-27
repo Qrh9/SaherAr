@@ -302,24 +302,29 @@ async def isolate_vocals(event):
     audio_file = await reply.download_media()
     separator = Separator('spleeter:2stems')
 
-    # Perform vocal/accompaniment separation
-    await event.edit("⌔∮ يتم العزل، انتظر قليلاً...")
-    separator.separate_to_file(audio_file, './output')
+    try:
+        # Perform vocal/accompaniment separation
+        await event.edit("⌔∮ يتم العزل، انتظر قليلاً...")
+        separator.separate_to_file(audio_file, 'output')
 
-    # Get the output files (vocals and accompaniment)
-    vocals_file = "./output/audio/vocals.wav"
-    accompaniment_file = "./output/audio/accompaniment.wav"
+        # Get the output files (vocals and accompaniment)
+        vocals_file = os.path.join('output', 'audio', 'vocals.wav')
+        accompaniment_file = os.path.join('output', 'audio', 'accompaniment.wav')
 
-    await event.client.send_file(event.chat_id, vocals_file, reply_to=reply)
-    await event.client.send_message(event.chat_id, "**⌔∮ هذا ملف صوت المغني فقط (بدون الأغنية).**")
-    await event.client.send_file(event.chat_id, accompaniment_file, reply_to=reply)
-    await event.client.send_message(event.chat_id, "**⌔∮ هذا ملف صوت الأغنية فقط (بدون المغني).**")
+        await event.client.send_file(event.chat_id, vocals_file, reply_to=reply)
+        await event.client.send_message(event.chat_id, "**⌔∮ هذا ملف صوت المغني فقط (بدون الأغنية).**")
+        await event.client.send_file(event.chat_id, accompaniment_file, reply_to=reply)
+        await event.client.send_message(event.chat_id, "**⌔∮ هذا ملف صوت الأغنية فقط (بدون المغني).**")
 
-    # Clean up the temporary files
-    os.remove(audio_file)
-    os.remove(vocals_file)
-    os.remove(accompaniment_file)
-    os.rmdir("./output")
+    except Exception as e:
+        await event.edit(f"⌔∮ حدث خطأ أثناء العزل: {e}")
+    
+    finally:
+        # Clean up the temporary files
+        os.remove(audio_file)
+        os.remove(vocals_file)
+        os.remove(accompaniment_file)
+        os.rmdir('output')
 
     await asyncio.sleep(5)
     await event.delete()
