@@ -7,7 +7,7 @@ import mutagen
 import requests
 from bs4 import BeautifulSoup
 from pathlib import Path
-import shutil
+
 from pydub import AudioSegment
 from ShazamAPI import Shazam
 from telethon import types
@@ -18,8 +18,8 @@ from validators.url import url
 from telethon import types
 from moviepy.editor import VideoFileClip
 from shazamio import Shazam
-import lyricsgenius
-from spleeter.separator import Separator
+
+
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.functions import delete_conv, name_dl, song_dl, video_dl, yt_search
