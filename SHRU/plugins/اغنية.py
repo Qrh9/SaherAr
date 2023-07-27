@@ -291,9 +291,6 @@ async def _(event):
 import os
 from pydub import AudioSegment
 
-import os
-from pydub import AudioSegment
-
 from ..core.managers import edit_delete, edit_or_reply
 
 @l313l.ar_cmd(pattern="عزل$", command=("عزل", plugin_category),
@@ -345,3 +342,22 @@ async def isolate_vocals(event):
     os.remove(mixed_audio_file)
     os.remove(vocals_file)
     os.remove(accompaniment_file)
+
+    # Use the vocalremover.org API to get the isolated vocals
+    vocals_url = "https://vocalremover.org/api/v1/vocals/remove?url=" + audio_file
+    vocals_response = requests.get(vocals_url)
+    if vocals_response.status_code == 200:
+        vocals_data = vocals_response.json()
+        vocals_file = vocals_data["file"]
+        await event.client.send_file(event.chat_id, vocals_file, reply_to=reply)
+        await edit_or_reply(
+            event,
+            "**⌔∮ هذا ملف صوت المغني فقط من الموقع (بدون الأغنية).**",
+            parse_mode="html",
+        )
+    else:
+        await edit_or_reply(
+            event,
+            "**⌔∮ حدث خطأ في تنزيل ملف الصوت من الموقع.**",
+            parse_mode="html",
+        )
