@@ -18,7 +18,7 @@ from telethon import types
 from moviepy.editor import VideoFileClip
 from shazamio import Shazam
 import lyricsgenius
-
+from spleeter.separator import Separator
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.functions import delete_conv, name_dl, song_dl, video_dl, yt_search
@@ -286,6 +286,7 @@ async def _(event):
         )
         await catevent.delete()
         await delete_conv(event, chat, purgeflag)
+
 @l313l.ar_cmd(pattern="عزل$", command=("عزل", plugin_category),
     info={
         "header": "قم بعزل صوت المغني والأغنية من ملف صوتي",
@@ -298,31 +299,25 @@ async def isolate_vocals(event):
         return await edit_or_reply(event, "⌔∮ يرجى الرد على ملف الصوتي للأغنية.")
 
     audio_file = await reply.download_media()
-    audio = AudioSegment.from_file(audio_file)
 
-    # Assuming stereo audio (left and right channels)
-    left_channel = audio.split_to_mono()[0]
-    right_channel = audio.split_to_mono()[1]
+    
+    separator = Separator("spleeter:2stems")
 
-    # Invert the phase of the right channel (to isolate the vocals)
-    isolated_vocals = left_channel.overlay(right_channel.invert_phase())
+    
+    separator.separate_to_file(audio_file, output_dir="output")
 
-    # Combine the isolated vocals and accompaniment into two separate audio segments
-    accompaniment = audio.overlay(isolated_vocals, position=0)
-
-    # Export the audio segments to separate files
-    isolated_vocals_file = "isolated_vocals.mp3"
-    accompaniment_file = "accompaniment.mp3"
-
-    isolated_vocals.export(isolated_vocals_file, format="mp3")
-    accompaniment.export(accompaniment_file, format="mp3")
+    
+    isolated_vocals_file = "output/audio/vocals.wav"
+    accompaniment_file = "output/audio/accompaniment.wav"
 
     await event.client.send_file(event.chat_id, isolated_vocals_file, reply_to=reply)
     await event.client.send_message(event.chat_id, "**⌔∮ هذا ملف صوت المغني فقط (بدون الأغنية).**")
     await event.client.send_file(event.chat_id, accompaniment_file, reply_to=reply)
     await event.client.send_message(event.chat_id, "**⌔∮ هذا ملف صوت الأغنية فقط (بدون المغني).**")
 
-    # Clean up the temporary files
+    
     os.remove(audio_file)
     os.remove(isolated_vocals_file)
     os.remove(accompaniment_file)
+    os.rmdir("output/audio")
+    os.rmdir("output")
