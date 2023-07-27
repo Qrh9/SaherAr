@@ -7,6 +7,7 @@ import mutagen
 import requests
 from bs4 import BeautifulSoup
 from pathlib import Path
+import shutil
 from pydub import AudioSegment
 from ShazamAPI import Shazam
 from telethon import types
@@ -286,6 +287,7 @@ async def _(event):
         )
         await catevent.delete()
         await delete_conv(event, chat, purgeflag)
+separator = Separator("spleeter:2stems")
 
 @l313l.ar_cmd(pattern="عزل$", command=("عزل", plugin_category),
     info={
@@ -299,25 +301,23 @@ async def isolate_vocals(event):
         return await edit_or_reply(event, "⌔∮ يرجى الرد على ملف الصوتي للأغنية.")
 
     audio_file = await reply.download_media()
-
     
-    separator = Separator("spleeter:2stems")
+    # Use Spleeter to isolate the vocals and accompaniment
+    try:
+        output_dir = "spleeter_output"
+        separator.separate_to_file(audio_file, output_dir)
+        vocals_file = os.path.join(output_dir, "accompaniment.wav")
+        accompaniment_file = os.path.join(output_dir, "vocals.wav")
+    except Exception as e:
+        LOGS.error(e)
+        return await edit_delete(event, f"**⌔∮ حدث خطأ أثناء عزل صوت المغني والأغنية:**\n__{e}__")
 
-    
-    separator.separate_to_file(audio_file, output_dir="output")
-
-    
-    isolated_vocals_file = "output/audio/vocals.wav"
-    accompaniment_file = "output/audio/accompaniment.wav"
-
-    await event.client.send_file(event.chat_id, isolated_vocals_file, reply_to=reply)
+    # Send the isolated vocals and accompaniment as separate files
+    await event.client.send_file(event.chat_id, vocals_file, reply_to=reply)
     await event.client.send_message(event.chat_id, "**⌔∮ هذا ملف صوت المغني فقط (بدون الأغنية).**")
     await event.client.send_file(event.chat_id, accompaniment_file, reply_to=reply)
     await event.client.send_message(event.chat_id, "**⌔∮ هذا ملف صوت الأغنية فقط (بدون المغني).**")
 
-    
+    # Clean up the temporary files
+    shutil.rmtree(output_dir)
     os.remove(audio_file)
-    os.remove(isolated_vocals_file)
-    os.remove(accompaniment_file)
-    os.rmdir("output/audio")
-    os.rmdir("output")
