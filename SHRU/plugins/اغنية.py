@@ -289,35 +289,40 @@ async def _(event):
         await delete_conv(event, chat, purgeflag)
 import requests
 import tempfile
-
+import requests
+import tempfile
 def isolate_vocals(song_file):
-  """
-  This function isolates the vocals from a song file.
+    """
+    This function isolates the vocals from a song file.
 
-  Args:
-    song_file: The path to the song file.
+    Args:
+      song_file: The path to the song file.
 
-  Returns:
-    A tuple of two files: one with the vocals and one with the instrumental.
-  """
+    Returns:
+      A tuple of two files: one with the vocals and one with the instrumental.
+    """
 
-  # Upload the song file to the vocal remover service.
-  response = requests.post("https://vocalremover.org/api/v1/upload", files={"file": song_file})
-  if response.status_code != 200:
-    raise Exception("Error uploading song file: {}".format(response.status_code))
+    # Upload the song file to the vocal remover service.
+    with open(song_file, "rb") as file:
+        response = requests.post("https://vocalremover.org/api/v1/upload", files={"file": file})
+    if response.status_code != 200:
+        raise Exception("Error uploading song file: {}".format(response.status_code))
 
-  # Get the URLs of the isolated vocals and instrumental files.
-  vocals_url = response.json()["vocals_url"]
-  instrumental_url = response.json()["instrumental_url"]
+    # Get the URLs of the isolated vocals and instrumental files.
+    vocals_url = response.json()["vocals_url"]
+    instrumental_url = response.json()["instrumental_url"]
 
-  # Download the isolated vocals and instrumental files.
-  with tempfile.NamedTemporaryFile() as vocals_file, tempfile.NamedTemporaryFile() as instrumental_file:
-    requests.get(vocals_url, stream=True).save(vocals_file.name)
-    requests.get(instrumental_url, stream=True).save(instrumental_file.name)
+    # Download the isolated vocals and instrumental files.
+    vocals_response = requests.get(vocals_url)
+    instrumental_response = requests.get(instrumental_url)
 
-  # Return the isolated vocals and instrumental files.
-  return vocals_file.name, instrumental_file.name
+    # Create temporary files to save the isolated vocals and instrumental.
+    with tempfile.NamedTemporaryFile(suffix=".mp3", delete=False) as vocals_file, tempfile.NamedTemporaryFile(suffix=".mp3", delete=False) as instrumental_file:
+        vocals_file.write(vocals_response.content)
+        instrumental_file.write(instrumental_response.content)
 
+    # Return the paths to the isolated vocals and instrumental files.
+    return vocals_file.name, instrumental_file.name
 @l313l.ar_cmd(
     pattern="عزل$",
     command=("عزل", plugin_category),
@@ -344,3 +349,4 @@ def isolate_vocals_cmd(message, args):
   # Send the isolated vocals and instrumental to the user.
   l313l.send_file(message.chat.id, vocals_file)
   l313l.send_file(message.chat.id, instrumental_file)
+
