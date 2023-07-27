@@ -289,6 +289,8 @@ async def _(event):
         await delete_conv(event, chat, purgeflag)
 import requests
 import tempfile
+import os
+
 def isolate_vocals(song_file):
     """
     This function isolates the vocals from a song file.
@@ -355,6 +357,7 @@ async def isolate_vocals_cmd(event):
         await event.edit(f"⌔∮ حدث خطأ أثناء عزل الصوت: {str(e)}")
     finally:
         # Delete the temporary files.
-        for file_path in (vocals_file, instrumental_file):
-            if file_path and os.path.exists(file_path):
-                os.remove(file_path)
+        if 'vocals_file' in locals() and os.path.exists(vocals_file):
+            os.remove(vocals_file)
+        if 'instrumental_file' in locals() and os.path.exists(instrumental_file):
+            os.remove(instrumental_file)
