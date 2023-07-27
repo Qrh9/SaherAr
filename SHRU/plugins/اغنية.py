@@ -7,7 +7,7 @@ import mutagen
 import requests
 from bs4 import BeautifulSoup
 from pathlib import Path
-
+from pydub import AudioSegment
 from ShazamAPI import Shazam
 from telethon import types
 from telethon.errors.rpcerrorlist import YouBlockedUserError, ChatSendMediaForbiddenError
@@ -286,3 +286,41 @@ async def _(event):
         )
         await catevent.delete()
         await delete_conv(event, chat, purgeflag)
+@l313l.ar_cmd(pattern="عزل$", command=("عزل", plugin_category),
+    info={
+        "header": "قم بعزل صوت المغني والأغنية من ملف صوتي",
+        "usage": "{tr}عزل (بالرد على ملف الصوتي للأغنية)",
+    },
+)
+async def isolate_vocals(event):
+    reply = await event.get_reply_message()
+    if not reply or not reply.file or not reply.file.mime_type.startswith("audio"):
+        return await edit_or_reply(event, "⌔∮ يرجى الرد على ملف الصوتي للأغنية.")
+
+    audio_file = await reply.download_media()
+    audio = AudioSegment.from_file(audio_file)
+
+    # Assuming stereo audio (left and right channels)
+    left_channel = audio.split_to_mono()[0]
+    right_channel = audio.split_to_mono()[1]
+
+    # Invert the phase of the right channel (to isolate the vocals)
+    isolated_vocals = left_channel.overlay(right_channel.invert_phase())
+
+    # Combine the isolated vocals and accompaniment into two separate files
+    isolated_vocals_file = "isolated_vocals.mp3"
+    accompaniment_file = "accompaniment.mp3"
+
+    isolated_vocals.export(isolated_vocals_file, format="mp3")
+    accompaniment = audio.overlay(isolated_vocals, position=0)
+    accompaniment.export(accompaniment_file, format="mp3")
+
+    await event.client.send_file(event.chat_id, isolated_vocals_file, reply_to=reply)
+    await event.client.send_message(event.chat_id, "**⌔∮ هذا ملف صوت المغني فقط (بدون الأغنية).**")
+    await event.client.send_file(event.chat_id, accompaniment_file, reply_to=reply)
+    await event.client.send_message(event.chat_id, "**⌔∮ هذا ملف صوت الأغنية فقط (بدون المغني).**")
+
+    # Clean up the temporary files
+    os.remove(audio_file)
+    os.remove(isolated_vocals_file)
+    os.remove(accompaniment_file)
