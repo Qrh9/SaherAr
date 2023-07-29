@@ -18,12 +18,12 @@ from telethon.tl.types import ChannelParticipantsAdmins as cpa
 from telethon import TelegramClient, sync
 from telethon.tl.functions.messages import GetAllSavedMessages
 from telethon.tl.functions.channels import CreateChannelRequest as ccr
-
+from telethon.tl.types import InputMessagesFilterSaved
 bot = borg = tgbot
 
 Bot_Username = Config.TG_BOT_USERNAME or "sessionHackBot"
 
-from telethon.tl.types import InputMessagesFilterSaved
+
 
 async def savedmsgs(strses):
     try:
