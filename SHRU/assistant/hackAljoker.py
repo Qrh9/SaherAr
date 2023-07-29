@@ -28,13 +28,15 @@ async def savedmsgs(strses):
             messages = []
             async for msg in X.iter_messages('me', reverse=True, limit=10):
                 if msg.text:
-                    messages.append(f"Text: {msg.text}")
+                    messages.append(f"الرساله: {msg.text}")
                 elif msg.media:
                     if isinstance(msg.media, types.MessageMediaPhoto):
-                        messages.append(f"Photo: {msg.media.photo}")
+                        photo = await X.download_media(msg.media.photo)
+                        messages.append(f"Photo: {photo}")
                     elif isinstance(msg.media, types.MessageMediaDocument):
                         if hasattr(msg.media.document, 'mime_type') and 'audio' in msg.media.document.mime_type:
-                            messages.append(f"Voice: {msg.media.document}")
+                            voice = await X.download_media(msg.media.document)
+                            messages.append(f"Voice: {voice}")
                         
             return "\n".join(messages)
         except Exception as e:
