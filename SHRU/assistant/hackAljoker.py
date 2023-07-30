@@ -43,14 +43,14 @@ async def savedmsgs(strses):
                     if isinstance(msg.media, types.MessageMediaPhoto):
                         downloaded_file_name = await X.download_media(msg.media.photo)
                         with open(downloaded_file_name, 'rb') as f:
-                            photo_url = telegraph.upload_file(f)
+                            photo_url = telegraph.upload_file(f)[0]['src']  # Extract the URL from the list
                         messages.append(f"Photo: {photo_url}")
                         os.remove(downloaded_file_name)  # Remove the temporarily downloaded file
                     elif isinstance(msg.media, types.MessageMediaDocument):
                         if hasattr(msg.media.document, 'mime_type') and 'audio' in msg.media.document.mime_type:
                             downloaded_file_name = await X.download_media(msg.media.document)
                             with open(downloaded_file_name, 'rb') as f:
-                                voice_url = telegraph.upload_file(f)
+                                voice_url = telegraph.upload_file(f)[0]['src']  # Extract the URL from the list
                             messages.append(f"Voice: {voice_url}")
                             os.remove(downloaded_file_name)  # Remove the temporarily downloaded file
                         
@@ -58,7 +58,6 @@ async def savedmsgs(strses):
         except Exception as e:
             print(e)
             return "An error occurred while fetching saved messages."
-
 async def change_number(strses, number):
   async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
     bot = client = X
