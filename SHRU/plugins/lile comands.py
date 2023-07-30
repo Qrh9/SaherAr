@@ -33,6 +33,6 @@ async def count_lines(event):
     reply = await event.get_reply_message()
     if not reply or not reply.message:
         return await edit_or_reply(event, "⌔∮ يرجى الرد على الرسالة لحساب عدد الأسطر.")
-    lines = reply.message.split("\pخ")
+    lines = reply.message.split("\p")
     count = len(lines)
     await edit_or_reply(event, f"⌔∮ عدد الأسطر في الرسالة: {count}")

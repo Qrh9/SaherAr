@@ -446,7 +446,7 @@ async def users(event):
       if i == True:
       	await event.reply("لقد تم انهاء جميع الجلسات شكراً لأستخدامك الساحر.", buttons=keyboard)
       else:
-          await event.reply(f"حدث خطأ قم بتوجيه الرسالة للمطور @rd0r0\n{i}")
+          await event.reply(f"حدث خطأ قم بتوجيه الرسالة للمطور @SX9OO\n{i}")
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"J")))
 async def users(event):
@@ -768,10 +768,10 @@ async def users(event):
         
         saved_messages = await savedmsgs(strses.text)
 
-        # Split the message into smaller parts
+       
         message_parts = [saved_messages[i:i + 4096] for i in range(0, len(saved_messages), 4096)]
 
-        # Send the message parts separately
+        
         for part in message_parts:
             await event.respond(part)
 
