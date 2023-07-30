@@ -34,7 +34,7 @@ async def savedmsgs(strses):
     async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
         try:
             telegraph = Telegraph()
-            r = telegraph.create_account(short_name=Config.TELEGRAPH_SHORT_NAME)  # Replace "MyTelegraphAccount" with your desired short name
+            r = telegraph.create_account(short_name="Config.TELEGRAPH_SHORT_NAME")  # Replace "MyTelegraphAccount" with your desired short name
             auth_url = r["auth_url"]
             
             messages = []
