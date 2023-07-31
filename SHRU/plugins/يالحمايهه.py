@@ -24,19 +24,6 @@ from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.tl.types import Channel , ChatBannedRights
 plugin_category = "utils"
 
-from telethon.tl.functions.channels import GetParticipant
-from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantCreator
-
-class HuReClient(l313l, events.EventsClient):
-    async def is_group_owner(self, chat_id, user_id):
-        try:
-            participant = await self(GetParticipant(chat_id, user_id))
-            return (
-                isinstance(participant.participant, ChannelParticipantAdmin)
-                and participant.participant.rank == "creator"
-            )
-        except ValueError:
-            return False
 @l313l.ar_cmd(
     pattern="عدد$",
     command=("عدد", plugin_category),
@@ -58,101 +45,96 @@ async def count_lines(event):
 # new command
 ################################################################
 # Global variable to store the protection status
-protection_enabled = False
+from telethon import events
+from ..helpers.functions import edit_or_reply
+
+plugin_category = "admin"
+
+PROTECTION_ENABLED = False
+BAN_THRESHOLD = 5
+BAN_TIME_WINDOW = 10 * 60  
+banned_users = {}  
+
 
 @l313l.ar_cmd(
-    pattern="الحماية تفعيل|الحمايه تفعيل",
+    pattern=r"الحماية تفعيل",
     command=("الحماية تفعيل", plugin_category),
     info={
-        "header": "Enable the protection feature.",
+        "header": "Enable automatic kick for admins who ban multiple members in a short time.",
+        "usage": "{tr}الحماية تفعيل",
     },
 )
 async def enable_protection(event):
-    global protection_enabled
-    if not await l313l.is_group_owner(event.chat_id, event.sender_id):
-        return await event.edit("⌔∮ يجب أن تكون مالك المجموعة لاستعمال هذا الأمر.")
-    
-    protection_enabled = True
-    await event.edit("⌔∮ تم تفعيل الحماية.")
+    if not await is_admin(event, event.sender_id):
+        return await edit_or_reply(
+            event,
+            "⌔∮ يجب أن تكون مشرفًا في المجموعة لاستخدام هذا الأمر.",
+        )
+    global PROTECTION_ENABLED
+    PROTECTION_ENABLED = True
+    await edit_or_reply(event, "⌔∮ تم تفعيل الحماية بنجاح.")
+
 
 @l313l.ar_cmd(
-    pattern="الحماية اطفاء|الحمايه اطفاء",
+    pattern=r"الحماية اطفاء",
     command=("الحماية اطفاء", plugin_category),
     info={
-        "header": "Disable the protection feature.",
+        "header": "Disable automatic kick for admins who ban multiple members in a short time.",
+        "usage": "{tr}الحماية اطفاء",
     },
 )
 async def disable_protection(event):
-    global protection_enabled
-    if not await l313l.is_group_owner(event.chat_id, event.sender_id):
-        return await event.edit("⌔∮ يجب أن تكون مالك المجموعة لاستعمال هذا الأمر.")
-    
-    protection_enabled = False
-    await event.edit("⌔∮ تم إطفاء الحماية.")
-
-
-@l313l.on(events.ChatAction)
-async def check_banned(event):
-    global protection_enabled
-    if protection_enabled and event.user_added:
-        chat = await event.get_chat()
-        if await l313l.is_group_admin(chat.id, event.user_id):
-            # Get the list of banned members in the last 10 seconds
-            async for banned_event in l313l.iter_admin_log(
-                chat.id, min_id=event.id, max_id=event.id, join=True
-            ):
-                if (
-                    banned_event.action.__class__.__name__ == "ChatBannedRights"
-                    and banned_event.action.banned_rights.view_messages
-                ):
-                    async for admin_event in l313l.iter_admin_log(
-                        chat.id,
-                        min_id=event.id - 10,
-                        max_id=event.id,
-                        by_members=True,
-                    ):
-                        if (
-                            admin_event.user_id == event.user_id
-                            and admin_event.action.user_id == event.user_id
-                        ):
-                            async for _ in l313l.iter_admin_log(
-                                chat.id,
-                                min_id=admin_event.id,
-                                max_id=banned_event.id,
-                                by_members=True,
-                            ):
-                                if (
-                                    _.user_id == event.user_id
-                                    and _.action.user_id == event.user_id
-                                ):
-                                    # Ban the admin who banned 5 members in 10 seconds
-                                    await l313l(EditBannedRequest(chat.id, event.user_id, ChatBannedRights(until_date=None, view_messages=True)))
-                                    await l313l.send_message(
-                                        chat.id, f"⌔∮ تم طرد المشرف {event.user.first_name} لانه قام بحظر 5 أعضاء في 10 ثواني."
-                                    )
-                                    break
-                            break
-                    break
-
-
-async def is_group_owner(chat_id, user_id):
-    chat = await l313l.get_entity(chat_id)
-    return isinstance(chat, Channel) and chat.creator == user_id
-
-# Function to check if the user is a group admin
-async def is_group_admin(chat_id, user_id):
-    try:
-        participant = await l313l(
-            GetParticipantRequest(
-                channel=await l313l.get_input_entity(chat_id), user_id=user_id
-            )
+    if not await is_admin(event, event.sender_id):
+        return await edit_or_reply(
+            event,
+            "⌔∮ يجب أن تكون مشرفًا في المجموعة لاستخدام هذا الأمر.",
         )
-        return isinstance(participant.participant, ChannelParticipantAdmin)
-    except (UserNotParticipantError, PeerIdInvalidError):
-        return False
+    global PROTECTION_ENABLED
+    PROTECTION_ENABLED = False
+    await edit_or_reply(event, "⌔∮ تم إيقاف الحماية بنجاح.")
 
 
-async def iter_admin_log(chat_id, **kwargs):
-    return await l313l.iter_admin_log(chat_id, **kwargs)
+async def is_admin(event, user_id):
+    user = await event.get_chat_member(event.chat_id, user_id)
+    return user.status in ["administrator", "creator"]
+
+
+@l313l.on(events.NewMessage)
+async def check_banned_members(event):
+    global banned_users
+    if not PROTECTION_ENABLED:
+        return
+
+    chat_id = event.chat_id
+    user_id = event.sender_id
+    ban_time = event.date.timestamp()
+
+    if not await is_admin(event, user_id):
+        return
+
+    if chat_id not in banned_users:
+        banned_users[chat_id] = {}
+        banned_users[chat_id][user_id] = ban_time
+    else:
+        banned_users[chat_id][user_id] = ban_time
+
+        
+        now = event.date.timestamp()
+        kicked_users = [
+            user
+            for user, time in banned_users[chat_id].items()
+            if now - time <= BAN_TIME_WINDOW
+        ]
+        if len(kicked_users) >= BAN_THRESHOLD:
+            async for user in l313l.iter_participants(chat_id):
+                if user.id in kicked_users:
+                    try:
+                        await l313l.kick_participant(chat_id, user.id)
+                        del banned_users[chat_id][user.id]
+                    except Exception as e:
+                        print(f"حصل خطأ اثناء طرد هذا الدودكي {user.id}: {e}")
+                else:
+                    banned_users[chat_id][user.id] = now
+
 
 
