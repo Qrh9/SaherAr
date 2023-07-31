@@ -13,7 +13,9 @@ from SHRU import HEROKU_APP, UPSTREAM_REPO_URL, l313l
 from ..core.managers import edit_delete, edit_or_reply
 from telethon.events import NewMessage
 from telethon.tl import types
-
+from telethon.tl.types import ChannelAdminRights, ChatAdminRights
+from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
+from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.utils import get_display_name
 from telethon import events
@@ -53,12 +55,10 @@ async def count_lines(event):
 ################################################################
 # Global variable to store the protection status
 
-PROTECTION_ENABLED = False
-BAN_THRESHOLD = 5
-BAN_TIME_WINDOW = 10 * 60
-banned_users = {}
-
-
+async def is_admin(event):
+    chat = await event.get_chat()
+    admin_rights = getattr(chat, "admin_rights", None)
+    return isinstance(admin_rights, (ChatAdminRights, ChannelAdminRights))
 @l313l.ar_cmd(
     pattern=r"الحماية تفعيل",
     command=("الحماية تفعيل", plugin_category),
@@ -68,7 +68,7 @@ banned_users = {}
     },
 )
 async def enable_protection(event):
-    if not await is_admin(event, event.sender_id):
+    if not await is_admin(event):
         return await edit_or_reply(
             event,
             "⌔∮ يجب أن تكون مشرفًا في المجموعة لاستخدام هذا الأمر.",
@@ -76,7 +76,6 @@ async def enable_protection(event):
     global PROTECTION_ENABLED
     PROTECTION_ENABLED = True
     await edit_or_reply(event, "⌔∮ تم تفعيل الحماية بنجاح.")
-
 @l313l.ar_cmd(
     pattern=r"الحماية اطفاء",
     command=("الحماية اطفاء", plugin_category),
