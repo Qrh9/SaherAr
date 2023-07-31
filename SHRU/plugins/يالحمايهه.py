@@ -13,16 +13,23 @@ from SHRU import HEROKU_APP, UPSTREAM_REPO_URL, l313l
 from ..core.managers import edit_delete, edit_or_reply
 from telethon.events import NewMessage
 from telethon.tl import types
-from telethon.errors import UserNotParticipantError
+
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.utils import get_display_name
 from telethon import events
 from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.types import ChannelParticipantAdmin
 from telethon.errors import UserNotParticipantError, PeerIdInvalidError
-from telethon.tl.functions.channels import GetParticipantRequest
+
 from telethon.tl.types import Channel , ChatBannedRights
-plugin_category = "utils"
+plugin_category = "admin"
+from SHRU import l313l
+
+from ..core.managers import edit_delete, edit_or_reply
+from ..helpers.utils import _format
+from ..sql_helper.locks_sql import get_locks, is_locked, update_lock
+from ..utils import is_admin
+from . import BOTLOG, get_user_from_event
 
 @l313l.ar_cmd(
     pattern="عدد$",
@@ -45,24 +52,11 @@ async def count_lines(event):
 # new command
 ################################################################
 # Global variable to store the protection status
-plugin_category = "admin"
 
 PROTECTION_ENABLED = False
 BAN_THRESHOLD = 5
 BAN_TIME_WINDOW = 10 * 60
 banned_users = {}
-
-
-async def is_admin(client, chat_id, user_id):
-    try:
-        participants = await client.get_participants(chat_id)
-        for participant in participants:
-            if participant.id == user_id:
-                return participant.admin_rights or participant.creator
-        return False
-    except Exception as e:
-        print(f"Error checking admin status: {e}")
-        return False
 
 
 @l313l.ar_cmd(
@@ -74,7 +68,7 @@ async def is_admin(client, chat_id, user_id):
     },
 )
 async def enable_protection(event):
-    if not await is_admin(l313l, event.chat_id, event.sender_id):
+    if not await is_admin(event, event.sender_id):
         return await edit_or_reply(
             event,
             "⌔∮ يجب أن تكون مشرفًا في المجموعة لاستخدام هذا الأمر.",
@@ -82,7 +76,6 @@ async def enable_protection(event):
     global PROTECTION_ENABLED
     PROTECTION_ENABLED = True
     await edit_or_reply(event, "⌔∮ تم تفعيل الحماية بنجاح.")
-
 
 @l313l.ar_cmd(
     pattern=r"الحماية اطفاء",
@@ -93,7 +86,7 @@ async def enable_protection(event):
     },
 )
 async def disable_protection(event):
-    if not await is_admin(l313l, event.chat_id, event.sender_id):
+    if not await is_admin(event, event.sender_id):
         return await edit_or_reply(
             event,
             "⌔∮ يجب أن تكون مشرفًا في المجموعة لاستخدام هذا الأمر.",
@@ -101,7 +94,6 @@ async def disable_protection(event):
     global PROTECTION_ENABLED
     PROTECTION_ENABLED = False
     await edit_or_reply(event, "⌔∮ تم إيقاف الحماية بنجاح.")
-
 
 @l313l.on(events.NewMessage)
 async def check_banned_members(event):
@@ -113,7 +105,7 @@ async def check_banned_members(event):
     user_id = event.sender_id
     ban_time = event.date.timestamp()
 
-    if not await is_admin(l313l, chat_id, user_id):
+    if not await is_admin(event, user_id):
         return
 
     if chat_id not in banned_users:
