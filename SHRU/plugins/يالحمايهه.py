@@ -54,11 +54,17 @@ async def count_lines(event):
 # new command
 ################################################################
 # Global variable to store the protection status
+plugin_category = "admin"
 
+PROTECTION_ENABLED = False
+BAN_THRESHOLD = 5
+BAN_TIME_WINDOW = 10 * 60
+banned_users = {}
 async def is_admin(event):
     chat = await event.get_chat()
     admin_rights = getattr(chat, "admin_rights", None)
-    return isinstance(admin_rights, (ChatAdminRights, ChannelAdminRights))
+    return isinstance(admin_rights, ChatAdminRights)
+
 @l313l.ar_cmd(
     pattern=r"الحماية تفعيل",
     command=("الحماية تفعيل", plugin_category),
