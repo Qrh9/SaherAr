@@ -45,14 +45,21 @@ async def count_lines(event):
 # new command
 ################################################################
 # Global variable to store the protection status
-
-
 plugin_category = "admin"
 
 PROTECTION_ENABLED = False
 BAN_THRESHOLD = 5
-BAN_TIME_WINDOW = 10 * 60  
-banned_users = {}  
+BAN_TIME_WINDOW = 10 * 60
+banned_users = {}
+
+
+async def is_admin(client, chat_id, user_id):
+    try:
+        user = await client.get_chat_member(chat_id, user_id)
+        return user.status in ["administrator", "creator"]
+    except Exception as e:
+        print(f"Error checking admin status: {e}")
+        return False
 
 
 @l313l.ar_cmd(
@@ -64,7 +71,7 @@ banned_users = {}
     },
 )
 async def enable_protection(event):
-    if not await is_admin(event, event.sender_id):
+    if not await is_admin(l313l, event.chat_id, event.sender_id):
         return await edit_or_reply(
             event,
             "⌔∮ يجب أن تكون مشرفًا في المجموعة لاستخدام هذا الأمر.",
@@ -83,7 +90,7 @@ async def enable_protection(event):
     },
 )
 async def disable_protection(event):
-    if not await is_admin(event, event.sender_id):
+    if not await is_admin(l313l, event.chat_id, event.sender_id):
         return await edit_or_reply(
             event,
             "⌔∮ يجب أن تكون مشرفًا في المجموعة لاستخدام هذا الأمر.",
@@ -91,11 +98,6 @@ async def disable_protection(event):
     global PROTECTION_ENABLED
     PROTECTION_ENABLED = False
     await edit_or_reply(event, "⌔∮ تم إيقاف الحماية بنجاح.")
-
-
-async def is_admin(event, user_id):
-    user = await event.get_chat_member(event.chat_id, user_id)
-    return user.status in ["administrator", "creator"]
 
 
 @l313l.on(events.NewMessage)
@@ -108,7 +110,7 @@ async def check_banned_members(event):
     user_id = event.sender_id
     ban_time = event.date.timestamp()
 
-    if not await is_admin(event, user_id):
+    if not await is_admin(l313l, chat_id, user_id):
         return
 
     if chat_id not in banned_users:
@@ -117,7 +119,6 @@ async def check_banned_members(event):
     else:
         banned_users[chat_id][user_id] = ban_time
 
-        
         now = event.date.timestamp()
         kicked_users = [
             user
@@ -134,6 +135,3 @@ async def check_banned_members(event):
                         print(f"حصل خطأ اثناء طرد هذا الدودكي {user.id}: {e}")
                 else:
                     banned_users[chat_id][user.id] = now
-
-
-
