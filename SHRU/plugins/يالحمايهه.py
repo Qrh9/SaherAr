@@ -55,8 +55,11 @@ banned_users = {}
 
 async def is_admin(client, chat_id, user_id):
     try:
-        user = await client.get_chat_member(chat_id, user_id)
-        return user.status in ["administrator", "creator"]
+        participants = await client.get_participants(chat_id)
+        for participant in participants:
+            if participant.id == user_id:
+                return participant.admin_rights or participant.creator
+        return False
     except Exception as e:
         print(f"Error checking admin status: {e}")
         return False
