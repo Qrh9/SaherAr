@@ -9,11 +9,9 @@ import requests
 import heroku3
 import re
 import urllib3
-from telethon import events 
 from SHRU import HEROKU_APP, UPSTREAM_REPO_URL, l313l
 from ..core.managers import edit_delete, edit_or_reply
 from telethon.events import NewMessage
-from telethon import event
 from telethon.tl import types
 from telethon.errors import UserNotParticipantError
 from telethon.tl.functions.channels import GetParticipantRequest
