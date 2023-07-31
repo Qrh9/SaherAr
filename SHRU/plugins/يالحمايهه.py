@@ -45,8 +45,7 @@ async def count_lines(event):
 # new command
 ################################################################
 # Global variable to store the protection status
-from telethon import events
-from ..helpers.functions import edit_or_reply
+
 
 plugin_category = "admin"
 
