@@ -24,16 +24,17 @@ from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.tl.types import Channel , ChatBannedRights
 plugin_category = "utils"
 
-from telethon.tl.types import ChannelParticipantOwner
+from telethon.tl.functions.channels import GetParticipant
+from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantCreator
 
 class HuReClient(l313l, events.EventsClient):
     async def is_group_owner(self, chat_id, user_id):
         try:
-            participants = await self.get_participants(chat_id, ids=[user_id])
-            if participants:
-                participant = participants[0]
-                return isinstance(participant.participant, ChannelParticipantOwner)
-            return False
+            participant = await self(GetParticipant(chat_id, user_id))
+            return (
+                isinstance(participant.participant, ChannelParticipantAdmin)
+                and participant.participant.rank == "creator"
+            )
         except ValueError:
             return False
 @l313l.ar_cmd(
