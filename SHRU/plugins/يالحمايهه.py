@@ -21,16 +21,24 @@ async def disable_protection(event):
     await event.edit("تم إطفاء الحماية ضد الإداريين.")
     banned_counts = defaultdict(int)
 
-@l313l.on(events.ChatAction())
-async def check_ban_count(event):
+@l313l.on(events.NewMessage(pattern=r"\.الحماية تفعيل|\.الحماية اطفاء", outgoing=True))
+async def handle_protection_toggle(event):
+    pass
+
+@l313l.on(events.NewMessage(outgoing=True))
+async def track_bans(event):
     global banned_counts
 
-    if not isinstance(event.action, events.ChatActionBanned):
-        # Only count if it's a ban action
+    if not event.is_reply:
+        return
+
+    reply_message = await event.get_reply_message()
+
+    if not isinstance(reply_message.action, events.MessageActionChatDeleteUser):
         return
 
     chat_id = event.chat_id
-    user_id = event.user_id
+    user_id = reply_message.action.user_id
 
     # Check if the user is an admin
     chat = await event.get_chat()
@@ -50,4 +58,8 @@ async def check_ban_count(event):
         except Exception as e:
             print(f"Error banning admin: {e}")
 
-        # Reset the ban count
+        # Reset the ban count for the admin
+        banned_counts[(chat_id, user_id)] = 0
+
+        # Add a delay to avoid potential flood
+        await asyncio.sleep(2)
