@@ -34,7 +34,7 @@ async def track_bans(event):
 
     reply_message = await event.get_reply_message()
 
-    if not isinstance(reply_message.action, events.MessageActionChatDeleteUser):
+    if not isinstance(reply_message.action, events.MessageActionChatDeleteUserCustom):
         return
 
     chat_id = event.chat_id
