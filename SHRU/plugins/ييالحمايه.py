@@ -92,6 +92,4 @@ async def disable_protection_command(event):
         await event.edit("تم إطفاء الحماية بنجاح في هذه المجموعة.")
     else:
         await event.edit("الحماية مطفية بالفعل في هذه المجموعة.")
-=======
 
->>>>>>> 49b991ca50c5a7c9ab67f739a44dd1a1bb0bbcd8
