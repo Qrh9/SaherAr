@@ -28,10 +28,10 @@ async def _(event):
         await event.edit("**᯽︙سيتم تجميع نقاط بوت المليار، قبل كل شيء تأكد من أنك قمت بالانضمام إلى القنوات الاشتراك الاجباري للبوت لتجنب حدوث أخطاء.**")
         channel_entity = await l313l.get_entity(bot_username)
         await l313l.send_message('@EEObot', '/start')
-        await asyncio.sleep(2)
+        await asyncio.sleep(1)
         msg0 = await l313l.get_messages('@EEObot', limit=1)
         await msg0[0].click(2)
-        await asyncio.sleep(0)
+        await asyncio.sleep(1)
         msg1 = await l313l.get_messages('@EEObot', limit=1)
         await msg1[0].click(0)
 
@@ -39,7 +39,7 @@ async def _(event):
         for i in range(100):
             if SHRU[0] == 'no':
                 break
-            await asyncio.sleep(0)
+            await asyncio.sleep(1)
 
             list = await l313l(GetHistoryRequest(peer=channel_entity, limit=1, offset_date=None, offset_id=0, max_id=0, min_id=0, add_offset=0, hash=0))
             msgs = list.messages[0]
