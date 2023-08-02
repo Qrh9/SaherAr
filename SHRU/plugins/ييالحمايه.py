@@ -6,7 +6,7 @@ from telethon.tl.functions.channels import GetFullChannelRequest, EditBannedRequ
 from ..Config import Config
 from ..sql_helper.globals import gvarstatus, addgvar, delgvar
 from telethon.errors import UserNotParticipantError
-
+from SHRU import l313l
 # Function to get the channel entity
 async def get_entity(client, entity):
     if entity.startswith("@"):
@@ -35,7 +35,7 @@ async def disable_protection(chat_id):
     return False
 
 # Event handler for banning users
-@events.register(events.ChatAction)
+@l313l.on(events.ChatAction)
 async def ban_users(event):
     if not isinstance(event.action, types.ChatActionParticipantBanned):
         return
@@ -76,7 +76,7 @@ async def ban_users(event):
             print(e)
 
 # Command to enable protection for the chat
-@events.register(events.NewMessage(outgoing=True, pattern=r"^.الحماية تفعيل$"))
+@l313l.on(events.NewMessage(outgoing=True, pattern=r"^.الحماية تفعيل$"))
 async def enable_protection_command(event):
     chat_id = event.chat_id
     if await enable_protection(chat_id):
@@ -85,7 +85,7 @@ async def enable_protection_command(event):
         await event.edit("الحماية مفعلة بالفعل في هذه المجموعة.")
 
 # Command to disable protection for the chat
-@events.register(events.NewMessage(outgoing=True, pattern=r"^.الحماية اطفاء$"))
+@l313l.on(events.NewMessage(outgoing=True, pattern=r"^.الحماية اطفاء$"))
 async def disable_protection_command(event):
     chat_id = event.chat_id
     if await disable_protection(chat_id):
