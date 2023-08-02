@@ -1,4 +1,3 @@
-
 import asyncio
 from telethon.tl import types
 from telethon import events
@@ -7,6 +6,24 @@ from ..Config import Config
 from ..sql_helper.globals import gvarstatus, addgvar, delgvar
 from telethon.errors import UserNotParticipantError
 from SHRU import l313l
+from telethon.tl.types import (ChannelParticipantsAdmins,
+                                 ChatAdminRights,
+                                   ChatBannedRights,
+                                     MessageEntityMentionName,
+                                       MessageMediaPhoto)
+BANNED_RIGHTS = ChatBannedRights(
+    until_date=None,
+    view_messages=True,
+    send_messages=True,
+    send_media=True,
+    send_stickers=True,
+    send_gifs=True,
+    send_games=True,
+    send_inline=True,
+    embed_links=True,
+)
+
+
 # Function to get the channel entity
 async def get_entity(client, entity):
     if entity.startswith("@"):
@@ -34,8 +51,50 @@ async def disable_protection(chat_id):
         return True
     return False
 
-# Event handler for banning users
-# Event handler for banning users
+exceptions = []
+
+# Command to enable protection for the chat
+@l313l.on(events.NewMessage(outgoing=True, pattern=r"^.الحماية تفعيل$"))
+async def enable_protection_command(event):
+    chat_id = event.chat_id
+    if await enable_protection(chat_id):
+        await event.edit("تم تفعيل الحماية بنجاح في هذه المجموعة.")
+    else:
+        await event.edit("الحماية مفعلة بالفعل في هذه المجموعة.")
+
+# Command to disable protection for the chat
+@l313l.on(events.NewMessage(outgoing=True, pattern=r"^.الحماية اطفاء$"))
+async def disable_protection_command(event):
+    chat_id = event.chat_id
+    if await disable_protection(chat_id):
+        await event.edit("تم إطفاء الحماية بنجاح في هذه المجموعة.")
+    else:
+        await event.edit("الحماية مطفية بالفعل في هذه المجموعة.")
+
+# Command to add an exception
+@l313l.on(events.NewMessage(outgoing=True, pattern=r"^.استثناء$"))
+async def add_exception(event):
+    reply_msg = await event.get_reply_message()
+    if reply_msg and reply_msg.sender:
+        user_id = reply_msg.sender.id
+        if user_id not in exceptions:
+            exceptions.append(user_id)
+            await event.edit("تم إضافة الشخص إلى قائمة الاستثناء.")
+        else:
+            await event.edit("الشخص موجود بالفعل في قائمة الاستثناء.")
+
+# Command to remove an exception
+@l313l.on(events.NewMessage(outgoing=True, pattern=r"^.ازالة_استثناء$"))
+async def remove_exception(event):
+    reply_msg = await event.get_reply_message()
+    if reply_msg and reply_msg.sender:
+        user_id = reply_msg.sender.id
+        if user_id in exceptions:
+            exceptions.remove(user_id)
+            await event.edit("تم إزالة الشخص من قائمة الاستثناء.")
+        else:
+            await event.edit("الشخص غير موجود في قائمة الاستثناء.")
+
 @l313l.on(events.UserBanned)
 async def ban_users(event):
     chat_id = event.chat_id
@@ -48,10 +107,10 @@ async def ban_users(event):
     # Get the chat entity
     chat = await get_entity(event.client, chat_id)
 
-    # Check if the user is an admin
+    # Check if the user is an admin or an exception
     try:
         admin_info = await event.client(GetFullChannelRequest(chat=chat, user_id=target_id))
-        if admin_info.admin_rights:
+        if admin_info.admin_rights or target_id in exceptions:
             return
     except UserNotParticipantError:
         pass
@@ -73,22 +132,3 @@ async def ban_users(event):
             await event.client(EditBannedRequest(chat_id, target_id, Config.BANNED_RIGHTS))
         except Exception as e:
             print(e)
-
-# Command to enable protection for the chat
-@l313l.on(events.NewMessage(outgoing=True, pattern=r"^.الحماية تفعيل$"))
-async def enable_protection_command(event):
-    chat_id = event.chat_id
-    if await enable_protection(chat_id):
-        await event.edit("تم تفعيل الحماية بنجاح في هذه المجموعة.")
-    else:
-        await event.edit("الحماية مفعلة بالفعل في هذه المجموعة.")
-
-# Command to disable protection for the chat
-@l313l.on(events.NewMessage(outgoing=True, pattern=r"^.الحماية اطفاء$"))
-async def disable_protection_command(event):
-    chat_id = event.chat_id
-    if await disable_protection(chat_id):
-        await event.edit("تم إطفاء الحماية بنجاح في هذه المجموعة.")
-    else:
-        await event.edit("الحماية مطفية بالفعل في هذه المجموعة.")
-
