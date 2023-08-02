@@ -35,10 +35,9 @@ async def disable_protection(chat_id):
     return False
 
 # Event handler for banning users
-@l313l.on(events.ChatAction)
+# Event handler for banning users
+@l313l.on(events.UserBanned)
 async def ban_users(event):
-    if not isinstance(event.action, types.ChatActionParticipantBanned):
-        return
     chat_id = event.chat_id
     target_id = event.user_id
 
