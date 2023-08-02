@@ -1,65 +1,93 @@
 import asyncio
-from collections import defaultdict
+from telethon.tl import types
 from telethon import events
-from telethon.tl.types import Channel, Chat
-from SHRU import l313l
+from telethon.tl.functions.channels import GetFullChannelRequest, EditBannedRequest
+from ..Config import Config
+from ..sql_helper.globals import gvarstatus, addgvar, delgvar
+from telethon.errors import UserNotParticipantError
 
-banned_counts = defaultdict(int)
+# Function to get the channel entity
+async def get_entity(client, entity):
+    if entity.startswith("@"):
+        entity = entity[1:]
+    try:
+        return await client.get_entity(entity)
+    except ValueError:
+        return None
 
-# Time window in seconds to count bans
-BAN_TIME_WINDOW = 60
+# Check if protection is enabled for a chat
+async def is_protection_enabled(chat_id):
+    return gvarstatus(f"protection_enabled_{chat_id}") == "yes"
 
-@l313l.on(events.NewMessage(pattern=r"\.الحماية تفعيل", outgoing=True))
-async def enable_protection(event):
-    global banned_counts
-    await event.edit("تم تفعيل الحماية ضد الإداريين الذين يحظرون 5 أعضاء في 60 ثانية.")
-    banned_counts = defaultdict(int)
+# Enable protection for a chat
+async def enable_protection(chat_id):
+    if not await is_protection_enabled(chat_id):
+        addgvar(f"protection_enabled_{chat_id}", "yes")
+        return True
+    return False
 
-@l313l.on(events.NewMessage(pattern=r"\.الحماية اطفاء", outgoing=True))
-async def disable_protection(event):
-    global banned_counts
-    await event.edit("تم إطفاء الحماية ضد الإداريين.")
-    banned_counts = defaultdict(int)
+# Disable protection for a chat
+async def disable_protection(chat_id):
+    if await is_protection_enabled(chat_id):
+        delgvar(f"protection_enabled_{chat_id}")
+        return True
+    return False
 
-@l313l.on(events.NewMessage(pattern=r"\.الحماية تفعيل|\.الحماية اطفاء", outgoing=True))
-async def handle_protection_toggle(event):
-    pass
-
-@l313l.on(events.NewMessage(outgoing=True))
-async def track_bans(event):
-    global banned_counts
-
-    if not event.is_reply:
+# Event handler for banning users
+@events.register(events.ChatAction)
+async def ban_users(event):
+    if not isinstance(event.action, types.ChatActionParticipantBanned):
         return
-
-    reply_message = await event.get_reply_message()
-
-    if not isinstance(reply_message.action, events.MessageActionChatDeleteUserCustom):
-        return
-
     chat_id = event.chat_id
-    user_id = reply_message.action.user_id
+    target_id = event.user_id
+
+    # Check if protection is enabled for the chat
+    if not await is_protection_enabled(chat_id):
+        return
+
+    # Get the chat entity
+    chat = await get_entity(event.client, chat_id)
 
     # Check if the user is an admin
-    chat = await event.get_chat()
-    if not isinstance(chat, (Channel, Chat)):
-        return
-    if not chat.admin_rights:
-        return
+    try:
+        admin_info = await event.client(GetFullChannelRequest(chat=chat, user_id=target_id))
+        if admin_info.admin_rights:
+            return
+    except UserNotParticipantError:
+        pass
 
-    # Increment the ban count for the admin
-    banned_counts[(chat_id, user_id)] += 1
+    # Get the chat participants
+    chat_participants = await event.client.get_participants(chat_id)
+    banned_count = 0
 
-    # Check if the admin reached the ban limit
-    if banned_counts[(chat_id, user_id)] >= 5:
-        # Ban the admin
+    # Count the number of banned users in the last 3 actions
+    for action in reversed(chat_participants):
+        if isinstance(action, types.ChannelParticipantBanned):
+            banned_count += 1
+        if banned_count >= 3:
+            break
+
+    # If the number of banned users is 3 or more, ban the admin
+    if banned_count >= 3:
         try:
-            await event.client.kick_participant(chat_id, user_id)
+            await event.client(EditBannedRequest(chat_id, target_id, Config.BANNED_RIGHTS))
         except Exception as e:
-            print(f"Error banning admin: {e}")
+            print(e)
 
-        # Reset the ban count for the admin
-        banned_counts[(chat_id, user_id)] = 0
+# Command to enable protection for the chat
+@events.register(events.NewMessage(outgoing=True, pattern=r"^.الحماية تفعيل$"))
+async def enable_protection_command(event):
+    chat_id = event.chat_id
+    if await enable_protection(chat_id):
+        await event.edit("تم تفعيل الحماية بنجاح في هذه المجموعة.")
+    else:
+        await event.edit("الحماية مفعلة بالفعل في هذه المجموعة.")
 
-        # Add a delay to avoid potential flood
-        await asyncio.sleep(2)
+# Command to disable protection for the chat
+@events.register(events.NewMessage(outgoing=True, pattern=r"^.الحماية اطفاء$"))
+async def disable_protection_command(event):
+    chat_id = event.chat_id
+    if await disable_protection(chat_id):
+        await event.edit("تم إطفاء الحماية بنجاح في هذه المجموعة.")
+    else:
+        await event.edit("الحماية مطفية بالفعل في هذه المجموعة.")
