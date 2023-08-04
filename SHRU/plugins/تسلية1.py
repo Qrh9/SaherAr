@@ -312,26 +312,26 @@ async def Hussein(event):
         owner_id = reply_msg.from_id.user_id
         if owner_id == l313l.uid:
             if event.message.message == "هكره":
-                animation_interval = 4
+                animation_interval = 1.6
                 animation_ttl = range(14)
                 event = await event.reply("**᯽︙ سيتم اختراق الحساب بأمر من المطور\n انا اسف💔** ")
                 animation_chars = [
-            "`root@anon:~#` ",
-            "`root@anon:~# ls`",
-            "`root@anon:~# ls\n\n  usr  ghost  codes  \n\nroot@aono:~#`",
-            "`root@anon:~# ls\n\n  usr  ghost  codes  \n\nroot@aono:~# # so lets hack it ...`",
-            "`root@anon:~# ls\n\n  usr  ghost  codes  \n\nroot@aono:~# # so lets hack it ...\nroot@anon:~# `",
-            "`root@anon:~# ls\n\n  usr  ghost  codes  \n\nroot@aono:~# # so lets hack it ...\nroot@anon:~# touch setup.py`",
-            "`root@anon:~# ls\n\n  usr  ghost  codes  \n\nroot@aono:~# # so lets hack it ...\nroot@anon:~# touch setup.py\n\nsetup.py deployed ...`",
-            "`root@anon:~# ls\n\n  usr  ghost  codes  \n\nroot@aono:~# # so lets hack it ...\nroot@anon:~# touch setup.py\n\nsetup.py deployed ...\nيتم الان الرفع عبر CMD تلقائياً ...`",
-            "`root@anon:~# ls\n\n  usr  ghost  codes  \n\nroot@aono:~# # so lets hack it ...\nroot@anon:~# touch setup.py\n\nsetup.py deployed ...\nيتم الان الرفع عبر CMD تلقائياً ...\n\nroot@anon:~# trap whoami`",
-            "`root@anon:~# ls\n\n  usr  ghost  codes  \n\nroot@aono:~# # so lets hack it ...\nroot@anon:~# touch setup.py\n\nsetup.py deployed ...\nيتم الان الرفع عبر CMD تلقائياً ...\n\nroot@anon:~# trap whoami\n\nwhoami=user`",
-            "`root@anon:~# ls\n\n  usr  ghost  codes  \n\nroot@aono:~# # so lets hack it ...\nroot@anon:~# touch setup.py\n\nsetup.py deployed ...\nيتم الان الرفع عبر CMD تلقائياً ...\n\nroot@anon:~# trap whoami\n\nwhoami=user\nboost_trap on force ...`",
-            "`root@anon:~# ls\n\n  usr  ghost  codes  \n\nroot@aono:~# # so lets hack it ...\nroot@anon:~# touch setup.py\n\nsetup.py deployed ...\nيتم الان الرفع عبر CMD تلقائياً ...\n\nroot@anon:~# trap whoami\n\nwhoami=user\nboost_trap on force ...\nvictim detected in ghost ...`",
-            "`root@anon:~# ls\n\n  usr  ghost  codes  \n\nroot@aono:~# # so lets hack it ...\nroot@anon:~# touch setup.py\n\nsetup.py deployed ...\nيتم الان الرفع عبر CMD تلقائياً ...\n\nroot@anon:~# trap whoami\n\nwhoami=user\nboost_trap on force ...\nvictim detected in ghost ...\n\nتم اكتمال العملية ✓!`",
-            "root@anon:~# ls\n\n  usr  ghost  codes  \n\nroot@aono:~# # so lets hack it ...\nroot@anon:~# touch setup.py\n\nsetup.py deployed ...\nيتم الان الرفع عبر CMD تلقائياً ...\n\nroot@anon:~# trap whoami\n\nwhoami=user\nboost_trap on force ...\nvictim detected  in ghost ...\n\nتم اكتمال العملية ✓!\nيتم الان استخراج توكن الضحية!\nToken=`DJ65gulO90P90nlkm65dRfc8I`",
-         ]
-            
+                    "`starting telegram hack`",
+                    "`يتم سحب الصور والمعلومات...\n 0%completed.\nTERMINAL:\nDownloading Bruteforce-Telegram-0.1.tar.gz (1.3) kB`",  # credit to legendx22,sawan
+                    "`يتم سحب الصور والمعلومات...\n 4% completed\n TERMINAL:\nDownloading Bruteforce-Telegram-0.1.tar.gz (9.3 kB)\nCollecting Data Package`",
+                    "`يتم سحب الصور والمعلومات...\n 6% completed\n TERMINAL:\nDownloading Bruteforce-Telegram-0.1.tar.gz (9.3 kB)\nCollecting Data Packageseeing target account chat\n lding chat tg-bot bruteforce finished`",
+                    "`يتم سحب الصور والمعلومات....\n 8%completed\n TERMINAL:\nDownloading Bruteforce-Telegram-0.1.tar.gz (9.3 kB)\nCollecting Data Packageseeing target account chat\n lding chat tg-bot bruteforce finished\n creating pdf of chat`",
+                    "`يتم سحب الصور والمعلومات...\n 15%completed\n Terminal:chat history from telegram exporting to private database.\n terminal 874379gvrfghhuu5tlotruhi5rbh installing`",
+                    "`يتم سحب الصور والمعلومات...\n 24%completed\n TERMINAL:\nDownloading Bruteforce-Telegram-0.1.tar.gz (9.3 kB)\nCollecting Data Packageseeing target account chat\n lding chat tg-bot bruteforce finished\nerminal:chat history from telegram exporting to private database.\n terminal 874379gvrfghhuu5tlotruhi5rbh installed\n creting data into pdf`",
+                    "`يتم سحب الصور والمعلومات...\n 32%completed\n looking for use history \n downloading-telegram -id prtggtgf . gfr (12.99 mb)\n collecting data starting imprute attack to user account\n chat history from telegram exporting to private database.\n terminal 874379gvrfghhuu5tlotruhi5rbh installed\n creted data into pdf\nDownload sucessful Bruteforce-Telegram-0.1.tar.gz (1.3)`",
+                    "`يتم سحب الصور والمعلومات...\n 38%completed\n\nDownloading Bruteforce-Telegram-0.1.tar.gz (9.3 kB)\nCollecting Data Package\n  Downloading Telegram-Data-Sniffer-7.1.1-py2.py3-none-any.whl (82 kB): finished with status 'done'\nCreated wheel for telegram: filename=Telegram-Data-Sniffer-0.0.1-py3-none-any.whl size=1306 sha256=cb224caad7fe01a6649188c62303cd4697c1869fa12d280570bb6ac6a88e6b7e`",
+                    "`يتم سحب الصور والمعلومات...\n 52%completed\nexterting data from telegram private server\ndone with status 36748hdeg \n checking for more data in device`",
+                    "`يتم سحب الصور والمعلومات...\n 60%completed\nmore data found im target device\npreparing to download data\n process started with status 7y75hsgdt365ege56es \n status changed to up`",
+                    "`يتم سحب الصور والمعلومات....\n 73% completed\n downloading data from device\n process completed with status 884hfhjh\nDownloading-0.1.tar.gz (9.3 kB)\nCollecting Data Packageseeing target\n lding chat tg-bot bruteforce finished\n creating pdf of chat`",
+                    "`يتم سحب الصور والمعلومات...\n 88%completed\nall data from telegram private server downloaded\nterminal download sucessfull--with status jh3233fdg66y yr4vv.irh\n data collected from tg-bot\nTERMINAL:\n Bruteforce-Telegram-0.1.tar.gz (1.3)downloaded`",
+                    "`100%\n█████████████████████████ `\n\n\n  TERMINAL:\nيتم تنزيل Bruteforce-Telegram-0.1.tar.gz (9.3 kB)\nCollecting Data Package\n  يتم تنزيل Telegram-Data-Sniffer-7.1.1-py2.py3-none-any.whl (82 kB)\nBuilding wheel for Tg-Bruteforcing (setup.py): finished with status 'done'\nCreated wheel for telegram: filename=Telegram-Data-Sniffer-0.0.1-py3-none-any.whl size=1306 sha256=cb224caad7fe01a6649188c62303cd4697c1869fa12d280570bb6ac6a88e6b7e\n  Stored in directory: `",
+                    f"`قم بالاعتذار الى المطور لكي لا يتم نشر صورك ومعلومات\n تم رفع جميع الصور المخزونة والمحادثات وجهات الاتصال المستخدم عبر مجلد pdf \n\n😂 لا تقلق المطور فقط من يرى معلوماتك .. اذا لم تصدق ادخل الى هذا الرابط وانظر بنفسك` 🙂\n\nhttps://drive.google.com/file/d/1EHJSkt64RZEw7a2h8xkRqZSv_4dWhB02/view?usp=sharing`"
+                ]
 
     for i in animation_ttl:
 # Made for Hussein        
