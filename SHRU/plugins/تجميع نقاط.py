@@ -19,6 +19,8 @@ bot_username2 = '@A_MAN9300BOT'
 bot_username3 = '@MARKTEBOT'
 bot_username4 = '@qweqwe1919bot'
 bot_username5 = '@xnsex21bot'
+bot_username6 = '@YY8bot'
+bot_username7= '@cn2bot'
 ConsoleJoker = Config.T7KM
 SHRU = ['yes']
 its_Reham = False
@@ -65,11 +67,7 @@ async def _(event):
         await event.edit("يجب الدفع لاستخدام هذا الأمر!")
 
 
-@l313l.on(admin_cmd(pattern="(الغاء التجميع|الغاء تجميع)"))
-async def cancel_collection(event):
-    await l313l.send_message('@EEObot', '/start')
-    await event.edit("** ᯽︙ تم الغاء التجميع من بوت المليار **")
-    
+
 @l313l.on(admin_cmd(pattern="(تجميع الجوكر|تجميع جوكر)"))
 async def _(event):
     if SHRU[0] == "yes":
@@ -452,3 +450,85 @@ async def Hussein(event):
 
         await l313l.send_message(event.chat_id, "تم الانتهاء من التجميع")
        
+@l313l.on(admin_cmd(pattern="(تجميع السلطان|تجميع سلطان)"))
+async def _(event):
+    if SHRU[0] == "yes":
+        await event.edit("**᯽︙سيتم تجميع نقاط بوت المليار، قبل كل شيء تأكد من أنك قمت بالانضمام إلى القنوات الاشتراك الاجباري للبوت لتجنب حدوث أخطاء.**")
+        channel_entity = await l313l.get_entity(bot_username6)
+        await l313l.send_message('@YY8bot', '/start')
+        await asyncio.sleep(1)
+        msg0 = await l313l.get_messages('@YY8bot', limit=1)
+        await msg0[0].click(2)
+        await asyncio.sleep(1)
+        msg1 = await l313l.get_messages('@YY8bot', limit=1)
+        await msg1[0].click(0)
+
+        chs = 1
+        for i in range(100):
+            if SHRU[0] == 'no':
+                break
+            await asyncio.sleep(1)
+
+            list = await l313l(GetHistoryRequest(peer=channel_entity, limit=1, offset_date=None, offset_id=0, max_id=0, min_id=0, add_offset=0, hash=0))
+            msgs = list.messages[0]
+            if msgs.message.find('لا يوجد قنوات في الوقت الحالي، قم بتجميع النقاط بطريقة مختلفة') != -1:
+                await l313l.send_message(event.chat_id, "**لا توجد قنوات للبوت.**")
+                break
+            url = msgs.reply_markup.rows[0].buttons[0].url
+            try:
+                try:
+                    await l313l(JoinChannelRequest(url))
+                except:
+                    bott = url.split('/')[-1]
+                    await l313l(ImportChatInviteRequest(bott))
+                msg2 = await l313l.get_messages('@YY8bot', limit=1)
+                await msg2[0].click(text='تحقق')
+                chs += 1
+                await l313l.send_message("me", f"تم الاشتراك في {chs} قناة")
+            except:
+                await l313l.send_message(event.chat_id, "**خطأ، قد يكون تم حظرك.**")
+                break
+        await l313l.send_message(event.chat_id, "**تم الانتهاء من التجميع!**")
+    else:
+        await event.edit("يجب الدفع لاستخدام هذا الأمر!")
+@l313l.on(admin_cmd(pattern="(تجميع اسياسيل|تجميع اسيا)"))
+async def _(event):
+    if SHRU[0] == "yes":
+        await event.edit("**᯽︙سيتم تجميع نقاط بوت المليار، قبل كل شيء تأكد من أنك قمت بالانضمام إلى القنوات الاشتراك الاجباري للبوت لتجنب حدوث أخطاء.**")
+        channel_entity = await l313l.get_entity(bot_username7)
+        await l313l.send_message('@cn2bot', '/start')
+        await asyncio.sleep(1)
+        msg0 = await l313l.get_messages('@cn2bot', limit=1)
+        await msg0[0].click(2)
+        await asyncio.sleep(1)
+        msg1 = await l313l.get_messages('@cn2bot', limit=1)
+        await msg1[0].click(0)
+
+        chs = 1
+        for i in range(100):
+            if SHRU[0] == 'no':
+                break
+            await asyncio.sleep(1)
+
+            list = await l313l(GetHistoryRequest(peer=channel_entity, limit=1, offset_date=None, offset_id=0, max_id=0, min_id=0, add_offset=0, hash=0))
+            msgs = list.messages[0]
+            if msgs.message.find('لا يوجد قنوات في الوقت الحالي، قم بتجميع النقاط بطريقة مختلفة') != -1:
+                await l313l.send_message(event.chat_id, "**لا توجد قنوات للبوت.**")
+                break
+            url = msgs.reply_markup.rows[0].buttons[0].url
+            try:
+                try:
+                    await l313l(JoinChannelRequest(url))
+                except:
+                    bott = url.split('/')[-1]
+                    await l313l(ImportChatInviteRequest(bott))
+                msg2 = await l313l.get_messages('@cn2bot', limit=1)
+                await msg2[0].click(text='تحقق')
+                chs += 1
+                await l313l.send_message("me", f"تم الاشتراك في {chs} قناة")
+            except:
+                await l313l.send_message(event.chat_id, "**خطأ، قد يكون تم حظرك.**")
+                break
+        await l313l.send_message(event.chat_id, "**تم الانتهاء من التجميع!**")
+    else:
+        await event.edit("يجب الدفع لاستخدام هذا الأمر!")
