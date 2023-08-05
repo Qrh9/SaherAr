@@ -23,7 +23,7 @@ from SHRU import BOTLOG_CHATID
 from ..Config import Config
 from ..helpers.utils import _format
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
-from . import AUTONAME, DEFAULT_GROUP, DEFAULT_BIO, edit_delete, l313l, logging
+from . import AUTONAME, DEFAULT_GROUP, DEFAULT_BIO, edit_delete, l313l, logging , edit_or_reply
 from colour import Color
 
 plugin_category = "tools"
@@ -330,7 +330,31 @@ async def _(event):  # sourcery no-metrics
             parse_mode=_format.parse_pre,
         )
 
+async def automessage_loop():
+    AUTOMESSAGE_START = gvarstatus("automessage") == "true"
+    while AUTOMESSAGE_START:
+        current_time = datetime.now().strftime("%I:%M %p")  # Format time as "HH:MM AM/PM"
+        message = gvarstatus("automessage_text") or "تحديث الرسالة الوقتية"
+        updated_message = f"{message} {current_time}"
+        try:
+            # Edit the existing message using the edit_or_reply function
+            await edit_or_reply(updated_message)
+        except FloodWaitError as ex:
+            LOGS.warning(str(ex))
+            await asyncio.sleep(120)
+        await asyncio.sleep(60)  # Wait for 1 minute before updating the message again
+        AUTOMESSAGE_START = gvarstatus("automessage") == "true"
 
+@l313l.on(admin_cmd(pattern="رسالةوقتيه(?: |$)(.*)"))
+async def _(event):
+    "To set a time-based message"
+    input_message = event.pattern_match.group(1)
+    if gvarstatus("automessage") is not None and gvarstatus("automessage") == "true":
+        return await edit_delete(event, "**الرسالة الوقتية مفعلة بالفعل 🧸♥**")
+    addgvar("automessage", True)
+    addgvar("automessage_text", input_message)
+    await edit_delete(event, f"**تم تفعيل الرسالة الوقتية بنجاح ✓**\nالرسالة الوقتية: {input_message}")
+    await automessage_loop()
 l313l.loop.create_task(digitalpicloop())
 l313l.loop.create_task(digitalgrouppicloop())
 l313l.loop.create_task(autoname_loop())
