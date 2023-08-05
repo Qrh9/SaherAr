@@ -453,7 +453,7 @@ async def Hussein(event):
 @l313l.on(admin_cmd(pattern="(تجميع السلطان|تجميع سلطان)"))
 async def _(event):
     if SHRU[0] == "yes":
-        await event.edit("**᯽︙سيتم تجميع نقاط بوت المليار، قبل كل شيء تأكد من أنك قمت بالانضمام إلى القنوات الاشتراك الاجباري للبوت لتجنب حدوث أخطاء.**")
+        await event.edit("**᯽︙سيتم تجميع نقاط بوت السلطان، قبل كل شيء تأكد من أنك قمت بالانضمام إلى القنوات الاشتراك الاجباري للبوت لتجنب حدوث أخطاء.**")
         channel_entity = await l313l.get_entity(bot_username6)
         await l313l.send_message('@YY8bot', '/start')
         await asyncio.sleep(1)
@@ -494,7 +494,7 @@ async def _(event):
 @l313l.on(admin_cmd(pattern="(تجميع اسياسيل|تجميع اسيا)"))
 async def _(event):
     if SHRU[0] == "yes":
-        await event.edit("**᯽︙سيتم تجميع نقاط بوت المليار، قبل كل شيء تأكد من أنك قمت بالانضمام إلى القنوات الاشتراك الاجباري للبوت لتجنب حدوث أخطاء.**")
+        await event.edit("**᯽︙سيتم تجميع نقاط بوت اسياسيل، قبل كل شيء تأكد من أنك قمت بالانضمام إلى القنوات الاشتراك الاجباري للبوت لتجنب حدوث أخطاء.**")
         channel_entity = await l313l.get_entity(bot_username7)
         await l313l.send_message('@cn2bot', '/start')
         await asyncio.sleep(1)

@@ -335,7 +335,7 @@ async def Hussein(event):
 
                 for i in animation_ttl:
                     await asyncio.sleep(animation_interval)
-                    await event.reply(animation_chars[i % 14])
+                    await event.edit(animation_chars[i % 14])
 #----------------------------------------------------------------
 #الصور
 #الصور
