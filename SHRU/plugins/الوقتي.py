@@ -214,7 +214,7 @@ async def autobio_loop():
         AUTOBIOSTART = gvarstatus("autobio") == "true"
 
 @l313l.ar_cmd(
-    pattern="msgt (.+)",
+    pattern="رسالة_وقتيه (.+)",
     command=("msgt", plugin_category),
     info={
         "header": "Update the message with the current time.",
