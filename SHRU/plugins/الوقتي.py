@@ -213,6 +213,31 @@ async def autobio_loop():
         await asyncio.sleep(Config.CHANGE_TIME)
         AUTOBIOSTART = gvarstatus("autobio") == "true"
 
+@l313l.ar_cmd(
+    pattern="msgt (.+)",
+    command=("msgt", plugin_category),
+    info={
+        "header": "Update the message with the current time.",
+        "usage": [
+            "{tr}msgt <message>",
+        ],
+    },
+)
+async def msg_with_time(event):
+    "Update the message with the current time."
+    msg = event.pattern_match.group(1)
+    current_time = datetime.now().strftime("%H:%M")
+    edited_msg = f"{msg} {current_time}"
+    sent_msg = await event.edit(edited_msg)
+
+    while True:
+        try:
+            await asyncio.sleep(300)  
+            current_time = datetime.now().strftime("%H:%M")
+            edited_msg = f"{msg} {current_time}"
+            await sent_msg.edit(edited_msg)
+        except asyncio.CancelledError:
+            break
 
 @l313l.on(admin_cmd(pattern=f"{phow8t}(?:\s|$)([\s\S]*)"))
 async def _(event):
@@ -345,16 +370,6 @@ async def automessage_loop():
         await asyncio.sleep(60)  # Wait for 1 minute before updating the message again
         AUTOMESSAGE_START = gvarstatus("automessage") == "true"
 
-@l313l.on(admin_cmd(pattern="رسالةوقتيه(?: |$)(.*)"))
-async def _(event):
-    "To set a time-based message"
-    input_message = event.pattern_match.group(1)
-    if gvarstatus("automessage") is not None and gvarstatus("automessage") == "true":
-        return await edit_delete(event, "**الرسالة الوقتية مفعلة بالفعل 🧸♥**")
-    addgvar("automessage", True)
-    addgvar("automessage_text", input_message)
-    await edit_delete(event, f"**تم تفعيل الرسالة الوقتية بنجاح ✓**\nالرسالة الوقتية: {input_message}")
-    await automessage_loop()
 l313l.loop.create_task(digitalpicloop())
 l313l.loop.create_task(digitalgrouppicloop())
 l313l.loop.create_task(autoname_loop())
