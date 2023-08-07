@@ -183,7 +183,7 @@ async def generate_random_username(event):
         v2 = ''.join((random.choice(abc) for _ in range(1)))
         v3 = ''.join((random.choice(abc) for _ in range(1)))
         v4 = ''.join((random.choice(abc1) for _ in range(1)))
-        username = f"{v1}{v3}{v2}{v2}{v4}"
+        username = f"{v1}{v2}{v2}{v2}{v4}"
         if not await Username_exists_by_Qrh9(username):
             await event.edit(f"**᯽︙ تم, يوزك الجديد    : @{username}**")
             return
