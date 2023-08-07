@@ -232,7 +232,7 @@ async def msg_with_time(event):
 
     while True:
         try:
-            await asyncio.sleep(300)  
+            await asyncio.sleep(60)  
             current_time = datetime.now().strftime("%H:%M")
             edited_msg = f"{msg} {current_time}"
             await sent_msg.edit(edited_msg)
