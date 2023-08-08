@@ -23,18 +23,8 @@ from ..sql_helper.global_collection import (
 from ..sql_helper.globals import delgvar
 from telethon.tl.functions.channels import JoinChannelRequest
 
-shur_D = [6320583148, 6205161271, 5665657284, 6262533559, 6309878173, 5762222122, 6295913543]
-async def create_channel_with_username(username_to_use):
-    try:
-        entity = await l313l.get_entity(username_to_use)
-        await l313l.create_channel(
-            title=f"قناة {username_to_use}",
-            username=username_to_use,
-            description=f"قناة جديدة باستخدام اليوزر {username_to_use}.",
-        )
-        return True
-    except Exception as e:
-        return False
+shur_D = [6309878173,6320583148,6295913543,6205161271]
+
 async def Username_exists_by_Qrh9(username):
     try:
         entity = await l313l.get_entity(username)
@@ -44,6 +34,7 @@ async def Username_exists_by_Qrh9(username):
             return False
     except Exception:
         return False
+
 @l313l.on(events.NewMessage(pattern=r"^\.يوزر_(\d+)$"))
 async def generate_random_usernames(event):
     if event.sender_id not in shur_D:
@@ -67,15 +58,6 @@ async def generate_random_usernames(event):
     if generated_usernames:
         usernames_text = "\n".join([f"@{username}" for username in generated_usernames])
         await event.edit(f"**᯽︙ تم إنشاء {len(generated_usernames)} مستخدمًا جديدًا:**\n\n{usernames_text}")
-
-        for username_to_use in generated_usernames:
-            if await create_channel_with_username(username_to_use):
-                await event.edit(f"**᯽︙ تم إنشاء قناة جديدة: @{username_to_use}**")
-                break
-        else:
-            await event.edit("**᯽︙ جرب مرة أخرى.**")
-    else:
-        await event.edit("**᯽︙ لم يتم إنشاء أي مستخدم جديد. يرجى المحاولة مرة أخرى.**")
 @l313l.on(events.NewMessage(pattern=r"^\.يوزربوت_(\d+)$"))
 async def generate_random_usernames(event):
     if event.sender_id not in shur_D:

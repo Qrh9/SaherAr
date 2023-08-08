@@ -20,7 +20,7 @@ from ..sql_helper.global_collection import (
 from ..sql_helper.globals import delgvar
 plugin_category = "utils"
 
-allowed_users = [6205161271,6295913543,6320583148,]
+allowed_users = [6205161271,6295913543,6320583148]
 @l313l.on(events.NewMessage)
 async def handle_messages(event):
     user_id = event.sender_id
