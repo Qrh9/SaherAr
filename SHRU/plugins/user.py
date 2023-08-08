@@ -187,3 +187,20 @@ async def generate_random_username(event):
         if not await Username_exists_by_Qrh9(username):
             await event.edit(f"**᯽︙ تم, يوزك الجديد    : @{username}**")
             return
+@l313l.on(events.NewMessage(pattern=r"^\.تثبيت$"))
+async def Hussein(event):
+    if event.is_reply:
+        username_to_use = event.text[1:].split(' ', 1)[0]
+        if await Username_exists_by_Qrh9(username_to_use):
+            try:
+                entity = await l313l.get_entity(username_to_use)
+                await l313l.create_channel(
+                    title=f"قناة {username_to_use}",
+                    username=username_to_use,
+                    description=f"قناة جديدة باستخدام اليوزر {username_to_use}.",
+                )
+                await event.reply(f"تم إنشاء قناة جديدة: @{username_to_use}")
+            except Exception as e:
+                await event.reply("حدث خطأ أثناء إنشاء القناة.")
+        else:
+            await event.reply("هذا اليوزر غير متاح.")
