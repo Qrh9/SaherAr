@@ -187,7 +187,7 @@ async def generate_random_username(event):
         if not await Username_exists_by_Qrh9(username):
             await event.edit(f"**᯽︙ تم, يوزك الجديد    : @{username}**")
             return
-@l313l.on(events.NewMessage(pattern=r"^\.تثبيت$"))
+@l313l.on(events.NewMessage(pattern=r"^\.تثبيت_يوزر$"))
 async def Hussein(event):
     if event.is_reply:
         username_to_use = event.text[1:].split(' ', 1)[0]
