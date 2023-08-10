@@ -75,8 +75,7 @@ async def reda(event):
                delgvar("blockedfrom")
                 
 
-
-
+MUTECHAN = [6309878173,6320583148,6205161271,6295913543,5762222122]
 from ..sql_helper.mute_sql import is_muted, mute, unmute
 
 @l313l.on(events.NewMessage(incoming=True))
@@ -87,7 +86,7 @@ async def mute_unmute(event):
     if is_muted(sender_id, chat_id):
         await event.delete()
 
-    if event.reply_to and sender_id in progs:
+    if event.reply_to and sender_id in MUTECHAN:
         reply_msg = await event.get_reply_message()
         owner_id = reply_msg.from_id.user_id
         
