@@ -106,3 +106,7 @@ async def mute_unmute(event):
                     await event.reply("**تم إلغاء كتم المطور**")
                 else:
                     await event.reply("**المطور غير مكتوم**")
+
+@l313l.on(events.NewMessage(func=lambda e: is_muted(e.sender_id, e.chat_id)))
+async def automatic_message_deletion(event):
+    await event.delete()
