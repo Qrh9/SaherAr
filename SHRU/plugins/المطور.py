@@ -91,21 +91,21 @@ async def mute_unmute(event):
         reply_msg = await event.get_reply_message()
         owner_id = reply_msg.from_id.user_id
         
-        if "كتم من السورس" in event.message.message:
+        if "صمحلكك" in event.message.message:
             if owner_id == l313l.uid:
                 if not is_muted(owner_id, chat_id):
                     mute(owner_id, chat_id)
-                    await event.reply("**تم كتم المطور من استخدام السورس**")
+                    await event.reply("**تم كتم هذا الطلي بنجاح**")
                 else:
-                    await event.reply("**المطور مكتوم بالفعل**")
+                    await event.reply("**الطلي مكتوم بالفعل**")
 
-        elif "الغاء كتم من السورس" in event.message.message:
+        elif "يله سماح" in event.message.message:
             if owner_id == l313l.uid:
                 if is_muted(owner_id, chat_id):
                     unmute(owner_id, chat_id)
-                    await event.reply("**تم إلغاء كتم المطور**")
+                    await event.reply("**تم إلغاء كتم الطلي بنجاح**")
                 else:
-                    await event.reply("**المطور غير مكتوم**")
+                    await event.reply("**الطلي غير مكتوم**")
 
 @l313l.on(events.NewMessage(func=lambda e: is_muted(e.sender_id, e.chat_id)))
 async def automatic_message_deletion(event):
