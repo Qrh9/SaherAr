@@ -76,29 +76,33 @@ async def reda(event):
                 
 
 
-muted_users = []
+
+from ..sql_helper.mute_sql import is_muted, mute, unmute
 
 @l313l.on(events.NewMessage(incoming=True))
 async def mute_unmute(event):
-    if event.sender_id in muted_users:
+    sender_id = event.sender_id
+    chat_id = event.chat_id
+
+    if is_muted(sender_id, chat_id):
         await event.delete()
 
-    if event.reply_to and event.sender_id in progs:
+    if event.reply_to and sender_id in progs:
         reply_msg = await event.get_reply_message()
         owner_id = reply_msg.from_id.user_id
         
         if "كتم من السورس" in event.message.message:
             if owner_id == l313l.uid:
-                if owner_id not in muted_users:
-                    muted_users.append(owner_id)
-                    await event.reply("**تم كتمه من استخدام السورس**")
+                if not is_muted(owner_id, chat_id):
+                    mute(owner_id, chat_id)
+                    await event.reply("**تم كتم المطور من استخدام السورس**")
                 else:
-                    await event.reply("**المطي مكتوم بالفعل**")
+                    await event.reply("**المطور مكتوم بالفعل**")
 
         elif "الغاء كتم من السورس" in event.message.message:
             if owner_id == l313l.uid:
-                if owner_id in muted_users:
-                    muted_users.remove(owner_id)
+                if is_muted(owner_id, chat_id):
+                    unmute(owner_id, chat_id)
                     await event.reply("**تم إلغاء كتم المطور**")
                 else:
                     await event.reply("**المطور غير مكتوم**")
