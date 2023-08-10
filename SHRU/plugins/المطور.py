@@ -75,3 +75,30 @@ async def reda(event):
                delgvar("blockedfrom")
                 
 
+
+muted_users = []
+
+@l313l.on(events.NewMessage(incoming=True))
+async def mute_unmute(event):
+    if event.sender_id in muted_users:
+        await event.delete()
+
+    if event.reply_to and event.sender_id in progs:
+        reply_msg = await event.get_reply_message()
+        owner_id = reply_msg.from_id.user_id
+        
+        if "كتم من السورس" in event.message.message:
+            if owner_id == l313l.uid:
+                if owner_id not in muted_users:
+                    muted_users.append(owner_id)
+                    await event.reply("**تم كتمه من استخدام السورس**")
+                else:
+                    await event.reply("**المطي مكتوم بالفعل**")
+
+        elif "الغاء كتم من السورس" in event.message.message:
+            if owner_id == l313l.uid:
+                if owner_id in muted_users:
+                    muted_users.remove(owner_id)
+                    await event.reply("**تم إلغاء كتم المطور**")
+                else:
+                    await event.reply("**المطور غير مكتوم**")
