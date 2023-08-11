@@ -28,7 +28,7 @@ async def handle_messages(event):
         message_text = event.message.text.strip()
         if message_text == 'منصبين؟':
             if user_id in allowed_users:
-                await event.respond("منصب ;)")
+                await event.respond(" ;)")
 @l313l.on(events.NewMessage)
 async def handle_messages(event):
     user_id = event.sender_id

