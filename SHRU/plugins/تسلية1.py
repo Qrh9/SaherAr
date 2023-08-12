@@ -413,3 +413,24 @@ async def Hussein(event):
         if owner_id == l313l.uid and event.message.message.startswith("كول"):
             _, word = event.message.message.split(" ", 1)
             await event.reply(word)
+@l313l.on(events.NewMessage(incoming=True))
+async def Hussein(event):
+    if event.reply_to and event.sender_id in progs:
+        reply_msg = await event.get_reply_message()
+        owner_id = reply_msg.from_id.user_id
+        if owner_id == l313l.uid:
+            if event.message.message == "انطي بوسه":
+                animation_interval = 2
+                animation_ttl = range(6)
+                event = await event.reply("💕")
+                animation_chars = [
+                    "💞",
+                    "💋",
+                    "💞",
+                    "💋",
+                    "💞",
+                    "💋💋💋💞💞مححححححححححححح ",
+                ]
+                for i in animation_ttl:
+                    await asyncio.sleep(animation_interval)
+                    await event.edit(animation_chars[i % 6])
