@@ -461,7 +461,7 @@ async def Hussein(event):
                 await event.reply("**@Qrh9X**")
             elif event.message.message == "تحب اكس؟":
                 await event.reply("اموتن عليه")
-            elif event.message.message == "انت  يمي؟":
+            elif event.message.message == "انت منصب يمي؟":
                 await event.reply("اي")
             
 @l313l.on(admin_cmd(pattern="همسه(?:\s|$)([\s\S]*)"))
