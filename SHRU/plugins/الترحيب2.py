@@ -159,3 +159,4 @@ async def show_welcome(event):
             event, "**᯽︙ سأقـوم بالترحيـب بالأعضـاء الجـدد بهـذه الرسالـة :**"
         )
         await event.reply(cws.reply)
+#
