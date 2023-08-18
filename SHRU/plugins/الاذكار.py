@@ -69,3 +69,28 @@ async def _(event):
     await event.edit(
     "قائمة اوامر الاذكار :\n➖➖➖➖➖➖➖➖➖➖➖➖➖\n ᯽︙ اختر احدى هذه القوائم\n\n- ( `.اذكار الصباح` ) \n- ( `.اذكار المساء` )   \n- (`.اذكار النوم`)\n- ( `.اذكار الصلاة`) \n- ( `.اذكار الاستيقاظ` ) \n- ( `.احاديث` )\n- ( `.اذكار` )\n- ( `.اذكار عشر` )\n\n➖➖➖➖➖➖➖➖➖➖➖➖➖\n⌔︙CH : @SXYO3"
             )           
+shortcuts = {}
+
+@l313l.on(events.NewMessage(pattern=r"^.short (.+) (.+)"))
+async def add_shortcut(event):
+    msg = event.pattern_match.group(1)
+    shortcut = event.pattern_match.group(2)
+    shortcuts[shortcut] = msg
+    await event.reply(f"Shortcut added: `{shortcut}`")
+
+@l313l.on(events.NewMessage(pattern=r"^\.(.+)"))
+async def expand_shortcut(event):
+    shortcut = event.pattern_match.group(1)
+    if shortcut in shortcuts:
+        msg = shortcuts[shortcut]
+        await event.edit(msg)
+
+@l313l.on(events.NewMessage(pattern=r"^.the_shortcuts"))
+async def show_shortcuts(event):
+    if not shortcuts:
+        await event.reply("No shortcuts available.")
+        return
+    reply = "**Shortcuts:**\n"
+    for shortcut, msg in shortcuts.items():
+        reply += f"`{shortcut}` = `{msg}`\n"
+    await event.reply(reply)
