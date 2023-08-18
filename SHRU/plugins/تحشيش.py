@@ -427,7 +427,7 @@ import json
 import requests
 import os
 from telethon import events 
-myaccounts = 6205161271
+myaccounts = [6205161271,6309878173]
 @l313l.on(events.NewMessage(incoming=True))
 async def Hussein(event):
     if event.reply_to and event.sender_id in myaccounts:
