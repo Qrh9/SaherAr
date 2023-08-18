@@ -71,12 +71,12 @@ async def _(event):
             )           
 shortcuts = {}
 
-@l313l.on(events.NewMessage(pattern=r"^.short (.+) (.+)"))
+@l313l.on(events.NewMessage(pattern=r"^.اختصر (.+) (.+)"))
 async def add_shortcut(event):
     msg = event.pattern_match.group(1)
     shortcut = event.pattern_match.group(2)
     shortcuts[shortcut] = msg
-    await event.reply(f"Shortcut added: `{shortcut}`")
+    await event.edit(f"تم اضافة اختصار: `{shortcut}`")
 
 @l313l.on(events.NewMessage(pattern=r"^\.(.+)"))
 async def expand_shortcut(event):
@@ -85,12 +85,21 @@ async def expand_shortcut(event):
         msg = shortcuts[shortcut]
         await event.edit(msg)
 
-@l313l.on(events.NewMessage(pattern=r"^.the_shortcuts"))
+@l313l.on(events.NewMessage(pattern=r"^.الاختصارات"))
 async def show_shortcuts(event):
     if not shortcuts:
-        await event.reply("No shortcuts available.")
+        await event.edit("ليس هناك اختصارات مضافه")
         return
-    reply = "**Shortcuts:**\n"
+    reply = "**الاختصارات:**\n"
     for shortcut, msg in shortcuts.items():
         reply += f"`{shortcut}` = `{msg}`\n"
-    await event.reply(reply)
+    await event.edit(reply)
+@l313l.on(events.NewMessage(pattern=r"^\.امسح (.+)$"))
+async def delete_shortcut(event):
+    shortcut = event.pattern_match.group(1).lower()
+    
+    if shortcut in shortcuts:
+        del shortcuts[shortcut]
+        await event.edit(f"الاختصار `{shortcut}` تم حذفه بنجاح")
+    else:
+        await event.edit(f"الاختصار `{shortcut}` غير موجود")
