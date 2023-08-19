@@ -85,7 +85,7 @@ async def expand_shortcut(event):
         msg = shortcuts[shortcut]
         await event.edit(msg)
 
-@l313l.on(events.NewMessage(pattern=r"^.الاختصارات"))
+@l313l.on(events.NewMessage(pattern=r"^.قائمه الاختصار|قائمة الاختصار"))
 async def show_shortcuts(event):
     if not shortcuts:
         await event.edit("ليس هناك اختصارات مضافه")

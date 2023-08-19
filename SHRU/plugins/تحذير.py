@@ -94,3 +94,18 @@ async def _(event):
     reply_message = await event.get_reply_message()
     sql.reset_warns(str(reply_message.sender_id), event.chat_id)
     await edit_or_reply(event, "**▸┊تم إعادة ضبط التحذيرات!**")
+@l313l.ar_cmd(
+    pattern="عدد$",
+    command=("عدد", plugin_category),
+    info={
+        "header": "Count the number of lines in a message.",
+        "usage": "{tr}عدد (reply to a message)",
+    },
+)
+async def count_lines(event):
+    reply = await event.get_reply_message()
+    if not reply or not reply.message:
+        return await edit_or_reply(event, "⌔∮ يرجى الرد على الرسالة لحساب عدد الأسطر.")
+    lines = reply.message.split("\p")
+    count = len(lines)
+    await edit_or_reply(event, f"⌔∮ عدد الأسطر في الرسالة: {count}")
