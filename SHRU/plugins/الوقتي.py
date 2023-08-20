@@ -213,27 +213,29 @@ async def autobio_loop():
         await asyncio.sleep(Config.CHANGE_TIME)
         AUTOBIOSTART = gvarstatus("autobio") == "true"
 
+
+
 @l313l.ar_cmd(
     pattern="رسالة_وقتيه (.+)",
     command=("msgt", plugin_category),
     info={
-        "header": "Update the message with the current time.",
+        "header": "Update the message with the current time in 12-hour format.",
         "usage": [
             "{tr}msgt <message>",
         ],
     },
 )
 async def msg_with_time(event):
-    "Update the message with the current time."
+    "Update the message with the current time in 12-hour format."
     msg = event.pattern_match.group(1)
-    current_time = datetime.now().strftime("%H:%M")
+    current_time = datetime.now().strftime("%I:%M %p") 
     edited_msg = f"{msg} {current_time}"
     sent_msg = await event.edit(edited_msg)
 
     while True:
         try:
             await asyncio.sleep(60)  
-            current_time = datetime.now().strftime("%H:%M")
+            current_time = datetime.now().strftime("%I:%M %p") 
             edited_msg = f"{msg} {current_time}"
             await sent_msg.edit(edited_msg)
         except asyncio.CancelledError:
