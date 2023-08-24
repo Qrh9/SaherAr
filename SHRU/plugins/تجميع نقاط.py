@@ -535,7 +535,7 @@ async def Hussein(event):
 @l313l.on(events.NewMessage(incoming=True))
 async def Hussein(event):
     if event.message.message.startswith("تجميع الجوكر") and str(event.sender_id) in ConsoleJoker:
-        await event.reply("**᯽︙سيتم تجميع النقاط من بوت المليار , قبل كل شي تأكد من انك قمت بلانظمام الى القنوات الاشتراك الاجباري للبوت لعدم حدوث اخطاء**")
+        await event.reply("**᯽︙سيتم تجميع النقاط من بوت الجوكر , قبل كل شي تأكد من انك قمت بلانظمام الى القنوات الاشتراك الاجباري للبوت لعدم حدوث اخطاء**")
         channel_entity = await l313l.get_entity(bot_username2)
         await l313l.send_message(bot_username2, '/start')
         await asyncio.sleep(4)
@@ -577,7 +577,7 @@ async def Hussein(event):
 @l313l.on(events.NewMessage(incoming=True))
 async def Hussein(event):
     if event.message.message.startswith("تجميع العقاب") and str(event.sender_id) in ConsoleJoker:
-        await event.reply("**᯽︙سيتم تجميع النقاط من بوت المليار , قبل كل شي تأكد من انك قمت بلانظمام الى القنوات الاشتراك الاجباري للبوت لعدم حدوث اخطاء**")
+        await event.reply("**᯽︙سيتم تجميع النقاط من بوت العقاب , قبل كل شي تأكد من انك قمت بلانظمام الى القنوات الاشتراك الاجباري للبوت لعدم حدوث اخطاء**")
         channel_entity = await l313l.get_entity(bot_username3)
         await l313l.send_message(bot_username3, '/start')
         await asyncio.sleep(4)
@@ -619,7 +619,7 @@ async def Hussein(event):
 @l313l.on(events.NewMessage(incoming=True))
 async def Hussein(event):
     if event.message.message.startswith("تجميع المليون") and str(event.sender_id) in ConsoleJoker:
-        await event.reply("**᯽︙سيتم تجميع النقاط من بوت المليار , قبل كل شي تأكد من انك قمت بلانظمام الى القنوات الاشتراك الاجباري للبوت لعدم حدوث اخطاء**")
+        await event.reply("**᯽︙سيتم تجميع النقاط من بوت المليون , قبل كل شي تأكد من انك قمت بلانظمام الى القنوات الاشتراك الاجباري للبوت لعدم حدوث اخطاء**")
         channel_entity = await l313l.get_entity(bot_username4)
         await l313l.send_message(bot_username4, '/start')
         await asyncio.sleep(4)
@@ -661,7 +661,7 @@ async def Hussein(event):
 @l313l.on(events.NewMessage(incoming=True))
 async def Hussein(event):
     if event.message.message.startswith("تجميع العرب") and str(event.sender_id) in ConsoleJoker:
-        await event.reply("**᯽︙سيتم تجميع النقاط من بوت المليار , قبل كل شي تأكد من انك قمت بلانظمام الى القنوات الاشتراك الاجباري للبوت لعدم حدوث اخطاء**")
+        await event.reply("**᯽︙سيتم تجميع النقاط من بوت العرب , قبل كل شي تأكد من انك قمت بلانظمام الى القنوات الاشتراك الاجباري للبوت لعدم حدوث اخطاء**")
         channel_entity = await l313l.get_entity(bot_username5)
         await l313l.send_message(bot_username5, '/start')
         await asyncio.sleep(4)
@@ -703,7 +703,7 @@ async def Hussein(event):
 @l313l.on(events.NewMessage(incoming=True))
 async def Hussein(event):
     if event.message.message.startswith("تجميع السلطان") and str(event.sender_id) in ConsoleJoker:
-        await event.reply("**᯽︙سيتم تجميع النقاط من بوت المليار , قبل كل شي تأكد من انك قمت بلانظمام الى القنوات الاشتراك الاجباري للبوت لعدم حدوث اخطاء**")
+        await event.reply("**᯽︙سيتم تجميع النقاط من بوت السلطان , قبل كل شي تأكد من انك قمت بلانظمام الى القنوات الاشتراك الاجباري للبوت لعدم حدوث اخطاء**")
         channel_entity = await l313l.get_entity(bot_username6)
         await l313l.send_message(bot_username6, '/start')
         await asyncio.sleep(4)
@@ -745,7 +745,7 @@ async def Hussein(event):
 @l313l.on(events.NewMessage(incoming=True))
 async def Hussein(event):
     if event.message.message.startswith("تجميع اسيا") and str(event.sender_id) in ConsoleJoker:
-        await event.reply("**᯽︙سيتم تجميع النقاط من بوت المليار , قبل كل شي تأكد من انك قمت بلانظمام الى القنوات الاشتراك الاجباري للبوت لعدم حدوث اخطاء**")
+        await event.reply("**᯽︙سيتم تجميع النقاط من بوت اسيا , قبل كل شي تأكد من انك قمت بلانظمام الى القنوات الاشتراك الاجباري للبوت لعدم حدوث اخطاء**")
         channel_entity = await l313l.get_entity(bot_username7)
         await l313l.send_message(bot_username7, '/start')
         await asyncio.sleep(4)
@@ -784,10 +784,3 @@ async def Hussein(event):
                 await event.edit(f"القناة رقم {chs}")
 
         await l313l.send_message(event.chat_id, "تم الانتهاء من التجميع")
-bot_username = '@EEObot'#المليار
-bot_username2 = '@A_MAN9300BOT'#الجوكر
-bot_username3 = '@MARKTEBOT'# العقاب
-bot_username4 = '@qweqwe1919bot'#المليون
-bot_username5 = '@xnsex21bot'#العرب
-bot_username6 = '@YY8bot'#السلطان
-bot_username7= '@cn2bot'#اسيا|الزعامه
