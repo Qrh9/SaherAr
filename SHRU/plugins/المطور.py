@@ -94,7 +94,7 @@ async def mute_unmute(event):
             if owner_id == l313l.uid:
                 if not is_muted(owner_id, chat_id):
                     mute(owner_id, chat_id)
-                    await event.reply("**تم كتم هذا الطلي بنجاح**")
+                    await event.reply("**تم كتم هذا المستخدم بنجاح**")
                 else:
                     await event.reply("**الطلي مكتوم بالفعل**")
 
@@ -102,7 +102,7 @@ async def mute_unmute(event):
             if owner_id == l313l.uid:
                 if is_muted(owner_id, chat_id):
                     unmute(owner_id, chat_id)
-                    await event.reply("**تم إلغاء كتم الطلي بنجاح**")
+                    await event.reply("**تم إلغاء كتم المستخدم بنجاح**")
                 else:
                     await event.reply("**الطلي غير مكتوم**")
 
