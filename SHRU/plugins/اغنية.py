@@ -65,43 +65,59 @@ async def _(event):
         return await edit_or_reply(event, "⌔∮ يرجى الرد على ما تريد البحث عنه")
     cat = base64.b64decode("YnkybDJvRG04WEpsT1RBeQ==")
     catevent = await edit_or_reply(event, "⌔∮ جاري البحث عن المطلوب انتظر")
-    video_link = await yt_search(str(query))
-    if not url(video_link):
-        return await catevent.edit(
-            f"⌔∮ عذرا لم استطع ايجاد مقاطع ذات صلة بـ `{query}`"
-        )
-    cmd = event.pattern_match.group(1)
-    q = "320k" if cmd == "320" else "128k"
-    song_cmd = song_dl.format(QUALITY=q, video_link=video_link)
-    name_cmd = name_dl.format(video_link=video_link)
-    try:
-        cat = Get(cat)
-        await event.client(cat)
-    except BaseException:
-        pass
-    try:
-        stderr = (await _catutils.runcmd(song_cmd))[1]
-        # if stderr:
-        # await catevent.edit(f"**خطأ :** `{stderr}`")
-        catname, stderr = (await _catutils.runcmd(name_cmd))[:2]
-        if stderr:
-            return await catevent.edit(f"**خطأ :** `{stderr}`")
-        catname = os.path.splitext(catname)[0]
-        song_file = Path(f"{catname}.mp3")
-        catname = urllib.parse.unquote(catname)
-    except:
-        pass
-    if not os.path.exists(song_file):
-        return await catevent.edit(
-            f"⌔∮ عذرا لم استطع ايجاد مقاطع ذات صله بـ `{query}`"
-        )
-    await catevent.edit("**⌔∮ جارِ الارسال انتظر قليلاً**")
+    
+    # Keep searching while the artist name is "Shopify"
+    while True:
+        video_link = await yt_search(str(query))
+        if not url(video_link):
+            return await catevent.edit(
+                f"⌔∮ عذرا لم استطع ايجاد مقاطع ذات صلة بـ `{query}`"
+            )
+        
+        cmd = event.pattern_match.group(1)
+        q = "320k" if cmd == "320" else "128k"
+        song_cmd = song_dl.format(QUALITY=q, video_link=video_link)
+        name_cmd = name_dl.format(video_link=video_link)
+        
+        try:
+            cat = Get(cat)
+            await event.client(cat)
+        except BaseException:
+            pass
+        
+        try:
+            stderr = (await _catutils.runcmd(song_cmd))[1]
+            catname, stderr = (await _catutils.runcmd(name_cmd))[:2]
+            if stderr:
+                return await catevent.edit(f"**خطأ :** `{stderr}`")
+            catname = os.path.splitext(catname)[0]
+            song_file = Path(f"{catname}.mp3")
+            catname = urllib.parse.unquote(catname)
+        except:
+            pass
+        
+        if not os.path.exists(song_file):
+            return await catevent.edit(
+                f"⌔∮ عذرا لم استطع ايجاد مقاطع ذات صله بـ `{query}`"
+            )
+        
+        # Extract artist name from catname
+        artist_name = catname.split(" - ")[0]
+        
+        if artist_name == "Shopify":
+            await catevent.edit("**⌔∮ جارِ الارسال انتظر قليلاً**")
+            await asyncio.sleep(30)  # Wait for 30 seconds
+            query = "please wait 30 sac"  # Update the query
+        else:
+            break
+    
     catthumb = Path(f"{catname}.jpg")
     if not os.path.exists(catthumb):
         catthumb = Path(f"{catname}.webp")
     elif not os.path.exists(catthumb):
         catthumb = None
     title = catname.replace("./temp/", "").replace("_", "|")
+    
     try:
         await event.client.send_file(
             event.chat_id,
@@ -119,6 +135,7 @@ async def _(event):
     except ChatSendMediaForbiddenError as err:
         await catevent.edit("لا يمكن ارسال المقطع الصوتي هنا")
         LOGS.error(str(err))
+
 # =========================================================== #2
 
 @l313l.ar_cmd(
