@@ -102,7 +102,6 @@ async def _(event):
     elif not os.path.exists(catthumb):
         catthumb = None
     title = catname.replace("./temp/", "").replace("_", "|")
-    title = title.replace("<artist name>", "Rio time's")
     try:
         await event.client.send_file(
             event.chat_id,
