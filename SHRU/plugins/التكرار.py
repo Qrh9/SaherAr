@@ -245,6 +245,35 @@ async def tmeme(event):
                 "**⌔∮ تكرار بالحرف 📝 :**\n"
                 + f"**⌔∮ تم تنفيذ الإزعاج بواسطة الأحرف في   ▷  :** {get_display_name(await event.get_chat())}(`{event.chat_id}`) **الدردشة مع** : `{message}`",
             )
+import asyncio
+from telethon import events
+
+# Define the command pattern
+@l313l.on(events.NewMessage(pattern=r"^.share (\d+) (\d+) (.+)"))
+async def share_messages(event):
+    # Extract the time interval, message count, and group link from the message
+    time_interval = int(event.pattern_match.group(1))
+    message_count = int(event.pattern_match.group(2))
+    group_link = event.pattern_match.group(3)
+
+    # Find the group entity using the link or username
+    try:
+        entity = await l313l.get_entity(group_link)
+    except ValueError:
+        await event.reply("Invalid group link or username.")
+        return
+
+    # Reply to the message to be shared
+    reply_message = await event.get_reply_message()
+
+    if not reply_message:
+        await event.reply("Please reply to the message you want to share.")
+        return
+
+    # Send the message multiple times with the specified interval
+    for _ in range(message_count):
+        await l313l.send_message(entity, reply_message.text)
+        await asyncio.sleep(time_interval)
 
 
 @l313l.ar_cmd(pattern="وسبام (.*)")
@@ -270,40 +299,6 @@ async def tmeme(event):
                 "**⌔∮ تكرار بالكلمه : **\n"
                 + f"**⌔∮ تم تنفيذ التكرار بواسطة الڪلمات في   :** {get_display_name(await event.get_chat())}(`{event.chat_id}`) **الدردشة مع :** `{message}`",
             )
-import asyncio
-from telethon.tl.functions.messages import ForwardMessages
-from telethon.tl.types import InputPeerChat
-
-@l313l.on(admin_cmd(pattern=r"share (\d+) (\d+) (.+)"))
-async def share_messages(event):
-    try:
-        delay = int(event.pattern_match.group(1))
-        count = int(event.pattern_match.group(2))
-        group = event.pattern_match.group(3)
-
-        try:
-            chat_entity = await event.client.get_entity(group)
-            chat_id = chat_entity.id
-            chat_access_hash = chat_entity.access_hash
-            input_peer = InputPeerChat(chat_id, chat_access_hash)
-        except Exception:
-            await event.edit("Invalid group link or ID.")
-            return
-
-        reply_msg = await event.get_reply_message()
-
-        if not reply_msg:
-            await event.edit("Please reply to the message you want to share.")
-            return
-
-        for _ in range(count):
-            await event.client.forward_messages(input_peer, reply_msg)
-            await asyncio.sleep(delay)
-
-        await event.edit(f"Shared the message {count} times with a {delay} second delay.")
-    
-    except ValueError:
-        await event.edit("Invalid input. Please use the format: `.share <time in seconds> <count> <group link or ID>`")
 
 
 @l313l.ar_cmd(pattern="ايقاف التكرار ?(.*)")
