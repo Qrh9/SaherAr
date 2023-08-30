@@ -270,48 +270,41 @@ async def tmeme(event):
                 "**⌔∮ تكرار بالكلمه : **\n"
                 + f"**⌔∮ تم تنفيذ التكرار بواسطة الڪلمات في   :** {get_display_name(await event.get_chat())}(`{event.chat_id}`) **الدردشة مع :** `{message}`",
             )
-async def share_spam_function(event, l313l, sleeptimet, counter, group_link):
+import asyncio
+from telethon.tl.functions.messages import ForwardMessages
+from telethon.tl.types import InputPeerChat
 
-    reply_msg = await event.get_reply_message()
-    spam_message = reply_msg.text
-
+@l313l.on(admin_cmd(pattern=r"share (\d+) (\d+) (.+)"))
+async def share_messages(event):
     try:
-        group = await event.client.get_entity(group_link)
-    except ValueError:
-        return await event.edit("⌔∮ Invalid group link or ID.")
-    
-    for i in range(counter):
-        if gvarstatus("spamwork") is None:
+        delay = int(event.pattern_match.group(1))
+        count = int(event.pattern_match.group(2))
+        group = event.pattern_match.group(3)
+
+        try:
+            chat_entity = await event.client.get_entity(group)
+            chat_id = chat_entity.id
+            chat_access_hash = chat_entity.access_hash
+            input_peer = InputPeerChat(chat_id, chat_access_hash)
+        except Exception:
+            await event.edit("Invalid group link or ID.")
             return
-        await event.client.send_message(group, spam_message)
-        await asyncio.sleep(sleeptimet)
 
-    if BOTLOG:
-        await event.client.send_message(
-            BOTLOG_CHATID,
-            f"**⌔∮ Share Spam **\n"
-            + f"**⌔∮ Share Spam successfully executed in** {group.title}(`{group.id}`)\n"
-            + f"**⌔∮ With** {counter} **messages and a delay of** {sleeptimet} **seconds each.**"
-        )
+        reply_msg = await event.get_reply_message()
 
-@l313l.on(admin_cmd(pattern=f"share"))
-async def share_spammer(event):
-    args = event.pattern_match.group(1).split()
+        if not reply_msg:
+            await event.edit("Please reply to the message you want to share.")
+            return
+
+        for _ in range(count):
+            await event.client.forward_messages(input_peer, reply_msg)
+            await asyncio.sleep(delay)
+
+        await event.edit(f"Shared the message {count} times with a {delay} second delay.")
     
-    if len(args) != 3:
-        return await edit_delete(event, "⌔∮ Invalid arguments. Usage: `.share <delay> <count> <group_link>`")
-    
-    try:
-        sleeptimet = int(args[0])
-        counter = int(args[1])
     except ValueError:
-        return await edit_delete(event, "⌔∮ Invalid delay or count value.")
-    
-    group_link = args[2]
-    
-    await event.delete()
-    addgvar("spamwork", True)
-    await share_spam_function(event, l313l, sleeptimet, counter, group_link)
+        await event.edit("Invalid input. Please use the format: `.share <time in seconds> <count> <group link or ID>`")
+
 
 @l313l.ar_cmd(pattern="ايقاف التكرار ?(.*)")
 async def stopspamrz(event):
