@@ -254,7 +254,7 @@ from telethon import events
 import asyncio
 from telethon import events
 
-@l313l.on(events.NewMessage(pattern=r"^.share (\d+) (\d+) (.+)"))
+@l313l.on(events.NewMessage(pattern=r"^.تكرار (\d+) (\d+) (.+)"))
 async def share_messages(event):
     time_interval = int(event.pattern_match.group(1))
     message_count = int(event.pattern_match.group(2))
@@ -269,16 +269,16 @@ async def share_messages(event):
     reply_message = await event.get_reply_message()
 
     if not reply_message:
-        await event.edit("⌔∮ الرجاء الرد على الرسالة التي تريد تكرارها.")
+        await event.edit("⌔∮ !يجب الرد على الرسالة التي تريد تكرارها.")
         return
 
-    await event.edit(f"⌔∮ بدأ عملية التكرار... {time_interval} ثانية كل {message_count} مرة.")
+    await event.edit(f"⌔∮ بدأت عملية التكرار... {time_interval} ثانية كل {message_count} مرة.")
 
     for _ in range(message_count):
         sent_message = await l313l.send_message(entity, reply_message.text)
         await asyncio.sleep(time_interval)
 
-    await event.edit(f"⌔∮ تمت التكرار {message_count} مرة. تم الانتهاء من التكرار.")
+    await event.edit(f"⌔∮  تم التكرار بنجاح")
 
 @l313l.ar_cmd(pattern="وسبام (.*)")
 async def tmeme(event):
