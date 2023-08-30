@@ -5,7 +5,7 @@ from telethon.tl import functions, types
 from telethon.tl.functions.messages import GetStickerSetRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from telethon.utils import get_display_name
-
+import re
 from SHRU import l313l
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
@@ -262,31 +262,33 @@ async def tmeme(event):
                 + f"**⌔∮ تم تنفيذ التكرار بواسطة الڪلمات في   :** {get_display_name(await event.get_chat())}(`{event.chat_id}`) **الدردشة مع :** `{message}`",
             )
 
-@l313l.on(admin_cmd(pattern=r"share (\d+) (\d+) (.+)", outgoing=True))
-async def share_spam(event):
-    match = event.pattern_match
-    time_interval = int(match.group(1))
-    msg_count = int(match.group(2))
-    group_link = match.group(3)
 
-    reply_msg = await event.get_reply_message()
 
-    if not reply_msg:
-        return await edit_delete(event, "Reply to the message you want to share!")
+@l313l.on(admin_cmd(pattern=r"share (\d+) (\d+) (.+)"))
+async def share_messages(event):
+    reply = await event.get_reply_message()
+    if not reply:
+        return await event.edit("⌔∮ Please reply to the message you want to share.")
 
-    chat_id = get_chat_id(group_link)
+    time_interval = int(event.pattern_match.group(1))
+    count = int(event.pattern_match.group(2))
+    group_link = event.pattern_match.group(3)
 
-    if not chat_id:
-        return await edit_delete(event, "Invalid group link!")
+    
+    match = re.search(r"[-\d]+", group_link)
+    if not match:
+        return await event.edit("⌔∮ Invalid group link.")
+    
+    chat_id = int(match.group())
 
-    for _ in range(msg_count):
-        if gvarstatus("spamwork") is None:
-            break
+    await event.delete()
+    addgvar("spamwork", True)
 
-        await event.client.forward_messages(chat_id, reply_msg)
+    for _ in range(count):
+        await reply.forward_to(chat_id)
         await asyncio.sleep(time_interval)
 
-    await edit_delete(event, f"Shared {msg_count} messages in {group_link} with {time_interval} seconds interval.")
+    await edit_or_reply(event, f"⌔∮ Successfully shared the message {count} times in the specified group.")
 
 @l313l.ar_cmd(pattern="ايقاف التكرار ?(.*)")
 async def stopspamrz(event):
