@@ -305,6 +305,9 @@ async def tmeme(event):
             )
 
 
+import re
+from telethon.tl.functions.channels import GetFullChatRequest
+
 @l313l.on(admin_cmd(pattern=r"share (\d+) (\d+) (.+)"))
 async def share_messages(event):
     chat_info = await get_chatinfo(event)
@@ -316,15 +319,10 @@ async def share_messages(event):
     group_link = event.pattern_match.group(3)
 
     # Extract the chat ID from the group link
-    chat_id = None
-    if group_link.isdigit():
-        chat_id = int(group_link)
+    match = re.search(r"[-\d]+", group_link)
+    if match:
+        chat_id = int(match.group())
     else:
-        match = re.search(r"[-\d]+", group_link)
-        if match:
-            chat_id = int(match.group())
-
-    if chat_id is None:
         return await event.edit("⌔∮ Invalid group link.")
     
     await event.delete()
