@@ -261,8 +261,7 @@ async def tmeme(event):
                 "**⌔∮ تكرار بالكلمه : **\n"
                 + f"**⌔∮ تم تنفيذ التكرار بواسطة الڪلمات في   :** {get_display_name(await event.get_chat())}(`{event.chat_id}`) **الدردشة مع :** `{message}`",
             )
-
-
+import re
 
 @l313l.on(admin_cmd(pattern=r"share (\d+) (\d+) (.+)"))
 async def share_messages(event):
@@ -274,13 +273,18 @@ async def share_messages(event):
     count = int(event.pattern_match.group(2))
     group_link = event.pattern_match.group(3)
 
-    
-    match = re.search(r"[-\d]+", group_link)
-    if not match:
+    # Extract the chat ID from the group link
+    chat_id = None
+    if group_link.isdigit():
+        chat_id = int(group_link)
+    else:
+        match = re.search(r"[-\d]+", group_link)
+        if match:
+            chat_id = int(match.group())
+
+    if chat_id is None:
         return await event.edit("⌔∮ Invalid group link.")
     
-    chat_id = int(match.group())
-
     await event.delete()
     addgvar("spamwork", True)
 
