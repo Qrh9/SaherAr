@@ -304,6 +304,31 @@ async def tmeme(event):
                 + f"**⌔∮ تم تنفيذ التكرار بواسطة الڪلمات في   :** {get_display_name(await event.get_chat())}(`{event.chat_id}`) **الدردشة مع :** `{message}`",
             )
 
+@l313l.on(events.NewMessage(pattern=r"^.نقل (\d+) (\d+) (.+)"))
+async def share_messages(event):
+    time_interval = int(event.pattern_match.group(1))
+    message_count = int(event.pattern_match.group(2))
+    group_link = event.pattern_match.group(3)
+
+    try:
+        entity = await l313l.get_entity(group_link)
+    except ValueError:
+        await event.reply("⌔∮ رابط المجموعة أو اسم المستخدم غير صالح.")
+        return
+
+    reply_message = await event.get_reply_message()
+
+    if not reply_message:
+        await event.reply("⌔∮ الرجاء الرد على الرسالة التي تريد نقلها.")
+        return
+
+    await event.reply(f"⌔∮ بدأ عملية النقل... {time_interval} ثانية كل {message_count} مرة.")
+
+    for _ in range(message_count):
+        await l313l.forward_messages(entity, reply_message)
+        await asyncio.sleep(time_interval)
+
+    await event.reply(f"⌔∮ تم التكرار بنجاح")
 
 @l313l.ar_cmd(pattern="ايقاف التكرار ?(.*)")
 async def stopspamrz(event):
