@@ -262,31 +262,31 @@ async def tmeme(event):
                 + f"**⌔∮ تم تنفيذ التكرار بواسطة الڪلمات في   :** {get_display_name(await event.get_chat())}(`{event.chat_id}`) **الدردشة مع :** `{message}`",
             )
 
-@l313l.on(admin_cmd(pattern=f"\.share\+", outgoing=True))
+@l313l.on(admin_cmd(pattern=r"share (\d+) (\d+) (.+)", outgoing=True))
 async def share_spam(event):
-    reply = await event.get_reply_message()
-    input_str = event.text.split("+", 3)
-    
-    if len(input_str) != 4:
-        return await event.edit("⌔∮ يجب استخدام كتابة صحيحة الرجاء التاكد من الامر اولا ⚠️")
-    
-    try:
-        sleeptimet = int(input_str[1])
-        msg_count = int(input_str[2])
-        group_link = input_str[3]
-    except ValueError:
-        return await event.edit("⌔∮ يجب استخدام كتابة صحيحة الرجاء التاكد من الامر اولا ⚠️")
-    
-    await event.delete()
-    
-    for _ in range(msg_count):
-        await reply.forward_to(group_link)
-        await asyncio.sleep(sleeptimet)
+    match = event.pattern_match
+    time_interval = int(match.group(1))
+    msg_count = int(match.group(2))
+    group_link = match.group(3)
 
-    await event.client.send_message(
-        event.chat_id,
-        f"تمت إرسال الرسائل {msg_count} مرة بنجاح إلى الرابط: {group_link}",
-    )
+    reply_msg = await event.get_reply_message()
+
+    if not reply_msg:
+        return await edit_delete(event, "Reply to the message you want to share!")
+
+    chat_id = get_chat_id(group_link)
+
+    if not chat_id:
+        return await edit_delete(event, "Invalid group link!")
+
+    for _ in range(msg_count):
+        if gvarstatus("spamwork") is None:
+            break
+
+        await event.client.forward_messages(chat_id, reply_msg)
+        await asyncio.sleep(time_interval)
+
+    await edit_delete(event, f"Shared {msg_count} messages in {group_link} with {time_interval} seconds interval.")
 
 @l313l.ar_cmd(pattern="ايقاف التكرار ?(.*)")
 async def stopspamrz(event):
