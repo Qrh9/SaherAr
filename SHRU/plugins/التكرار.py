@@ -270,70 +270,48 @@ async def tmeme(event):
                 "**⌔∮ تكرار بالكلمه : **\n"
                 + f"**⌔∮ تم تنفيذ التكرار بواسطة الڪلمات في   :** {get_display_name(await event.get_chat())}(`{event.chat_id}`) **الدردشة مع :** `{message}`",
             )
+async def share_spam_function(event, l313l, sleeptimet, counter, group_link):
 
-async def get_chatinfo(event):
-    chat = event.pattern_match.group(1)
-    chat_info = None
-    if chat:
-        try:
-            chat = int(chat)
-        except ValueError:
-            pass
-    if not chat:
-        if event.reply_to_msg_id:
-            replied_msg = await event.get_reply_message()
-            if replied_msg.fwd_from and replied_msg.fwd_from.channel_id is not None:
-                chat = replied_msg.fwd_from.channel_id
-        else:
-            chat = event.chat_id
-    try:
-        chat_info = await event.client(GetFullChatRequest(chat))
-    except:
-        try:
-            chat_info = await event.client(GetFullChannelRequest(chat))
-        except ChannelInvalidError:
-            await event.reply("**▾∮ لم يتم العثور على المجموعة او القناة**")
-            return None
-        except ChannelPrivateError:
-            await event.reply("**▾∮ لا يمكنني استخدام الامر من الكروبات او القنوات الخاصة**")
-            return None
-        except ChannelPublicGroupNaError:
-            await event.reply("**▾∮ لم يتم العثور على المجموعة او القناة**")
-            return None
-        except (TypeError, ValueError) as err:
-            await event.reply("**▾∮ رابط الكروب غير صحيح**")
-            return None
-    return chat_info
-@l313l.on(admin_cmd(pattern=r"share (\d+) (\d+) (.+)"))
-async def share_messages(event):
     reply_msg = await event.get_reply_message()
-    if not reply_msg:
-        return await event.edit("**▾∮ يجـب الرد على الرسالة المراد مشاركتها!**")
+    spam_message = reply_msg.text
 
     try:
-        sleeptimet = int(event.pattern_match.group(1))
-        msg_count = int(event.pattern_match.group(2))
-        group_link = event.pattern_match.group(3)
+        group = await event.client.get_entity(group_link)
     except ValueError:
-        return await event.edit("**▾∮ يجـب استخدام الأرقام بشكل صحيح!**")
-
-    chat_info = await get_chatinfo(event)
-    if not chat_info:
-        return
-
-    chat_id = chat_info.full_chat.id
-
-    if "joinchat" in group_link:
-        group_link = group_link.split("/")[-1]
-
-    msg_text = reply_msg.text
-
-    await event.edit("**▾∮ بدأ المشاركة ...**")
-    for _ in range(msg_count):
-        await l313l.send_message(group_link, msg_text, link_preview=False)
+        return await event.edit("⌔∮ Invalid group link or ID.")
+    
+    for i in range(counter):
+        if gvarstatus("spamwork") is None:
+            return
+        await event.client.send_message(group, spam_message)
         await asyncio.sleep(sleeptimet)
 
-    await event.edit("**▾∮ تمت المشاركة بنجـاح!**")
+    if BOTLOG:
+        await event.client.send_message(
+            BOTLOG_CHATID,
+            f"**⌔∮ Share Spam **\n"
+            + f"**⌔∮ Share Spam successfully executed in** {group.title}(`{group.id}`)\n"
+            + f"**⌔∮ With** {counter} **messages and a delay of** {sleeptimet} **seconds each.**"
+        )
+
+@l313l.on(admin_cmd(pattern=f"share"))
+async def share_spammer(event):
+    args = event.pattern_match.group(1).split()
+    
+    if len(args) != 3:
+        return await edit_delete(event, "⌔∮ Invalid arguments. Usage: `.share <delay> <count> <group_link>`")
+    
+    try:
+        sleeptimet = int(args[0])
+        counter = int(args[1])
+    except ValueError:
+        return await edit_delete(event, "⌔∮ Invalid delay or count value.")
+    
+    group_link = args[2]
+    
+    await event.delete()
+    addgvar("spamwork", True)
+    await share_spam_function(event, l313l, sleeptimet, counter, group_link)
 
 @l313l.ar_cmd(pattern="ايقاف التكرار ?(.*)")
 async def stopspamrz(event):
