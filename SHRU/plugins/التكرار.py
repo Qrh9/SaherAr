@@ -251,6 +251,9 @@ from telethon import events
 import asyncio
 from telethon import events
 
+import asyncio
+from telethon import events
+
 @l313l.on(events.NewMessage(pattern=r"^.share (\d+) (\d+) (.+)"))
 async def share_messages(event):
     time_interval = int(event.pattern_match.group(1))
@@ -260,31 +263,22 @@ async def share_messages(event):
     try:
         entity = await l313l.get_entity(group_link)
     except ValueError:
-        await event.reply("Invalid group link or username.")
+        await event.edit("⌔∮ رابط المجموعة خاطئ.")
         return
 
     reply_message = await event.get_reply_message()
 
     if not reply_message:
-        await event.reply("Please reply to the message you want to share.")
+        await event.edit("⌔∮ الرجاء الرد على الرسالة التي تريد تكرارها.")
         return
 
-    sent_messages = []
+    await event.edit(f"⌔∮ بدأ عملية التكرار... {time_interval} ثانية كل {message_count} مرة.")
 
     for _ in range(message_count):
         sent_message = await l313l.send_message(entity, reply_message.text)
-        sent_messages.append(sent_message)
         await asyncio.sleep(time_interval)
 
-    await event.reply(f"Shared {message_count} times. Editing messages...")
-
-    # Edit the messages to a new content
-    edited_text = "Shared message is over."
-    for sent_message in sent_messages:
-        await sent_message.edit(edited_text)
-
-    await event.reply("All shared messages have been edited.")
-
+    await event.edit(f"⌔∮ تمت التكرار {message_count} مرة. تم الانتهاء من التكرار.")
 
 @l313l.ar_cmd(pattern="وسبام (.*)")
 async def tmeme(event):
@@ -300,7 +294,7 @@ async def tmeme(event):
         if event.is_private:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                "**⌔∮ تكرار بالكلمه : **\n"
+                "** ⌔∮ تكرار بالكلمه : **\n"
                 + f"**⌔∮ تم تنفيذ التكرار بواسطة الڪلمات في   :** [المستخدم](tg://user?id={event.chat_id}) **الدردشة مع :** `{message}`",
             )
         else:
