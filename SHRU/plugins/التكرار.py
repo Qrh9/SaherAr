@@ -248,32 +248,42 @@ async def tmeme(event):
 import asyncio
 from telethon import events
 
-# Define the command pattern
+import asyncio
+from telethon import events
+
 @l313l.on(events.NewMessage(pattern=r"^.share (\d+) (\d+) (.+)"))
 async def share_messages(event):
-    # Extract the time interval, message count, and group link from the message
     time_interval = int(event.pattern_match.group(1))
     message_count = int(event.pattern_match.group(2))
     group_link = event.pattern_match.group(3)
 
-    # Find the group entity using the link or username
     try:
         entity = await l313l.get_entity(group_link)
     except ValueError:
         await event.reply("Invalid group link or username.")
         return
 
-    # Reply to the message to be shared
     reply_message = await event.get_reply_message()
 
     if not reply_message:
         await event.reply("Please reply to the message you want to share.")
         return
 
-    # Send the message multiple times with the specified interval
+    sent_messages = []
+
     for _ in range(message_count):
-        await l313l.send_message(entity, reply_message.text)
+        sent_message = await l313l.send_message(entity, reply_message.text)
+        sent_messages.append(sent_message)
         await asyncio.sleep(time_interval)
+
+    await event.reply(f"Shared {message_count} times. Editing messages...")
+
+    # Edit the messages to a new content
+    edited_text = "Shared message is over."
+    for sent_message in sent_messages:
+        await sent_message.edit(edited_text)
+
+    await event.reply("All shared messages have been edited.")
 
 
 @l313l.ar_cmd(pattern="وسبام (.*)")
