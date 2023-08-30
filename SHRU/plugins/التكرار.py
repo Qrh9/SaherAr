@@ -13,8 +13,50 @@ from ..helpers.tools import media_type
 from ..helpers.utils import _catutils
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from . import BOTLOG, BOTLOG_CHATID
+from SHRU import *
+from SHRU import l313l
+from SHRU.utils import admin_cmd
+from telethon.tl.types import Channel, Chat, User
+from telethon.tl import functions, types
+from telethon.tl.functions.messages import  CheckChatInviteRequest, GetFullChatRequest
+from telethon.errors import (ChannelInvalidError, ChannelPrivateError, ChannelPublicGroupNaError, InviteHashEmptyError, InviteHashExpiredError, InviteHashInvalidError)
+from telethon.tl.functions.channels import GetFullChannelRequest, GetParticipantsRequest
 
 Mukrr = Config.MUKRR_ET or "مكرر"
+async def get_chatinfo(event):
+    chat = event.pattern_match.group(1)
+    chat_info = None
+    if chat:
+        try:
+            chat = int(chat)
+        except ValueError:
+            pass
+    if not chat:
+        if event.reply_to_msg_id:
+            replied_msg = await event.get_reply_message()
+            if replied_msg.fwd_from and replied_msg.fwd_from.channel_id is not None:
+                chat = replied_msg.fwd_from.channel_id
+        else:
+            chat = event.chat_id
+    try:
+        chat_info = await event.client(GetFullChatRequest(chat))
+    except:
+        try:
+            chat_info = await event.client(GetFullChannelRequest(chat))
+        except ChannelInvalidError:
+            await event.reply("**▾∮ لم يتم العثور على المجموعة او القناة**")
+            return None
+        except ChannelPrivateError:
+            await event.reply("**▾∮ لا يمكنني استخدام الامر من الكروبات او القنوات الخاصة**")
+            return None
+        except ChannelPublicGroupNaError:
+            await event.reply("**▾∮ لم يتم العثور على المجموعة او القناة**")
+            return None
+        except (TypeError, ValueError) as err:
+            await event.reply("**▾∮ رابط الكروب غير صحيح**")
+            return None
+    return chat_info
+
 async def spam_function(event, SHRU, l313l, sleeptimem, sleeptimet, DelaySpam=False):
 
     counter = int(l313l[0])
@@ -261,14 +303,14 @@ async def tmeme(event):
                 "**⌔∮ تكرار بالكلمه : **\n"
                 + f"**⌔∮ تم تنفيذ التكرار بواسطة الڪلمات في   :** {get_display_name(await event.get_chat())}(`{event.chat_id}`) **الدردشة مع :** `{message}`",
             )
-import re
+
 
 @l313l.on(admin_cmd(pattern=r"share (\d+) (\d+) (.+)"))
 async def share_messages(event):
-    reply = await event.get_reply_message()
-    if not reply:
-        return await event.edit("⌔∮ Please reply to the message you want to share.")
-
+    chat_info = await get_chatinfo(event)
+    if chat_info is None:
+        return
+    
     time_interval = int(event.pattern_match.group(1))
     count = int(event.pattern_match.group(2))
     group_link = event.pattern_match.group(3)
@@ -287,9 +329,11 @@ async def share_messages(event):
     
     await event.delete()
     addgvar("spamwork", True)
-
+    
+    replied_msg = await event.client.get_messages(event.chat_id, ids=event.reply_to_msg_id)
+    
     for _ in range(count):
-        await reply.forward_to(chat_id)
+        await replied_msg.forward_to(chat_id)
         await asyncio.sleep(time_interval)
 
     await edit_or_reply(event, f"⌔∮ Successfully shared the message {count} times in the specified group.")
