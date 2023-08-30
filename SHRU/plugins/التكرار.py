@@ -322,6 +322,9 @@ async def share_messages(event):
     if not chat_info:
         return
 
+    if "joinchat" in group_link:
+        group_link = group_link.split("/")[-1]
+
     msg_text = reply_msg.text
 
     await event.edit("**▾∮ بدأ المشاركة ...**")
