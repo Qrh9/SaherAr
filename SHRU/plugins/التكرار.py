@@ -306,7 +306,7 @@ async def tmeme(event):
 
 
 import re
-from telethon.tl.functions.channels import GetFullChatRequest
+from telethon.tl.functions.messages import ForwardMessages
 
 @l313l.on(admin_cmd(pattern=r"share (\d+) (\d+) (.+)"))
 async def share_messages(event):
@@ -329,9 +329,9 @@ async def share_messages(event):
     addgvar("spamwork", True)
     
     replied_msg = await event.client.get_messages(event.chat_id, ids=event.reply_to_msg_id)
-    
+
     for _ in range(count):
-        await replied_msg.forward_to(chat_id)
+        await event.client(ForwardMessages(to_id=chat_id, from_peer=replied_msg.chat_id, id=[replied_msg.id]))
         await asyncio.sleep(time_interval)
 
     await edit_or_reply(event, f"⌔∮ Successfully shared the message {count} times in the specified group.")
