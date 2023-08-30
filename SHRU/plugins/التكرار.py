@@ -304,7 +304,6 @@ async def get_chatinfo(event):
             await event.reply("**▾∮ رابط الكروب غير صحيح**")
             return None
     return chat_info
-
 @l313l.on(admin_cmd(pattern=r"share (\d+) (\d+) (.+)"))
 async def share_messages(event):
     reply_msg = await event.get_reply_message()
@@ -322,6 +321,8 @@ async def share_messages(event):
     if not chat_info:
         return
 
+    chat_id = chat_info.full_chat.id
+
     if "joinchat" in group_link:
         group_link = group_link.split("/")[-1]
 
@@ -329,7 +330,7 @@ async def share_messages(event):
 
     await event.edit("**▾∮ بدأ المشاركة ...**")
     for _ in range(msg_count):
-        await l313l.send_message(group_link, msg_text)
+        await l313l.send_message(group_link, msg_text, link_preview=False)
         await asyncio.sleep(sleeptimet)
 
     await event.edit("**▾∮ تمت المشاركة بنجـاح!**")
