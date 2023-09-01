@@ -40,85 +40,7 @@ SONG_SENDING_STRING = "<code>جارِ الارسال انتظر قليلا...</c
 #                                                             #
 # =========================================================== #
 # =========================================================== #1
-@l313l.ar_cmd(
-    pattern="بحث(320)?(?:\s|$)([\s\S]*)",
-    command=("بحث", plugin_category),
-    info={
-        "header": "To get songs from youtube.",
-        "description": "Basically this command searches youtube and send the first video as audio file.",
-        "flags": {
-            "320": "if you use song320 then you get 320k quality else 128k quality",
-        },
-        "usage": "{tr}song <song name>",
-        "examples": "{tr}song memories song",
-    },
-)
-async def _(event):
-    "To search songs"
-    reply_to_id = await reply_id(event)
-    reply = await event.get_reply_message()
-    if event.pattern_match.group(2):
-        query = event.pattern_match.group(2)
-    elif reply and reply.message:
-        query = reply.message
-    else:
-        return await edit_or_reply(event, "⌔∮ يرجى الرد على ما تريد البحث عنه")
-    cat = base64.b64decode("YnkybDJvRG04WEpsT1RBeQ==")
-    catevent = await edit_or_reply(event, "⌔∮ جاري البحث عن المطلوب انتظر")
-    video_link = await yt_search(str(query))
-    if not url(video_link):
-        return await catevent.edit(
-            f"⌔∮ عذرا لم استطع ايجاد مقاطع ذات صلة بـ `{query}`"
-        )
-    cmd = event.pattern_match.group(1)
-    q = "320k" if cmd == "320" else "128k"
-    song_cmd = song_dl.format(QUALITY=q, video_link=video_link)
-    name_cmd = name_dl.format(video_link=video_link)
-    try:
-        cat = Get(cat)
-        await event.client(cat)
-    except BaseException:
-        pass
-    try:
-        stderr = (await _catutils.runcmd(song_cmd))[1]
-        # if stderr:
-        # await catevent.edit(f"**خطأ :** `{stderr}`")
-        catname, stderr = (await _catutils.runcmd(name_cmd))[:2]
-        if stderr:
-            return await catevent.edit(f"**خطأ :** `{stderr}`")
-        catname = os.path.splitext(catname)[0]
-        song_file = Path(f"{catname}.mp3")
-        catname = urllib.parse.unquote(catname)
-    except:
-        pass
-    if not os.path.exists(song_file):
-        return await catevent.edit(
-            f"⌔∮ عذرا لم استطع ايجاد مقاطع ذات صله بـ `{query}`"
-        )
-    await catevent.edit("**⌔∮ جارِ الارسال انتظر قليلاً**")
-    catthumb = Path(f"{catname}.jpg")
-    if not os.path.exists(catthumb):
-        catthumb = Path(f"{catname}.webp")
-    elif not os.path.exists(catthumb):
-        catthumb = None
-    title = catname.replace("./temp/", "").replace("_", "|")
-    try:
-        await event.client.send_file(
-            event.chat_id,
-            song_file,
-            force_document=False,
-            caption=f"**العنوان:** `{title}`",
-            thumb=catthumb,
-            supports_streaming=True,
-            reply_to=reply_to_id,
-        )
-        await catevent.delete()
-        for files in (catthumb, song_file):
-            if files and os.path.exists(files):
-                os.remove(files)
-    except ChatSendMediaForbiddenError as err:
-        await catevent.edit("لا يمكن ارسال المقطع الصوتي هنا")
-        LOGS.error(str(err))
+
 
 # =========================================================== #2
 
@@ -287,3 +209,79 @@ async def _(event):
         )
         await catevent.delete()
         await delete_conv(event, chat, purgeflag)
+import os
+import asyncio
+import urllib.parse
+from pytube import YouTube
+from telethon.tl.types import DocumentAttributeAudio
+from telethon.tl import functions
+
+from ..helpers.functions import yt_search, download_youtube_audio
+from ..Config import Config
+from ..core.logger import logging
+from ..core.managers import edit_or_reply
+
+# Command to search for and send a song from YouTube
+@l313l.ar_cmd(
+    pattern="بحث(320)?(?:\s|$)([\s\S]*)",
+    command=("بحث", plugin_category),
+    info={
+        "header": "Search for songs on YouTube.",
+        "description": "Search YouTube for a song and send it as an audio file.",
+        "flags": {
+            "320": "Use 320k quality (default is 128k).",
+        },
+        "usage": "{tr}بحث <song name>",
+        "examples": "{tr}بحث memories song",
+    },
+)
+async def search_song(event):
+    reply_to_id = await reply_id(event)
+    reply = await event.get_reply_message()
+    if event.pattern_match.group(2):
+        query = event.pattern_match.group(2)
+    elif reply and reply.message:
+        query = reply.message
+    else:
+        return await edit_or_reply(event, "Please reply to a message or provide a query to search for.")
+    
+    # Default quality is 128k, use 320k if the flag is present
+    quality = "320k" if "320" in event.pattern_match.group(1) else "128k"
+    
+    # Search for the song on YouTube
+    await edit_or_reply(event, "Searching for the song...")
+    video_url = await yt_search(query)
+    
+    if not video_url:
+        return await edit_or_reply(event, "Sorry, I couldn't find any relevant videos for that query.")
+    
+    # Download the song from YouTube
+    await edit_or_reply(event, "Downloading the song...")
+    song_file, song_title, thumb_file = await download_youtube_audio(video_url, quality)
+    
+    if not song_file:
+        return await edit_or_reply(event, "Sorry, I couldn't download the song.")
+    
+    # Send the song as an audio file
+    await edit_or_reply(event, "Sending the song...")
+    
+    try:
+        await event.client.send_file(
+            event.chat_id,
+            song_file,
+            thumb=thumb_file,
+            caption=f"**Title:** {song_title}",
+            supports_streaming=True,
+            reply_to=reply_to_id,
+        )
+        
+        await event.delete()
+        
+        # Clean up downloaded files
+        for file in (song_file, thumb_file):
+            if file and os.path.exists(file):
+                os.remove(file)
+                
+    except Exception as e:
+        LOGS.error(str(e))
+        await edit_or_reply(event, "An error occurred while sending the song.")
