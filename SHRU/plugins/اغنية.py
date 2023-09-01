@@ -45,7 +45,7 @@ SONG_SENDING_STRING = "<code>جارِ الارسال انتظر قليلا...</c
     command=("بحث", plugin_category),
     info={
         "header": "To get songs from youtube.",
-        "description": "Basically this command searches youtube and send the first video as audio file.",
+        "description": "Basically this command searches youtube and sends the first video as an audio file.",
         "flags": {
             "320": "if you use song320 then you get 320k quality else 128k quality",
         },
@@ -68,9 +68,10 @@ async def _(event):
     video_link = await yt_search(str(query))
     
     if not url(video_link):
-        return await catevent.edit(
+        await catevent.edit(
             f"⌔∮ عذرًا، لم أتمكن من العثور على مقاطع ذات صلة بـ `{query}`"
         )
+        return
     
     cmd = event.pattern_match.group(1)
     q = "320k" if cmd == "320" else "128k"
@@ -87,7 +88,8 @@ async def _(event):
         catname, stderr = (await _catutils.runcmd(name_cmd))[:2]
         
         if stderr:
-            return await catevent.edit(f"**⌔∮ خطأ :** `{stderr}`")
+            await catevent.edit(f"**⌔∮ خطأ :** `{stderr}`")
+            return
         
         catname = os.path.splitext(catname)[0]
         song_file = Path(f"{catname}.mp3")
@@ -99,11 +101,11 @@ async def _(event):
         pass
     
     if not os.path.exists(song_file):
-        return await catevent.edit(
+        await catevent.edit(
             f"⌔∮ عذرًا، لم أتمكن من العثور على مقاطع ذات صلة بـ `{query}`"
         )
+        return
     
-    await catevent.edit("**⌔∮ جارِ إرسال الملف الصوتي، الرجاء الانتظار قليلاً")
     catthumb = Path(f"{catname}.jpg")
     
     if not os.path.exists(catthumb):
@@ -111,7 +113,8 @@ async def _(event):
     elif not os.path.exists(catthumb):
         catthumb = None
     
-    title = title.replace("<artist name>", "اسم الفنان")
+    title = catname.replace("./temp/", "").replace("_", "|")
+
     
     try:
         if reply:
@@ -120,7 +123,7 @@ async def _(event):
                 reply,
                 silent=True,
             )
-        await catevent.delete()
+        await catevent.edit(f"**⌔∮ تم العثور على نتائج لـ `{query}`**")
         
         for files in (catthumb, song_file):
             if files and os.path.exists(files):
