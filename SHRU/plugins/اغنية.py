@@ -62,7 +62,7 @@ async def _(event):
     elif reply and reply.message:
         query = reply.message
     else:
-        return await edit_or_reply(event, "⌔∮ يُرجى الرد على ما ترغب في البحث عنه")
+        return await edit_or_reply(event, "⌔∮ يرجى الرد على ما ترغب في البحث عنه")
     
     catevent = await edit_or_reply(event, "⌔∮ جاري البحث عن ما تم طلبه، الرجاء الانتظار")
     video_link = await yt_search(str(query))
@@ -92,6 +92,9 @@ async def _(event):
         catname = os.path.splitext(catname)[0]
         song_file = Path(f"{catname}.mp3")
         catname = urllib.parse.unquote(catname)
+        
+        # Define the title variable here
+        title = catname.replace("./temp/", "").replace("_", "|")
     except:
         pass
     
@@ -100,7 +103,7 @@ async def _(event):
             f"⌔∮ عذرًا، لم أتمكن من العثور على مقاطع ذات صلة بـ `{query}`"
         )
     
-    await catevent.edit("**⌔∮ جارِ إرسال الملف الصوتي، الرجاء الانتظار قليلاً**")
+    await catevent.edit("**⌔∮ جارِ إرسال الملف الصوتي، الرجاء الانتظار قليلاً")
     catthumb = Path(f"{catname}.jpg")
     
     if not os.path.exists(catthumb):
