@@ -44,17 +44,17 @@ SONG_SENDING_STRING = "<code>جارِ الارسال انتظر قليلا...</c
     pattern="بحث(320)?(?:\s|$)([\s\S]*)",
     command=("بحث", plugin_category),
     info={
-        "header": "للحصول على أغاني من YouTube.",
-        "description": "عمومًا، هذا الأمر يبحث في YouTube ويُرسل أول فيديو كملف صوتي.",
+        "header": "To get songs from youtube.",
+        "description": "Basically this command searches youtube and send the first video as audio file.",
         "flags": {
-            "320": "إذا استخدمت `song320` ستحصل على جودة 320k وإلا ستحصل على جودة 128k.",
+            "320": "if you use song320 then you get 320k quality else 128k quality",
         },
-        "usage": "{tr}بحث <اسم الأغنية>",
-        "examples": "{tr}بحث memories song",
+        "usage": "{tr}song <song name>",
+        "examples": "{tr}song memories song",
     },
 )
 async def _(event):
-    "للبحث عن الأغاني"
+    "To search songs"
     reply_to_id = await reply_id(event)
     reply = await event.get_reply_message()
     if event.pattern_match.group(2):
@@ -62,7 +62,7 @@ async def _(event):
     elif reply and reply.message:
         query = reply.message
     else:
-        return await edit_or_reply(event, "⌔∮ يرجى الرد على ما ترغب في البحث عنه")
+        return await edit_or_reply(event, "⌔∮ يرجى الرد على ما تريد البحث عنه")
     
     catevent = await edit_or_reply(event, "⌔∮ جاري البحث عن ما تم طلبه، الرجاء الانتظار")
     video_link = await yt_search(str(query))
@@ -114,11 +114,12 @@ async def _(event):
     title = title.replace("<artist name>", "اسم الفنان")
     
     try:
-        await event.client.forward_messages(
-            event.chat_id,
-            reply,
-            silent=True,
-        )
+        if reply:
+            await event.client.forward_messages(
+                event.chat_id,
+                reply,
+                silent=True,
+            )
         await catevent.delete()
         
         for files in (catthumb, song_file):
@@ -127,6 +128,7 @@ async def _(event):
     except ChatSendMediaForbiddenError as err:
         await catevent.edit("⌔∮ لا يمكن إرسال الملف الصوتي هنا")
         LOGS.error(str(err))
+
 
 # =========================================================== #2
 #322242
