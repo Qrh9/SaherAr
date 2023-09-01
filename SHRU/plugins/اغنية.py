@@ -113,8 +113,7 @@ async def _(event):
     elif not os.path.exists(catthumb):
         catthumb = None
     
-    title = catname.replace("./temp/", "").replace("_", "|")
-
+    title = title.replace("<artist name>", "اسم الفنان")
     
     try:
         if reply:
@@ -125,12 +124,24 @@ async def _(event):
             )
         await catevent.edit(f"**⌔∮ تم العثور على نتائج لـ `{query}`**")
         
+        # Forward the song
+        await event.client.send_file(
+            event.chat_id,
+            song_file,
+            force_document=False,
+            caption=f"**العنوان:** `{title}`",
+            thumb=catthumb,
+            supports_streaming=True,
+            reply_to=reply_to_id,
+        )
+        
         for files in (catthumb, song_file):
             if files and os.path.exists(files):
                 os.remove(files)
     except ChatSendMediaForbiddenError as err:
         await catevent.edit("⌔∮ لا يمكن إرسال الملف الصوتي هنا")
         LOGS.error(str(err))
+
 
 
 # =========================================================== #2
