@@ -65,13 +65,20 @@ async def _(event):
         return await edit_or_reply(event, "⌔∮ يرجى الرد على ما تريد البحث عنه")
     
     catevent = await edit_or_reply(event, "⌔∮ جاري البحث عن ما تم طلبه، الرجاء الانتظار")
+    
+    # First, try the primary search method
     video_link = await yt_search(str(query))
     
     if not url(video_link):
-        await catevent.edit(
-            f"⌔∮ عذرًا، لم أتمكن من العثور على مقاطع ذات صلة بـ `{query}`"
-        )
-        return
+        # Primary search didn't work, let's try a fallback search
+        await catevent.edit(f"⌔∮ لم يتم العثور على نتائج لـ `{query}`، جاري البحث بطريقة بديلة")
+        
+        # Fallback search method
+        video_link = await yt_search_fallback(str(query))
+        
+        if not url(video_link):
+            await catevent.edit(f"⌔∮ لم يتم العثور على نتائج بأي من الطرق لـ `{query}`")
+            return
     
     cmd = event.pattern_match.group(1)
     q = "320k" if cmd == "320" else "128k"
