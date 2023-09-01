@@ -7,7 +7,7 @@ import mutagen
 import requests
 from bs4 import BeautifulSoup
 from pathlib import Path
-
+import re
 from pydub import AudioSegment
 from ShazamAPI import Shazam
 from telethon import types
@@ -39,6 +39,24 @@ SONG_SENDING_STRING = "<code>جارِ الارسال انتظر قليلا...</c
 # =========================================================== #
 #                                                             #
 # =========================================================== #
+# Import this module at the beginning of your script
+import urllib
+
+# Define a new function for the fallback search
+async def yt_search_fallback(query):
+    try:
+        search_url = f"https://www.youtube.com/results?search_query={urllib.parse.quote(query)}"
+        html_content = requests.get(search_url).text
+
+        # Parse the HTML content
+        soup = BeautifulSoup(html_content, "html.parser")
+
+        # Find the first video link
+        for element in soup.find_all("a", {"href": re.compile(r"/watch\?v=.*")}):
+            video_link = f"https://www.youtube.com{element['href']}"
+            return video_link
+    except Exception as e:
+        print(str(e))
 # =========================================================== #1
 @l313l.ar_cmd(
     pattern="بحث(320)?(?:\s|$)([\s\S]*)",
