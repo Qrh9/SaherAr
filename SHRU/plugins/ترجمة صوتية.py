@@ -3,7 +3,7 @@ from telethon import functions
 import subprocess
 from SHRU.helpers.functions.functions import translate
 from datetime import datetime
-from ALJoker import get_string
+from ALSAHER import get_string
 
 
 

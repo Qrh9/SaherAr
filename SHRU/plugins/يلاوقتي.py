@@ -1,7 +1,7 @@
 # اذا تخمط اذكر الحقوق رجـاءا  - 
 # كتابة وتعديل وترتيب  ~ @SX9OO
 # For ~ @SXYO3
-#تعديل Reda / رضا
+#تعديل riooo / ريو
 #من تعرف تخمط اذكر حقوق لتسوي نفسك مطور
 from ..sql_helper.group import auto_g, del_auto_g, get_auto_g
 import webcolors
@@ -12,7 +12,7 @@ import shutil
 import time
 from datetime import datetime
 from telethon import events
-from ALJoker import get_string
+from ALSAHER import get_string
 from telethon.errors import ChatAdminRequiredError
 from PIL import Image, ImageDraw, ImageFont
 from pySmartDL import SmartDL
@@ -91,7 +91,7 @@ async def digitalpicloop():
         except BaseException:
             return
         DIGITALPICSTART = gvarstatus("digitalpic") == "true"
-#Reda
+#riooo
 #اننننسخخخخخ هههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههه
 async def digitalgrouppicloop():
     "2KjZiNin2LPYt9ipINiz2YjYsdizINis2YrYqNir2YjZhiAo2KfYsNinINin2LPYqtio2K/ZhNiq2Ycg2LHYp9itINiq2KvYqNiqINmB2LTZhNmDKSDZhdi5INiq2K3Zitin2KrZiiDYp9iu2YjZg9mFINix2LbYpyBAcmQwcjA="
