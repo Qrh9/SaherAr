@@ -23,24 +23,20 @@ from SHRU import BOTLOG_CHATID
 from ..Config import Config
 from ..helpers.utils import _format
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
-from . import AUTONAME, DEFAULT_GROUP, DEFAULT_BIO, edit_delete, l313l, logging , edit_or_reply
+from . import AUTONAME, DEFAULT_GROUP, DEFAULT_BIO, edit_delete, l313l, logging
 from colour import Color
-
 plugin_category = "tools"
 # لتخمط ابن الكحبة
 DEFAULTUSERBIO = DEFAULT_BIO or "﴿ لا تَحزَن إِنَّ اللَّهَ مَعَنا ﴾ "
 DEFAULTUSERGRO = DEFAULT_GROUP or ""
 DEFAULTUSER = AUTONAME or ""
 LOGS = logging.getLogger(__name__)
-
 FONT_FILE_TO_USE = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"
-
 autopic_path = os.path.join(os.getcwd(), "SHRU", "original_pic.png")
 digitalpic_path = os.path.join(os.getcwd(), "SHRU", "digital_pic.png")
 digital_group_pic_path = os.path.join(os.getcwd(), "SHRU", "digital_group_pic.png")
 autophoto_path = os.path.join(os.getcwd(), "SHRU", "photo_pfp.png")
 auto_group_photo_path = os.path.join(os.getcwd(), "SHRU", "photo_pfp.png")
-
 digitalpfp = Config.DIGITAL_PIC or "https://telegra.ph/file/63a826d5e5f0003e006a0.jpg"
 digitalgrouppfp = Config.DIGITAL_GROUP_PIC or "https://telegra.ph/file/63a826d5e5f0003e006a0.jpg"
 SX9OO = Config.TIME_JEP or ""
@@ -50,7 +46,6 @@ namerzfont = Config.JP_FN or "𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵𝟬"
 namew8t = Config.NAME_ET or "اسم وقتي"
 biow8t = Config.BIO_ET or "بايو وقتي"
 phow8t = Config.PHOTO_ET or "الصورة الوقتية"
-
 def check_color(color):
     try:
         color = color.replace(" ", "")
@@ -58,7 +53,6 @@ def check_color(color):
         return True
     except ValueError:
         return False
-
 async def digitalpicloop():
     colorco = gvarstatus("digitalpiccolor") or Config.DIGITAL_PIC_COLOR
     if colorco is None:
@@ -97,12 +91,10 @@ async def digitalpicloop():
         except BaseException:
             return
         DIGITALPICSTART = gvarstatus("digitalpic") == "true"
-
 #Reda
 #اننننسخخخخخ هههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههه
 async def digitalgrouppicloop():
     "2KjZiNin2LPYt9ipINiz2YjYsdizINis2YrYqNir2YjZhiAo2KfYsNinINin2LPYqtio2K/ZhNiq2Ycg2LHYp9itINiq2KvYqNiqINmB2LTZhNmDKSDZhdi5INiq2K3Zitin2KrZiiDYp9iu2YjZg9mFINix2LbYpyBAcmQwcjA="
-
     dgp = gvarstatus("digitalgrouppic")
     colorco = gvarstatus("digitalgrouppiccolor") or Config.DIGITAL_PIC_COLOR
     if colorco is None:
@@ -148,7 +140,6 @@ async def digitalgrouppicloop():
         message = base64.b64decode(base64m)
         messageo = message.decode()
         LOGS.info(messageo)
-
 async def group_loop():
     ag = get_auto_g()
     AUTONAMESTAR = ag != None
@@ -173,8 +164,6 @@ async def group_loop():
             LOGS.warning("FloodWaitError! خطأ حظر مؤقت من التيليجرام")
         await asyncio.sleep(Config.CHANGE_TIME)
         AUTONAMESTAR = get_auto_g() != None
-
-
 async def autoname_loop():
     AUTONAMESTART = gvarstatus("autoname") == "true"
     while AUTONAMESTART:
@@ -193,8 +182,6 @@ async def autoname_loop():
             await asyncio.sleep(120)
         await asyncio.sleep(Config.CHANGE_TIME)
         AUTONAMESTART = gvarstatus("autoname") == "true"
-
-
 async def autobio_loop():
     AUTOBIOSTART = gvarstatus("autobio") == "true"
     while AUTOBIOSTART:
@@ -212,35 +199,6 @@ async def autobio_loop():
             LOGS.warning(str(ex))
         await asyncio.sleep(Config.CHANGE_TIME)
         AUTOBIOSTART = gvarstatus("autobio") == "true"
-
-
-
-@l313l.ar_cmd(
-    pattern="رسالة_وقتيه (.+)",
-    command=("msgt", plugin_category),
-    info={
-        "header": "Update the message with the current time in 12-hour format.",
-        "usage": [
-            "{tr}msgt <message>",
-        ],
-    },
-)
-async def msg_with_time(event):
-    "Update the message with the current time in 12-hour format."
-    msg = event.pattern_match.group(1)
-    current_time = datetime.now().strftime("%I:%M %p") 
-    edited_msg = f"{msg} {current_time}"
-    sent_msg = await event.edit(edited_msg)
-
-    while True:
-        try:
-            await asyncio.sleep(60)  
-            current_time = datetime.now().strftime("%I:%M %p") 
-            edited_msg = f"{msg} {current_time}"
-            await sent_msg.edit(edited_msg)
-        except asyncio.CancelledError:
-            break
-
 @l313l.on(admin_cmd(pattern=f"{phow8t}(?:\s|$)([\s\S]*)"))
 async def _(event):
     "To set random colour pic with time to profile pic"
@@ -253,7 +211,6 @@ async def _(event):
     addgvar("digitalpic", True)
     await edit_delete(event, "**تم تفـعيل الصـورة الـوقتية بنجـاح ✓**")
     await digitalpicloop()
-
 @l313l.on(admin_cmd(pattern="كروب وقتي"))
 async def _(event):
     ison = get_auto_g()
@@ -266,7 +223,6 @@ async def _(event):
         await group_loop()
     else:
         return await edit_delete(event, "**يمكنك استعمال الاسم الوقتي في الكروب او في القناة فقط**")
-
 @l313l.on(admin_cmd(pattern="كروب صورة وقتي"))
 async def _(event):
     ison = gvarstatus("digitalgrouppic")
@@ -279,7 +235,6 @@ async def _(event):
         await digitalgrouppicloop()
     else:
         return await edit_delete(event, "**يمكنك استعمال الصورة الوقتية في كروب او قناة**")
-
 @l313l.on(admin_cmd(pattern=f"{namew8t}(?:\s|$)([\s\S]*)"))
 async def _(event):
     "To set your display name along with time"
@@ -288,8 +243,6 @@ async def _(event):
     addgvar("autoname", True)
     await edit_delete(event, "**تم تفـعيل اسـم الـوقتي بنجـاح ✓**")
     await autoname_loop()
-
-
 @l313l.on(admin_cmd(pattern=f"{biow8t}(?:\s|$)([\s\S]*)"))
 async def _(event):
     "To update your bio along with time"
@@ -298,8 +251,6 @@ async def _(event):
     addgvar("autobio", True)
     await edit_delete(event, "**تم تفـعيل البـايو الـوقتي بنجـاح ✓**")
     await autobio_loop()
-
-
 @l313l.ar_cmd(
     pattern="انهاء ([\s\S]*)",
     command=("انهاء", plugin_category),
@@ -356,25 +307,8 @@ async def _(event):  # sourcery no-metrics
             f"عـذرا يجـب استـخدام الامـر بشـكل صحـيح 🧸♥",
             parse_mode=_format.parse_pre,
         )
-
-async def automessage_loop():
-    AUTOMESSAGE_START = gvarstatus("automessage") == "true"
-    while AUTOMESSAGE_START:
-        current_time = datetime.now().strftime("%I:%M %p")  # Format time as "HH:MM AM/PM"
-        message = gvarstatus("automessage_text") or "تحديث الرسالة الوقتية"
-        updated_message = f"{message} {current_time}"
-        try:
-            # Edit the existing message using the edit_or_reply function
-            await edit_or_reply(updated_message)
-        except FloodWaitError as ex:
-            LOGS.warning(str(ex))
-            await asyncio.sleep(120)
-        await asyncio.sleep(60)  # Wait for 1 minute before updating the message again
-        AUTOMESSAGE_START = gvarstatus("automessage") == "true"
-
 l313l.loop.create_task(digitalpicloop())
 l313l.loop.create_task(digitalgrouppicloop())
 l313l.loop.create_task(autoname_loop())
 l313l.loop.create_task(autobio_loop())
 l313l.loop.create_task(group_loop())
-l313l.loop.create_task(automessage_loop())
