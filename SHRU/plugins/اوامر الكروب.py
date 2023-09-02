@@ -730,14 +730,14 @@ async def hussein(event):
 is_Reham = False
 No_group_Joker = "@SXYO3"
 # يا يلفاشل هم الك نيه تاخذه وتنشره بسورسك 🤣
-active_aljoker = []
+active_ALSAHER = []
 
 @l313l.ar_cmd(pattern=r"الذكاء تفعيل")
 async def enable_bot(event):
     global is_Reham
     if not is_Reham:
         is_Reham = True
-        active_aljoker.append(event.chat_id)
+        active_ALSAHER.append(event.chat_id)
         await event.edit("**᯽︙ تم تفعيل امر الذكاء الاصطناعي سيتم الرد على اسئلة الجميع عند الرد علي.**")
     else:
         await event.edit("**᯽︙ الزر مُفعّل بالفعل.**")
@@ -746,7 +746,7 @@ async def disable_bot(event):
     global is_Reham
     if is_Reham:
         is_Reham = False
-        active_aljoker.remove(event.chat_id)
+        active_ALSAHER.remove(event.chat_id)
         await event.edit("**᯽︙ تم تعطيل امر الذكاء الاصطناعي.**")
     else:
         await event.edit("**᯽︙ الزر مُعطّل بالفعل.**")
@@ -754,7 +754,7 @@ async def disable_bot(event):
 async def reply_to_hussein(event):
     if not is_Reham:
         return
-    if event.is_private or event.chat_id not in active_aljoker:
+    if event.is_private or event.chat_id not in active_ALSAHER:
         return
     message = event.message
     if message.reply_to_msg_id:

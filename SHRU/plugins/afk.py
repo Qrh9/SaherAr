@@ -1,6 +1,6 @@
 import asyncio
 from datetime import datetime
-from ALJoker import languages
+from ALSAHER import languages
 from telethon.tl import functions, types
 from SHRU.helpers.functions.functions import translate 
 from SHRU import CMD_HELP, l313l

@@ -5,7 +5,7 @@ import datetime
 from telethon import events
 from SHRU import *
 #ها يالفاشل شعدك داخل هنا 🫣 اعتمد ع نفسك لتخلي سورس الساحر مصدر طشت سورسك
-Aljoker_Asbo3 = {
+ALSAHER_Asbo3 = {
     'Monday': 'الاثنين',
     'Tuesday': 'الثلاثاء',
     'Wednesday': 'الأربعاء',
@@ -57,7 +57,7 @@ async def Hussein(event, caption):
     sender = await event.get_sender()
     sender_id = event.sender_id
     lMl10l_date = event.date.strftime("%Y-%m-%d")
-    lMl10l_day = Aljoker_Asbo3[event.date.strftime("%A")]
+    lMl10l_day = ALSAHER_Asbo3[event.date.strftime("%A")]
     await bot.send_file(
         "me",
         media,

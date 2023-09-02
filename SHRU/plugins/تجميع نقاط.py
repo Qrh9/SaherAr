@@ -272,17 +272,17 @@ async def hussein(event):
         is_rio_status = gvarstatus("is_rio")
         if is_rio_status != "True":
             addgvar("is_rio", "True")
-            await send_aljoker(event)
+            await send_ALSAHER(event)
         else:
             await event.edit("**راتب وعد قيد التشغيل بالفعل!**")
     else:
         await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
-async def send_aljoker(event):
+async def send_ALSAHER(event):
     is_rio_status = gvarstatus("is_rio")
     if is_rio_status == "True":
         await event.respond('بخشيش')
         await asyncio.sleep(660)
-        await send_aljoker(event)  
+        await send_ALSAHER(event)  
 @l313l.ar_cmd(pattern="ايقاف بخشيش وعد(?:\s|$)([\s\S]*)")
 async def hussein(event):
     if event.is_group:
@@ -375,7 +375,7 @@ async def Reham(event):
         
 
 @l313l.ar_cmd(pattern="استثمار بوت وعد")
-async def aljoker_money_w3d(event):
+async def ALSAHER_money_w3d(event):
     global its_Reham
     if event.is_group:
         await event.respond("فلوسي")
