@@ -1,5 +1,5 @@
 from SHRU import bot, l313l
-#By Source joker @SXYO3
+#By Source saher @SXYO3
 from telethon import events, functions, types, Button
 from datetime import timedelta
 from SHRU.utils import admin_cmd
@@ -461,7 +461,12 @@ async def users(event):
       i = await delacc(strses.text)
       await event.reply("تم حذف الحساب بنجاح 😈.", buttons=keyboard)
 
-      
+from telegram.ext import CommandHandler
+
+@bot.command("hiii")
+def start(update, context):
+    update.message.reply_text("hiii how can i assist you ")
+ 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"K")))
 async def users(event):
   async with bot.conversation(event.chat_id) as x:
