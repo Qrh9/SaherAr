@@ -29,7 +29,7 @@ from . import l313l
 
 plugin_category = "utils"
 LOGS = logging.getLogger(__name__)
-
+adss=["Shopify","TRODELVY® (sacituzumab govitecan-hziy)"]
 # =========================================================== #
 #                           STRINGS                           #
 # =========================================================== #
@@ -58,7 +58,7 @@ async def yt_search_fallback(query):
     except Exception as e:
         print(str(e))
 # =========================================================== #1
-import asyncio
+Shopify = ["Shopify", "TRODELVY® (sacituzumab govitecan-hziy)"]
 
 @l313l.ar_cmd(
     pattern="بحث(?:\s|$)([\s\S]*)",
@@ -74,7 +74,7 @@ async def _(event):
     "To search songs"
     reply_to_id = await reply_id(event)
     reply = await event.get_reply_message()
-    
+
     if event.pattern_match.group(1):
         query = event.pattern_match.group(1)
     elif reply and reply.message:
@@ -84,61 +84,67 @@ async def _(event):
 
     while True:
         catevent = await edit_or_reply(event, "⌔∮ جاري البحث عن ما تم طلبه، الرجاء الانتظار")
-        
+
         # Search for the song
         video_link = await yt_search(str(query))
-        
+
         if not url(video_link):
             await catevent.edit(f"⌔∮ لم يتم العثور على نتائج لـ `{query}`")
             return
 
-        # Check if the artist name is "Shopify"
+        # Check if any artist in the Shopify list is in the title
         cmd = event.pattern_match.group(1)
         q = "320k" if cmd == "320" else "128k"
         song_cmd = song_dl.format(QUALITY=q, video_link=video_link)
         name_cmd = name_dl.format(video_link=video_link)
-        
+
         try:
             await event.client(cat)
         except BaseException:
             pass
-        
+
         try:
             stderr = (await _catutils.runcmd(song_cmd))[1]
             catname, stderr = (await _catutils.runcmd(name_cmd))[:2]
-            
+
             if stderr:
                 await catevent.edit(f"**⌔∮ خطأ :** `{stderr}`")
                 return
-            
+
             catname = os.path.splitext(catname)[0]
             song_file = Path(f"{catname}.mp3")
             catname = urllib.parse.unquote(catname)
-            
+
             # Define the title variable here
             title = catname.replace("./temp/", "").replace("_", "|")
         except:
             pass
-        
+
         if not os.path.exists(song_file):
             await catevent.edit(f"⌔∮ عذرًا، لم أتمكن من العثور على مقاطع ذات صلة بـ `{query}`")
             return
 
-        # Check if the artist name is "Shopify"
-        if "Shopify" in title:
-            await catevent.edit(f"⌔∮ الفنان هو 'Shopify'. سيتم المحاولة مرة أخرى...")
+        # Check if any artist in the Shopify list is in the title
+        artist_found = False
+        for artist in Shopify:
+            if artist in title:
+                artist_found = True
+                break
+
+        if artist_found:
+            await catevent.edit(f"⌔∮ لقد ظهر اعلان سيتم المحاوله مره اخرى...")
             await asyncio.sleep(1)  # Wait for 1 second before retrying
             continue
 
         catthumb = Path(f"{catname}.jpg")
-        
+
         if not os.path.exists(catthumb):
             catthumb = Path(f"{catname}.webp")
         elif not os.path.exists(catthumb):
             catthumb = None
-        
+
         title = title.replace("<artist name>", "اسم الفنان")
-        
+
         try:
             if reply:
                 await event.client.forward_messages(
@@ -147,7 +153,7 @@ async def _(event):
                     silent=True,
                 )
             await catevent.edit(f"**⌔∮ تم العثور على نتائج لـ `{query}`**")
-            
+
             # Forward the song
             await event.client.send_file(
                 event.chat_id,
@@ -158,11 +164,11 @@ async def _(event):
                 supports_streaming=True,
                 reply_to=reply_to_id,
             )
-            
+
             for files in (catthumb, song_file):
                 if files and os.path.exists(files):
                     os.remove(files)
-            
+
             break  # Exit the loop when a valid song is found
         except ChatSendMediaForbiddenError as err:
             await catevent.edit("⌔∮ لا يمكن إرسال الملف الصوتي هنا")
