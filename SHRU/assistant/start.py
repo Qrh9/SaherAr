@@ -38,14 +38,7 @@ async def start(event):
                 [Button.url("المطـور 🔗", "https://t.me/SX9OO"), Button.inline(
                     "اوامر الزغـرفة", data="rozzag")],
                 # Add the new button here:
-                [
-                    Button.inline("التحويلات والصرف", data="transactions"),
-                    # Add the sub-buttons here:
-                    Button.inline("تون", data="tun"),
-                    Button.inline("يوستد", data="ustad"),
-                    Button.inline("بتكوين", data="bitcoin"),
-                    Button.inline("اسيا", data="asia"),
-                ],
+                [Button.inline("التحويلات والصرف", data="transactions")],
             ])
     else:
         if already_added(event.sender_id):
