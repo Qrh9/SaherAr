@@ -140,7 +140,7 @@ async def settings(event):
 
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"rozname"))) 
-async def settings(event):  #    قـسـم  الزغرفـة جمـثـون
+async def settings(event):  
     if event.sender_id == bot.uid:
         await event.delete()
         await tgbot.send_message(event.chat_id,
@@ -383,3 +383,16 @@ async def settings(event):  # انتهـى  :)  اذا تخـمط تـذكر ت�
                                  ])
     else:
         await event.answer("انت لا تستطيع استخدام هذا البوت.", alert=True)
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"rozzag")))
+async def settings(event):
+    if event.sender_id == bot.uid:
+        await event.delete()
+        # Create a message with four buttons
+        message = "**التحويلات والصرف:**"
+        buttons = [
+            [Button.inline("Option 1", data="option1")],
+            [Button.inline("Option 2", data="option2")],
+            [Button.inline("Option 3", data="option3")],
+            [Button.inline("Option 4", data="option4")]
+        ]
+        await tgbot.send_message(event.chat_id, message, buttons=buttons)
