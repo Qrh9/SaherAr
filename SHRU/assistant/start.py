@@ -1,6 +1,4 @@
-#    جميع الحقوق لمطوري سورس جـيبثون حصريا لهم فقط
-#    اذا تخمط الملف اذك الحقوق وكاتبيه ومطوريه لا تحذف الحقوق وتصير فاشل 👍
-#    كتابة الشسد 
+
 import asyncio
 import io
 import re
@@ -33,14 +31,22 @@ async def start(event):
     if event.sender_id == bot.uid:
         await tgbot.send_message(
             vent,
-            message=f"اهـلا يا مالكـي انـه انـا {bot_id}, مسـاعدك ! \nمـاذا تريـد ان تفعـل اليـوم ?",
+            message=f"اهـلا يا مالكـي انـه انـا {bot_id}, مسـاعدك ! \nمـاذا تريـد ان تفعـل اليـوم ؟",
             buttons=[
-                                     [Button.inline("عرض المستخدمين 📬", data="users"), Button.inline(
-                                         "اوامر البـوت ⚒️", data="gibcmd")],
-                                     [Button.url("المطـور 🔗", "https://t.me/SX9OO"), Button.inline(
-                                         "اوامر الزغـرفة", data="rozzag")],
-
-                                 ])
+                [Button.inline("عرض المستخـدمين 📬", data="users"), Button.inline(
+                    "اوامر البـوت ⚒️", data="gibcmd")],
+                [Button.url("المطـور 🔗", "https://t.me/SX9OO"), Button.inline(
+                    "اوامر الزغـرفة", data="rozzag")],
+                # Add the new button here:
+                [
+                    Button.inline("التحويلات والصرف", data="transactions"),
+                    # Add the sub-buttons here:
+                    Button.inline("تون", data="tun"),
+                    Button.inline("يوستد", data="ustad"),
+                    Button.inline("بتكوين", data="bitcoin"),
+                    Button.inline("اسيا", data="asia"),
+                ],
+            ])
     else:
         if already_added(event.sender_id):
             pass
@@ -55,7 +61,6 @@ async def start(event):
                 [Button.url("تحتاج مسـاعدة ❓", "https://t.me/SX9OO")],
             ],
         )
-
 #Data
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"deploy")))
@@ -383,16 +388,3 @@ async def settings(event):  # انتهـى  :)  اذا تخـمط تـذكر ت�
                                  ])
     else:
         await event.answer("انت لا تستطيع استخدام هذا البوت.", alert=True)
-@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"rozzag")))
-async def settings(event):
-    if event.sender_id == bot.uid:
-        await event.delete()
-        # Create a message with four buttons
-        message = "**التحويلات والصرف:**"
-        buttons = [
-            [Button.inline("Option 1", data="option1")],
-            [Button.inline("Option 2", data="option2")],
-            [Button.inline("Option 3", data="option3")],
-            [Button.inline("Option 4", data="option4")]
-        ]
-        await tgbot.send_message(event.chat_id, message, buttons=buttons)
