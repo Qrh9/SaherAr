@@ -463,7 +463,7 @@ async def users(event):
 
 from telegram.ext import CommandHandler
 
-@bot.command("hiii")
+@bot.on("hiii")
 def start(update, context):
     update.message.reply_text("hiii how can i assist you ")
  
