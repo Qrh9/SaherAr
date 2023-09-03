@@ -62,7 +62,37 @@ async def start(event):
             ],
         )
 #Data
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"transactions")))
+async def transactions(event):
+    await event.delete()
+    if event.query.user_id == bot.uid:
+        await tgbot.send_message(
+            event.chat_id,
+            message="اختر وسيلة التحويل أدناه:",
+            buttons=[
+                [Button.inline("تون", data="tun"), Button.inline(
+                    "يوستد", data="youstod")],
+                [Button.inline("بتكوين", data="bitcoin"), Button.inline(
+                    "اسيا", data="asia")],
+            ],
+        )
 
+# Add handlers for the submenu options
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"tun")))
+async def tun(event):
+    await event.respond("You selected تون")
+
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"youstod")))
+async def youstod(event):
+    await event.respond("You selected يوستد")
+
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"bitcoin")))
+async def bitcoin(event):
+    await event.respond("You selected بتكوين")
+
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"asia")))
+async def asia(event):
+    await event.respond("You selected اسيا")
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"deploy")))
 async def help(event):
     await event.delete()
