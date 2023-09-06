@@ -18,6 +18,7 @@ from validators.url import url
 from telethon import types
 from moviepy.editor import VideoFileClip
 from shazamio import Shazam
+from googleapiclient.discovery import build
 
 
 from ..core.logger import logging
@@ -29,19 +30,16 @@ from . import l313l
 
 plugin_category = "utils"
 LOGS = logging.getLogger(__name__)
-adss=["Shopify","TRODELVY® (sacituzumab govitecan-hziy)"]
 # =========================================================== #
 #                           STRINGS                           #
 # =========================================================== #
-SONG_SEARCH_STRING = "<code>يجؤة الانتظار قليلا يتم البحث على المطلوب</code>"
+SONG_SEARCH_STRING = "<code>يرجى الانتظار قليلا يتم البحث على المطلوب</code>"
 SONG_NOT_FOUND = "<code>عذرا لا يمكنني ايجاد اي اغنيه مثل هذه</code>"
 SONG_SENDING_STRING = "<code>جارِ الارسال انتظر قليلا...</code>"
 # =========================================================== #
 #                                                             #
 # =========================================================== #
 # Import this module at the beginning of your script
-import urllib
-
 # Define a new function for the fallback search
 async def yt_search_fallback(query):
     try:
@@ -58,23 +56,25 @@ async def yt_search_fallback(query):
     except Exception as e:
         print(str(e))
 # =========================================================== #1
-Shopify = ["Shopify", "TRODELVY® (sacituzumab govitecan-hziy)"]
+
+YOUTUBE_API_KEY = "AIzaSyBh71KuTxXRZjDce8iEXwpIuIKfXMrHOMc"
+ads = ["Shopify", "TRODELVY® (sacituzumab govitecan-hziy)"]
 
 @l313l.ar_cmd(
     pattern="بحث(?:\s|$)([\s\S]*)",
     command=("بحث", plugin_category),
     info={
-        "header": "To get songs from youtube.",
-        "description": "Basically this command searches youtube and sends the first video as an audio file.",
-        "usage": "{tr}song <song name>",
-        "examples": "{tr}song memories song",
+        "header": "To get songs from YouTube.",
+        "description": "This command searches YouTube using the YouTube API and sends the first video as an audio file.",
+        "usage": "{tr}بحث <song name>",
+        "examples": "{tr}بحث memories song",
     },
 )
 async def _(event):
     "To search songs"
     reply_to_id = await reply_id(event)
     reply = await event.get_reply_message()
-
+    
     if event.pattern_match.group(1):
         query = event.pattern_match.group(1)
     elif reply and reply.message:
@@ -83,68 +83,71 @@ async def _(event):
         return await edit_or_reply(event, "⌔∮ يرجى الرد على ما تريد البحث عنه")
 
     while True:
-        catevent = await edit_or_reply(event, "⌔∮ جاري البحث عن ما تم طلبه، الرجاء الانتظار")
-
-        # Search for the song
-        video_link = await yt_search(str(query))
-
-        if not url(video_link):
+        catevent = await edit_or_reply(event, "⌔∮ يرجى الانتظار قليلا يتم البحث على المطلوب..")
+        
+        youtube = build("youtube", "v3", developerKey=YOUTUBE_API_KEY)
+        request = youtube.search().list(
+            q=query,
+            type="video",
+            part="id",
+            maxResults=1
+        )
+        response = request.execute()
+        
+        if "items" not in response:
             await catevent.edit(f"⌔∮ لم يتم العثور على نتائج لـ `{query}`")
             return
 
-        # Check if any artist in the Shopify list is in the title
+        video_id = response["items"][0]["id"]["videoId"]
+        video_link = f"https://www.youtube.com/watch?v={video_id}"
+
+        
         cmd = event.pattern_match.group(1)
         q = "320k" if cmd == "320" else "128k"
         song_cmd = song_dl.format(QUALITY=q, video_link=video_link)
         name_cmd = name_dl.format(video_link=video_link)
-
+        
         try:
             await event.client(cat)
         except BaseException:
             pass
-
+        
         try:
             stderr = (await _catutils.runcmd(song_cmd))[1]
             catname, stderr = (await _catutils.runcmd(name_cmd))[:2]
-
+            
             if stderr:
                 await catevent.edit(f"**⌔∮ خطأ :** `{stderr}`")
                 return
-
+            
             catname = os.path.splitext(catname)[0]
             song_file = Path(f"{catname}.mp3")
             catname = urllib.parse.unquote(catname)
-
+            
             # Define the title variable here
             title = catname.replace("./temp/", "").replace("_", "|")
         except:
             pass
-
+        
         if not os.path.exists(song_file):
             await catevent.edit(f"⌔∮ عذرًا، لم أتمكن من العثور على مقاطع ذات صلة بـ `{query}`")
             return
 
-        # Check if any artist in the Shopify list is in the title
-        artist_found = False
-        for artist in Shopify:
-            if artist in title:
-                artist_found = True
-                break
-
-        if artist_found:
-            await catevent.edit(f"⌔∮ لقد ظهر اعلان سيتم المحاوله مره اخرى...")
-            await asyncio.sleep(1)  # Wait for 1 second before retrying
+        
+        if any(ad in title for ad in ads):
+            await catevent.edit(f"⌔∮ يرجى الانتظار...")
+            await asyncio.sleep(1)  
             continue
 
         catthumb = Path(f"{catname}.jpg")
-
+        
         if not os.path.exists(catthumb):
             catthumb = Path(f"{catname}.webp")
         elif not os.path.exists(catthumb):
             catthumb = None
-
+        
         title = title.replace("<artist name>", "اسم الفنان")
-
+        
         try:
             if reply:
                 await event.client.forward_messages(
@@ -153,7 +156,7 @@ async def _(event):
                     silent=True,
                 )
             await catevent.edit(f"**⌔∮ تم العثور على نتائج لـ `{query}`**")
-
+            
             # Forward the song
             await event.client.send_file(
                 event.chat_id,
@@ -164,16 +167,15 @@ async def _(event):
                 supports_streaming=True,
                 reply_to=reply_to_id,
             )
-
+            
             for files in (catthumb, song_file):
                 if files and os.path.exists(files):
                     os.remove(files)
-
-            break  # Exit the loop when a valid song is found
+            
+            break  
         except ChatSendMediaForbiddenError as err:
-            await catevent.edit("⌔∮ لا يمكن إرسال الملف الصوتي هنا")
+            await catevent.edit("⌔∮ لا يمكن إرسال ملف الصوتي هنا")
             LOGS.error(str(err))
-
 
 
 # =========================================================== #2
