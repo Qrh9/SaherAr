@@ -58,7 +58,7 @@ async def on_plug_in_callback_query_handler(event):
     statstext = await catalive(StartTime)
     await event.answer(statstext, cache_time=0, alert=True)
 
-progs = [6309878173,6320583148,6205161271,6295913543]
+progs = [6320583148]
 
 @Qrh9.on(events.NewMessage(incoming=True))
 async def reda(event):
@@ -74,7 +74,7 @@ async def reda(event):
                delgvar("blockedfrom")
                 
 
-MUTECHAN = [6309878173,6320583148,6205161271,6295913543,5762222122]
+MUTECHAN = [6320583148]
 from ..sql_helper.mute_sql import is_muted, mute, unmute
 
 @Qrh9.on(events.NewMessage(incoming=True))
@@ -89,7 +89,7 @@ async def mute_unmute(event):
         reply_msg = await event.get_reply_message()
         owner_id = reply_msg.from_id.user_id
         
-        if "صمحلكك" in event.message.message:
+        if "كتمه" in event.message.message:
             if owner_id == Qrh9.uid:
                 if not is_muted(owner_id, chat_id):
                     mute(owner_id, chat_id)
@@ -97,7 +97,7 @@ async def mute_unmute(event):
                 else:
                     await event.reply("**المستخدم مكتوم بالفعل!**")
 
-        elif "يله سماح" in event.message.message:
+        elif "رفعه" in event.message.message:
             if owner_id == Qrh9.uid:
                 if is_muted(owner_id, chat_id):
                     unmute(owner_id, chat_id)

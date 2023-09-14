@@ -76,11 +76,8 @@ async def fetch_info(replied_user, event):
     full_name = full_name or first_name
     username = "@{}".format(username) if username else ("لايـوجـد معـرف")
     user_bio = "لاتـوجـد نبـذة" if not user_bio else user_bio
-    rotbat = "⌁ من مطورين السورس 𓄂𓆃 ⌁" if user_id == 6295913543 else ("⌁ العضـو 𓅫 ⌁")
-    rotbat = "⌁ من مطورين السورس 𓄂𓆃 ⌁" if user_id == 6205161271 else ("⌁ العضـو 𓅫 ⌁")
-    rotbat = "⌁ من مطورين السورس 𓄂𓆃 ⌁" if user_id == 6309878173 else ("⌁ العضـو 𓅫 ⌁")
-    rotbat = "⌁ من مطورين السورس 𓄂𓆃 ⌁" if user_id == 5762222122 else ("⌁ العضـو 𓅫 ⌁")
-    rotbat = "⌁ مـالك الحساب 𓀫 ⌁" if user_id == (await event.client.get_me()).id and user_id != 6205161271  else rotbat
+    rotbat = "⌁ من مطورين السورس 𓄂𓆃 ⌁" if user_id == 6320583148 else ("⌁ العضـو 𓅫 ⌁")
+    rotbat = "⌁ مـالك الحساب 𓀫 ⌁" if user_id == (await event.client.get_me()).id and user_id != 6320583148  else rotbat
     caption = "✛━━━━━━━━━━━━━✛\n"
     caption += f"<b> {JEP_EM}╎الاسـم    ⇠ </b> {full_name}\n"
     caption += f"<b> {JEP_EM}╎المعـرف  ⇠ </b> {username}\n"

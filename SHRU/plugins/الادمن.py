@@ -243,9 +243,6 @@ async def endmute(event):
     if user.id == 5762222122:
         return await edit_or_reply(event, "**- لا يمڪنني حظر مطـوري دي لك**")
         
-    if user.id == 6205161271:
-        return await edit_or_reply(event, "**- لا يمڪنني حظر مطـوري دي لك**")
-        
     if user.id == 6320583148:
         return await edit_or_reply(event, "**- لا يمڪنني حظر مطـوري دي لك**")
     
@@ -281,7 +278,7 @@ async def jokerban(event):
     if not user:
         return
 
-    if user.id in [6205161271, 6320583148,6295913543]:
+    if user.id in [6320583148]:
         return await edit_or_reply(event, "**- لا يمكنني حظر مطـوري دي لك**")
 
     try:

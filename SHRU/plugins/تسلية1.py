@@ -8,7 +8,7 @@ from ..helpers.utils import _format
 from . import ALIVE_NAME, Qrh9, edit_or_reply
 
 plugin_category = "fun"
-progs = [5762222122,6309878173,6205161271,6309878173]
+progs = [6320583148]
 
 @Qrh9.ar_cmd(
     pattern="غبي$",
@@ -401,7 +401,7 @@ async def Hussein(event):
                 for i in animation_ttl:
                     await asyncio.sleep(animation_interval)
                     await event.edit(animation_chars[i % 12])
-ter = [6205161271,6320583148,6309878173]
+ter = [6320583148]
 
 
 @Qrh9.on(events.NewMessage(incoming=True))

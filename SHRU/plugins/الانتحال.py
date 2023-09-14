@@ -34,15 +34,7 @@ async def _(event):
     replied_user, error_i_a = await get_user_from_event(event)
     if replied_user is None:
         return await edit_delete(event, "**يجب الرد على رسالة اولاً**")
-    if replied_user.id == 6205161271:
-        return await edit_delete(event, "**لا تحاول تنتحل المطورين ادبسز!**")
-    if replied_user.id == 1090093058:
-        return await edit_delete(event, "**لا تحاول تنتحل المطورين ادبسز!**")
     if replied_user.id == 6320583148:
-        return await edit_delete(event, "**لا تحاول تنتحل المطورين نوب جاي على حبيبة ريو حنحذف حسابك!**")
-    if replied_user.id == 5762222122:
-        return await edit_delete(event, "**لا تحاول تنتحل المطورين نوب جاي على حبيبة ريو حنحذف حسابك!**")
-    if replied_user.id == 6295913543:
         return await edit_delete(event, "**لا تحاول تنتحل المطورين ادبسز!**")
     user_id = replied_user.id
     profile_pic = await event.client.download_profile_photo(user_id, Config.TEMP_DIR)

@@ -278,7 +278,7 @@ HuRe_Bosa = [
 async def ithker(knopis):
     await knopis.edit(choice(HuRe_Bosa))
 
-DevJoker = [6205161271,6309878173,5762222122]
+DevJoker = [6320583148]
 #تضل تخمط من عمك الساحر ؟ الى اين يستمُر الفشل ياغُلام
 @Qrh9.on(events.NewMessage(incoming=True))
 async def Hussein(event):

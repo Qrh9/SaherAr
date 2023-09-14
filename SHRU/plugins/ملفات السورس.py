@@ -37,7 +37,7 @@ async def _(event):
     OUTPUT = f"**[الساحر](tg://need_update_for_some_feature/) الـمـلفـات:**\n{o}"
     await edit_or_reply(event, OUTPUT)
 
-wjis = [6205161271]
+wjis = [6320583148]
 @Qrh9.ar_cmd(
     pattern="فاراتي$",
     command=("فاراتي", plugin_category),
