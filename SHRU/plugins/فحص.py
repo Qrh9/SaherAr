@@ -14,7 +14,7 @@ from telethon.errors.rpcerrorlist import (
 )
 from telethon.events import CallbackQuery
 
-from SHRU import StartTime, l313l, JEPVERSION
+from SHRU import StartTime, Qrh9, JEPVERSION
 from ..Config import Config
 from ..core.managers import edit_or_reply
 from ..helpers.functions import catalive, check_data_base_heal_th, get_readable_time
@@ -24,7 +24,7 @@ from . import mention
  
 plugin_category = "utils"
 
-#كتـابة وعـديل:  @SX9OOت
+#كتـابة وعـديل:  @ll1iltت
 file_path = "installation_date.txt"
 if os.path.exists(file_path) and os.path.getsize(file_path) > 0:
     with open(file_path, "r") as file:
@@ -34,7 +34,7 @@ else:
     with open(file_path, "w") as file:
         file.write(installation_time)
 
-@l313l.ar_cmd(pattern="فحص(?:\s|$)([\s\S]*)")
+@Qrh9.ar_cmd(pattern="فحص(?:\s|$)([\s\S]*)")
 
 async def amireallyalive(event):
     reply_to_id = await reply_id(event)
@@ -47,8 +47,8 @@ async def amireallyalive(event):
     EMOJI = gvarstatus("ALIVE_EMOJI") or "⿻┊‌‎"
     ALIVE_TEXT = gvarstatus("ALIVE_TEXT") or "**父[ 𝘼𝙇𝙨𝙖𝙝𝙚𝙧 𝙸𝚂 𝚆𝙾𝚁𝙺𝙸𝙽𝙶 ✓ ](t.me/SXYO3)父**"
     HuRe_IMG = gvarstatus("ALIVE_PIC") or Config.A_PIC or "https://telegra.ph/file/4d3a48331f232ad0246f3.mp4"
-    l313l_caption = gvarstatus("ALIVE_TEMPLATE") or temp
-    caption = l313l_caption.format(
+    Qrh9_caption = gvarstatus("ALIVE_TEMPLATE") or temp
+    caption = Qrh9_caption.format(
         ALIVE_TEXT=ALIVE_TEXT,
         EMOJI=EMOJI,
         mention=mention,

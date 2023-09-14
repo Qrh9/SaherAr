@@ -1,11 +1,11 @@
 import asyncio
 
-from . import l313l, edit_or_reply
+from . import Qrh9, edit_or_reply
 
 plugin_category = "fun"
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="تحميل$",
     command=("تحميل", plugin_category),
     info={
@@ -24,7 +24,7 @@ async def _(event):
         await event.edit(animation_chars[i % 4])
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="مربع$",
     command=("مربع", plugin_category),
     info={
@@ -43,7 +43,7 @@ async def _(event):
         await event.edit(animation_chars[i % 4])
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="up$",
     command=("up", plugin_category),
     info={
@@ -62,7 +62,7 @@ async def _(event):
         await event.edit(animation_chars[i % 4])
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="دائره$",
     command=("دائره", plugin_category),
     info={
@@ -81,7 +81,7 @@ async def _(event):
         await event.edit(animation_chars[i % 4])
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="قلب$",
     command=("قلب", plugin_category),
     info={
@@ -100,7 +100,7 @@ async def _(event):
         await event.edit(animation_chars[i % 4])
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="انيم$",
     command=("انيم", plugin_category),
     info={
@@ -130,7 +130,7 @@ async def _(event):
         await event.edit(animation_chars[i % 10])
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="بشره$",
     command=("بشره", plugin_category),
     info={
@@ -149,7 +149,7 @@ async def _(event):
         await event.edit(animation_chars[i % 6])
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="قرد$",
     command=("قرد", plugin_category),
     info={
@@ -168,7 +168,7 @@ async def _(event):
         await event.edit(animation_chars[i % 6])
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="herber$",
     command=("herber", plugin_category),
     info={
@@ -198,7 +198,7 @@ async def _(event):
         await event.edit(animation_chars[i % 10])
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="يد$",
     command=("يد", plugin_category),
     info={
@@ -231,7 +231,7 @@ async def _(event):
         await event.edit(animation_chars[i % 13])
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="العد التنازلي$",
     command=("العد التنازلي", plugin_category),
     info={
@@ -263,7 +263,7 @@ async def _(event):
         await event.edit(animation_chars[i % 12])
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="قلوب$",
     command=("قلوب", plugin_category),
     info={

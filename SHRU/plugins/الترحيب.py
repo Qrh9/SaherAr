@@ -4,7 +4,7 @@
 from telethon import events
 from telethon.utils import get_display_name
 
-from SHRU import l313l
+from SHRU import Qrh9
 from SHRU.core.logger import logging
 
 from ..core.managers import edit_delete, edit_or_reply
@@ -21,7 +21,7 @@ plugin_category = "utils"
 LOGS = logging.getLogger(__name__)
 
 
-@l313l.on(events.ChatAction)
+@Qrh9.on(events.ChatAction)
 async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
     cws = get_current_welcome_settings(event.chat_id)
     if (
@@ -87,7 +87,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
         update_previous_welcome(event.chat_id, current_message.id)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="ترحيب(?:\s|$)([\s\S]*)",
     command=("ترحيب", plugin_category),
     info={
@@ -149,7 +149,7 @@ async def save_welcome(event):
     await edit_or_reply("**᯽︙ هـنالك خـطأ في وضـع الـترحيب هـنا**")
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="حذف الترحيب$",
     command=("حذف الترحيب", plugin_category),
     info={
@@ -166,7 +166,7 @@ async def del_welcome(event):
         await edit_or_reply(event, "**᯽︙ ليـس لـدي اي تـرحيبـات بالأصـل ✓**")
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="الترحيب$",
     command=("الترحيب", plugin_category),
     info={
@@ -194,7 +194,7 @@ async def show_welcome(event):
         await event.reply(cws.reply, link_preview=False)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="الترحيب (تشغيل|ايقاف)$",
     command=("cleanwelcome", plugin_category),
     info={

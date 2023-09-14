@@ -1,10 +1,10 @@
 # Copyright (C) 2021 SHRU TEAM
-# FILES WRITTEN BY  @SX9OO
+# FILES WRITTEN BY  @ll1ilt
 import asyncio
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from SHRU import l313l
+from SHRU import Qrh9
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import get_user_from_event, sanga_seperator
@@ -13,7 +13,7 @@ from ..helpers.utils import _format
 plugin_category = "utils"
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="تاريخ(معرفات)?(?: |$)(.*)",
     command=("تاريخ", plugin_category),
     info={
@@ -28,7 +28,7 @@ plugin_category = "utils"
         "examples": "{tr}sg @missrose_bot",
     },
 )
-async def _(event):  #   : @SX9OO
+async def _(event):  #   : @ll1ilt
     "To get name/username history."
     input_str = "".join(event.text.split(maxsplit=1)[1:])
     reply_message = await event.get_reply_message()

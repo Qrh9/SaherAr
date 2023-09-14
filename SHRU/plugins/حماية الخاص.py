@@ -6,7 +6,7 @@ from telethon import Button, functions
 from telethon.events import CallbackQuery
 from telethon.utils import get_display_name
 
-from SHRU import l313l
+from SHRU import Qrh9
 from SHRU.core.logger import logging
 
 from ..Config import Config
@@ -397,7 +397,7 @@ async def do_pm_spam_action(event, chat):
         return
 
 #ترجمه وكتابة فريق الساحر
-@l313l.ar_cmd(incoming=True, func=lambda e: e.is_private, edited=False, forword=None)
+@Qrh9.ar_cmd(incoming=True, func=lambda e: e.is_private, edited=False, forword=None)
 async def on_new_private_message(event):
     if gvarstatus("pmpermit") is None:
         return
@@ -419,7 +419,7 @@ async def on_new_private_message(event):
     await do_pm_permit_action(event, chat)
 #ترجمه وكتابة فريق الساحر
 
-@l313l.ar_cmd(outgoing=True, func=lambda e: e.is_private, edited=False, forword=None)
+@Qrh9.ar_cmd(outgoing=True, func=lambda e: e.is_private, edited=False, forword=None)
 async def you_dm_other(event):
     if gvarstatus("pmpermit") is None:
         return
@@ -471,7 +471,7 @@ async def you_dm_other(event):
         sql.add_collection("pmmessagecache", PMMESSAGE_CACHE, {})
 
 #ترجمه وكتابة فريق الساحر
-@l313l.tgbot.on(CallbackQuery(data=re.compile(rb"show_pmpermit_options")))
+@Qrh9.tgbot.on(CallbackQuery(data=re.compile(rb"show_pmpermit_options")))
 async def on_plug_in_callback_query_handler(event):
     if event.query.user_id == event.client.uid:
         text = "⌯︙- عذرا هذه الخيارات ليست لك انها للمستخدمين الذين يراسلوك 😐⚕️"
@@ -502,7 +502,7 @@ async def on_plug_in_callback_query_handler(event):
     await event.edit(text, buttons=buttons)
 
 #ترجمه وكتابة فريق الساحر
-@l313l.tgbot.on(CallbackQuery(data=re.compile(rb"to_enquire_something")))
+@Qrh9.tgbot.on(CallbackQuery(data=re.compile(rb"to_enquire_something")))
 async def on_plug_in_callback_query_handler(event):
     if event.query.user_id == event.client.uid:
         text = "⌯︙- عذرا هذه الخيارات ليست لك انها للمستخدمين الذين يراسلوك 🧸♥"
@@ -523,7 +523,7 @@ async def on_plug_in_callback_query_handler(event):
     await event.edit(text)
 #ترجمه وكتابة فريق الساحر
 
-@l313l.tgbot.on(CallbackQuery(data=re.compile(rb"to_request_something")))
+@Qrh9.tgbot.on(CallbackQuery(data=re.compile(rb"to_request_something")))
 async def on_plug_in_callback_query_handler(event):
     if event.query.user_id == event.client.uid:
         text = "⌯︙- عذرا هذه الخيارات ليست لك انها للمستخدمين الذين يراسلوك 🧸♥"
@@ -544,7 +544,7 @@ async def on_plug_in_callback_query_handler(event):
     await event.edit(text)
 
 #ترجمه وكتابة فريق الساحر
-@l313l.tgbot.on(CallbackQuery(data=re.compile(rb"to_chat_with_my_master")))
+@Qrh9.tgbot.on(CallbackQuery(data=re.compile(rb"to_chat_with_my_master")))
 async def on_plug_in_callback_query_handler(event):
     if event.query.user_id == event.client.uid:
         text = "⌯︙- عذرا هذه الخيارات ليست لك انها للمستخدمين الذين يراسلوك 🧸♥"
@@ -564,7 +564,7 @@ async def on_plug_in_callback_query_handler(event):
     await event.edit(text)
 #ترجمه وكتابة فريق الساحر
 
-@l313l.tgbot.on(CallbackQuery(data=re.compile(rb"to_spam_my_master_inbox")))
+@Qrh9.tgbot.on(CallbackQuery(data=re.compile(rb"to_spam_my_master_inbox")))
 async def on_plug_in_callback_query_handler(event):
     if event.query.user_id == event.client.uid:
         text = " عذرا هذه الخيارات ليست لك انها للمستخدمين الذين يراسلوك 🧸♥"
@@ -597,7 +597,7 @@ async def on_plug_in_callback_query_handler(event):
     await event.edit(text)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="الحماية (تشغيل|تعطيل)$",
     command=("الحماية", plugin_category),
     info={
@@ -625,7 +625,7 @@ async def pmpermit_on(event):
         await edit_delete(event, "⌯︙امر الحمايه بالفعل مُعطل لحسابك 🌿")
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="الحماية (تشغيل|تعطيل)$",
     command=("الحماية", plugin_category),
     info={
@@ -658,7 +658,7 @@ async def pmpermit_on(event):
         )
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="(س|سماح)(?:\s|$)([\s\S]*)",
     command=("سماح", plugin_category),
     info={
@@ -734,7 +734,7 @@ async def approve_p_m(event):  # sourcery no-metrics
         )
 #ترجمه وكتابة فريق الساحر
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="(ر|رفض)(?:\s|$)([\s\S]*)",
     command=("رفض", plugin_category),
     info={
@@ -785,7 +785,7 @@ async def disapprove_p_m(event):
         )
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="بلوك(?:\s|$)([\s\S]*)",
     command=("بلوك", plugin_category),
     info={
@@ -841,7 +841,7 @@ async def block_p_m(event):
     )
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="انبلوك(?:\s|$)([\s\S]*)",
     command=("انبلوك", plugin_category),
     info={
@@ -874,7 +874,7 @@ async def unblock_pm(event):
     )
 
 #ترجمه وكتابة فريق الساحر
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="المسموح لهم$",
     command=("المسموح لهم", plugin_category),
     info={

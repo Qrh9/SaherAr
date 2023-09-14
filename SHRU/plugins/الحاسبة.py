@@ -3,9 +3,9 @@ import re
 from telethon import Button
 from telethon.events import CallbackQuery, InlineQuery
 
-from SHRU import CMD_HELP, l313l
+from SHRU import CMD_HELP, Qrh9
 
-# 𝗧𝗲𝗹𝗲𝗚𝗿𝗮𝗠 : @SXYO3  ~ @SX9OO
+# 𝗧𝗲𝗹𝗲𝗚𝗿𝗮𝗠 : @SXYO3  ~ @ll1ilt
 from ..core.decorators import check_owner
 
 CALC = {}
@@ -38,7 +38,7 @@ lst = list(zip(tultd[::4], tultd[1::4], tultd[2::4], tultd[3::4]))
 lst.append([Button.inline("=", data="calc=")])
 
 
-@l313l.on(admin_cmd(pattern="حاسبة(?:\s|$)([\s\S]*)"))
+@Qrh9.on(admin_cmd(pattern="حاسبة(?:\s|$)([\s\S]*)"))
 async def icalc(e):
     if e.client._bot:
         return await e.reply(
@@ -49,7 +49,7 @@ async def icalc(e):
     await e.delete()
 
 
-@l313l.tgbot.on(InlineQuery)
+@Qrh9.tgbot.on(InlineQuery)
 async def inlinecalc(event):
     query_user_id = event.query.user_id
     query = event.text
@@ -64,8 +64,8 @@ async def inlinecalc(event):
         await event.answer([calc])
 
 
-# 𝗧𝗲𝗹𝗲𝗚𝗿𝗮𝗠 : @SXYO3  ~ @SX9OO
-@l313l.tgbot.on(CallbackQuery(data=re.compile(b"calc(.*)")))
+# 𝗧𝗲𝗹𝗲𝗚𝗿𝗮𝗠 : @SXYO3  ~ @ll1ilt
+@Qrh9.tgbot.on(CallbackQuery(data=re.compile(b"calc(.*)")))
 @check_owner
 async def _(e):  # sourcery no-metrics
     x = (e.data_match.group(1)).decode()
@@ -130,8 +130,8 @@ async def _(e):  # sourcery no-metrics
         await e.answer(str(x))
 
 
-# 𝗧𝗲𝗹𝗲𝗚𝗿𝗮𝗠 : @SXYO3  ~ @SX9OO
-@l313l.tgbot.on(CallbackQuery(data=re.compile(b"recalc")))
+# 𝗧𝗲𝗹𝗲𝗚𝗿𝗮𝗠 : @SXYO3  ~ @ll1ilt
+@Qrh9.tgbot.on(CallbackQuery(data=re.compile(b"recalc")))
 @check_owner
 async def _(e):
     m = [

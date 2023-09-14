@@ -4,10 +4,10 @@ import re
 
 from telethon.events import CallbackQuery
 
-from SHRU import l313l
+from SHRU import Qrh9
 
 
-@l313l.tgbot.on(CallbackQuery(data=re.compile(b"rzan_(.*)")))
+@Qrh9.tgbot.on(CallbackQuery(data=re.compile(b"rzan_(.*)")))
 async def on_plug_in_callback_query_handler(event):
     timestamp = int(event.pattern_match.group(1).decode("UTF-8"))
     if os.path.exists("./SHRU/secrets.txt"):
@@ -15,7 +15,7 @@ async def on_plug_in_callback_query_handler(event):
         try:
             message = jsondata[f"{timestamp}"]
             userid = message["userid"]
-            ids = [userid, l313l.uid]
+            ids = [userid, Qrh9.uid]
             if event.query.user_id in ids:
                 encrypted_tcxt = message["text"]
                 reply_pop_up_alert = encrypted_tcxt

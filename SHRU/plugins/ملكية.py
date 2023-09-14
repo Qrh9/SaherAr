@@ -3,14 +3,14 @@
 import telethon.password as pwd_mod
 from telethon.tl import functions
 
-from SHRU import l313l
+from SHRU import Qrh9
 
 from ..Config import Config
 
 plugin_category = "utils"
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="ملكية (.*)",
     command=("ملكية", plugin_category),
     info={

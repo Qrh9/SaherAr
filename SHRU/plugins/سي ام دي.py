@@ -3,14 +3,14 @@ from pathlib import Path
 import imp
 from ..Config import Config
 from ..utils import load_module, remove_plugin
-from . import CMD_HELP, CMD_LIST, SUDO_LIST, l313l, edit_delete, edit_or_reply, reply_id
+from . import CMD_HELP, CMD_LIST, SUDO_LIST, Qrh9, edit_delete, edit_or_reply, reply_id
 
 plugin_category = "tools"
 
 DELETE_TIMEOUT = 5
 thumb_image_path = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="جد بكج (.*)",
     command=("جد بكج", plugin_category),
     info={
@@ -26,7 +26,7 @@ async def findpkg(event):
     except ImportError:
          await edit_or_reply(event, f"᯽︙ الباكج غير موجود X \n{pkgname}")
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="تنصيب$",
     command=("تنصيب", plugin_category),
     info={
@@ -62,7 +62,7 @@ async def install(event):
             os.remove(downloaded_file_name)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="الغاء التنصيب (.*)",
     command=("الغاء التنصيب", plugin_category),
     info={

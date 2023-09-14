@@ -1,6 +1,6 @@
 import random
 
-from SHRU import l313l
+from SHRU import Qrh9
 
 from ..core.managers import edit_or_reply
 from . import fonts
@@ -8,7 +8,7 @@ from . import fonts
 plugin_category = "extra"
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="زغرفة1(?:\s|$)([\s\S]*)",
     command=("زغرفة1", plugin_category),)
 async def stylish_generator(event):
@@ -30,7 +30,7 @@ async def stylish_generator(event):
     await edit_or_reply(event, string)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="زغرفة2(?:\s|$)([\s\S]*)",
     command=("زغرفة2", plugin_category),)
 async def stylish_generator(event):
@@ -52,7 +52,7 @@ async def stylish_generator(event):
     await edit_or_reply(event, string)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="زغرفة3(?:\s|$)([\s\S]*)",
     command=("زغرفة3", plugin_category),)
 async def vapor(event):
@@ -79,7 +79,7 @@ async def vapor(event):
     await edit_or_reply(event, "".join(reply_text))
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="زغرفة4(?:\s|$)([\s\S]*)",
     command=("زغرفة4", plugin_category),
 )
@@ -102,7 +102,7 @@ async def stylish_generator(event):
     await edit_or_reply(event, string)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="زغرفة5(?:\s|$)([\s\S]*)",
     command=("زغرفة5", plugin_category),
 )
@@ -125,7 +125,7 @@ async def stylish_generator(event):
     await edit_or_reply(event, string)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="زغرفة6(?:\s|$)([\s\S]*)",
     command=("زغرفة6", plugin_category),
 )
@@ -148,7 +148,7 @@ async def stylish_generator(event):
     await edit_or_reply(event, string)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="زغرفة7(?:\s|$)([\s\S]*)",
     command=("زغرفة7", plugin_category),
 )
@@ -171,7 +171,7 @@ async def stylish_generator(event):
     await edit_or_reply(event, string)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="زغرفة8(?:\s|$)([\s\S]*)",
     command=("زغرفة8", plugin_category),
 )
@@ -194,7 +194,7 @@ async def stylish_generator(event):
     await edit_or_reply(event, string)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="زغرفة9(?:\s|$)([\s\S]*)",
     command=("زغرفة9", plugin_category),
 )
@@ -217,7 +217,7 @@ async def stylish_generator(event):
     await edit_or_reply(event, string)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="زغرفة10(?:\s|$)([\s\S]*)",
     command=("زغرفة10", plugin_category),
 )
@@ -240,7 +240,7 @@ async def stylish_generator(event):
     await edit_or_reply(event, string)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="زغرفة0(?:\s|$)([\s\S]*)",
     command=("زغرفة0", plugin_category),
 )

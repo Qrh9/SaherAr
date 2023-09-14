@@ -10,7 +10,7 @@ from telethon.errors.rpcerrorlist import (
     WebpageMediaEmptyError,
 )
 
-from SHRU import l313l
+from SHRU import Qrh9
 from telethon import events
 from ..core.managers import edit_or_reply
 from ..helpers.utils import reply_id
@@ -19,9 +19,9 @@ from . import mention
 
 plugin_category = "utils"
 
-#كتـابة وتعـديل:  @SX9OO
+#كتـابة وتعـديل:  @ll1ilt
 
-@l313l.ar_cmd(pattern="بنك(?:\s|$)([\s\S]*)")
+@Qrh9.ar_cmd(pattern="بنك(?:\s|$)([\s\S]*)")
 
 async def jokerping(event):
     reply_to_id = await reply_id(event)

@@ -2,7 +2,7 @@ import time
 
 from prettytable import PrettyTable
 
-from SHRU import l313l
+from SHRU import Qrh9
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.tools import media_type
@@ -29,7 +29,7 @@ def weird_division(n, d):
     return n / d if d else 0
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="تخزين الكروب(?:\s|$)([\s\S]*)",
     command=("تخزين الكروب", plugin_category),
     info={
@@ -131,7 +131,7 @@ async def _(event):  # sourcery no-metrics
     await catevent.edit(result, parse_mode="HTML", link_preview=False)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="تخزين المستخدم(?:\s|$)([\s\S]*)",
     command=("تخزين المستخدم", plugin_category),
     info={

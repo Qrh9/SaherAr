@@ -8,7 +8,7 @@ from ..Config import Config
 from ..core import LOADED_CMDS, PLG_INFO
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
-from ..core.session import l313l
+from ..core.session import Qrh9
 from ..helpers.tools import media_type
 from ..helpers.utils import _cattools, _catutils, _format, install_pip, reply_id
 from .decorators import admin_cmd, sudo_cmd
@@ -37,11 +37,11 @@ def load_module(shortname, plugin_path=None):
         checkplugins(path)
         spec = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(spec)
-        mod.bot = l313l
+        mod.bot = Qrh9
         mod.LOGS = LOGS
         mod.Config = Config
         mod._format = _format
-        mod.tgbot = l313l.tgbot
+        mod.tgbot = Qrh9.tgbot
         mod.sudo_cmd = sudo_cmd
         mod.CMD_HELP = CMD_HELP
         mod.reply_id = reply_id
@@ -54,7 +54,7 @@ def load_module(shortname, plugin_path=None):
         mod.parse_pre = _format.parse_pre
         mod.edit_or_reply = edit_or_reply
         mod.logger = logging.getLogger(shortname)
-        mod.borg = l313l
+        mod.borg = Qrh9
         spec.loader.exec_module(mod)
         # for imports
         sys.modules["SHRU.plugins." + shortname] = mod
@@ -71,23 +71,23 @@ def remove_plugin(shortname):
         for cmdname in cmd:
             if cmdname in LOADED_CMDS:
                 for i in LOADED_CMDS[cmdname]:
-                    l313l.remove_event_handler(i)
+                    Qrh9.remove_event_handler(i)
                 del LOADED_CMDS[cmdname]
         return True
     except Exception as e:
         LOGS.error(e)
     try:
         for i in LOAD_PLUG[shortname]:
-            l313l.remove_event_handler(i)
+            Qrh9.remove_event_handler(i)
         del LOAD_PLUG[shortname]
     except BaseException:
         pass
     try:
         name = f"SHRU.plugins.{shortname}"
-        for i in reversed(range(len(l313l._event_builders))):
-            ev, cb = l313l._event_builders[i]
+        for i in reversed(range(len(Qrh9._event_builders))):
+            ev, cb = Qrh9._event_builders[i]
             if cb.__module__ == name:
-                del l313l._event_builders[i]
+                del Qrh9._event_builders[i]
     except BaseException:
         raise ValueError
 

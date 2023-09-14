@@ -1,13 +1,13 @@
 from asyncio import sleep
 
-from SHRU import l313l
+from SHRU import Qrh9
 from SHRU.core.logger import logging
 
 plugin_category = "tools"
 LOGS = logging.getLogger(__name__)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="مؤقت (\d*) ([\s\S]*)",
     command=("مؤقت", plugin_category),
     info={

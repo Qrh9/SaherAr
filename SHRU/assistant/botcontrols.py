@@ -3,7 +3,7 @@ from datetime import datetime
 
 from telethon.errors import BadRequestError, FloodWaitError, ForbiddenError
 
-from SHRU import l313l
+from SHRU import Qrh9
 
 from ..Config import Config
 from ..core.logger import logging
@@ -30,7 +30,7 @@ cmhd = Config.COMMAND_HAND_LER
 
 
 
-@l313l.bot_cmd(pattern="^اذاعة$", from_users=Config.OWNER_ID)
+@Qrh9.bot_cmd(pattern="^اذاعة$", from_users=Config.OWNER_ID)
 async def bot_broadcast(event):
     replied = await event.get_reply_message()
     if not replied:
@@ -86,7 +86,7 @@ async def bot_broadcast(event):
     await br_cast.edit(b_info, parse_mode="html")
 
 
-@l313l.bot_cmd(pattern="^اذع$", from_users=Config.OWNER_ID)
+@Qrh9.bot_cmd(pattern="^اذع$", from_users=Config.OWNER_ID)
 async def bot_broadcast(event):
     replied = await event.get_reply_message()
     if not replied:
@@ -143,7 +143,7 @@ async def bot_broadcast(event):
     await br_cast.edit(b_info, parse_mode="html")
 
 
-@l313l.ar_cmd(pattern="^المستخدمين$")
+@Qrh9.ar_cmd(pattern="^المستخدمين$")
 async def ban_starters(event):
     ulist = get_all_starters()
     if len(ulist) == 0:
@@ -154,7 +154,7 @@ async def ban_starters(event):
     await edit_or_reply(event, msg)
 
 
-@l313l.bot_cmd(pattern="^حظر\\s+([\\s\\S]*)", from_users=Config.OWNER_ID)
+@Qrh9.bot_cmd(pattern="^حظر\\s+([\\s\\S]*)", from_users=Config.OWNER_ID)
 async def ban_botpms(event):
     user_id, reason = await get_user_and_reason(event)
     reply_to = await reply_id(event)
@@ -185,7 +185,7 @@ async def ban_botpms(event):
     await event.reply(msg)
 
 
-@l313l.bot_cmd(pattern="^الغاء حظر(?:\\s|$)([\\s\\S]*)", from_users=Config.OWNER_ID)
+@Qrh9.bot_cmd(pattern="^الغاء حظر(?:\\s|$)([\\s\\S]*)", from_users=Config.OWNER_ID)
 async def ban_botpms(event):
     user_id, reason = await get_user_and_reason(event)
     reply_to = await reply_id(event)
@@ -211,7 +211,7 @@ async def ban_botpms(event):
     await event.reply(msg)
 
 
-@l313l.ar_cmd(pattern="^المحظورين$")
+@Qrh9.ar_cmd(pattern="^المحظورين$")
 async def ban_starters(event):
     ulist = get_all_bl_users()
     if len(ulist) == 0:
@@ -222,7 +222,7 @@ async def ban_starters(event):
     await edit_or_reply(event, msg)
 
 
-@l313l.ar_cmd(pattern="التكرار (تفعيل|تعطيل)$")
+@Qrh9.ar_cmd(pattern="التكرار (تفعيل|تعطيل)$")
 async def ban_antiflood(event):
     input_str = event.pattern_match.group(1)
     if input_str == "تفعيل":

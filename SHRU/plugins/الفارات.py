@@ -5,7 +5,7 @@ import heroku3
 import requests
 import urllib3
 
-from SHRU import l313l
+from SHRU import Qrh9
 
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
@@ -18,7 +18,7 @@ HEROKU_APP_NAME = Config.HEROKU_APP_NAME
 HEROKU_API_KEY = Config.HEROKU_API_KEY
 
 
-@l313l.ar_cmd(pattern="وضع (.*)")
+@Qrh9.ar_cmd(pattern="وضع (.*)")
 async def variable(var):
     if Config.HEROKU_API_KEY is None:
         return await edit_delete(
@@ -241,7 +241,7 @@ async def variable(var):
         heroku_var[variable] = vra
 
 
-@l313l.ar_cmd(pattern="محو (.*)")
+@Qrh9.ar_cmd(pattern="محو (.*)")
 async def variable(event):
     if Config.HEROKU_API_KEY is None:
         return await edit_delete(
@@ -370,7 +370,7 @@ async def variable(event):
         del heroku_var[variable]
 
 
-@l313l.ar_cmd(pattern="وقت(?:\s|$)([\s\S]*)")
+@Qrh9.ar_cmd(pattern="وقت(?:\s|$)([\s\S]*)")
 async def variable(event):
     if Config.HEROKU_API_KEY is None:
         return await edit_delete(
@@ -477,7 +477,7 @@ async def variable(event):
             )
         heroku_var[variable] = Syria
         
-@l313l.ar_cmd(pattern="زخرفة الصورة(?:\s|$)([\s\S]*)")
+@Qrh9.ar_cmd(pattern="زخرفة الصورة(?:\s|$)([\s\S]*)")
 async def variable(event):
     if Config.HEROKU_API_KEY is None:
         return await edit_delete(
@@ -648,7 +648,7 @@ async def variable(event):
             await jep.edit("**⌔∮ تم بنجاح تغيير زخرفة الصورة الوقتية\n\n❃ جار اعادة تشغيل السورس انتظر من 2-5 دقائق ليتشغل مره اخرى**".format(input_str))
         heroku_var[variable] = zinfo
 
-@l313l.ar_cmd(pattern="ميوزك(?:\s|$)([\s\S]*)")
+@Qrh9.ar_cmd(pattern="ميوزك(?:\s|$)([\s\S]*)")
 async def variable(event):
     if Config.HEROKU_API_KEY is None:
         return await edit_delete(
@@ -685,7 +685,7 @@ async def variable(event):
         heroku_var[variable] = zinfo
 
 
-@l313l.ar_cmd(pattern="استخدامي$")
+@Qrh9.ar_cmd(pattern="استخدامي$")
 async def dyno_usage(dyno):
     if (HEROKU_APP_NAME is None) or (HEROKU_API_KEY is None):
         return await edit_delete(
@@ -743,7 +743,7 @@ async def dyno_usage(dyno):
     )
 
 
-@l313l.ar_cmd(pattern="لوك$")
+@Qrh9.ar_cmd(pattern="لوك$")
 async def _(dyno):
     if (HEROKU_APP_NAME is None) or (HEROKU_API_KEY is None):
         return await edit_delete(

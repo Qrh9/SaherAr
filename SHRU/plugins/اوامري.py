@@ -3,9 +3,9 @@ import re
 from telethon import Button, events
 from telethon.events import CallbackQuery
 
-from l313l.razan.resources.assistant import *
-from l313l.razan.resources.mybot import *
-from SHRU import l313l
+from Qrh9.razan.resources.assistant import *
+from Qrh9.razan.resources.mybot import *
+from SHRU import Qrh9
 from ..core import check_owner
 from ..Config import Config
 
@@ -22,7 +22,7 @@ if Config.TG_BOT_USERNAME is not None and tgbot is not None:
         await bot.get_me()
         if query.startswith("اوامري") and event.query.user_id == bot.uid:
             buttons = [
-                [Button.inline("✨ اوامر الادمن ✨", data="l313l0")],
+                [Button.inline("✨ اوامر الادمن ✨", data="Qrh90")],
                 [
                     Button.inline("✨ اوامر البوت ✨", data="rozbot"),
                     Button.inline("✨ الحساب ✨", data="Jmrz"),
@@ -79,15 +79,15 @@ if Config.TG_BOT_USERNAME is not None and tgbot is not None:
 async def repo(event):
     if event.fwd_from:
         return
-    SX9OO = Config.TG_BOT_USERNAME
+    ll1ilt = Config.TG_BOT_USERNAME
     if event.reply_to_msg_id:
         await event.get_reply_message()
-    response = await bot.inline_query(SX9OO, "اوامري")
+    response = await bot.inline_query(ll1ilt, "اوامري")
     await response[0].click(event.chat_id)
     await event.delete()
 
 
-@l313l.tgbot.on(CallbackQuery(data=re.compile(rb"l313l0")))
+@Qrh9.tgbot.on(CallbackQuery(data=re.compile(rb"Qrh90")))
 @check_owner
 async def _(event):
     buttons = [
@@ -96,17 +96,17 @@ async def _(event):
       Button.inline("القائمة الرئيسية", data="ROE"),]]
     await event.edit(ROZADM, buttons=buttons)
 
-@l313l.tgbot.on(CallbackQuery(data=re.compile(rb"jrzst")))
+@Qrh9.tgbot.on(CallbackQuery(data=re.compile(rb"jrzst")))
 @check_owner
 async def _(event):
     butze = [
     [
      Button.inline("التالي", data="tslrzj"),
-     Button.inline("رجوع", data="l313l0")]]
+     Button.inline("رجوع", data="Qrh90")]]
     await event.edit(GRTSTI, buttons=butze)
 
 
-@l313l.tgbot.on(CallbackQuery(data=re.compile(rb"tslrzj")))
+@Qrh9.tgbot.on(CallbackQuery(data=re.compile(rb"tslrzj")))
 @check_owner
 async def _(event):
     buttons = [
@@ -116,7 +116,7 @@ async def _(event):
     await event.edit(JMAN, buttons=buttons)
 
 
-@l313l.tgbot.on(CallbackQuery(data=re.compile(rb"krrznd")))
+@Qrh9.tgbot.on(CallbackQuery(data=re.compile(rb"krrznd")))
 @check_owner
 async def _(event):
     buttons = [
@@ -126,7 +126,7 @@ async def _(event):
     await event.edit(TKPRZ, buttons=buttons)
 
 
-@l313l.tgbot.on(CallbackQuery(data=re.compile(rb"rozbot")))
+@Qrh9.tgbot.on(CallbackQuery(data=re.compile(rb"rozbot")))
 @check_owner
 async def _(event):
     buttons = [
@@ -136,7 +136,7 @@ async def _(event):
     await event.edit(ROZBOT, buttons=buttons)
 
 
-@l313l.tgbot.on(CallbackQuery(data=re.compile(rb"Jmrz")))
+@Qrh9.tgbot.on(CallbackQuery(data=re.compile(rb"Jmrz")))
 @check_owner
 async def _(event):
     buttons = [
@@ -146,7 +146,7 @@ async def _(event):
     await event.edit(JROZT, buttons=buttons)
 
 
-@l313l.tgbot.on(CallbackQuery(data=re.compile(rb"r7brz")))
+@Qrh9.tgbot.on(CallbackQuery(data=re.compile(rb"r7brz")))
 @check_owner
 async def _(event):
     buttons = [
@@ -156,7 +156,7 @@ async def _(event):
     await event.edit(JMTRD, buttons=buttons)
 
 
-@l313l.tgbot.on(CallbackQuery(data=re.compile(rb"sejrz")))
+@Qrh9.tgbot.on(CallbackQuery(data=re.compile(rb"sejrz")))
 @check_owner
 async def _(event):
     buttons = [
@@ -166,7 +166,7 @@ async def _(event):
     await event.edit(ROZSEG, buttons=buttons)
 
 
-@l313l.tgbot.on(CallbackQuery(data=re.compile(rb"gro")))
+@Qrh9.tgbot.on(CallbackQuery(data=re.compile(rb"gro")))
 @check_owner
 async def _(event):
     buttons = [
@@ -176,7 +176,7 @@ async def _(event):
     await event.edit(JMGR1,buttons=buttons)
 
 
-@l313l.tgbot.on(CallbackQuery(data=re.compile(rb"grrz")))
+@Qrh9.tgbot.on(CallbackQuery(data=re.compile(rb"grrz")))
 @check_owner
 async def _(event):
     buttons = [
@@ -186,7 +186,7 @@ async def _(event):
     await event.edit(ROZPRV, buttons=buttons)
 
 
-@l313l.tgbot.on(CallbackQuery(data=re.compile(rb"iiers")))
+@Qrh9.tgbot.on(CallbackQuery(data=re.compile(rb"iiers")))
 @check_owner
 async def _(event):
     buttons = [
@@ -196,7 +196,7 @@ async def _(event):
     await event.edit(HERP, buttons=buttons)
 
 
-@l313l.tgbot.on(CallbackQuery(data=re.compile(rb"rfhrz")))
+@Qrh9.tgbot.on(CallbackQuery(data=re.compile(rb"rfhrz")))
 @check_owner
 async def _(event):
     buttons = [
@@ -206,8 +206,8 @@ async def _(event):
     await event.edit(T7SHIZ, buttons=buttons)
 
 
-@l313l.tgbot.on(CallbackQuery(data=re.compile(rb"uscuxrz")))
+@Qrh9.tgbot.on(CallbackQuery(data=re.compile(rb"uscuxrz")))
 @check_owner
 async def _(event):
-    buttons = [[Button.inline("رجوع", data="l313l0"),]]
+    buttons = [[Button.inline("رجوع", data="Qrh90"),]]
     await event.edit(CLORN, buttons=buttons)

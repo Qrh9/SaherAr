@@ -1,5 +1,5 @@
 #ترجمه فريق الساحر على التيلكرام
-from SHRU import CMD_HELP, l313l
+from SHRU import CMD_HELP, Qrh9
 
 from ..core.managers import edit_delete, edit_or_reply
 
@@ -8,7 +8,7 @@ plugin_category = "extra"
 name = "Profile Photos"
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="صورة(?: |$)(.*)",
     command=("صورة", plugin_category),
     info={

@@ -1,8 +1,8 @@
 import pyfiglet
-from SHRU import l313l
+from SHRU import Qrh9
 from SHRU.helpers.utils import _format
 from SHRU.core.managers import edit_delete, edit_or_reply
-from SHRU.plugins import _format, l313l, deEmojify
+from SHRU.plugins import _format, Qrh9, deEmojify
 
 plugin_category = "utils"
 
@@ -40,7 +40,7 @@ CMD_FIG = {
 
 }
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="تشكيل(?:\s|$)([\s\S]*)",
     command=("تشكيل", plugin_category),
     info={

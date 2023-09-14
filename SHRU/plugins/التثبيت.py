@@ -20,7 +20,7 @@ from telethon.tl.types import (
     MessageMediaPhoto,
 )
 
-from SHRU import l313l
+from SHRU import Qrh9
 
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
@@ -68,7 +68,7 @@ plugin_category = "admin"
 #----
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="تثبيت( بالاشعار|$)",
     command=("تثبيت", plugin_category),
     info={
@@ -104,8 +104,8 @@ async def pin(event):
                 \nالـدردشـة: {event.chat.title}(`{event.chat_id}`)\
                 \nالـتثبيت: {is_silent}",
         )
-#admin plugin for  l313l
-@l313l.ar_cmd(
+#admin plugin for  Qrh9
+@Qrh9.ar_cmd(
     pattern="الغاء التثبيت( للكل|$)",
     command=("الغاء التثبيت", plugin_category),
     info={
@@ -150,8 +150,8 @@ async def pin(event):
                 \n** ᯽︙ تم بنجاح الغاء التثبيـت في الدردشة  ✅ \
                 \n⌔︙الدردشـه  🔖 : {event.chat.title}(`{event.chat_id}`)",
         )
-#admin plugin for  l313l
-@l313l.ar_cmd(
+#admin plugin for  Qrh9
+@Qrh9.ar_cmd(
     pattern="الاحداث( -ر)?(?: |$)(\d*)?",
     command=("الأحداث", plugin_category),
     info={
@@ -215,5 +215,5 @@ async def _iundlt(event):  # sourcery no-metrics
                     f"{msg.old.message}\n᯽︙ ارسلت بواسطه {_format.mentionuser(ruser.first_name ,ruser.id)}",
                     file=msg.old.media,
                 )
-#admin plugin for  l313l
+#admin plugin for  Qrh9
 # by  @SX9OO

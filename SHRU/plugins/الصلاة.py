@@ -4,12 +4,12 @@ import json
 import requests
 #ترجمه فريق الساحر على التيلكرام
 from ..sql_helper.globals import gvarstatus
-from . import l313l, edit_delete, edit_or_reply
+from . import Qrh9, edit_delete, edit_or_reply
 
 plugin_category = "extra"
 
 #ترجمه فريق الساحر على التيلكرام
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="صلاة(?: |$)(.*)",
     command=("صلاة", plugin_category),
     info={
@@ -29,7 +29,7 @@ async def get_adzan(adzan):
         ) #ترجمه فريق الساحر على التيلكرام
         return
     result = json.loads(request.text)
-    l313lresult = f"<b>اوقـات صـلاه المـسلمين 👳‍♂️ </b>\
+    Qrh9result = f"<b>اوقـات صـلاه المـسلمين 👳‍♂️ </b>\
             \n\n<b>المـدينة     : </b><i>{result['results']['location']['city']}</i>\
             \n<b>الـدولة  : </b><i>{result['results']['location']['country']}</i>\
             \n<b>التـاريخ     : </b><i>{result['results']['datetime'][0]['date']['gregorian']}</i>\
@@ -44,7 +44,7 @@ async def get_adzan(adzan):
             \n<b>العشـاء     : </b><i>{result['results']['datetime'][0]['times']['Isha']}</i>\
             \n<b>منتـصف الليل : </b><i>{result['results']['datetime'][0]['times']['Midnight']}</i>\
     "
-    await edit_or_reply(adzan, l313lresult, "html")
+    await edit_or_reply(adzan, Qrh9result, "html")
 
 # Copyright (C) 2021 SHRU TEAM
-# FILES WRITTEN BY  @SX9OO
+# FILES WRITTEN BY  @ll1ilt

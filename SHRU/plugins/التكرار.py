@@ -6,7 +6,7 @@ from telethon.tl.functions.messages import GetStickerSetRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from telethon.utils import get_display_name
 import re
-from SHRU import l313l
+from SHRU import Qrh9
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.tools import media_type
@@ -14,7 +14,7 @@ from ..helpers.utils import _catutils
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from . import BOTLOG, BOTLOG_CHATID
 from SHRU import *
-from SHRU import l313l
+from SHRU import Qrh9
 from SHRU.utils import admin_cmd
 from telethon.tl.types import Channel, Chat, User
 from telethon.tl import functions, types
@@ -24,11 +24,11 @@ from telethon.tl.functions.channels import GetFullChannelRequest, GetParticipant
 
 Mukrr = Config.MUKRR_ET or "مكرر"
 
-async def spam_function(event, SHRU, l313l, sleeptimem, sleeptimet, DelaySpam=False):
+async def spam_function(event, SHRU, Qrh9, sleeptimem, sleeptimet, DelaySpam=False):
 
-    counter = int(l313l[0])
-    if len(l313l) == 2:
-        spam_message = str(l313l[1])
+    counter = int(Qrh9[0])
+    if len(Qrh9) == 2:
+        spam_message = str(Qrh9[1])
         for _ in range(counter):
             if gvarstatus("spamwork") is None:
                 return
@@ -118,12 +118,12 @@ async def spam_function(event, SHRU, l313l, sleeptimem, sleeptimet, DelaySpam=Fa
             )
 
 
-@l313l.ar_cmd(pattern="كرر (.*)")
+@Qrh9.ar_cmd(pattern="كرر (.*)")
 async def spammer(event):
     SHRU = await event.get_reply_message()
-    l313l = ("".join(event.text.split(maxsplit=1)[1:])).split(" ", 1)
+    Qrh9 = ("".join(event.text.split(maxsplit=1)[1:])).split(" ", 1)
     try:
-        counter = int(l313l[0])
+        counter = int(Qrh9[0])
     except Exception:
         return await edit_delete(
             event, "⌔∮ يجي استخدام كتابة صحيحة الرجاء التاكد من الامر اولا ⚠️"
@@ -136,9 +136,9 @@ async def spammer(event):
         sleeptimem = 0.3
     await event.delete()
     addgvar("spamwork", True)
-    await spam_function(event, SHRU, l313l, sleeptimem, sleeptimet)
+    await spam_function(event, SHRU, Qrh9, sleeptimem, sleeptimet)
 
-@l313l.on(admin_cmd(pattern=f"{Mukrr}"))
+@Qrh9.on(admin_cmd(pattern=f"{Mukrr}"))
 async def spammer(event):
     reply = await event.get_reply_message()
     input_str = "".join(event.text.split(maxsplit=1)[1:]).split(" ", 2)
@@ -148,13 +148,13 @@ async def spammer(event):
         return await edit_delete(
             event, "⌔∮ يجب استخدام كتابة صحيحة الرجاء التاكد من الامر اولا ⚠️"
         )
-    l313l = input_str[1:]
+    Qrh9 = input_str[1:]
     await event.delete()
     addgvar("spamwork", True)
-    await spam_function(event, reply, l313l, sleeptimem, sleeptimet, DelaySpam=True)
+    await spam_function(event, reply, Qrh9, sleeptimem, sleeptimet, DelaySpam=True)
 
 
-@l313l.ar_cmd(pattern="تكرار الملصق$")
+@Qrh9.ar_cmd(pattern="تكرار الملصق$")
 async def stickerpack_spam(event):
     reply = await event.get_reply_message()
     if not reply or media_type(reply) is None or media_type(reply) != "Sticker":
@@ -222,7 +222,7 @@ async def stickerpack_spam(event):
         await event.client.send_file(BOTLOG_CHATID, reqd_sticker_set.documents[0])
 
 
-@l313l.ar_cmd(pattern="سبام (.*)")
+@Qrh9.ar_cmd(pattern="سبام (.*)")
 async def tmeme(event):
     cspam = str("".join(event.text.split(maxsplit=1)[1:]))
     message = cspam.replace(" ", "")
@@ -254,14 +254,14 @@ from telethon import events
 import asyncio
 from telethon import events
 
-@l313l.on(events.NewMessage(pattern=r"^.تكرار (\d+) (\d+) (.+)"))
+@Qrh9.on(events.NewMessage(pattern=r"^.تكرار (\d+) (\d+) (.+)"))
 async def share_messages(event):
     time_interval = int(event.pattern_match.group(1))
     message_count = int(event.pattern_match.group(2))
     group_link = event.pattern_match.group(3)
 
     try:
-        entity = await l313l.get_entity(group_link)
+        entity = await Qrh9.get_entity(group_link)
     except ValueError:
         await event.edit("⌔∮ رابط المجموعة خاطئ.")
         return
@@ -275,12 +275,12 @@ async def share_messages(event):
     await event.edit(f"⌔∮ بدأت عملية التكرار... {time_interval} ثانية كل {message_count} مرة.")
 
     for _ in range(message_count):
-        sent_message = await l313l.send_message(entity, reply_message.text)
+        sent_message = await Qrh9.send_message(entity, reply_message.text)
         await asyncio.sleep(time_interval)
 
     await event.edit(f"⌔∮  تم التكرار بنجاح")
 
-@l313l.ar_cmd(pattern="وسبام (.*)")
+@Qrh9.ar_cmd(pattern="وسبام (.*)")
 async def tmeme(event):
     wspam = str("".join(event.text.split(maxsplit=1)[1:]))
     message = wspam.split()
@@ -304,14 +304,14 @@ async def tmeme(event):
                 + f"**⌔∮ تم تنفيذ التكرار بواسطة الڪلمات في   :** {get_display_name(await event.get_chat())}(`{event.chat_id}`) **الدردشة مع :** `{message}`",
             )
 
-@l313l.on(events.NewMessage(pattern=r"^.نقل (\d+) (\d+) (.+)"))
+@Qrh9.on(events.NewMessage(pattern=r"^.نقل (\d+) (\d+) (.+)"))
 async def share_messages(event):
     time_interval = int(event.pattern_match.group(1))
     message_count = int(event.pattern_match.group(2))
     group_link = event.pattern_match.group(3)
 
     try:
-        entity = await l313l.get_entity(group_link)
+        entity = await Qrh9.get_entity(group_link)
     except ValueError:
         await event.reply("⌔∮ رابط المجموعة أو اسم المستخدم غير صالح.")
         return
@@ -325,12 +325,12 @@ async def share_messages(event):
     await event.reply(f"⌔∮ بدأ عملية النقل... {time_interval} ثانية كل {message_count} مرة.")
 
     for _ in range(message_count):
-        await l313l.forward_messages(entity, reply_message)
+        await Qrh9.forward_messages(entity, reply_message)
         await asyncio.sleep(time_interval)
 
     await event.reply(f"⌔∮ تم التكرار بنجاح")
 
-@l313l.ar_cmd(pattern="ايقاف التكرار ?(.*)")
+@Qrh9.ar_cmd(pattern="ايقاف التكرار ?(.*)")
 async def stopspamrz(event):
     if gvarstatus("spamwork") is not None and gvarstatus("spamwork") == "true":
         delgvar("spamwork")

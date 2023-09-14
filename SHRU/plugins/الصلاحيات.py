@@ -7,7 +7,7 @@ from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from telethon.tl.types import ChatBannedRights
 
 
-from SHRU import l313l
+from SHRU import Qrh9
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.utils import _format
@@ -18,9 +18,9 @@ from . import BOTLOG, get_user_from_event
 plugin_category = "admin" 
 
 # Copyright (C) 2021 SHRU TEAM
-# FILES WRITTEN BY  @SX9OO
+# FILES WRITTEN BY  @ll1ilt
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="قفل (.*)",
     command=("قفل", plugin_category),
     info={
@@ -208,7 +208,7 @@ async def _(event):  # sourcery no-metrics
             )
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="فتح (.*)",
     command=("فتح", plugin_category),
     info={
@@ -311,7 +311,7 @@ async def _(event):  # sourcery no-metrics
                     event, "᯽︙ ارسال الانلاين مسموح في هذه الدردشه ⌁"
                 )
             ainline = False
-            locktype = "الانلاين"  # BY  @SX9OO  -  @UUNZZ
+            locktype = "الانلاين"  # BY  @ll1ilt  -  @UUNZZ
         elif input_str == "التصويت":  
             if not gpoll:
                 return await edit_delete(
@@ -395,8 +395,8 @@ async def _(event):  # sourcery no-metrics
                 time=5,
             )
 
-# BY  @SX9OO
-@l313l.ar_cmd(
+# BY  @ll1ilt
+@Qrh9.ar_cmd(
     pattern="الصلاحيات$",
     command=("الصلاحيات", plugin_category),
     info={
@@ -456,7 +456,7 @@ async def _(event):  # sourcery no-metrics
     await edit_or_reply(event, res)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="plock (.*)",
     command=("plock", plugin_category),
     info={
@@ -703,7 +703,7 @@ async def _(event):  # sourcery no-metrics
         )
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="punlock (.*)",
     command=("punlock", plugin_category),
     info={
@@ -954,7 +954,7 @@ async def _(event):  # sourcery no-metrics
         )
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="uperm(?: |$)(.*)",
     command=("uperm", plugin_category),
     info={
@@ -1031,7 +1031,7 @@ async def _(event):  # sourcery no-metrics
     await edit_or_reply(event, output)
 
 
-@l313l.ar_cmd(incoming=True)
+@Qrh9.ar_cmd(incoming=True)
 async def check_incoming_messages(event):  # sourcery no-metrics
     if not event.is_private:
         chat = await event.get_chat()
@@ -1097,7 +1097,7 @@ async def check_incoming_messages(event):  # sourcery no-metrics
                 update_lock(peer_id, "url", False)
 
 
-@l313l.on(events.ChatAction())
+@Qrh9.on(events.ChatAction())
 async def _(event):
     if not event.is_private:
         chat = await event.get_chat()
@@ -1139,4 +1139,4 @@ async def _(event):
                     users_added_by
                 )
             )
-#THIS FILE WRITTEN BY  @SX9OO
+#THIS FILE WRITTEN BY  @ll1ilt

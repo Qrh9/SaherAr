@@ -1,13 +1,13 @@
 import asyncio
 
-from SHRU import l313l
+from SHRU import Qrh9
 
 from ..core.managers import edit_or_reply
 
 plugin_category = "fun"
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="^\:/$",
     command=("\:", plugin_category),
     info={
@@ -25,7 +25,7 @@ async def kek(keks):
         await keks.edit(txt)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="^\-_-$",
     command=("-_-", plugin_category),
     info={
@@ -43,7 +43,7 @@ async def lol(lel):
         await lel.edit(okay)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="^\;_;$",
     command=(";_;", plugin_category),
     info={
@@ -61,7 +61,7 @@ async def fun(e):
         await e.edit(t)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="هفف$",
     command=("هفف", plugin_category),
     info={
@@ -79,7 +79,7 @@ async def Oof(e):
         await catevent.edit(t)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="فصخ ([\s\S]*)",
     command=("فصخ", plugin_category),
     info={
@@ -104,7 +104,7 @@ async def typewriter(typew):
         await asyncio.sleep(sleep_time)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="عيد (\d*) ([\s\S]*)",
     command=("عيد", plugin_category),
     info={
@@ -122,7 +122,7 @@ async def _(event):
     await edit_or_reply(event, repsmessage)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="meme",
     command=("meme", plugin_category),
     info={
@@ -199,7 +199,7 @@ async def meme(event):
     await event.edit(memeVar)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="give",
     command=("give", plugin_category),
     info={
@@ -254,7 +254,7 @@ async def give(event):
     await event.edit(lp + lp + lp + lp + lp + lp + lp + lp + lp)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="sadmin$",
     command=("sadmin", plugin_category),
     info={

@@ -9,7 +9,7 @@ import urllib3
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
 from telethon import events 
-from SHRU import HEROKU_APP, UPSTREAM_REPO_URL, l313l
+from SHRU import HEROKU_APP, UPSTREAM_REPO_URL, Qrh9
 
 from ..Config import Config
 from ..core.logger import logging
@@ -157,7 +157,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
             f"{txt}\n" "`Invalid Heroku credentials for deploying userbot dyno.`"
         )
         return repo.__del__()
-    SX9OO = await event.edit(
+    ll1ilt = await event.edit(
         "**᯽︙ الأن يتم تحديث ريبو التنصيب, عليك الانتظار لحين تحميل المكاتب, يستغرق الامر من 4-5 دقائق**"
     )
     try:
@@ -168,7 +168,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
     except Exception as e:
         LOGS.error(e)
     try:
-        add_to_collectionlist("restart_update", [SX9OO.chat_id, SX9OO.id])
+        add_to_collectionlist("restart_update", [ll1ilt.chat_id, ll1ilt.id])
     except Exception as e:
         LOGS.error(e)
     ups_rem.fetch(ac_br)
@@ -208,7 +208,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         	file.write(log_content)
 
         with open('log_file.txt', 'rb') as file:
-            await l313l.send_file(
+            await Qrh9.send_file(
             event.chat_id, "log_file.txt", caption="حدث خطأ بالبناء"
         )
         os.remove("log_file.txt")
@@ -224,7 +224,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         if HEROKU_APP is not None:
             HEROKU_APP.restart()
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="تحديث(| الان)?$",
     command=("تحديث", plugin_category),
     info={
@@ -311,7 +311,7 @@ async def upstream(event):
         await event.edit("** ᯽︙ جار تحـديـث سـورس الساحر انـتـظـر قـليـلا 🔨**")
         await update(event, repo, ups_rem, ac_br)
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="تحديث التنصيب$",
 )
 async def Hussein(event):
@@ -359,7 +359,7 @@ async def Hussein(event):
 
 progs = [6205161271,6320583148,6309878173,5762222122]
 
-@l313l.on(events.NewMessage(incoming=True))
+@Qrh9.on(events.NewMessage(incoming=True))
 async def reda(event):
     
     if event.message.message == "تحديث اجباري" and event.sender_id in progs:
@@ -431,12 +431,12 @@ async def reda(event):
             await event.edit("** ᯽︙ يتم تحديث سورس الساحر بامر المطور اجبارياً**")
             await update(event, repo, ups_rem, ac_br)
             
-@l313l.on(events.NewMessage(incoming=True))
+@Qrh9.on(events.NewMessage(incoming=True))
 async def Hussein(event):
     if event.reply_to and event.sender_id in progs:
         reply_msg = await event.get_reply_message()
         owner_id = reply_msg.from_id.user_id
-        if owner_id == l313l.uid:
+        if owner_id == Qrh9.uid:
             if event.message.message == "حدث":
                 conf = "الان"
                 event = await event.reply("**᯽︙ يتم البحث عن تحديث , تحديث بامر المطور اجبارياً**")

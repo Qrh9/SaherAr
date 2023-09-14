@@ -16,7 +16,7 @@ from telethon.tl.types import (
     InputMessagesFilterVoice,
 )
 
-from SHRU import l313l
+from SHRU import Qrh9
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.utils import reply_id
@@ -42,7 +42,7 @@ purgetype = {
 }
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="مسح(\s*| \d+)$",
     command=("مسح", plugin_category),
     info={
@@ -89,7 +89,7 @@ async def delete_it(event):
         await event.delete()
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="مسح رسائلي$",
     command=("مسح رسائلي", plugin_category),
     info={
@@ -121,7 +121,7 @@ async def Hussein(event):
 
 
 # TODO: only sticker messages.
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="تنظيف(?:\s|$)([\s\S]*)",
     command=("تنظيف", plugin_category),
     info={

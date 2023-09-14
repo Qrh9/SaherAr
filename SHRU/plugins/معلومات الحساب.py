@@ -5,7 +5,7 @@ from telethon.tl.custom import Dialog
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from telethon.tl.types import Channel, Chat, User
 
-from SHRU import l313l
+from SHRU import Qrh9
 
 from ..core.managers import edit_delete, edit_or_reply
 
@@ -37,7 +37,7 @@ def user_full_name(user):
     return " ".join(names)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="معلوماتي$",
     command=("معلوماتي", plugin_category),
     info={
@@ -115,7 +115,7 @@ async def stats(event):  # sourcery no-metrics
     response += f"✛━━━━━━━━━━━━━✛\n"
     await cat.edit(response)
         
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="كروباته(?:\s|$)([\s\S]*)",
     command=("كروباته", plugin_category),
     info={
@@ -155,7 +155,7 @@ async def _(event):
         response = await conv.get_response()
         await event.client.send_read_ackno
 
-@l313l.on(admin_cmd(pattern="قائمه (جميع القنوات|القنوات المشرف عليها|قنواتي)"))
+@Qrh9.on(admin_cmd(pattern="قائمه (جميع القنوات|القنوات المشرف عليها|قنواتي)"))
 async def ViewChJok(event):  
     catcmd = event.pattern_match.group(1)
     catevent = await edit_or_reply(event, STAT_INDICATION)
@@ -217,7 +217,7 @@ async def ViewChJok(event):
     except Exception:
         await edit_or_reply(catevent, output)
         
-@l313l.on(admin_cmd(pattern="قائمه (جميع المجموعات|مجموعات اديرها|كروباتي)$"))
+@Qrh9.on(admin_cmd(pattern="قائمه (جميع المجموعات|مجموعات اديرها|كروباتي)$"))
 async def stats(event):  # sourcery no-metrics
     catcmd = event.pattern_match.group(1)
     catevent = await edit_or_reply(event, STAT_INDICATION)

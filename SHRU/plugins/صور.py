@@ -4,7 +4,7 @@ import shutil
 
 from telethon.errors.rpcerrorlist import MediaEmptyError
 
-from SHRU import l313l
+from SHRU import Qrh9
 
 from ..core.managers import edit_or_reply
 from ..helpers.google_image_download import googleimagesdownload
@@ -13,7 +13,7 @@ from ..helpers.utils import reply_id
 plugin_category = "misc"
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="صور(?: |$)(\d*)? ?([\s\S]*)",
     command=("صور", plugin_category),
     info={

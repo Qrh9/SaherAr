@@ -8,7 +8,7 @@ from datetime import datetime
 import speech_recognition as sr
 from pydub import AudioSegment
 
-from SHRU import l313l
+from SHRU import Qrh9
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import media_type
 from ..helpers.utils import reply_id
@@ -18,7 +18,7 @@ plugin_category = "utils"
 
 #لتخمط الملف اذا انته ابن گحبة انسخ وألصق لسورسك وصيح اني مطور الملف متعوب عليه وشغل ايد
 
-@l313l.ar_cmd(pattern="احجي(?:\s|$)([\s\S]*)",
+@Qrh9.ar_cmd(pattern="احجي(?:\s|$)([\s\S]*)",
                command=("احجي", plugin_category),
               )
 async def _(event):
@@ -110,7 +110,7 @@ def to_text(pic, api):
     finally:
         os.remove(pic)
 
-@l313l.ar_cmd(pattern="استخرج(?:\s|$)([\s\S]*)",
+@Qrh9.ar_cmd(pattern="استخرج(?:\s|$)([\s\S]*)",
                command=("استخرج", plugin_category),
               )
 async def _(event):
@@ -118,7 +118,7 @@ async def _(event):
     lan = event.pattern_match.group(1)
     if not reply:
      return edit_delete(event, "**᯽︙ قم بالرد على الصورة المراد استخراج النص منه**")
-    pic_file = await l313l.download_media(reply, Config.TMP_DOWNLOAD_DIRECTORY)
+    pic_file = await Qrh9.download_media(reply, Config.TMP_DOWNLOAD_DIRECTORY)
     if not pic_file:
         return await edit_delete(event, "**᯽︙ قم بالرد على صورة**")
     else:

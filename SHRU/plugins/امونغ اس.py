@@ -9,7 +9,7 @@ from PIL import Image, ImageDraw, ImageFont
 from requests import get
 from telethon.utils import get_display_name
 
-from SHRU import l313l
+from SHRU import Qrh9
 
 from ..Config import Config
 from ..core.managers import edit_or_reply
@@ -18,14 +18,14 @@ from . import ALIVE_NAME
 
 plugin_category = "extra"
 
-#كـتابة وتعـديل  @SX9OO
+#كـتابة وتعـديل  @ll1ilt
 # SHRU ™
 async def amongus_gen(text: str, clr: int) -> str:
-    url = "https://github.com/SHRU-AR/l313l-Resources/raw/master/Resources/Amongus/"
+    url = "https://github.com/SHRU-AR/Qrh9-Resources/raw/master/Resources/Amongus/"
     font = ImageFont.truetype(
         BytesIO(
             get(
-                "https://github.com/SHRU-AR/l313l-Resources/raw/master/Resources/fonts/bold.ttf"
+                "https://github.com/SHRU-AR/Qrh9-Resources/raw/master/Resources/fonts/bold.ttf"
             ).content
         ),
         60,
@@ -54,10 +54,10 @@ async def amongus_gen(text: str, clr: int) -> str:
 
 async def get_imposter_img(text: str) -> str:
     background = get(
-        f"https://github.com/SHRU-AR/l313l-Resources/raw/master/Resources/imposter/impostor{randint(1,22)}.png"
+        f"https://github.com/SHRU-AR/Qrh9-Resources/raw/master/Resources/imposter/impostor{randint(1,22)}.png"
     ).content
     font = get(
-        "https://github.com/SHRU-AR/l313l-Resources/raw/master/Resources/fonts/roboto_regular.ttf"
+        "https://github.com/SHRU-AR/Qrh9-Resources/raw/master/Resources/fonts/roboto_regular.ttf"
     ).content
     font = BytesIO(font)
     font = ImageFont.truetype(font, 30)
@@ -76,7 +76,7 @@ async def get_imposter_img(text: str) -> str:
     image.save(webp_file, "png")
     return webp_file
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="من القاتل(|بريء) ([\s\S]*)",
     command=("من القاتل", plugin_category),
     info={
@@ -169,7 +169,7 @@ async def _(event):
         await event.client.send_file(event.chat_id, "CAADAQADQAADnjOcH-WOkB8DEctJAg")
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="القاتل(|بريء) ([\s\S]*)",
     command=("القاتل", plugin_category),
     info={

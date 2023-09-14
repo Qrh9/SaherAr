@@ -1,17 +1,17 @@
 # Copyright (C) 2021 SHRU TEAM
-# FILES WRITTEN BY  @SX9OO
+# FILES WRITTEN BY  @ll1ilt
 import os
 import re
 
 from telethon import Button
 
 from ..Config import Config
-from . import l313l, edit_delete, reply_id
+from . import Qrh9, edit_delete, reply_id
 
 plugin_category = "tools"
 BTN_URL_REGEX = re.compile(r"(\[([^\[]+?)\]\<buttonurl:(?:/{0,2})(.+?)(:same)?\>)")
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="لستة(?: |$)(.*)",
     command=("لستة", plugin_category),
     info={

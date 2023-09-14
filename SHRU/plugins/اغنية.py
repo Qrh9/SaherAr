@@ -26,7 +26,7 @@ from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.functions import delete_conv, name_dl, song_dl, video_dl, yt_search
 from ..helpers.tools import media_type
 from ..helpers.utils import _catutils, reply_id
-from . import l313l
+from . import Qrh9
 
 plugin_category = "utils"
 LOGS = logging.getLogger(__name__)
@@ -60,7 +60,7 @@ async def yt_search_fallback(query):
 YOUTUBE_API_KEY = "AIzaSyBh71KuTxXRZjDce8iEXwpIuIKfXMrHOMc"
 ads = ["Shopify", "TRODELVY® (sacituzumab govitecan-hziy)"]
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="بحث(?:\s|$)([\s\S]*)",
     command=("بحث", plugin_category),
     info={
@@ -181,7 +181,7 @@ async def _(event):
 # =========================================================== #2
 #322242
 # ========================================================= @
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="فيديو(?:\s|$)([\s\S]*)",
     command=("فيديو", plugin_category),
     info={
@@ -255,7 +255,7 @@ async def _(event):
 
 
 
-@l313l.ar_cmd(pattern="اسم الاغنية$")
+@Qrh9.ar_cmd(pattern="اسم الاغنية$")
 async def shazamcmd(event):
     reply = await event.get_reply_message()
     mediatype = media_type(reply)
@@ -292,7 +292,7 @@ async def shazamcmd(event):
     await catevent.delete
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="بحث2(?:\s|$)([\s\S]*)",
     command=("بحث2", plugin_category),
     info={

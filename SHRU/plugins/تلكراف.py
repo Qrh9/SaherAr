@@ -1,6 +1,6 @@
 #SHRU
 #- - - - - - - - - - - - -
-#@SX9OO
+#@ll1ilt
 #@SXYO3
 #- - - - - - - - - - - - -
 
@@ -14,7 +14,7 @@ from PIL import Image
 from telegraph import Telegraph, exceptions, upload_file
 from telethon.utils import get_display_name
 
-from SHRU import l313l
+from SHRU import Qrh9
 
 from ..Config import Config
 from ..core.logger import logging
@@ -35,7 +35,7 @@ def resize_image(image):
     im.save(image, "PNG")
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="(ت(ل)?ك(راف)?) ?(m|t|ميديا|نص)(?:\s|$)([\s\S]*)",
     command=("تلكراف", plugin_category),
     info={

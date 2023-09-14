@@ -8,7 +8,7 @@ import requests
 import heroku3
 import urllib3
 from telethon import events 
-from SHRU import HEROKU_APP, UPSTREAM_REPO_URL, l313l
+from SHRU import HEROKU_APP, UPSTREAM_REPO_URL, Qrh9
 from ..Config import Config
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
@@ -34,7 +34,7 @@ ashour = [
     ""
 ]
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="عاشوراء$",
     command=("عاشوراء", plugin_category),
     info={

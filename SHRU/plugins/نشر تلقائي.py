@@ -5,7 +5,7 @@ from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.messages import ExportChatInviteRequest
 from telethon.tl.functions.users import GetFullUserRequest
 
-from SHRU import l313l
+from SHRU import Qrh9
 
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
@@ -42,7 +42,7 @@ async def get_user_from_event(event):
             return None
     return user_object
 
-@l313l.on(admin_cmd(pattern="(نشر_تلقائي|النشر_التلقائي)"))
+@Qrh9.on(admin_cmd(pattern="(نشر_تلقائي|النشر_التلقائي)"))
 async def _(event):
     if (event.is_private or event.is_group):
         return await edit_or_reply(event, "**᯽︙ عـذراً .. النشر التلقائي خـاص بالقنـوات فقـط**")
@@ -71,7 +71,7 @@ async def _(event):
 
 
 
-@l313l.on(admin_cmd(pattern="(ايقاف_نشر|ايقاف_النشر)"))
+@Qrh9.on(admin_cmd(pattern="(ايقاف_نشر|ايقاف_النشر)"))
 async def _(event):
     if (event.is_private or event.is_group):
         return await edit_or_reply(event, "**᯽︙ عـذراً .. النشر التلقائي خـاص بالقنـوات فقـط**")
@@ -99,7 +99,7 @@ async def _(event):
     await edit_or_reply(event, f"**᯽︙ تم ايقـاف النشـر التلقـائي من** `{jok}`")
 
 
-@l313l.ar_cmd(incoming=True, forword=None)
+@Qrh9.ar_cmd(incoming=True, forword=None)
 async def _(event):
     if event.is_private:
         return
@@ -111,4 +111,4 @@ async def _(event):
         if event.media:
             await event.client.send_file(int(chat), event.media, caption=event.text)
         elif not event.media:
-            await l313l.send_message(int(chat), event.message)
+            await Qrh9.send_message(int(chat), event.message)

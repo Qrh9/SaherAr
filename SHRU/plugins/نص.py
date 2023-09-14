@@ -39,4 +39,4 @@ async def _(event):
              await event.client.send_message(event.chat_id, response.message)
              
 # Copyright (C) 2021 SHRU TEAM
-# FILES WRITTEN BY  @SX9OO
+# FILES WRITTEN BY  @ll1ilt

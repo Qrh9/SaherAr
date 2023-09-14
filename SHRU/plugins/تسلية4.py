@@ -1,11 +1,11 @@
 import asyncio
 
-from . import ALIVE_NAME, l313l, edit_or_reply
+from . import ALIVE_NAME, Qrh9, edit_or_reply
 
 plugin_category = "fun"
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="قاتل(?: |$)(.*)",
     command=("قاتل", plugin_category),
     info={
@@ -36,7 +36,7 @@ async def _(event):
         await event.edit(animation_chars[i % 8])
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="عين$",
     command=("عين", plugin_category),
     info={
@@ -72,7 +72,7 @@ async def _(event):
     await event.delete()
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="افكرر$",
     command=("افكرر", plugin_category),
     info={
@@ -128,7 +128,7 @@ async def _(event):
         await event.edit(animation_chars[i % 36])
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="افعى$",
     command=("افعى", plugin_category),
     info={
@@ -175,7 +175,7 @@ async def _(event):
         await event.edit(animation_chars[i % 27])
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="رجل$",
     command=("رجل", plugin_category),
     info={
@@ -211,7 +211,7 @@ async def _(event):
         await event.edit(animation_chars[i % 16])
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="مايكرو$",
     command=("مايكرو", plugin_category),
     info={
@@ -259,7 +259,7 @@ async def _(event):
         await event.edit(animation_chars[i % 28])
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="فايروس$",
     command=("فايروس", plugin_category),
     info={
@@ -309,7 +309,7 @@ async def _(event):
         await event.edit(animation_chars[i % 30])
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="قطار$",
     command=("قطار", plugin_category),
     info={
@@ -359,7 +359,7 @@ async def _(event):
         await event.edit(animation_chars[i % 30])
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="نيكول$",
     command=("نيكول", plugin_category),
     info={
@@ -385,7 +385,7 @@ async def _(event):
         await event.edit(animation_chars[i % 6])
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="موسيقى$",
     command=("موسيقى", plugin_category),
     info={
@@ -416,7 +416,7 @@ async def _(event):
         await event.edit(animation_chars[i % 11])
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="رسم$",
     command=("رسم", plugin_category),
     info={

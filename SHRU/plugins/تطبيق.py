@@ -7,12 +7,12 @@ Fetch App Details from Playstore.
 import bs4
 import requests
 
-from . import ALIVE_NAME, l313l, edit_or_reply
+from . import ALIVE_NAME, Qrh9, edit_or_reply
 
 plugin_category = "utils"
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="app ([\s\S]*)",
     command=("app", plugin_category),
     info={

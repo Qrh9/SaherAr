@@ -2,7 +2,7 @@ import re
 
 from telethon.utils import get_display_name
 
-from SHRU import l313l
+from SHRU import Qrh9
 
 from ..core.managers import edit_or_reply
 from ..sql_helper import blacklist_sql as sql
@@ -11,7 +11,7 @@ from ..utils import is_admin
 plugin_category = "admin"
 
 #copyright for SHRU © 2021
-@l313l.ar_cmd(incoming=True, groups_only=True)
+@Qrh9.ar_cmd(incoming=True, groups_only=True)
 async def on_new_message(event):
     name = event.raw_text
     snips = sql.get_chat_blacklist(event.chat_id)
@@ -34,7 +34,7 @@ async def on_new_message(event):
             break
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="منع(?:\s|$)([\s\S]*)",
     command=("منع", plugin_category),
     info={
@@ -65,7 +65,7 @@ async def _(event):
     )
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="الغاء منع(?:\s|$)([\s\S]*)",
     command=("الغاء منع", plugin_category),
     info={
@@ -94,7 +94,7 @@ async def _(event):
     )
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="قائمة المنع$",
     command=("قائمة المنع", plugin_category),
     info={

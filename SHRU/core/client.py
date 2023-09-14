@@ -163,7 +163,7 @@ class HuReClient(TelegramClient):
                             Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=False
                         )
 
-            from .session import l313l
+            from .session import Qrh9
 
             if not func.__doc__ is None:
                 CMD_INFO[command[0]].append((func.__doc__).strip())
@@ -176,18 +176,18 @@ class HuReClient(TelegramClient):
                     except BaseException:
                         LOADED_CMDS.update({command[0]: [wrapper]})
                 if edited:
-                    l313l.add_event_handler(
+                    Qrh9.add_event_handler(
                         wrapper,
                         MessageEdited(pattern=REGEX_.regex1, outgoing=True, **kwargs),
                     )
-                l313l.add_event_handler(
+                Qrh9.add_event_handler(
                     wrapper,
                     NewMessage(pattern=REGEX_.regex1, outgoing=True, **kwargs),
                 )
                 if allow_sudo and gvarstatus("sudoenable") is not None:
                     if command is None or command[0] in sudo_enabledcmds:
                         if edited:
-                            l313l.add_event_handler(
+                            Qrh9.add_event_handler(
                                 wrapper,
                                 MessageEdited(
                                     pattern=REGEX_.regex2,
@@ -195,7 +195,7 @@ class HuReClient(TelegramClient):
                                     **kwargs,
                                 ),
                             )
-                        l313l.add_event_handler(
+                        Qrh9.add_event_handler(
                             wrapper,
                             NewMessage(
                                 pattern=REGEX_.regex2,
@@ -211,8 +211,8 @@ class HuReClient(TelegramClient):
                 except BaseException:
                     LOADED_CMDS.update({file_test: [func]})
                 if edited:
-                    l313l.add_event_handler(func, events.MessageEdited(**kwargs))
-                l313l.add_event_handler(func, events.NewMessage(**kwargs))
+                    Qrh9.add_event_handler(func, events.MessageEdited(**kwargs))
+                Qrh9.add_event_handler(func, events.NewMessage(**kwargs))
             return wrapper
 
         return decorator
@@ -278,12 +278,12 @@ class HuReClient(TelegramClient):
                             Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=False
                         )
 
-            from .session import l313l
+            from .session import Qrh9
 
             if edited is True:
-                l313l.tgbot.add_event_handler(func, events.MessageEdited(**kwargs))
+                Qrh9.tgbot.add_event_handler(func, events.MessageEdited(**kwargs))
             else:
-                l313l.tgbot.add_event_handler(func, events.NewMessage(**kwargs))
+                Qrh9.tgbot.add_event_handler(func, events.NewMessage(**kwargs))
 
             return wrapper
 

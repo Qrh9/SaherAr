@@ -3,7 +3,7 @@
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from telethon.utils import get_display_name
 
-from .. import l313l
+from .. import Qrh9
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.utils import _format, get_user_from_event
@@ -13,7 +13,7 @@ plugin_category = "tools"
 
 LOGS = logging.getLogger(__name__)
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="رسالة(?:\s|$)([\s\S]*)",
     command=("رسالة", plugin_category),
 
@@ -56,7 +56,7 @@ async def catbroadcast_add(event):
         msg = await event.client.send_message(user.id, reply)
     await edit_delete(event, "• تـم ارسال رسالتك بنجاح ✅ •")
 
-@l313l.ar_cmd(pattern="ازالة التوجيه")
+@Qrh9.ar_cmd(pattern="ازالة التوجيه")
 async def Reda (event):
     if event.message.reply_to_msg_id:
         
@@ -64,10 +64,10 @@ async def Reda (event):
         
         if replied_msg.media:
             
-            await l313l.send_message(event.chat_id, "", file=replied_msg.media)
+            await Qrh9.send_message(event.chat_id, "", file=replied_msg.media)
         else:
             
-            await l313l.send_message(chat_id=event.chat_id, message=replied_msg.message)
+            await Qrh9.send_message(chat_id=event.chat_id, message=replied_msg.message)
     else:
         await edit_delete(event, "**قم بالرد على رسالة أولاً **")
 

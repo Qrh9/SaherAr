@@ -23,7 +23,7 @@ from SHRU import BOTLOG_CHATID
 from ..Config import Config
 from ..helpers.utils import _format
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
-from . import AUTONAME, DEFAULT_GROUP, DEFAULT_BIO, edit_delete, l313l, logging , edit_or_reply
+from . import AUTONAME, DEFAULT_GROUP, DEFAULT_BIO, edit_delete, Qrh9, logging , edit_or_reply
 from colour import Color
 
 plugin_category = "tools"
@@ -82,16 +82,16 @@ async def digitalpicloop():
         fnt = ImageFont.truetype(jep, 65)
         drawn_text.text((200, 200), current_time, font=fnt, fill=colo)
         img.save(autophoto_path)
-        file = await l313l.upload_file(autophoto_path)
+        file = await Qrh9.upload_file(autophoto_path)
         try:
             if i > 0:
-                await l313l(
+                await Qrh9(
                     functions.photos.DeletePhotosRequest(
-                        await l313l.get_profile_photos("me", limit=1)
+                        await Qrh9.get_profile_photos("me", limit=1)
                     )
                 )
             i += 1
-            await l313l(functions.photos.UploadProfilePhotoRequest(file))
+            await Qrh9(functions.photos.UploadProfilePhotoRequest(file))
             os.remove(autophoto_path)
             await asyncio.sleep(60)
         except BaseException:
@@ -126,19 +126,19 @@ async def digitalgrouppicloop():
         fnt = ImageFont.truetype(jep, 65)
         drawn_text.text((200, 200), current_time, font=fnt, fill=colo)
         img.save(auto_group_photo_path)
-        file = await l313l.upload_file(auto_group_photo_path)
+        file = await Qrh9.upload_file(auto_group_photo_path)
         try:
             if i > 0:
-                async for photo in l313l.iter_profile_photos(int(dgp), limit=1) :
-                    await l313l(
+                async for photo in Qrh9.iter_profile_photos(int(dgp), limit=1) :
+                    await Qrh9(
                     functions.photos.DeletePhotosRequest(id=[types.InputPhoto( id=photo.id, access_hash=photo.access_hash, file_reference=photo.file_reference )])
                     )
             i += 1
-            await l313l(functions.channels.EditPhotoRequest(int(dgp), file))
+            await Qrh9(functions.channels.EditPhotoRequest(int(dgp), file))
             os.remove(auto_group_photo_path)
             await asyncio.sleep(60)
         except ChatAdminRequiredError:
-            return await l313l.tgbot.send_message(BOTLOG_CHATID, "**يجب ان يكون لديك صلاحية تغيير صورة الكروب لتغيير صورة الكروب الوقتية •**")
+            return await Qrh9.tgbot.send_message(BOTLOG_CHATID, "**يجب ان يكون لديك صلاحية تغيير صورة الكروب لتغيير صورة الكروب الوقتية •**")
         except ChannelInvalidError:
             return
         except FloodWaitError:
@@ -161,12 +161,12 @@ async def group_loop():
                 HM = HM.replace(normal, namefont)
         name = f"{DEFAULTUSERGRO} {HM}"
         try:
-            await l313l(functions.channels.EditTitleRequest(
-                channel=await l313l.get_entity(int(ag)),
+            await Qrh9(functions.channels.EditTitleRequest(
+                channel=await Qrh9.get_entity(int(ag)),
                 title=name
             ))
         except ChatAdminRequiredError:
-            await l313l.tgbot.send_message(BOTLOG_CHATID, "**يجب ان يكون لديك صلاحية تغيير اسم الكروب لتفعيل وقتي الكروب•**")
+            await Qrh9.tgbot.send_message(BOTLOG_CHATID, "**يجب ان يكون لديك صلاحية تغيير اسم الكروب لتفعيل وقتي الكروب•**")
         except ChannelInvalidError:
             return
         except FloodWaitError:
@@ -187,7 +187,7 @@ async def autoname_loop():
         name = f"{SX9OO} {HM}"
         LOGS.info(name)
         try:
-            await l313l(functions.account.UpdateProfileRequest(last_name=name))
+            await Qrh9(functions.account.UpdateProfileRequest(last_name=name))
         except FloodWaitError as ex:
             LOGS.warning(str(ex))
             await asyncio.sleep(120)
@@ -207,7 +207,7 @@ async def autobio_loop():
         bio = f"{DEFAULTUSERBIO} {HI}"
         LOGS.info(bio)
         try:
-            await l313l(functions.account.UpdateProfileRequest(about=bio))
+            await Qrh9(functions.account.UpdateProfileRequest(about=bio))
         except FloodWaitError as ex:
             LOGS.warning(str(ex))
         await asyncio.sleep(Config.CHANGE_TIME)
@@ -215,7 +215,7 @@ async def autobio_loop():
 
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="رسالة_وقتيه (.+)",
     command=("msgt", plugin_category),
     info={
@@ -241,7 +241,7 @@ async def msg_with_time(event):
         except asyncio.CancelledError:
             break
 
-@l313l.on(admin_cmd(pattern=f"{phow8t}(?:\s|$)([\s\S]*)"))
+@Qrh9.on(admin_cmd(pattern=f"{phow8t}(?:\s|$)([\s\S]*)"))
 async def _(event):
     "To set random colour pic with time to profile pic"
     downloader = SmartDL(digitalpfp, digitalpic_path, progress_bar=False)
@@ -254,7 +254,7 @@ async def _(event):
     await edit_delete(event, "**تم تفـعيل الصـورة الـوقتية بنجـاح ✓**")
     await digitalpicloop()
 
-@l313l.on(admin_cmd(pattern="كروب وقتي"))
+@Qrh9.on(admin_cmd(pattern="كروب وقتي"))
 async def _(event):
     ison = get_auto_g()
     if event.is_group or event.is_channel:
@@ -267,7 +267,7 @@ async def _(event):
     else:
         return await edit_delete(event, "**يمكنك استعمال الاسم الوقتي في الكروب او في القناة فقط**")
 
-@l313l.on(admin_cmd(pattern="كروب صورة وقتي"))
+@Qrh9.on(admin_cmd(pattern="كروب صورة وقتي"))
 async def _(event):
     ison = gvarstatus("digitalgrouppic")
     if event.is_group or event.is_channel:
@@ -280,7 +280,7 @@ async def _(event):
     else:
         return await edit_delete(event, "**يمكنك استعمال الصورة الوقتية في كروب او قناة**")
 
-@l313l.on(admin_cmd(pattern=f"{namew8t}(?:\s|$)([\s\S]*)"))
+@Qrh9.on(admin_cmd(pattern=f"{namew8t}(?:\s|$)([\s\S]*)"))
 async def _(event):
     "To set your display name along with time"
     if gvarstatus("autoname") is not None and gvarstatus("autoname") == "true":
@@ -290,7 +290,7 @@ async def _(event):
     await autoname_loop()
 
 
-@l313l.on(admin_cmd(pattern=f"{biow8t}(?:\s|$)([\s\S]*)"))
+@Qrh9.on(admin_cmd(pattern=f"{biow8t}(?:\s|$)([\s\S]*)"))
 async def _(event):
     "To update your bio along with time"
     if gvarstatus("autobio") is not None and gvarstatus("autobio") == "true":
@@ -300,7 +300,7 @@ async def _(event):
     await autobio_loop()
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="انهاء ([\s\S]*)",
     command=("انهاء", plugin_category),
 )
@@ -372,9 +372,9 @@ async def automessage_loop():
         await asyncio.sleep(60)  # Wait for 1 minute before updating the message again
         AUTOMESSAGE_START = gvarstatus("automessage") == "true"
 
-l313l.loop.create_task(digitalpicloop())
-l313l.loop.create_task(digitalgrouppicloop())
-l313l.loop.create_task(autoname_loop())
-l313l.loop.create_task(autobio_loop())
-l313l.loop.create_task(group_loop())
-l313l.loop.create_task(automessage_loop())
+Qrh9.loop.create_task(digitalpicloop())
+Qrh9.loop.create_task(digitalgrouppicloop())
+Qrh9.loop.create_task(autoname_loop())
+Qrh9.loop.create_task(autobio_loop())
+Qrh9.loop.create_task(group_loop())
+Qrh9.loop.create_task(automessage_loop())

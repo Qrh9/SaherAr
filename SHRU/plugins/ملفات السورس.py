@@ -1,4 +1,4 @@
-from SHRU import l313l
+from SHRU import Qrh9
 import pkg_resources
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.utils import _catutils, parse_pre, yaml_format
@@ -11,7 +11,7 @@ plugin_category = "tools"
 
 #Reda
 
-@l313l.ar_cmd(pattern="المكاتب")
+@Qrh9.ar_cmd(pattern="المكاتب")
 async def reda(event):
     installed_packages = pkg_resources.working_set
     installed_packages_list = sorted(["%s==%s" % (i.key, i.version)
@@ -22,7 +22,7 @@ async def reda(event):
     list += "**سورس الساحر**"
     await edit_or_reply(event, list)
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="الملفات$",
     command=("الملفات", plugin_category),
     info={
@@ -38,7 +38,7 @@ async def _(event):
     await edit_or_reply(event, OUTPUT)
 
 wjis = [6205161271]
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="فاراتي$",
     command=("فاراتي", plugin_category),
     info={
@@ -55,9 +55,9 @@ async def _(event):
         f"**[الساحر](tg://need_update_for_some_feature/) قـائمـة الـفـارات:**\n\n\n{o}\n\n**انتبه هنالك معلومات حساسة لا تُعطِها لشخص غير موثوق**"
     )
     await edit_or_reply(event, "**تم ارسال المعلومات في الرسائل المحفوضة \nانتبه من الاشخاص الي يطلبون منك كتابة هذا الامر يريد ان يخترقك!**")
-    await l313l.send_message("me", OUTPUT)
+    await Qrh9.send_message("me", OUTPUT)
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="متى$",
     command=("متى", plugin_category),
     info={
@@ -78,7 +78,7 @@ async def _(event):
     await edit_or_reply(
         event, f"**᯽︙ نـشـرت هـذه الـرسالة فـي  :** `{yaml_format(result)}`"
     )
-@l313l.ar_cmd(pattern="رابط مباشر")
+@Qrh9.ar_cmd(pattern="رابط مباشر")
 async def upload_reda(event):
     r = await event.get_reply_message()
     if r is None:

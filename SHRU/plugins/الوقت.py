@@ -6,7 +6,7 @@ from pytz import country_names as c_n
 from pytz import country_timezones as c_tz
 from pytz import timezone as tz
 
-from SHRU import l313l
+from SHRU import Qrh9
 
 from ..Config import Config
 from ..core.managers import edit_or_reply
@@ -44,7 +44,7 @@ async def get_tz(con):
         return
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="توقيت(?:\s|$)([\s\S]*)(?<![0-9])(?: |$)([0-9]+)?",
     command=("توقيت", plugin_category),
     info={
@@ -110,9 +110,9 @@ async def time_func(tdata):
             f"({time_zone} timezone).`",
         )
 
-#كـتابة  @SX9OO
+#كـتابة  @ll1ilt
 #تعديل وترتيب  @KiNGBrlin
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="الوقت(?:\s|$)([\s\S]*)",
     command=("الوقت", plugin_category),
     info={

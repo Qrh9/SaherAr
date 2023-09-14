@@ -1,16 +1,16 @@
-#edit  ~ @SX9OO for l313l 
+#edit  ~ @ll1ilt for Qrh9 
 
 from telethon import events
 from SHRU.utils import admin_cmd
-from SHRU import l313l
+from SHRU import Qrh9
 from . import *
 
-#edit  ~ @SX9OO for l313l 
+#edit  ~ @ll1ilt for Qrh9 
 #جميع الحقوق محفوظة لسـورس الساحر تخـمط تبيـن فشلـك
 
 
 plugin_category = "extra"
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="ك1$",
     command=("ك1", plugin_category),
            )
@@ -19,15 +19,15 @@ async def tmgif(event):
         return
     ROZ = await reply_id(event)
     if cute:
-        l313l = f"**{ROZA}**\n"
-        l313l += f"✛━━━━━━━━━━━━━✛\n"
-        l313l += f"**الـمتحـرڪـة الأولـى **"
-        await event.client.send_file(event.chat_id, cute, caption=l313l, reply_to=ROZ)
+        Qrh9 = f"**{ROZA}**\n"
+        Qrh9 += f"✛━━━━━━━━━━━━━✛\n"
+        Qrh9 += f"**الـمتحـرڪـة الأولـى **"
+        await event.client.send_file(event.chat_id, cute, caption=Qrh9, reply_to=ROZ)
 
-#edit  ~ @SX9OO for l313l 
+#edit  ~ @ll1ilt for Qrh9 
 #جميع الحقوق محفوظة لسـورس الساحر تخـمط تبيـن فشلـك
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="ك2$",
     command=("ك2", plugin_category),
            )
@@ -41,10 +41,10 @@ async def tmgif(event):
         RAZAN += f"**الـمتحـرڪـة الـثـانيـة **\n"
         await event.client.send_file(event.chat_id, cute2, caption=RAZAN, reply_to=leo)
 
-#edit  ~ @SX9OO for l313l 
+#edit  ~ @ll1ilt for Qrh9 
 #جميع الحقوق محفوظة لسـورس الساحر تخـمط تبيـن فشلـك
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="ك3$",
     command=("ك3", plugin_category),
            )
@@ -58,10 +58,10 @@ async def tmgif(event):
         RAZAN += f"**الـمتحـرڪـة الـثـالثـة**\n"
         await event.client.send_file(event.chat_id, cute3, caption=RAZAN, reply_to=sic_id)
 
-#edit  ~ @SX9OO for l313l 
+#edit  ~ @ll1ilt for Qrh9 
 #جميع الحقوق محفوظة لسـورس الساحر تخـمط تبيـن فشلـك
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="ك4$",
     command=("ك4", plugin_category),
            )
@@ -77,10 +77,10 @@ async def tmgif(event):
             event.chat_id, cute4, caption=RAZAN, reply_to=reply_to_id
         )
 
-#edit  ~ @SX9OO for l313l 
+#edit  ~ @ll1ilt for Qrh9 
 #جميع الحقوق محفوظة لسـورس الساحر تخـمط تبيـن فشلـك
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="ك5$",
     command=("ك5", plugin_category),
            )
@@ -97,10 +97,10 @@ async def tmgif(event):
             event.chat_id, cute5, caption=RAZAN, reply_to=reply_to_id
         )
 
-#edit  ~ @SX9OO for l313l 
+#edit  ~ @ll1ilt for Qrh9 
 #جميع الحقوق محفوظة لسـورس الساحر تخـمط تبيـن فشلـك
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="ك6$",
     command=("ك6", plugin_category),
            )
@@ -117,10 +117,10 @@ async def tmgif(event):
             event.chat_id, cute6, caption=RAZAN, reply_to=reply_to_id
         )
 
-#edit  ~ @SX9OO for l313l 
+#edit  ~ @ll1ilt for Qrh9 
 #جميع الحقوق محفوظة لسـورس الساحر تخـمط تبيـن فشلـك
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="ك7$",
     command=("ك7", plugin_category),
            )
@@ -137,5 +137,5 @@ async def tmgif(event):
         )
     
        
-#edit  ~ @SX9OO for l313l 
+#edit  ~ @ll1ilt for Qrh9 
 #جميع الحقوق محفوظة لسـورس الساحر تخـمط تبيـن فشلـك   

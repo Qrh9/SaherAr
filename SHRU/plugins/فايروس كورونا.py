@@ -1,13 +1,13 @@
 # Copyright (C) 2021 SHRU TEAM
-# FILES WRITTEN BY  @SX9OO
+# FILES WRITTEN BY  @ll1ilt
 from covid import Covid
 
-from . import l313l, covidindia, edit_delete, edit_or_reply
+from . import Qrh9, covidindia, edit_delete, edit_or_reply
 
 plugin_category = "extra"
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="كورونا(?:\s|$)([\s\S]*)",
     command=("كورونا", plugin_category),
     info={

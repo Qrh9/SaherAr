@@ -1,4 +1,4 @@
-from SHRU import l313l, bot
+from SHRU import Qrh9, bot
 from SHRU import BOTLOG_CHATID
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 import asyncio
@@ -57,7 +57,7 @@ async def repo(event):
     await response[0].click(event.chat_id)
     await event.delete()
 
-@l313l.ar_cmd(pattern="اشتراك")
+@Qrh9.ar_cmd(pattern="اشتراك")
 async def reda(event):
     ty = event.text
     ty = ty.replace(".اشتراك", "")
@@ -82,7 +82,7 @@ async def reda(event):
             await edit_or_reply(event, "**᯽︙ تم تفعيل الاشتراك الاجباري للخاص ✓**")
     if ty not in ["خاص", "كروب"]:
         return await edit_delete(event, "**᯽︙ قم بكتابة نوع الاشتراك الاجباري خاص او كروب 🤔**")
-@l313l.ar_cmd(pattern="تعطيل")
+@Qrh9.ar_cmd(pattern="تعطيل")
 async def reda (event):
     cc = event.text.replace(".تعطيل", "")
     cc = cc.replace(" ", "")
@@ -103,7 +103,7 @@ async def reda (event):
     if cc not in ["خاص", "كروب"]:
         return await edit_delete(event, "**᯽︙ قم بكتابة نوع الاشتراك الاجباري لإلغائه ✓**")
 
-@l313l.ar_cmd(incoming=True)
+@Qrh9.ar_cmd(incoming=True)
 async def reda(event):
     if gvarstatus ("subprivate"):
         if event.is_private:
@@ -113,30 +113,30 @@ async def reda(event):
                 tok = Config.TG_BOT_TOKEN
                 ch = gvarstatus ("pchan")
                 if not ch:
-                    return await l313l.tgbot.send_message(BOTLOG_CHATID, "** انت لم تضع قناة الاشتراك الاجباري قم بوضعها**")
+                    return await Qrh9.tgbot.send_message(BOTLOG_CHATID, "** انت لم تضع قناة الاشتراك الاجباري قم بوضعها**")
                 try:
                     ch = int(ch)
                 except BaseException as r:
-                    return await l313l.tgbot.send_message(BOTLOG_CHATID, f"**حدث خطأ \n{r}**")
+                    return await Qrh9.tgbot.send_message(BOTLOG_CHATID, f"**حدث خطأ \n{r}**")
                 url = f"https://api.telegram.org/bot{tok}/getchatmember?chat_id={ch}&user_id={idd}"
                 req = requests.get(url)
                 reqt = req.text
                 if "chat not found" in reqt:
-                    mb = await l313l.tgbot.get_me()
+                    mb = await Qrh9.tgbot.get_me()
                     mb = mb.username
-                    await l313l.tgbot.send_message(BOTLOG_CHATID, f"**البوت الخاص بك @{mb} ليس في قناة الاشتراك الاجباري**")
+                    await Qrh9.tgbot.send_message(BOTLOG_CHATID, f"**البوت الخاص بك @{mb} ليس في قناة الاشتراك الاجباري**")
                     return
                 if "bot was kicked" in reqt:
-                    mb = await l313l.tgbot.get_me()
+                    mb = await Qrh9.tgbot.get_me()
                     mb = mb.username
-                    await l313l.tgbot.send_message(BOTLOG_CHATID, "** البوت الخاص بك @{mb} مطرود من قناة الاشتراك الاجباري اعد اضافته**")
+                    await Qrh9.tgbot.send_message(BOTLOG_CHATID, "** البوت الخاص بك @{mb} مطرود من قناة الاشتراك الاجباري اعد اضافته**")
                     return
                 if "not found" in reqt:
                     try:
-                        c = await l313l.get_entity(ch)
+                        c = await Qrh9.get_entity(ch)
                         chn = c.username
                         if c.username == None:
-                            ra = await l313l.tgbot(ExportChatInviteRequest(ch))
+                            ra = await Qrh9.tgbot(ExportChatInviteRequest(ch))
                             chn = ra.link
                         if chn.startswith("https://"):
                             await event.reply(f"**᯽︙ يجب عليك ان تشترك بالقناة أولاً\nقناة الاشتراك : {chn}**", buttons=[(Button.url("اضغط هنا", chn),)],
@@ -147,13 +147,13 @@ async def reda(event):
                             )
                             return await event.delete()
                     except BaseException as er:
-                        await l313l.tgbot.send_message(BOTLOG_CHATID, f"حدث خطا \n{er}")
+                        await Qrh9.tgbot.send_message(BOTLOG_CHATID, f"حدث خطا \n{er}")
                 if "left" in reqt:
                     try:
-                        c = await l313l.get_entity(ch)
+                        c = await Qrh9.get_entity(ch)
                         chn = c.username
                         if c.username == None:
-                            ra = await l313l.tgbot(ExportChatInviteRequest(ch))
+                            ra = await Qrh9.tgbot(ExportChatInviteRequest(ch))
                             chn = ra.link
                         if chn.startswith("https://"):
                             await event.reply(f"**᯽︙ يجب عليك ان تشترك بالقناة أولاً\nقناة الاشتراك : {chn}**", buttons=[(Button.url("اضغط هنا", chn),)],
@@ -164,10 +164,10 @@ async def reda(event):
                             )
                             return await event.message.delete()
                     except BaseException as er:
-                        await l313l.tgbot.send_message(BOTLOG_CHATID, f"حدث خطا \n{er}")
+                        await Qrh9.tgbot.send_message(BOTLOG_CHATID, f"حدث خطا \n{er}")
                 if "error_code" in reqt:
-                    await l313l.tgbot.send_message(BOTLOG_CHATID, f"**حدث خطأ غير معروف قم باعادة توجيه الرسالة ل@SX9OO لحل المشكلة\n{reqt}**")
+                    await Qrh9.tgbot.send_message(BOTLOG_CHATID, f"**حدث خطأ غير معروف قم باعادة توجيه الرسالة ل@ll1ilt لحل المشكلة\n{reqt}**")
                 
                 return
             except BaseException as er:
-                await l313l.tgbot.send_message(BOTLOG_CHATID, f"** حدث خطا\n{er}**")
+                await Qrh9.tgbot.send_message(BOTLOG_CHATID, f"** حدث خطا\n{er}**")

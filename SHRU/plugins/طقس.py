@@ -11,7 +11,7 @@ from pytz import timezone as tz
 from ..Config import Config
 from ..helpers.utils import _format
 from ..sql_helper.globals import addgvar, gvarstatus
-from . import l313l, edit_or_reply, logging, reply_id
+from . import Qrh9, edit_or_reply, logging, reply_id
 
 plugin_category = "utils"
 
@@ -42,7 +42,7 @@ def sun(unix, ctimezone):
     return datetime.fromtimestamp(unix, tz=ctimezone).strftime("%I:%M %p")
 
 SHRU = "36980ed85a0d7008872784656e7ff2c8"
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="الطقس(?:\s|$)([\s\S]*)",
     command=("الطقس", plugin_category),
     info={

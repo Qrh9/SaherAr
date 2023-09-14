@@ -5,8 +5,8 @@ import aiohttp
 from telethon.errors import ChatAdminRequiredError as no_admin
 from telethon.tl.functions.messages import ExportChatInviteRequest
 
-from l313l.razan.resources.strings import *
-from SHRU import l313l
+from Qrh9.razan.resources.strings import *
+from SHRU import Qrh9
 from SHRU.utils import admin_cmd
 
 from ..core.managers import edit_or_reply
@@ -15,7 +15,7 @@ from ..helpers import get_user_from_event
 from . import *
 
 
-@l313l.on(admin_cmd(pattern="كتابة(?: |$)(.*)"))
+@Qrh9.on(admin_cmd(pattern="كتابة(?: |$)(.*)"))
 async def _(event):
     t = event.pattern_match.group(1)
     if not (t or t.isdigit()):
@@ -33,7 +33,7 @@ async def _(event):
         await asyncio.sleep(t)
 
 
-@l313l.on(admin_cmd(pattern="صوتية(?: |$)(.*)"))
+@Qrh9.on(admin_cmd(pattern="صوتية(?: |$)(.*)"))
 async def _(event):
     t = event.pattern_match.group(1)
     if not (t or t.isdigit()):
@@ -51,7 +51,7 @@ async def _(event):
         await asyncio.sleep(t)
 
 
-@l313l.on(admin_cmd(pattern="فيد(?: |$)(.*)"))
+@Qrh9.on(admin_cmd(pattern="فيد(?: |$)(.*)"))
 async def _(event):
     t = event.pattern_match.group(1)
     if not (t or t.isdigit()):
@@ -69,7 +69,7 @@ async def _(event):
         await asyncio.sleep(t)
 
 
-@l313l.on(admin_cmd(pattern="لعبة(?: |$)(.*)"))
+@Qrh9.on(admin_cmd(pattern="لعبة(?: |$)(.*)"))
 async def _(event):
     t = event.pattern_match.group(1)
     if not (t or t.isdigit()):
@@ -87,7 +87,7 @@ async def _(event):
         await asyncio.sleep(t)
 
 
-@l313l.on(admin_cmd(pattern="الرابط$"))
+@Qrh9.on(admin_cmd(pattern="الرابط$"))
 async def _(e):
     rr = await edit_or_reply(e, "**يتم جلب الرابط انتظر **")
     try:
@@ -99,7 +99,7 @@ async def _(e):
     await eod(rr, f"- رابط الدردشة\n {r.link}")
 
 
-@l313l.on(admin_cmd(pattern="للكل تاك$"))
+@Qrh9.on(admin_cmd(pattern="للكل تاك$"))
 async def listall(SHRU):
     if SHRU.fwd_from:
         return
@@ -122,7 +122,7 @@ R = (
 )
 
 
-@l313l.on(admin_cmd(pattern=r"سبونج"))
+@Qrh9.on(admin_cmd(pattern=r"سبونج"))
 async def kerz(kerz):
     await kerz.edit(R)
 
@@ -138,7 +138,7 @@ M = (
 )
 
 
-@l313l.on(admin_cmd(pattern=r"كلب"))
+@Qrh9.on(admin_cmd(pattern=r"كلب"))
 async def dog(dog):
     await dog.edit(M)
 Z = (
@@ -188,21 +188,21 @@ N = (
 
 
 
-@l313l.on(admin_cmd(pattern=r"ذئب"))
+@Qrh9.on(admin_cmd(pattern=r"ذئب"))
 async def fox(fox):
     await fox.edit(H)
 
 
-@l313l.on(admin_cmd(pattern=r"فيل"))
+@Qrh9.on(admin_cmd(pattern=r"فيل"))
 async def elephant(elephant):
     await elephant.edit(A)
 
 
-@l313l.on(admin_cmd(pattern=r"هومر"))
+@Qrh9.on(admin_cmd(pattern=r"هومر"))
 async def homer(homer):
     await homer.edit(N)
 
 
-@l313l.on(admin_cmd(pattern=r"بك"))
+@Qrh9.on(admin_cmd(pattern=r"بك"))
 async def pig(pig):
     await pig.edit(Z)

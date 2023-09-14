@@ -1,4 +1,4 @@
-from SHRU import l313l
+from SHRU import Qrh9
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 import os
 import datetime
@@ -15,12 +15,12 @@ ALSAHER_Asbo3 = {
     'Sunday': 'الأحد'
 }
 
-@l313l.on(admin_cmd(pattern="(جلب الصورة|جلب الصوره|ذاتيه|ذاتية|حفظ)"))
+@Qrh9.on(admin_cmd(pattern="(جلب الصورة|جلب الصوره|ذاتيه|ذاتية|حفظ)"))
 async def dato(event):
     if not event.is_reply:
         return await event.edit("..")
-    SX9OO = await event.get_reply_message()
-    pic = await SX9OO.download_media()
+    ll1ilt = await event.get_reply_message()
+    pic = await ll1ilt.download_media()
     await bot.send_file(
         "me",
         pic,
@@ -28,12 +28,12 @@ async def dato(event):
 - تـم حفظ الصـورة بنجـاح ✓ 
 - غير مبري الذمه اذا استخدمت الامر للابتزاز
 - CH: @SXYO3
-- Dev: @SX9OO
+- Dev: @ll1ilt
   """,
     )
     await event.delete()
 #By @SXYO3 For You 🌹
-@l313l.on(admin_cmd(pattern="(الذاتية تشغيل|ذاتية تشغيل)"))
+@Qrh9.on(admin_cmd(pattern="(الذاتية تشغيل|ذاتية تشغيل)"))
 async def reda(event):
     if gvarstatus ("savepicforme"):
         return await edit_delete(event, "**᯽︙حفظ الذاتيات مفعل وليس بحاجة للتفعيل مجدداً **")
@@ -41,7 +41,7 @@ async def reda(event):
         addgvar("savepicforme", "reda")
         await edit_delete(event, "**᯽︙تم تفعيل ميزة حفظ الذاتيات بنجاح ✓**")
  
-@l313l.on(admin_cmd(pattern="(الذاتية تعطيل|ذاتية تعطيل)"))
+@Qrh9.on(admin_cmd(pattern="(الذاتية تعطيل|ذاتية تعطيل)"))
 async def Reda_Is_Here(event):
     if gvarstatus ("savepicforme"):
         delgvar("savepicforme")
@@ -66,7 +66,7 @@ async def Hussein(event, caption):
     )
     os.remove(media)
 
-@l313l.on(events.NewMessage(func=lambda e: e.is_private and joker_unread_media(e) and e.sender_id != bot.uid))
+@Qrh9.on(events.NewMessage(func=lambda e: e.is_private and joker_unread_media(e) and e.sender_id != bot.uid))
 async def Reda(event):
     if gvarstatus("savepicforme"):
         caption = """**

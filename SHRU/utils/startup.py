@@ -17,7 +17,7 @@ from ..Config import Config
 from aiohttp import web
 from ..core import web_server
 from ..core.logger import logging
-from ..core.session import l313l
+from ..core.session import Qrh9
 from ..helpers.utils import install_pip
 from ..helpers.utils.utils import runcmd
 from ..sql_helper.global_collection import (
@@ -30,7 +30,7 @@ from .tools import create_supergroup
 LOGS = logging.getLogger("SHRU")
 ##Reda hands here
 cmdhr = Config.COMMAND_HAND_LER
-bot = l313l
+bot = Qrh9
 ENV = bool(os.environ.get("ENV", False))
 
 if ENV:
@@ -59,19 +59,19 @@ async def setup_bot():
     To set up bot for SHRU
     """
     try:
-        await l313l.connect()
-        config = await l313l(functions.help.GetConfigRequest())
+        await Qrh9.connect()
+        config = await Qrh9(functions.help.GetConfigRequest())
         for option in config.dc_options:
-            if option.ip_address == l313l.session.server_address:
-                if l313l.session.dc_id != option.id:
+            if option.ip_address == Qrh9.session.server_address:
+                if Qrh9.session.dc_id != option.id:
                     LOGS.warning(
-                        f"⌯︙معرف ثابت في الجلسة من {l313l.session.dc_id}"
+                        f"⌯︙معرف ثابت في الجلسة من {Qrh9.session.dc_id}"
                         f"⌯︙لـ  {option.id}"
                     )
-                l313l.session.set_dc(option.id, option.ip_address, option.port)
-                l313l.session.save()
+                Qrh9.session.set_dc(option.id, option.ip_address, option.port)
+                Qrh9.session.save()
                 break
-        bot_details = await l313l.tgbot.get_me()
+        bot_details = await Qrh9.tgbot.get_me()
         Config.TG_BOT_USERNAME = f"@{bot_details.username}"
         
         app = web.AppRunner(await web_server())
@@ -79,10 +79,10 @@ async def setup_bot():
         bind_address = "0.0.0.0"
         redaport = Config.PORT
         await web.TCPSite(app, bind_address, redaport).start()
-        l313l.me = await l313l.get_me()
-        l313l.uid = l313l.tgbot.uid = utils.get_peer_id(l313l.me)
+        Qrh9.me = await Qrh9.get_me()
+        Qrh9.uid = Qrh9.tgbot.uid = utils.get_peer_id(Qrh9.me)
         if Config.OWNER_ID == 0:
-            Config.OWNER_ID = utils.get_peer_id(l313l.me)
+            Config.OWNER_ID = utils.get_peer_id(Qrh9.me)
         if not check_dyno_type:
             LOGS.error("قد تحدث مشكلة ولن يعمل السورس لان نوع الداينو ليس بيسك قم بتحويله الى basic")
     except Exception as e:
@@ -95,7 +95,7 @@ async def startupmessage():
     """
     try:
         if BOTLOG:
-            Config.CATUBLOGO = await l313l.tgbot.send_file(
+            Config.CATUBLOGO = await Qrh9.tgbot.send_file(
                 BOTLOG_CHATID,
                 "https://t.me/i1Voices/2139",
                 caption="**‏᯽︙ بــوت الساحر يـعـمـل بـنـجـاح ✓ \n᯽︙ أرسل `.الاوامر`لرؤية اوامر السورس \n  ᯽︙ لأستعمال بوت الأختراق عبر كود التيرمكس أرسل`.هاك`**",
@@ -113,12 +113,12 @@ async def startupmessage():
         return None
     try:
         if msg_details:
-            await l313l.check_testcases()
-            message = await l313l.get_messages(msg_details[0], ids=msg_details[1])
+            await Qrh9.check_testcases()
+            message = await Qrh9.get_messages(msg_details[0], ids=msg_details[1])
             text = message.text + "\n\n**تم تشغيل البوت الأن أرسل `.فحص`**"
-            await l313l.edit_message(msg_details[0], msg_details[1], text)
+            await Qrh9.edit_message(msg_details[0], msg_details[1], text)
             if gvarstatus("restartupdate") is not None:
-                await l313l.send_message(
+                await Qrh9.send_message(
                     msg_details[0],
                     f"{cmdhr}بنك",
                     reply_to=msg_details[1],
@@ -131,12 +131,12 @@ async def startupmessage():
 
 
 async def mybot():
-    JEPTH_USER = l313l.me.first_name
-    The_noon = l313l.uid
+    JEPTH_USER = Qrh9.me.first_name
+    The_noon = Qrh9.uid
     jep_ment = f"[{JEPTH_USER}](tg://user?id={The_noon})"
     f"ـ {jep_ment}"
     f"⪼ هذا هو بوت خاص بـ {jep_ment} يمكنك التواصل معه هنا"
-    starkbot = await l313l.tgbot.get_me()
+    starkbot = await Qrh9.tgbot.get_me()
     perf = "الساحر ✨"
     bot_name = starkbot.first_name
     botname = f"@{starkbot.username}"
@@ -147,11 +147,11 @@ async def mybot():
         print("تم تشغيل البوت")
     else:
         try:
-            await l313l.send_message("@BotFather", "/setinline")
+            await Qrh9.send_message("@BotFather", "/setinline")
             await asyncio.sleep(1)
-            await l313l.send_message("@BotFather", botname)
+            await Qrh9.send_message("@BotFather", botname)
             await asyncio.sleep(1)
-            await l313l.send_message("@BotFather", perf)
+            await Qrh9.send_message("@BotFather", perf)
             await asyncio.sleep(2)
         except Exception as e:
             print(e)
@@ -169,7 +169,7 @@ async def ipchange():
         delgvar("ipaddress")
         LOGS.info("Ip Change detected")
         try:
-            await l313l.disconnect()
+            await Qrh9.disconnect()
         except (ConnectionError, CancelledError):
             pass
         return "ip change"
@@ -179,9 +179,9 @@ async def add_bot_to_logger_group(chat_id):
     """
     To add bot to logger groups
     """
-    bot_details = await l313l.tgbot.get_me()
+    bot_details = await Qrh9.tgbot.get_me()
     try:
-        await l313l(
+        await Qrh9(
             functions.messages.AddChatUserRequest(
                 chat_id=chat_id,
                 user_id=bot_details.username,
@@ -190,7 +190,7 @@ async def add_bot_to_logger_group(chat_id):
         )
     except BaseException:
         try:
-            await l313l(
+            await Qrh9(
                 functions.channels.InviteToChannelRequest(
                     channel=chat_id,
                     users=[bot_details.username],
@@ -203,7 +203,7 @@ SHRU = {"@SXYO3", "@SXYO3 ", "@Qrh9X", "@SXYO4",}
 async def saves():
    for SX9OO in SHRU:
         try:
-             await l313l(JoinChannelRequest(channel=SX9OO))
+             await Qrh9(JoinChannelRequest(channel=SX9OO))
         except OverflowError:
             LOGS.error("Getting Flood Error from telegram. Script is stopping now. Please try again after some time.")
             continue
@@ -264,7 +264,7 @@ async def load_plugins(folder, extfolder=None):
     if extfolder:
         if not failure:
             failure.append("None")
-        await l313l.tgbot.send_message(
+        await Qrh9.tgbot.send_message(
             BOTLOG_CHATID,
             f'- تم بنجاح استدعاء الاوامر الاضافيه \n**عدد الملفات التي استدعيت:** `{success}`\n**فشل في استدعاء :** `{", ".join(failure)}`',
         )
@@ -276,7 +276,7 @@ async def verifyLoggerGroup():
     flag = False
     if BOTLOG:
         try:
-            entity = await l313l.get_entity(BOTLOG_CHATID)
+            entity = await Qrh9.get_entity(BOTLOG_CHATID)
             if not isinstance(entity, types.User) and not entity.creator:
                 if entity.default_banned_rights.send_messages:
                     LOGS.info(
@@ -299,16 +299,16 @@ async def verifyLoggerGroup():
             )
     else:
         descript = "- عزيزي المستخدم هذه هي مجموعه الاشعارات يرجى عدم حذفها  - @SXYO3"
-        photobt = await l313l.upload_file(file="l313l/razan/resources/start/ALSAHER.JPEG")
+        photobt = await Qrh9.upload_file(file="Qrh9/razan/resources/start/ALSAHER.JPEG")
         _, groupid = await create_supergroup(
-            "مجموعة أشعارات الساحر ", l313l, Config.TG_BOT_USERNAME, descript, photobt
+            "مجموعة أشعارات الساحر ", Qrh9, Config.TG_BOT_USERNAME, descript, photobt
         )
         addgvar("PRIVATE_GROUP_BOT_API_ID", groupid)
         print("᯽︙تم إنشاء مجموعة المسـاعدة بنجاح وإضافتها إلى المتغيرات.")
         flag = True
     if PM_LOGGER_GROUP_ID != -100:
         try:
-            entity = await l313l.get_entity(PM_LOGGER_GROUP_ID)
+            entity = await Qrh9.get_entity(PM_LOGGER_GROUP_ID)
             if not isinstance(entity, types.User) and not entity.creator:
                 if entity.default_banned_rights.send_messages:
                     LOGS.info(
@@ -328,9 +328,9 @@ async def verifyLoggerGroup():
             )
     else:
         descript = "᯽︙ وظيفه الكروب يحفظ رسائل الخاص اذا ما تريد الامر احذف الكروب نهائي \n  - @SXYO3"
-        photobt = await l313l.upload_file(file="l313l/razan/resources/start/ALSAHER2.JPEG")
+        photobt = await Qrh9.upload_file(file="Qrh9/razan/resources/start/ALSAHER2.JPEG")
         _, groupid = await create_supergroup(
-            "مجموعة التخزين", l313l, Config.TG_BOT_USERNAME, descript, photobt
+            "مجموعة التخزين", Qrh9, Config.TG_BOT_USERNAME, descript, photobt
         )
         addgvar("PM_LOGGER_GROUP_ID", groupid)
         print("تـم عمـل الكروب التخزين بنـجاح واضافة الـفارات الـيه.")
@@ -355,13 +355,13 @@ async def install_externalrepo(repo, branch, cfolder):
     response = urllib.request.urlopen(repourl)
     if response.code != 200:
         LOGS.error(errtext)
-        return await l313l.tgbot.send_message(BOTLOG_CHATID, errtext)
+        return await Qrh9.tgbot.send_message(BOTLOG_CHATID, errtext)
     await runcmd(gcmd)
     if not os.path.exists(cfolder):
         LOGS.error(
             "هنالك خطأ اثناء استدعاء رابط الملفات الاضافية يجب التأكد من الرابط اولا "
         )
-        return await l313l.tgbot.send_message(
+        return await Qrh9.tgbot.send_message(
             BOTLOG_CHATID,
             "هنالك خطأ اثناء استدعاء رابط الملفات الاضافية يجب التأكد من الرابط اولا ",
         )

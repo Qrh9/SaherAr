@@ -1,5 +1,5 @@
 from urlextract import URLExtract
-from SHRU import l313l
+from SHRU import Qrh9
 from SHRU.core.logger import logging
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
@@ -17,7 +17,7 @@ oldvars = {
     "PM_BLOCK": "pmblock",
 }
 
-@l313l.ar_cmd(pattern="جلب (.*)")
+@Qrh9.ar_cmd(pattern="جلب (.*)")
 async def getvar(event):
     input = event.pattern_match.group(1)
     if input is None:
@@ -31,7 +31,7 @@ async def getvar(event):
     await edit_or_reply(event, gvarstatus(input))
 
 
-@l313l.ar_cmd(pattern="اضف (.*)")
+@Qrh9.ar_cmd(pattern="اضف (.*)")
 async def custom_HuRe(event):
     reply = await event.get_reply_message()
     text = None
@@ -146,7 +146,7 @@ async def custom_HuRe(event):
         )
 
 
-@l313l.ar_cmd(pattern="حذف (.*)")
+@Qrh9.ar_cmd(pattern="حذف (.*)")
 async def custom_HuRe(event):
     input_str = event.pattern_match.group(1)
     if (

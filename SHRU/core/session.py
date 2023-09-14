@@ -17,7 +17,7 @@ else:
     session = "SHRU"
 
 try:
-    l313l = HuReClient(
+    Qrh9 = HuReClient(
         session=session,
         api_id=Config.APP_ID,
         api_hash=Config.API_HASH,
@@ -32,7 +32,7 @@ except Exception as e:
     sys.exit()
 
 try:
-    l313l.tgbot = tgbot = HuReClient(
+    Qrh9.tgbot = tgbot = HuReClient(
         session="arTgbot",
         api_id=Config.APP_ID,
         api_hash=Config.API_HASH,

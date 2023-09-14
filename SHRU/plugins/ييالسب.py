@@ -1,4 +1,4 @@
-from SHRU import l313l
+from SHRU import Qrh9
 from telethon.tl.types import ChannelParticipantsAdmins
 from telethon import events
 
@@ -17,12 +17,12 @@ Mn3_sb = [
 ]
 
 
-@l313l.on(events.NewMessage)
+@Qrh9.on(events.NewMessage)
 async def Hussein(event):
     if gvarstatus("delete_enabled") and any(word in event.raw_text for word in Mn3_sb):
         await event.delete()
 
-@l313l.ar_cmd(pattern=r"السب تفعيل$")
+@Qrh9.ar_cmd(pattern=r"السب تفعيل$")
 async def sbt36el(event):
     if gvarstatus("delete_enabled") is not None and gvarstatus("delete_enabled") == "true":
         return await edit_delete(event, "**امر منع السب  مُفعل بالفعل **")
@@ -30,7 +30,7 @@ async def sbt36el(event):
         addgvar("delete_enabled", True)
         await event.edit("᯽︙ تم منع السب بنجاح ✓")
 
-@l313l.ar_cmd(pattern=r"السب تعطيل$")
+@Qrh9.ar_cmd(pattern=r"السب تعطيل$")
 async def sbtf3el(event):
     if gvarstatus("delete_enabled") is not None and gvarstatus("delete_enabled") == "true":
         delgvar("delete_enabled")

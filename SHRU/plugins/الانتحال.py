@@ -14,7 +14,7 @@ from . import (
     BOTLOG,
     BOTLOG_CHATID,
     DEFAULT_BIO,
-    l313l,
+    Qrh9,
     edit_delete,
     get_user_from_event,
 )
@@ -27,9 +27,9 @@ DEFAULTUSERBIO = (
     else "كنَّا نموت إذا افترقنا ساعةً ‏واليوم نُحصي الهجر بالأعوام @Qrh9X"
 )
 
-@l313l.ar_cmd(pattern="انتحال(?:\s|$)([\s\S]*)")
+@Qrh9.ar_cmd(pattern="انتحال(?:\s|$)([\s\S]*)")
 async def _(event):
-    mid = await l313l.get_me()
+    mid = await Qrh9.get_me()
     me = (await event.client(GetFullUserRequest(mid.id))).full_user
     replied_user, error_i_a = await get_user_from_event(event)
     if replied_user is None:
@@ -89,7 +89,7 @@ async def _(event):
             f"#الانتحال\nتم انتحال المستخدم: [{first_name}](tg://user?id={user_id })",
         )
         
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="اعادة$",
     command=("اعادة", plugin_category),
     info={
@@ -120,7 +120,7 @@ async def _(event):
             BOTLOG_CHATID, f"⌁︙تـم اعادة الـحساب الى وضـعه الاصلـي ،✅")
 #Reda
 jeps = ["SHRU", "HuResupport"]
-@l313l.ar_cmd(pattern="انتحال_الدردشه")
+@Qrh9.ar_cmd(pattern="انتحال_الدردشه")
 async def reda(event):
     if event.is_group or event.is_channel:
         chat_id = -1
@@ -131,12 +131,12 @@ async def reda(event):
             return await edit_delete(event, "**قم بوضع يوزر الگروب او القناة بدون علامة @ للانتحال**")
         chat_id = msg
         try:
-            result = await l313l(GetFullChannelRequest(
+            result = await Qrh9(GetFullChannelRequest(
                 chat_id
             ))
         except ValueError:
             return await edit_delete(event, "**᯽︙ لا يوجد هكذا كروب او قناة تاكد من اليوزر او الايدي ويجب ان يكون/تكون عام/عامة وليس خاص/خاصة**")
-        mych = await l313l(GetFullChannelRequest(
+        mych = await Qrh9(GetFullChannelRequest(
                 event.chat_id
             ))
         if msg in jeps:
@@ -144,8 +144,8 @@ async def reda(event):
         addgvar(f"{event.chat_id}name", mych.chats[0].title)
         addgvar(f"{event.chat_id}about", mych.full_chat.about)
         try:
-            await l313l(functions.channels.EditTitleRequest(
-                channel=await l313l.get_entity(event.chat_id),
+            await Qrh9(functions.channels.EditTitleRequest(
+                channel=await Qrh9.get_entity(event.chat_id),
                 title=result.chats[0].title
             ))
         except ChatAdminRequiredError:
@@ -155,16 +155,16 @@ async def reda(event):
         except FloodWaitError:
             return await edit_delete(event, "**انتضر مدة لا تقل عن 5 دقائق للانتحال مجدداً FLOODWAITERROR خطأ من التيليجرام**")
         try:
-            await l313l(functions.messages.EditChatAboutRequest(
+            await Qrh9(functions.messages.EditChatAboutRequest(
             peer=event.chat_id,
             about=result.full_chat.about
         ))
         except FloodWaitError:
             return await edit_delete(event, "**انتضر مدة لا تقل عن 5 دقائق للانتحال مجدداً FLOODWAITERROR خطأ من التيليجرام**")
-        profile_pic = await l313l.download_profile_photo(chat_id, Config.TEMP_DIR)
-        pfile = await l313l.upload_file(profile_pic)
+        profile_pic = await Qrh9.download_profile_photo(chat_id, Config.TEMP_DIR)
+        pfile = await Qrh9.upload_file(profile_pic)
         try:
-            await l313l(functions.channels.EditPhotoRequest(event.chat_id, pfile))
+            await Qrh9(functions.channels.EditPhotoRequest(event.chat_id, pfile))
         except FloodWaitError:
             return await edit_delete(event, "**انتضر مدة لا تقل عن 5 دقائق للانتحال مجدداً FLOODWAITERROR خطأ من التيليجرام**")
         await edit_delete(event, "**᯽︙ تم الانتحال بنجاح ✓**")
@@ -182,25 +182,25 @@ async def reda(event):
         await edit_delete(event, "**᯽︙ يمكنك انتحال قناة او كروب في قناة او كروب فقط**")
 
 #Reda
-@l313l.ar_cmd(pattern="اعادة_الدردشه")
+@Qrh9.ar_cmd(pattern="اعادة_الدردشه")
 async def reda_back(event):
     if event.is_group or event.is_channel:
         if gvarstatus (f"{event.chat_id}name"):
             try:
-                await l313l(functions.channels.EditTitleRequest(
-                    channel=await l313l.get_entity(event.chat_id),
+                await Qrh9(functions.channels.EditTitleRequest(
+                    channel=await Qrh9.get_entity(event.chat_id),
                     title=gvarstatus (f"{event.chat_id}name")
                 ))
             except ChatAdminRequiredError:
                 return await edit_delete(event, "**᯽︙ يجب ان تكون لديك صلاحيات لتغيير الاسم والصورة والبايو لإعادة القناة او الكروب**")
             except FloodWaitError:
                 return await edit_delete(event, "**انتضر مدة لا تقل عن 5 دقائق لإعادة الدردشة مجدداً FLOODWAITERROR خطأ من التيليجرام**")
-            await l313l(functions.messages.EditChatAboutRequest(
+            await Qrh9(functions.messages.EditChatAboutRequest(
             peer=event.chat_id,
             about=gvarstatus (f"{event.chat_id}about")
             ))
-            async for photo in l313l.iter_profile_photos(event.chat_id, limit=1) :
-                    await l313l(
+            async for photo in Qrh9.iter_profile_photos(event.chat_id, limit=1) :
+                    await Qrh9(
                     functions.photos.DeletePhotosRequest(id=[types.InputPhoto( id=photo.id, access_hash=photo.access_hash, file_reference=photo.file_reference )])
                     )
             await edit_delete(event, "**᯽︙ تم إعادة الكروب/ القناة بنجاح**")

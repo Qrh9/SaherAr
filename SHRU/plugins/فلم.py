@@ -6,7 +6,7 @@ from cryptography.fernet import Fernet
 import requests
 from html_telegraph_poster.upload_images import upload_image
 import random
-from SHRU import l313l
+from SHRU import Qrh9
 import asyncio
 from ..core.managers import edit_delete, edit_or_reply
 
@@ -15,7 +15,7 @@ valid_extensions = [".jpg", ".jpeg", ".png", ".gif"]
 ek = "ayD8OiHzrmRxNWUlhbgXY__xzObPjLxd87kj2ipE9wk="
 ea = "gAAAAABkkpU1sfechRmGwMJB3XPOylswN2TwCioE9-EBmNudPKr537aSI9Tf_tVyB39nv1p_5Oro1ZGIG2cNduPbF-fhk4onPBmDOJSP3fwaSznl1Mu8FFsEzKPh4qXeWT8TgUF4nma2"
 
-@l313l.ar_cmd(pattern="فلم")
+@Qrh9.ar_cmd(pattern="فلم")
 async def rfilm(event):
     await event.edit("يرجى الانتظار جاري البحث عن فيلم...")
     dk = ek.encode()
@@ -61,7 +61,7 @@ async def rfilm(event):
 
     await event.delete()
     try:
-        await l313l.tgbot.send_message(
+        await Qrh9.tgbot.send_message(
             event.chat_id,
             moviet,
             buttons=buttons,
@@ -70,7 +70,7 @@ async def rfilm(event):
             link_preview=False,
         )
     except ValueError:
-        await l313l.send_message(
+        await Qrh9.send_message(
             event.chat_id,
             moviet,
             file=moviep,
@@ -82,7 +82,7 @@ async def rfilm(event):
     
 #Reda
 
-@l313l.ar_cmd(pattern="مسلسل")
+@Qrh9.ar_cmd(pattern="مسلسل")
 async def rfilm(event):
     await event.edit("يرجى الانتضار جاري البحث على مسلسل...")
     dk = ek.encode()
@@ -124,7 +124,7 @@ async def rfilm(event):
             buttons.append(x)
     await event.delete()
     try:
-        await l313l.tgbot.send_message(
+        await Qrh9.tgbot.send_message(
             event.chat_id,
             sm,
             buttons=buttons,
@@ -133,7 +133,7 @@ async def rfilm(event):
             link_preview=False,
         )
     except ValueError:
-        await l313l.send_message(
+        await Qrh9.send_message(
             event.chat_id,
             sm,
             file=serp,

@@ -1,6 +1,6 @@
 import re
 
-from SHRU import l313l
+from SHRU import Qrh9
 
 from ..core.managers import edit_or_reply
 from ..sql_helper.filter_sql import (
@@ -15,7 +15,7 @@ plugin_category = "utils"
 ROZTEXT = "عـذرا لا يمكـنك اضافـة رد هـنا" 
 
 
-@l313l.ar_cmd(incoming=True)
+@Qrh9.ar_cmd(incoming=True)
 async def filter_incoming_handler(handler):  # sourcery no-metrics
     if handler.sender_id == handler.client.uid:
         return
@@ -85,7 +85,7 @@ async def filter_incoming_handler(handler):  # sourcery no-metrics
                 )
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="رد ([\s\S]*)",
     command=("رد", plugin_category),
     info={
@@ -150,7 +150,7 @@ async def add_new_filter(new_handler):
     await edit_or_reply(new_handler, f"Error while setting filter for {keyword}")
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="الردود$",
     command=("الردود", plugin_category),
     info={
@@ -175,7 +175,7 @@ async def on_snip_list(event):
     )
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="حذف رد ([\s\S]*)",
     command=("حذف رد", plugin_category),
     info={
@@ -192,7 +192,7 @@ async def remove_a_filter(r_handler):
         await r_handler.edit("**᯽︙ الـرد {} تـم حـذفة بنـجـاح ✓**".format(filt))
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="حذف الردود$",
     command=("حذف الردود", plugin_category),
     info={

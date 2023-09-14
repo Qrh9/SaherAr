@@ -9,7 +9,7 @@ from telethon.tl.types import ChatBannedRights
 from telethon.utils import get_display_name
 from telethon.tl.types import ChannelParticipantsAdmins
 
-from SHRU import l313l
+from SHRU import Qrh9
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.utils import _format
@@ -24,7 +24,7 @@ joker_mute = "https://telegra.ph/file/56a3dd726306259beded6.jpg"
 joker_unmute = "https://telegra.ph/file/e207affb10bf06d943ddf.jpg"
 #=================== الكـــــــــــــــتم  ===================  #
 
-@l313l.ar_cmd(pattern=f"كتم(?:\s|$)([\s\S]*)")
+@Qrh9.ar_cmd(pattern=f"كتم(?:\s|$)([\s\S]*)")
 async def mutejep(event):
     await event.delete()
     if event.is_private:
@@ -33,7 +33,7 @@ async def mutejep(event):
             return await event.edit(
                 "**- هـذا المسـتخـدم مڪتـوم . . سـابقـاً **"
             )
-        if event.chat_id == l313l.uid:
+        if event.chat_id == Qrh9.uid:
             return await edit_or_reply(event, "**𖡛... . لمـاذا تࢪيـد كتم نفسـك؟  ...𖡛**")
         if event.chat_id == 6205161271:
             return await edit_or_reply(event, "** دي . . لا يمڪنني كتـم مطـور السـورس  ╰**")
@@ -70,7 +70,7 @@ async def mutejep(event):
         user, reason = await get_user_from_event(event)
         if not user:
             return
-        if user.id == l313l.uid:
+        if user.id == Qrh9.uid:
             return await edit_or_reply(event, "**𖡛... . لمـاذا تࢪيـد كتم نفسـك؟  ...𖡛**")
         if user.id == 6205161271:
             return await edit_or_reply(event, "** دي . . لا يمڪنني كتـم مطـور السـورس  ╰**")
@@ -129,7 +129,7 @@ async def mutejep(event):
             ) 
 #=================== الغـــــــــــــاء الكـــــــــــــــتم  ===================  #
 
-@l313l.ar_cmd(pattern=f"(الغاء الكتم|الغاء كتم)(?:\s|$)([\s\S]*)")
+@Qrh9.ar_cmd(pattern=f"(الغاء الكتم|الغاء كتم)(?:\s|$)([\s\S]*)")
 async def unmutejep(event):
     await event.delete()
     if event.is_private:
@@ -189,7 +189,7 @@ async def unmutejep(event):
 
 
 
-@l313l.ar_cmd(incoming=True)
+@Qrh9.ar_cmd(incoming=True)
 async def watcher(event):
     if is_muted(event.sender_id, "كتم_مؤقت"):
         await event.delete

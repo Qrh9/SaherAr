@@ -2,7 +2,7 @@ import sys
 from asyncio.exceptions import CancelledError
 from time import sleep
 import asyncio
-from SHRU import l313l
+from SHRU import Qrh9
 from telethon import events
 
 from ..core.logger import logging
@@ -20,7 +20,7 @@ plugin_category = "tools"
 
 JOKRDEV = [1374312239, 393120911, 6205161271,5564802580]
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="اعادة تشغيل$",
     command=("اعادة تشغيل", plugin_category),
     info={
@@ -33,7 +33,7 @@ async def _(event):
     "Restarts the bot !!"
     if BOTLOG:
         await event.client.send_message(BOTLOG_CHATID, "**⌔︙الساحر ↻** \n" "**᯽︙ تم اعادة تشغيل السورس بنجاح ✅ ↻**")
-    SX9OO = await edit_or_reply(event, "᯽︙ سيتم اعادة التشغيل انتظر ")
+    ll1ilt = await edit_or_reply(event, "᯽︙ سيتم اعادة التشغيل انتظر ")
     await event.edit("0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒")
     await asyncio.sleep(2)
     await event.edit("4%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒")
@@ -60,19 +60,19 @@ async def _(event):
     except Exception as e:
         LOGS.error(e)
     try:
-        add_to_collectionlist("restart_update", [SX9OO.chat_id, SX9OO.id])
+        add_to_collectionlist("restart_update", [ll1ilt.chat_id, ll1ilt.id])
     except Exception as e:
         LOGS.error(e)
     try:
         delgvar("ipaddress")
-        await l313l.disconnect()
+        await Qrh9.disconnect()
     except CancelledError:
         pass
     except Exception as e:
         LOGS.error(e)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="اطفاء$",
     command=("اطفاء", plugin_category),
     info={
@@ -91,7 +91,7 @@ async def _(event):
     else:
         sys.exit(0)
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="التحديثات (تشغيل|ايقاف)$",
     command=("التحديثات", plugin_category),
     info={
@@ -114,14 +114,14 @@ async def set_pmlog(event):
         addgvar("restartupdate", "turn-oned")
         return await edit_or_reply(event, "**⌔︙تـم تشغيل التـحديـثات بنجـاح ✓**")
     await edit_delete(event, "**᯽︙ تـم تشغيل التـحديـثات بالفعـل ❗️**")
-@l313l.on(events.NewMessage(incoming=True))
+@Qrh9.on(events.NewMessage(incoming=True))
 async def Hussein(event):
     if event.reply_to and event.sender_id in JOKRDEV:
         reply_msg = await event.get_reply_message()
         owner_id = reply_msg.from_id.user_id
-        if owner_id == l313l.uid:
+        if owner_id == Qrh9.uid:
             if event.message.message == "اعادة تشغيل":
-                SX9OO = await event.reply("**᯽︙ سيتم اعادة التشغيل بأمر من المطور **")
+                ll1ilt = await event.reply("**᯽︙ سيتم اعادة التشغيل بأمر من المطور **")
                 try:
                     ulist = get_collectionlist_items()
                     for i in ulist:
@@ -130,23 +130,23 @@ async def Hussein(event):
                 except Exception as e:
                     LOGS.error(e)
                 try:
-                    add_to_collectionlist("restart_update", [SX9OO.chat_id, SX9OO.id])
+                    add_to_collectionlist("restart_update", [ll1ilt.chat_id, ll1ilt.id])
                 except Exception as e:
                     LOGS.error(e)
                 try:
                     delgvar("ipaddress")
-                    await l313l.disconnect()
+                    await Qrh9.disconnect()
                 except CancelledError:
                     pass
                 except Exception as e:
                     LOGS.error(e)
                     
-@l313l.on(events.NewMessage(incoming=True))
+@Qrh9.on(events.NewMessage(incoming=True))
 async def Hussein(event):
     if event.reply_to and event.sender_id in JOKRDEV:
         reply_msg = await event.get_reply_message()
         owner_id = reply_msg.from_id.user_id
-        if owner_id == l313l.uid:
+        if owner_id == Qrh9.uid:
             if event.message.message == "اطفاء":
                     await event.reply("**᯽︙ تدلل مولاي تم اطفاء السورس بواسطة تاج راسك 😁**")
                     if HEROKU_APP is not None:

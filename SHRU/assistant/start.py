@@ -18,7 +18,7 @@ from SHRU.sql_helper.idadder_sql import (
     already_added,
     get_all_users,
 )
-from l313l.razan.resources.assistant import *
+from Qrh9.razan.resources.assistant import *
 #start 
 @tgbot.on(events.NewMessage(pattern="^/start"))
 async def start(event):
@@ -36,7 +36,7 @@ async def start(event):
             buttons=[
                                      [Button.inline("عرض المستخدمين 📬", data="users"), Button.inline(
                                          "اوامر البـوت ⚒️", data="gibcmd")],
-                                     [Button.url("المطـور 🔗", "https://t.me/SX9OO"), Button.inline(
+                                     [Button.url("المطـور 🔗", "https://t.me/ll1ilt"), Button.inline(
                                          "اوامر الزغـرفة", data="rozzag")],
                                  ])
     else:
@@ -50,7 +50,7 @@ async def start(event):
             link_preview=False,
             buttons=[
                 [custom.Button.inline("تنـصيب الساحر  🐍", data="deploy")],
-                [Button.url("تحتاج مسـاعدة ❓", "https://t.me/SX9OO")],
+                [Button.url("تحتاج مسـاعدة ❓", "https://t.me/ll1ilt")],
             ],
         )
 #Data

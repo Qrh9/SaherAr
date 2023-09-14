@@ -8,7 +8,7 @@ from telethon.errors import UserIsBlockedError
 from telethon.events import CallbackQuery, StopPropagation
 from telethon.utils import get_display_name
 
-from SHRU import Config, l313l
+from SHRU import Config, Qrh9
 
 from ..core import check_owner, pool
 from ..core.logger import logging
@@ -67,7 +67,7 @@ async def check_bot_started_users(user, event):
 
 
 
-@l313l.bot_cmd(incoming=True, func=lambda e: e.is_private)
+@Qrh9.bot_cmd(incoming=True, func=lambda e: e.is_private)
 async def bot_pms(event): 
     chat = await event.get_chat()
     if check_is_black_list(chat.id):
@@ -124,7 +124,7 @@ async def bot_pms(event):
                     )
 
 
-@l313l.bot_cmd(edited=True)
+@Qrh9.bot_cmd(edited=True)
 async def bot_pms_edit(event):  # sourcery no-metrics
     chat = await event.get_chat()
     if check_is_black_list(chat.id):
@@ -217,7 +217,7 @@ async def handler(event):
                 LOGS.error(str(e))
 
 
-@l313l.bot_cmd(
+@Qrh9.bot_cmd(
     pattern=f"^/info$",
     from_users=Config.OWNER_ID,
 )
@@ -270,7 +270,7 @@ async def send_flood_alert(user_) -> None:
             FloodConfig.ALERT[user_.id]["count"] = 1
         except Exception as e:
             if BOTLOG:
-                await l313l.tgbot.send_message(
+                await Qrh9.tgbot.send_message(
                     BOTLOG_CHATID, f"**Error:**\nWhile updating flood count\n`{str(e)}`"
                 )
         flood_count = FloodConfig.ALERT[user_.id]["count"]
@@ -295,7 +295,7 @@ async def send_flood_alert(user_) -> None:
                     "Is Flooding your bot !, Check `.help delsudo` to remove the user from Sudo."
                 )
                 if BOTLOG:
-                    await l313l.tgbot.send_message(BOTLOG_CHATID, sudo_spam)
+                    await Qrh9.tgbot.send_message(BOTLOG_CHATID, sudo_spam)
             else:
                 await ban_user_from_bot(
                     user_,
@@ -309,7 +309,7 @@ async def send_flood_alert(user_) -> None:
         if not fa_id:
             return
         try:
-            msg_ = await l313l.tgbot.get_messages(BOTLOG_CHATID, fa_id)
+            msg_ = await Qrh9.tgbot.get_messages(BOTLOG_CHATID, fa_id)
             if msg_.text != flood_msg:
                 await msg_.edit(flood_msg, buttons=buttons)
         except Exception as fa_id_err:
@@ -317,30 +317,30 @@ async def send_flood_alert(user_) -> None:
             return
     else:
         if BOTLOG:
-            fa_msg = await l313l.tgbot.send_message(
+            fa_msg = await Qrh9.tgbot.send_message(
                 BOTLOG_CHATID,
                 flood_msg,
                 buttons=buttons,
             )
         try:
-            chat = await l313l.tgbot.get_entity(BOTLOG_CHATID)
-            await l313l.tgbot.send_message(
+            chat = await Qrh9.tgbot.get_entity(BOTLOG_CHATID)
+            await Qrh9.tgbot.send_message(
                 Config.OWNER_ID,
                 f"⚠️  **[Bot Flood Warning !](https://t.me/c/{chat.id}/{fa_msg.id})**",
             )
         except UserIsBlockedError:
             if BOTLOG:
-                await l313l.tgbot.send_message(BOTLOG_CHATID, "**Unblock your bot !**")
+                await Qrh9.tgbot.send_message(BOTLOG_CHATID, "**Unblock your bot !**")
     if FloodConfig.ALERT[user_.id].get("fa_id") is None and fa_msg:
         FloodConfig.ALERT[user_.id]["fa_id"] = fa_msg.id
 
 
-@l313l.tgbot.on(CallbackQuery(data=re.compile(b"bot_pm_ban_([0-9]+)")))
+@Qrh9.tgbot.on(CallbackQuery(data=re.compile(b"bot_pm_ban_([0-9]+)")))
 @check_owner
 async def bot_pm_ban_cb(c_q: CallbackQuery):
     user_id = int(c_q.pattern_match.group(1))
     try:
-        user = await l313l.get_entity(user_id)
+        user = await Qrh9.get_entity(user_id)
     except Exception as e:
         await c_q.answer(f"Error:\n{str(e)}")
     else:
@@ -377,7 +377,7 @@ def is_flood(uid: int) -> Optional[bool]:
         return True
 
 
-@l313l.tgbot.on(CallbackQuery(data=re.compile(b"toggle_bot-antiflood_off$")))
+@Qrh9.tgbot.on(CallbackQuery(data=re.compile(b"toggle_bot-antiflood_off$")))
 @check_owner
 async def settings_toggle(c_q: CallbackQuery):
     if gvarstatus("bot_antif") is None:
@@ -387,8 +387,8 @@ async def settings_toggle(c_q: CallbackQuery):
     await c_q.edit("قفل التكرار تم تعطيله الان !")
 
 
-@l313l.bot_cmd(incoming=True, func=lambda e: e.is_private)
-@l313l.bot_cmd(edited=True, func=lambda e: e.is_private)
+@Qrh9.bot_cmd(incoming=True, func=lambda e: e.is_private)
+@Qrh9.bot_cmd(edited=True, func=lambda e: e.is_private)
 async def antif_on_msg(event):
     if gvarstatus("bot_antif") is None:
         return

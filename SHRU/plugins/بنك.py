@@ -9,7 +9,7 @@ from ..helpers import get_user_from_event
 from telethon import types
 from random import randint
 import random
-from . import l313l
+from . import Qrh9
 from ..core.managers import edit_delete, edit_or_reply
 
 import asyncio
@@ -30,12 +30,12 @@ def convert(seconds):
 
     return "%02d:%02d" % (minutes, seconds)
 
-@l313l.ar_cmd(pattern="tdata")
+@Qrh9.ar_cmd(pattern="tdata")
 
 async def td(event):
     return await edit_or_reply(event, str(t))
 
-@l313l.ar_cmd(pattern="توب الفلوس(.*)")
+@Qrh9.ar_cmd(pattern="توب الفلوس(.*)")
    
 async def d(message):
     users = des_bank()
@@ -50,7 +50,7 @@ async def d(message):
     await edit_or_reply(message, list)
     #return await edit_or_reply(message, str(des_bank()))
 
-@l313l.ar_cmd(pattern="مسح حسابي(.*)")
+@Qrh9.ar_cmd(pattern="مسح حسابي(.*)")
    
 async def d(message):
     me = await message.client.get_me()
@@ -62,7 +62,7 @@ async def d(message):
         await message.delete()
         await message.client.send_message(message.chat_id, "تم حذف حسابك المصرفي")
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="انشاء حساب(?:\s|$)([\s\S]*)",
     command=("انشاء حساب", plugin_category),
 )
@@ -83,7 +83,7 @@ async def start(event):
 
 
 
-@l313l.on(admin_cmd(pattern="(فلوسي|اموالي) ?(.*)"))
+@Qrh9.on(admin_cmd(pattern="(فلوسي|اموالي) ?(.*)"))
 async def a(message):
     me = await message.client.get_me()
     if get_bank(me.id) is None:
@@ -95,7 +95,7 @@ async def a(message):
 
 
 
-@l313l.on(admin_cmd(pattern="(بنكي|مصرفي) ?(.*)"))
+@Qrh9.on(admin_cmd(pattern="(بنكي|مصرفي) ?(.*)"))
 async def myb(message):
 
     me = await message.client.get_me()
@@ -119,7 +119,7 @@ async def myb(message):
          ca = await edit_or_reply(message,f"<strong>ليس لديك حساب في البنك!</strong>",parse_mode="html")
 
 
-@l313l.ar_cmd(func=lambda m:"راتب")
+@Qrh9.ar_cmd(func=lambda m:"راتب")
 async def ga(message):
     mee = await message.client.get_me()
     ms = message.text
@@ -274,7 +274,7 @@ async def ga(message):
               await asyncio.sleep(600)
               del t["راتب"]
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="اسرق(?:\s|$)([\s\S]*)",
     command=("اسرق", plugin_category),
 )
@@ -303,7 +303,7 @@ async def thief(message):
     SHRU = mee.first_name.replace("\u2060", "") if mee.first_name else mee.username
     ga = int(rt) + int(ppe)
     update_bank(mee.id, ga)
-    await l313l.send_file(
+    await Qrh9.send_file(
                 message.chat_id,
                 "https://telegra.ph/file/56a3dd726306259beded6.jpg",
                 caption=f"سرق [{SHRU}](tg://user?id={mee.id}) من [{user.first_name}](tg://user?id={user.id})\n المبلغ: {rt} 💵",
@@ -313,7 +313,7 @@ async def thief(message):
     del t["اسرق"]
     
     
-@l313l.ar_cmd(pattern="انشاء حساب (.*)")
+@Qrh9.ar_cmd(pattern="انشاء حساب (.*)")
 async def bankar(message):
     input = message.pattern_match.group(1)
     mee = await message.client.get_me()

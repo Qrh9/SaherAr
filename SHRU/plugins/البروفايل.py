@@ -7,7 +7,7 @@ from telethon.tl.functions.channels import GetAdminedPublicChannelsRequest
 from telethon.tl.functions.photos import DeletePhotosRequest, GetUserPhotosRequest
 from telethon.tl.types import Channel, Chat, InputPhoto, User
 
-from SHRU import l313l
+from SHRU import Qrh9
 
 from ..Config import Config
 from ..core.logger import logging
@@ -29,7 +29,7 @@ USERNAME_TAKEN = "**᯽︙  هذا المعرف مستخدم ⌁ ،**"
 # ===============================================================
 #ياعلي مدد
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="وضع بايو (.*)",
     command=("وضع بايو", plugin_category),
     info={
@@ -47,7 +47,7 @@ async def _(event):
         await edit_or_reply(event, f"**خطأ:**\n`{str(e)}`")
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="وضع اسم (.*)",
     command=("وضع اسم", plugin_category),
     info={
@@ -73,7 +73,7 @@ async def _(event):
         await edit_or_reply(event, f"**خطأ:**\n`{str(e)}`")
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="وضع صورة$",
     command=("وضع صورة", plugin_category),
     info={
@@ -129,7 +129,7 @@ async def _(event):
         LOGS.info(str(e))
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="وضع معرف (.*)",
     command=("وضع معرف", plugin_category),
     info={
@@ -149,7 +149,7 @@ async def update_username(username):
         await edit_or_reply(event, f"**خطأ:**\n`{str(e)}`")
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="الحساب$",
     command=("الحساب", plugin_category),
     info={
@@ -193,7 +193,7 @@ async def count(event):
     await catevent.edit(result)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="حذف صوره ?(.*)",
     command=("حذف صوره", plugin_category),
     info={
@@ -228,7 +228,7 @@ async def remove_profilepic(delpfp):
     )
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="انشائي$",
     command=("انشائي", plugin_category),
     info={

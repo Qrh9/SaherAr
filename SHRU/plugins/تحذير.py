@@ -1,13 +1,13 @@
 import html
 
-from SHRU import l313l
+from SHRU import Qrh9
 from ..core.managers import edit_or_reply
 from ..sql_helper import warns_sql as sql
 
 plugin_category = "admin"
 
 #warn
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="تحذير(?:\s|$)([\s\S]*)",
     command=("تحذير", plugin_category),
     info={
@@ -47,7 +47,7 @@ async def _(event):
     await edit_or_reply(event, reply)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="التحذيرات",
     command=("التحذيرات", plugin_category),
     info={
@@ -78,7 +78,7 @@ async def _(event):
     await event.edit(text)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="ح(ذف) ?التحذير$",
     command=("حذف التحذير", plugin_category),
     info={
@@ -94,7 +94,7 @@ async def _(event):
     reply_message = await event.get_reply_message()
     sql.reset_warns(str(reply_message.sender_id), event.chat_id)
     await edit_or_reply(event, "**▸┊تم إعادة ضبط التحذيرات!**")
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="عدد$",
     command=("عدد", plugin_category),
     info={

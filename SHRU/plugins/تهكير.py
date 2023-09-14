@@ -1,9 +1,9 @@
 # Copyright (C) 2021 SHRU TEAM
-# FILES WRITTEN BY  @SX9OO
+# FILES WRITTEN BY  @ll1ilt
 
 import asyncio
 from telethon import events
-from SHRU import l313l
+from SHRU import Qrh9
 import random
 from ..core.managers import edit_or_reply
 from ..helpers.utils import _format
@@ -12,7 +12,7 @@ from . import ALIVE_NAME
 plugin_category = "fun"
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="تهكير$",
     command=("تهكير", plugin_category),
     info={
@@ -57,7 +57,7 @@ async def _(event):
             "᯽︙ لم يتـم التعـرف على المستـخدم",
             parse_mode=_format.parse_pre,
         )
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="تهكير2$",
     command=("تهكير2", plugin_category),
     info={

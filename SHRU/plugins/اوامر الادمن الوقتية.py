@@ -3,7 +3,7 @@ from telethon.errors.rpcerrorlist import UserAdminInvalidError, UserIdInvalidErr
 from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.types import ChatBannedRights
 
-from SHRU import l313l
+from SHRU import Qrh9
 
 from ..core.managers import edit_or_reply
 from ..helpers.utils import _format
@@ -17,7 +17,7 @@ NO_PERM = "**᯽︙ يبـدو انه ليس لديك صلاحيات كافية 
 
 joker_t8ed = "https://telegra.ph/file/2eca302f6e4a1198792ec.jpg"
 joker_unt8ed = "https://telegra.ph/file/b5d3498a825632e7716e3.jpg"
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="تقييد_مؤقت(?:\s|$)([\s\S]*)",
     command=("تقييد_مؤقت", plugin_category),
     info={
@@ -105,7 +105,7 @@ async def tmuter(event):  # sourcery no-metrics
         return await event.edit(f"`{str(e)}`")
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="حظر_مؤقت(?:\s|$)([\s\S]*)",
     command=("حظر_مؤقت", plugin_category),
     info={
@@ -200,7 +200,7 @@ async def tban(event):  # sourcery no-metrics
                 f"**مـدة الحـظر : **`{cattime}`",
             )
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="تقييد(?:\s|$)([\s\S]*)",
     command=("تقييد", plugin_category),
     info={
@@ -263,7 +263,7 @@ async def T8ed_Joker(event):
         return await event.edit("يبدو أنك لست مشرفًا في المجموعة أو تحاول تقييد مشرف هنا.")
     except Exception as e:
         return await event.edit(f"`{str(e)}`")
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="الغاء تقييد(?:\s|$)([\s\S]*)",
     command=("الغاء تقييد", plugin_category),
     info={

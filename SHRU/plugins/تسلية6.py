@@ -1,5 +1,5 @@
 #  =============================
-#  == SHRU  -  SX9OO =
+#  == SHRU  -  ll1ilt =
 #  =============================
 
 
@@ -7,7 +7,7 @@ import asyncio
 import os
 import re
 
-from SHRU import l313l
+from SHRU import Qrh9
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.utils import reply_id
@@ -24,7 +24,7 @@ from . import (
 
 plugin_category = "fun"
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="ترامب(?:\s|$)([\s\S]*)",
     command=("ترامب", plugin_category),
     info={
@@ -55,7 +55,7 @@ async def nekobot(cat):
         os.remove(catfile)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="مودي(?:\s|$)([\s\S]*)",
     command=("مودي", plugin_category),
     info={
@@ -86,7 +86,7 @@ async def nekobot(cat):
         os.remove(catfile)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="بنر(?:\s|$)([\s\S]*)",
     command=("بنر", plugin_category),
     info={
@@ -116,7 +116,7 @@ async def nekobot(cat):
         os.remove(catfile)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="كانا(?:\s|$)([\s\S]*)",
     command=("كانا", plugin_category),
     info={
@@ -147,7 +147,7 @@ async def nekobot(cat):
         os.remove(catfile)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="تويت(?:\s|$)([\s\S]*)",
     command=("تويت", plugin_category),
     info={

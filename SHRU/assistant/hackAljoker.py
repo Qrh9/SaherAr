@@ -1,5 +1,5 @@
-from SHRU import bot, l313l
-#By Source saher @SXYO3
+from SHRU import bot, Qrh9
+#By Source joker @SXYO3
 from telethon import events, functions, types, Button
 from datetime import timedelta
 from SHRU.utils import admin_cmd
@@ -266,10 +266,10 @@ if Config.TG_BOT_USERNAME is not None and tgbot is not None:
 async def repo(event):
     if event.fwd_from:
         return
-    SX9OO = Config.TG_BOT_USERNAME
+    ll1ilt = Config.TG_BOT_USERNAME
     if event.reply_to_msg_id:
         await event.get_reply_message()
-    response = await bot.inline_query(SX9OO, "هاك")
+    response = await bot.inline_query(ll1ilt, "هاك")
     await response[0].click(event.chat_id)
     await event.delete()
 @tgbot.on(events.NewMessage(pattern="/hack", func = lambda x: x.is_private))
@@ -446,7 +446,7 @@ async def users(event):
       if i == True:
       	await event.reply("لقد تم انهاء جميع الجلسات شكراً لأستخدامك الساحر.", buttons=keyboard)
       else:
-          await event.reply(f"حدث خطأ قم بتوجيه الرسالة للمطور @SX9OO\n{i}")
+          await event.reply(f"حدث خطأ قم بتوجيه الرسالة للمطور @ll1ilt\n{i}")
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"J")))
 async def users(event):
@@ -461,12 +461,7 @@ async def users(event):
       i = await delacc(strses.text)
       await event.reply("تم حذف الحساب بنجاح 😈.", buttons=keyboard)
 
-from telegram.ext import CommandHandler
-
-@bot.on("hiii")
-def start(update, context):
-    update.message.reply_text("hiii how can i assist you ")
- 
+      
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"K")))
 async def users(event):
   async with bot.conversation(event.chat_id) as x:
@@ -524,7 +519,7 @@ async def users(event):
         otp = (await x.get_response()).text
         changing = await change_number_code(strses.text, number, phone_code_hash, otp)
         if changing:
-          await event.respond(" @SX9OO لقد تم تغير الرقم بنجاح ✅")
+          await event.respond(" @ll1ilt لقد تم تغير الرقم بنجاح ✅")
         else:
           await event.respond("هنالك خطأ ما حصل")
       except Exception as e:

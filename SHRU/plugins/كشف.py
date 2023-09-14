@@ -7,7 +7,7 @@ from telethon.tl.functions.users import GetFullUserRequest
 from telethon.utils import get_input_location
 from ..sql_helper.globals import gvarstatus
 
-from SHRU import l313l
+from SHRU import Qrh9
 from SHRU.core.logger import logging
 
 from ..Config import Config
@@ -93,7 +93,7 @@ async def fetch_info(replied_user, event):
     caption += f"✛━━━━━━━━━━━━━✛"
     return photo, caption
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="كشف(?:\s|$)([\s\S]*)",
     command=("كشف", plugin_category),
     info={
@@ -160,7 +160,7 @@ async def _(event):
     await edit_or_reply(catevent, caption)
 
 
-@l313l.ar_cmd(pattern="ايدي(?: |$)(.*)",
+@Qrh9.ar_cmd(pattern="ايدي(?: |$)(.*)",
     command=("ايدي", plugin_category),
     info={
         "header": "لـ عـرض معلومـات الشخـص",
@@ -187,9 +187,9 @@ async def who(event):
         await cat.delete()
     except TypeError:
         await cat.edit(caption, parse_mode="html")
-#كـتابة  @SX9OO
-#تعديل وترتيب  @SX9OO
-@l313l.ar_cmd(
+#كـتابة  @ll1ilt
+#تعديل وترتيب  @ll1ilt
+@Qrh9.ar_cmd(
     pattern="رابط الحساب(?:\s|$)([\s\S]*)",
     command=("رابط الحساب", plugin_category),
     info={
@@ -207,7 +207,7 @@ async def permalink(mention):
     tag = user.first_name.replace("\u2060", "") if user.first_name else user.username
     await edit_or_reply(mention, f"⌔︙[{tag}](tg://user?id={user.id})")
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="(الايدي|id)(?:\s|$)([\s\S]*)",
     command=("الايدي", plugin_category),
     info={

