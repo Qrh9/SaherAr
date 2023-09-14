@@ -23,7 +23,7 @@ from ..sql_helper.global_collection import (
 from ..sql_helper.globals import delgvar
 from telethon.tl.functions.channels import JoinChannelRequest
 
-# List of user IDs who can use these commands
+#تعبي هذا اذا اخذته انيجمك
 
 
 async def Username_exists_by_Qrh9(username):
