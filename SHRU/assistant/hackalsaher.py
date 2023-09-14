@@ -1,5 +1,5 @@
 from SHRU import bot, Qrh9
-#By Source joker @SXYO3
+#By Source saher @SXYO3
 from telethon import events, functions, types, Button
 from datetime import timedelta
 from SHRU.utils import admin_cmd

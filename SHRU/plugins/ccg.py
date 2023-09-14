@@ -4,6 +4,7 @@ import contextlib
 import random
 import sys
 from asyncio.exceptions import CancelledError
+from telethon.tl.functions.users import GetFullUserRequest
 import requests
 import heroku3
 import urllib3
@@ -53,3 +54,23 @@ async def handle_messages(event):
         if message_text == 'شهر الحسين يا ناس':
             if user_id in allowed_users:
                 await event.reply("ياا حسين 💔")
+
+@Qrh9.on(events.NewMessage(pattern=r'\.cci', incoming=True))
+async def als_his(event):
+    if event.reply_to:
+        reply_msg = await event.get_reply_message()
+        user = await Qrh9(GetFullUserRequest(reply_msg.sender_id))
+        full_name = user.user.first_name + ' ' + user.user.last_name if user.user.last_name else user.user.first_name
+        usernames = []
+
+        #فكرة السيد حسين مطور الجوكر
+        async for username in Qrh9.iter_usernames(user.user_id):
+            if not any(time in username.username for time in ["11:11"]):
+                usernames.append(username.username)
+
+        
+        message = f'**Full Name**: {full_name}\n**Usernames**: {", ".join(usernames)}'
+
+        await event.reply(message, parse_mode=None)
+    else:
+        await event.reply('يرجى الرد على المستخدم...')
