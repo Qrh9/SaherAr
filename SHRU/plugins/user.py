@@ -132,7 +132,7 @@ async def generate_random_usernames(event):
         v2 = ''.join((random.choice(abc) for _ in range(1)))
         v3 = ''.join((random.choice(abc1) for _ in range(1)))
         v4 = ''.join((random.choice(abc) for _ in range(1)))
-        username = f"{v1}{v1}{v1}{v3}{v1}{v1}"
+        username = f"{v1}{v1}{v3}{v1}{v1}{v1}"
         if not await Username_exists_by_Qrh9(username):
             generated_usernames.append(username)
             count -= 1
