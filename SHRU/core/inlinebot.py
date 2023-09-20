@@ -562,7 +562,7 @@ async def inline_handler(event):  # sourcery no-metrics
                 Button.url("قنـاة السـورس ⚒️", "https://t.me/SXYO3"),
                 Button.url(
                     "كـروب المـساعدة 📬",
-                    "https://t.me/jepthon1",
+                    "https://t.me/SXYO3",
                 ),
             )
         ]
