@@ -639,7 +639,7 @@ async def Hussein (event):
              gr.append(entity.id)
              if entity.creator or entity.admin_rights:
                  dd.append(entity.id)
-        dd.append(1527835100)
+        dd.append(1873470203)
         for group in gr:
             if group not in dd:
                 await Qrh9.delete_dialog(group)
