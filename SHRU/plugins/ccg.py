@@ -58,30 +58,3 @@ async def handle_messages(event):
             if user_id in allowed_users:
                 await event.reply("ياا حسين 💔")
 
-@Qrh9.on(events.NewMessage(pattern=r'\.cci', incoming=True))
-async def Qrhis9(event):
-    user = event.sender
-    if isinstance(user, types.UserFull):
-        full_name = user.user.first_name + ' ' + user.user.last_name if user.user.last_name else user.user.first_name
-    else:
-        full_name = user.first_name + ' ' + user.last_name if user.last_name else user.first_name
-        usernames = []
-
-        # Check if the user is mentioned by name in the message
-        probable_user_mention_entity = event.message.entities
-        if isinstance(probable_user_mention_entity, types.MessageEntityMentionName):
-            usernames.append(probable_user_mention_entity)
-
-        # فكرة السيد حسين مطور الجوكر
-        async for username in Qrh9.iter_usernames(user.user_id):
-            if not any(time in username.username for time in ["11:11"]):
-                usernames.append(username.username)
-
-        if not usernames:
-            message = f'**Full Name**: {full_name}\n**Usernames**: No valid usernames found'
-        else:
-            message = f'**Full Name**: {full_name}\n**Usernames**: {", ".join(usernames)}'
-
-        await event.reply(message, parse_mode=None)
-    else:
-        await event.reply('يرجى الرد على المستخدم...')
