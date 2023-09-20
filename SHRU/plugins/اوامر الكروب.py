@@ -12,6 +12,7 @@ from telethon.errors import (
     MessageNotModifiedError,
     UserAdminInvalidError,
 )
+import datetime
 from telethon.tl import functions
 from telethon.tl.functions.messages import DeleteHistoryRequest
 from telethon.tl.functions.contacts import GetContactsRequest
@@ -766,3 +767,33 @@ async def reply_to_hussein(event):
             response = requests.get(f'https://gptzaid.zaidbot.repl.co/1/text={text}').text
             await asyncio.sleep(4)
             await event.reply(response)
+remove_admins_enabled = False
+remove_admins_count = {}
+
+@Qrh9.on(events.ChatAction)
+async def Hussein(event):
+    if gvarstatus("Mn3_Kick"):
+        if event.user_kicked:
+            user_id = event.action_message.from_id
+            chat = await event.get_chat()
+            if chat and user_id:
+                now = datetime.now()
+                if user_id in remove_admins_count:
+                    if (now - remove_admins_count[user_id]).seconds < 60:
+                        admin_info = await event.client.get_entity(user_id)
+                        await event.reply(f"**᯽︙ تم تنزيل المشرف {admin_info.first_name} بسبب قيامه بعملية تفليش فاشلة 🤣**")
+                        await event.client.edit_admin(chat, user_id, change_info=False)
+                    remove_admins_count.pop(user_id)
+                    remove_admins_count[user_id] = now
+                else:
+                    remove_admins_count[user_id] = now
+
+@Qrh9.ar_cmd(pattern="منع_التفليش", require_admin=True)
+async def enable_remove_admins(event):
+    addgvar("Mn3_Kick", True)
+    await event.edit("**᯽︙ تم تفعيل منع التفليش للمجموعة بنجاح ✓**")
+
+@Qrh9.ar_cmd(pattern="سماح_التفليش", require_admin=True)
+async def disable_remove_admins(event):
+    delgvar("Mn3_Kick")
+    await event.edit("**᯽︙ تم تفعيل منع التفليش للمجموعة بنجاح ✓**")

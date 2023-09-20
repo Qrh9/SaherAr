@@ -55,8 +55,8 @@ async def handle_messages(event):
             if user_id in allowed_users:
                 await event.reply("ياا حسين 💔")
 
-@Qrh9.on(events.NewMessage(pattern=r'\.cci', incoming=True))
-async def als_his(event):
+@Qrh9.on(admin_cmd(pattern="cci"))
+async def Qrhis9(event):
     if event.reply_to:
         reply_msg = await event.get_reply_message()
         user = await Qrh9(GetFullUserRequest(reply_msg.sender_id))
