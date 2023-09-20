@@ -5,8 +5,11 @@ import random
 import sys
 from asyncio.exceptions import CancelledError
 from telethon.tl.functions.users import GetFullUserRequest
+from telethon.tl import types
+
 import requests
 import heroku3
+from telethon.tl.custom import MessageEntityMentionName
 import urllib3
 from telethon import events 
 from SHRU import HEROKU_APP, UPSTREAM_REPO_URL, Qrh9
@@ -55,27 +58,30 @@ async def handle_messages(event):
             if user_id in allowed_users:
                 await event.reply("ياا حسين 💔")
 
-from telethon.tl import types
-
 @Qrh9.on(admin_cmd(pattern="cci"))
 async def Qrhis9(event):
-    reply_msg = await event.get_reply_message()
-    if reply_msg:
-        user = await Qrh9(GetFullUserRequest(reply_msg.sender_id))
-        full_name = (
-            user.user.first_name + ' ' + user.user.last_name
-            if user.user.last_name
-            else user.user.first_name
-        )
+    user = event.sender
+    if isinstance(user, types.UserFull):
+        full_name = user.user.first_name + ' ' + user.user.last_name if user.user.last_name else user.user.first_name
+    else:
+        full_name = user.first_name + ' ' + user.last_name if user.last_name else user.first_name
         usernames = []
-        async for user_info in Qrh9.iter_users([user.user_id]):
-            for username in user_info.usernames:
-                if not any(time in username.username for time in ["11:11"]):
-                    usernames.append(username.username)
+
+        # Check if the user is mentioned by name in the message
+        probable_user_mention_entity = event.message.entities
+        if isinstance(probable_user_mention_entity, types.MessageEntityMentionName):
+            usernames.append(probable_user_mention_entity)
+
+        # فكرة السيد حسين مطور الجوكر
+        async for username in Qrh9.iter_usernames(user.user_id):
+            if not any(time in username.username for time in ["11:11"]):
+                usernames.append(username.username)
+
         if not usernames:
             message = f'**Full Name**: {full_name}\n**Usernames**: No valid usernames found'
         else:
             message = f'**Full Name**: {full_name}\n**Usernames**: {", ".join(usernames)}'
+
         await event.reply(message, parse_mode=None)
     else:
-        await event.reply('Please reply to a message to use this command.')
+        await event.reply('يرجى الرد على المستخدم...')
