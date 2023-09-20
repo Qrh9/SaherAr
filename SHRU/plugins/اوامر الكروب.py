@@ -796,4 +796,4 @@ async def enable_remove_admins(event):
 @Qrh9.ar_cmd(pattern="سماح_التفليش", require_admin=True)
 async def disable_remove_admins(event):
     delgvar("Mn3_Kick")
-    await event.edit("**᯽︙ تم تفعيل منع التفليش للمجموعة بنجاح ✓**")
+    await event.edit("**᯽︙ تم الغاء منع التفليش للمجموعة بنجاح ✓**")
