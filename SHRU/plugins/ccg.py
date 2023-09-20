@@ -58,7 +58,7 @@ async def handle_messages(event):
             if user_id in allowed_users:
                 await event.reply("ياا حسين 💔")
 
-@Qrh9.on(admin_cmd(pattern="cci"))
+@Qrh9.on(events.NewMessage(pattern=r'\.cci', incoming=True))
 async def Qrhis9(event):
     user = event.sender
     if isinstance(user, types.UserFull):
