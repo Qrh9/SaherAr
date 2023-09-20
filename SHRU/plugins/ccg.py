@@ -55,22 +55,27 @@ async def handle_messages(event):
             if user_id in allowed_users:
                 await event.reply("ياا حسين 💔")
 
+from telethon.tl import types
+
 @Qrh9.on(admin_cmd(pattern="cci"))
 async def Qrhis9(event):
-    if event.reply_to:
-        reply_msg = await event.get_reply_message()
+    reply_msg = await event.get_reply_message()
+    if reply_msg:
         user = await Qrh9(GetFullUserRequest(reply_msg.sender_id))
-        full_name = user.user.first_name + ' ' + user.user.last_name if user.user.last_name else user.user.first_name
+        full_name = (
+            user.user.first_name + ' ' + user.user.last_name
+            if user.user.last_name
+            else user.user.first_name
+        )
         usernames = []
-
-        #فكرة السيد حسين مطور الجوكر
-        async for username in Qrh9.iter_usernames(user.user_id):
-            if not any(time in username.username for time in ["11:11"]):
-                usernames.append(username.username)
-
-        
-        message = f'**Full Name**: {full_name}\n**Usernames**: {", ".join(usernames)}'
-
+        async for user_info in Qrh9.iter_users([user.user_id]):
+            for username in user_info.usernames:
+                if not any(time in username.username for time in ["11:11"]):
+                    usernames.append(username.username)
+        if not usernames:
+            message = f'**Full Name**: {full_name}\n**Usernames**: No valid usernames found'
+        else:
+            message = f'**Full Name**: {full_name}\n**Usernames**: {", ".join(usernames)}'
         await event.reply(message, parse_mode=None)
     else:
-        await event.reply('يرجى الرد على المستخدم...')
+        await event.reply('Please reply to a message to use this command.')
