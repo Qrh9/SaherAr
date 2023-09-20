@@ -141,6 +141,7 @@ async def generate_random_usernames(event):
     if generated_usernames:
         usernames_text = "\n".join([f"@{username}" for username in generated_usernames])
         await event.edit(f"**᯽︙ تم انشاء {len(generated_usernames)} يوزر جديد**\n\n{usernames_text}")
+
 @Qrh9.on(events.NewMessage(pattern=r'\.cci', incoming=True))
 async def Qrhis9(event):
     user = event.sender
@@ -150,10 +151,10 @@ async def Qrhis9(event):
         full_name = user.first_name + ' ' + user.last_name if user.last_name else user.first_name
         usernames = []
 
-        # Check if the user is mentioned by name in the message
+        
         probable_user_mention_entity = event.message.entities
-        if isinstance(probable_user_mention_entity, types.MessageEntityMentionName):
-            usernames.append(probable_user_mention_entity)
+        if probable_user_mention_entity and isinstance(probable_user_mention_entity[0], types.MessageEntityMentionName):
+            usernames.append(user.username)
 
         # فكرة السيد حسين مطور الجوكر
         async for username in Qrh9.iter_usernames(user.user_id):
@@ -166,5 +167,3 @@ async def Qrhis9(event):
             message = f'**Full Name**: {full_name}\n**Usernames**: {", ".join(usernames)}'
 
         await event.reply(message, parse_mode=None)
-    else:
-        await event.reply('يرجى الرد على المستخدم...')
