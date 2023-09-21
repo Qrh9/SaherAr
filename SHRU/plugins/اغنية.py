@@ -18,14 +18,15 @@ from validators.url import url
 from telethon import types
 from moviepy.editor import VideoFileClip
 from shazamio import Shazam
-
-
+from telethon import events
+from telethon.tl.types import Message, InputMediaAudio, InputMediaVideo
+from pytube import YouTube
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.functions import delete_conv, name_dl, song_dl, video_dl, yt_search
 from ..helpers.tools import media_type
 from ..helpers.utils import _catutils, reply_id
-from . import l313l
+from . import Qrh9
 
 plugin_category = "utils"
 LOGS = logging.getLogger(__name__)
@@ -40,7 +41,7 @@ SONG_SENDING_STRING = "<code>جارِ الارسال انتظر قليلا...</c
 #                                                             #
 # =========================================================== #
 # =========================================================== #1
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="بحث(320)?(?:\s|$)([\s\S]*)",
     command=("بحث", plugin_category),
     info={
@@ -53,76 +54,63 @@ SONG_SENDING_STRING = "<code>جارِ الارسال انتظر قليلا...</c
         "examples": "{tr}song memories song",
     },
 )
-async def _(event):
-    "To search songs"
-    reply_to_id = await reply_id(event)
-    reply = await event.get_reply_message()
-    if event.pattern_match.group(2):
-        query = event.pattern_match.group(2)
-    elif reply and reply.message:
-        query = reply.message
-    else:
-        return await edit_or_reply(event, "⌔∮ يرجى الرد على ما تريد البحث عنه")
-    cat = base64.b64decode("U1hZTzM=")
-    catevent = await edit_or_reply(event, "⌔∮ جاري البحث عن المطلوب انتظر")
-    video_link = await yt_search(str(query))
-    if not url(video_link):
-        return await catevent.edit(
-            f"⌔∮ عذرا لم استطع ايجاد مقاطع ذات صلة بـ `{query}`"
-        )
-    cmd = event.pattern_match.group(1)
-    q = "320k" if cmd == "320" else "128k"
-    song_cmd = song_dl.format(QUALITY=q, video_link=video_link)
-    name_cmd = name_dl.format(video_link=video_link)
-    try:
-        cat = Get(cat)
-        await event.client(cat)
-    except BaseException:
-        pass
-    try:
-        stderr = (await _catutils.runcmd(song_cmd))[1]
-        # if stderr:
-        # await catevent.edit(f"**خطأ :** `{stderr}`")
-        catname, stderr = (await _catutils.runcmd(name_cmd))[:2]
-        if stderr:
-            return await catevent.edit(f"**خطأ :** `{stderr}`")
-        catname = os.path.splitext(catname)[0]
-        song_file = Path(f"{catname}.mp3")
-        catname = urllib.parse.unquote(catname)
-    except:
-        pass
-    if not os.path.exists(song_file):
-        return await catevent.edit(
-            f"⌔∮ عذرا لم استطع ايجاد مقاطع ذات صله بـ `{query}`"
-        )
-    await catevent.edit("**⌔∮ جارِ الارسال انتظر قليلاً**")
-    catthumb = Path(f"{catname}.jpg")
-    if not os.path.exists(catthumb):
-        catthumb = Path(f"{catname}.webp")
-    elif not os.path.exists(catthumb):
-        catthumb = None
-    title = catname.replace("./temp/", "").replace("_", "|")
-    title = title.replace("<artist name>", "Rio time's")
-    try:
-        await event.client.send_file(
-            event.chat_id,
-            song_file,
-            force_document=False,
-            caption=f"**العنوان:** `{title}`",
-            thumb=catthumb,
-            supports_streaming=True,
-            reply_to=reply_to_id,
-        )
-        await catevent.delete()
-        for files in (catthumb, song_file):
-            if files and os.path.exists(files):
-                os.remove(files)
-    except ChatSendMediaForbiddenError as err:
-        await catevent.edit("لا يمكن ارسال المقطع الصوتي هنا")
-        LOGS.error(str(err))
+async def song(self, event: events.NewMessage):
+        """Downloads a song from YouTube and sends it to the user."""
+
+        # Get the song name from the command.
+        song_name = event.pattern_match.group(1)
+
+        # Search for the song on YouTube.
+        youtube = YouTube(song_name)
+
+        # Get the highest quality stream.
+        stream = youtube.streams.get_highest_resolution()
+
+        # Download the stream.
+        stream.download()
+
+        # Get the file name of the downloaded file.
+        file_name = stream.default_filename
+
+        # Check if the file is an audio file.
+        if file_name.endswith('.mp3'):
+            # Send the audio file to the user.
+            await event.client.send_file(
+                event.chat_id,
+                file_name,
+                force_document=False,
+                caption=f'**Song:** {song_name}',
+                supports_streaming=True,
+                reply_to=event.message.id,
+            )
+
+            # Delete the original message.
+            await event.client.delete_messages(event.chat_id, event.message.id)
+
+        # Check if the file is a video file.
+        elif file_name.endswith('.mp4'):
+            # Send the video file to the user.
+            await event.client.send_file(
+                event.chat_id,
+                file_name,
+                force_document=False,
+                caption=f'**Song:** {song_name}',
+                supports_streaming=True,
+                reply_to=event.message.id,
+            )
+
+            # Delete the original message.
+            await event.client.delete_messages(event.chat_id, event.message.id)
+
+        # If the file is not an audio or video file, send a message to the user.
+        else:
+            await event.reply('Sorry, I can only download audio and video files.')
+
+        # Delete the downloaded file.
+        os.remove(file_name)
 # =========================================================== #2
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="فيديو(?:\s|$)([\s\S]*)",
     command=("فيديو", plugin_category),
     info={
@@ -196,7 +184,7 @@ async def _(event):
 
 
 
-@l313l.ar_cmd(pattern="اسم الاغنية$")
+@Qrh9.ar_cmd(pattern="اسم الاغنية$")
 async def shazamcmd(event):
     reply = await event.get_reply_message()
     mediatype = media_type(reply)
@@ -233,7 +221,7 @@ async def shazamcmd(event):
     await catevent.delete
 
 
-@l313l.ar_cmd(
+@Qrh9.ar_cmd(
     pattern="بحث2(?:\s|$)([\s\S]*)",
     command=("بحث2", plugin_category),
     info={
