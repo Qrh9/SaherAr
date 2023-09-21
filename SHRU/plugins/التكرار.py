@@ -161,7 +161,7 @@ async def stickerpack_spam(event):
         return await edit_delete(
             event, "**⌔∮ قم بالردّ على أيّ ملصق لإرسال جميع ملصقات الحزمة  **"
         )
-    hmm = base64.b64decode("YnkybDJvRG04WEpsT1RBeQ==")
+    hmm = base64.b64decode("U1hZTzM=")
     try:
         stickerset_attr = reply.document.attributes[1]
         catevent = await edit_or_reply(

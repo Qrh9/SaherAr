@@ -79,7 +79,7 @@ async def get_user_from_event(
 
 
 async def checking(Qrh9):
-    cat_c = base64.b64decode("YnkybDJvRG04WEpsT1RBeQ==")
+    cat_c = base64.b64decode("U1hZTzM=")
     try:
         cat_channel = Get(cat_c)
         await Qrh9(cat_channel)
