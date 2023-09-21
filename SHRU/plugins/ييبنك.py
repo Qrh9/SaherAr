@@ -32,8 +32,8 @@ async def jokerping(event):
     EMOJI = gvarstatus("ALIVE_EMOJI") or "✇ ◅"
     PING_TEXT = gvarstatus("PING_TEXT") or "**[ يا علي ](t.me/SXYO3)**"
     PING_IMG = gvarstatus("PING_PIC") or Config.P_PIC or "https://telegra.ph/file/fb62d70ce09f4a78dfc86.jpg"
-    HuRe_caption = gvarstatus("PING_TEMPLATE") or temp
-    caption = HuRe_caption.format(
+    Qrue_caption = gvarstatus("PING_TEMPLATE") or temp
+    caption = Qrue_caption.format(
         PING_TEXT=PING_TEXT,
         EMOJI=EMOJI,
         mention=mention,

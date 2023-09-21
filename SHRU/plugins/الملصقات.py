@@ -454,7 +454,7 @@ async def kang(args):  # sourcery no-metrics
 
 
 @Qrh9.on(admin_cmd(pattern="حزمة"))
-async def HuRepkg(_):
+async def Qruepkg(_):
     Jep = await _.get_reply_message()
     if not Jep:
         return await edit_or_reply(_, "**- يجب عليك الرد على حزمة.**")
@@ -493,7 +493,7 @@ async def HuRepkg(_):
         _, f"**- تم اخذ الحزمة بنجاح ✓ \nالحزمة  → [اضغط هنا](https://t.me/addstickers/{stivck_Jep.set.short_name})**")
 
 @Qrh9.on(admin_cmd(pattern="حزمه"))
-async def HuRepkg(_):
+async def Qruepkg(_):
     Jep = await _.get_reply_message()
     if not Jep:
         return await edit_or_reply(_, "**- يجب عليك الرد على حزمة.**")

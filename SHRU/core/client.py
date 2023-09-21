@@ -37,7 +37,7 @@ REGEX_ = REGEX()
 sudo_enabledcmds = sudo_enabled_cmds()
 
 
-class HuReClient(TelegramClient):
+class QrueClient(TelegramClient):
     def ar_cmd(
         self: TelegramClient,
         pattern: str or tuple = None,
@@ -269,7 +269,7 @@ class HuReClient(TelegramClient):
                             ftext, pastetype="s", markdown=False
                         )
                         text = "**تقرير خطا الساحر**\n\n"
-                        link = "[هنا](https://t.me/GroupHuRe)"
+                        link = "[هنا](https://t.me/GroupQrue)"
                         text += "إذا كنت تريد يمكنك الإبلاغ عن ذلك"
                         text += f"- فقط قم بإعادة توجيه هذه الرسالة {link}.\n"
                         text += "لا يتم تسجيل اي خطا فقط التاريخ والوقت\n\n"
@@ -306,15 +306,15 @@ class HuReClient(TelegramClient):
 
 
 
-HuReClient.fast_download_file = download_file
-HuReClient.fast_upload_file = upload_file
-HuReClient.reload = restart_script
-HuReClient.get_msg_link = get_message_link
-HuReClient.check_testcases = checking
+QrueClient.fast_download_file = download_file
+QrueClient.fast_upload_file = upload_file
+QrueClient.reload = restart_script
+QrueClient.get_msg_link = get_message_link
+QrueClient.check_testcases = checking
 try:
     send_message_check = TelegramClient.send_message
 except AttributeError:
-    HuReClient.send_message = send_message
-    HuReClient.send_file = send_file
-    HuReClient.edit_message = edit_message
+    QrueClient.send_message = send_message
+    QrueClient.send_file = send_file
+    QrueClient.edit_message = edit_message
 

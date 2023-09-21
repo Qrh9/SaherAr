@@ -52,7 +52,7 @@ async def _(event):
         text = text.strip()
         lan = lan.strip()
 
-    HuReevent = await edit_or_reply(event, "⌔∮ جـار التسجيل انتـظر قليلا")
+    Qrueevent = await edit_or_reply(event, "⌔∮ جـار التسجيل انتـظر قليلا")
 
 
     if not os.path.isdir("./temp/"):
@@ -90,7 +90,7 @@ async def _(event):
 
         except (subprocess.CalledProcessError, NameError, FileNotFoundError) as exc:
 
-            await HuReevent.edit(str(exc))
+            await Qrueevent.edit(str(exc))
 
         else:
 
@@ -120,7 +120,7 @@ async def _(event):
 
         await edit_delete(
 
-            HuReevent,
+            Qrueevent,
 
             "تحويل النص {} الى مقطع صوتي في {} ثواني ".format(text[0:20], ms),
 
@@ -128,4 +128,4 @@ async def _(event):
 
     except Exception as e:
 
-        await edit_or_reply(HuReevent, f"خطأ:\n{e}")
+        await edit_or_reply(Qrueevent, f"خطأ:\n{e}")

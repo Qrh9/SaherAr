@@ -46,7 +46,7 @@ async def amireallyalive(event):
     _, check_sgnirts = check_data_base_heal_th()
     EMOJI = gvarstatus("ALIVE_EMOJI") or "⿻┊‌‎"
     ALIVE_TEXT = gvarstatus("ALIVE_TEXT") or "**父[ 𝘼𝙇𝙨𝙖𝙝𝙚𝙧 𝙸𝚂 𝚆𝙾𝚁𝙺𝙸𝙽𝙶 ✓ ](t.me/SXYO3)父**"
-    HuRe_IMG = gvarstatus("ALIVE_PIC") or Config.A_PIC or "https://telegra.ph/file/4d3a48331f232ad0246f3.mp4"
+    Qrue_IMG = gvarstatus("ALIVE_PIC") or Config.A_PIC or "https://telegra.ph/file/4d3a48331f232ad0246f3.mp4"
     Qrh9_caption = gvarstatus("ALIVE_TEMPLATE") or temp
     caption = Qrh9_caption.format(
         ALIVE_TEXT=ALIVE_TEXT,
@@ -60,8 +60,8 @@ async def amireallyalive(event):
         ping=ms,
         Tare5=installation_time,
     )
-    if HuRe_IMG:
-        SHRU = [x for x in HuRe_IMG.split()]
+    if Qrue_IMG:
+        SHRU = [x for x in Qrue_IMG.split()]
         PIC = random.choice(SHRU)
         try:
             await event.client.send_file(

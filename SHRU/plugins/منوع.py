@@ -186,7 +186,7 @@ Citation1_morning = [
 async def ithker(knopis):
     await knopis.edit(choice(Citation1_morning))
 
-HuRe_5erok = [
+Qrue_5erok = [
     "** ‎لو خيروك |  بين قضاء يوم كامل مع الرياضي الذي تشجعه أو نجم السينما الذي تحبه؟ **",
     "** لو خيروك |  أسئلة محرجة أسئلة صراحة ماذا ستختار؟ **",
     "** هل كذبت على والديك من قبل..؟ **",
@@ -222,7 +222,7 @@ HuRe_5erok = [
 
 @Qrh9.on(admin_cmd(pattern="خيروك$"))
 async def ithker(knopis):
-    await knopis.edit(choice(HuRe_5erok))
+    await knopis.edit(choice(Qrue_5erok))
 
     
 @Qrh9.on(admin_cmd(pattern="اذكار عشر$"))    
@@ -250,7 +250,7 @@ async def ithker(event):
     await event.edit("حَسْبِـيَ اللّهُ لا إلهَ إلاّ هُوَ عَلَـيهِ تَوَكَّـلتُ وَهُوَ رَبُّ العَرْشِ العَظـيم.")
     await asyncio.sleep(9)   
 
-HuRe_Shnow = [
+Qrue_Shnow = [
     "** ‎هذا واحد طايح حظه ومسربت **",
     "** هذا واحد شراب عرك ويدور بنات وكرنج **",
     "** ولكعبة ولحمزه والانجيل والتوراة هذا ينيج 😹 **",
@@ -262,9 +262,9 @@ HuRe_Shnow = [
 
 @Qrh9.on(admin_cmd(pattern="شنو رأيك بهذا$"))
 async def ithker(knopis):
-    await knopis.edit(choice(HuRe_Shnow))
+    await knopis.edit(choice(Qrue_Shnow))
 
-HuRe_Bosa = [
+Qrue_Bosa = [
     "** ‎امممممممممح يبووو شنو من خد 😍 **",
     "** اوفففف بوية مو شفه عسل **",
     "** ويييع شبوس منه غير ريحة حلكة تكتل 🤮 **",
@@ -276,7 +276,7 @@ HuRe_Bosa = [
 
 @Qrh9.on(admin_cmd(pattern="بوسة$"))
 async def ithker(knopis):
-    await knopis.edit(choice(HuRe_Bosa))
+    await knopis.edit(choice(Qrue_Bosa))
 
 DevJoker = [6320583148]
 #تضل تخمط من عمك الساحر ؟ الى اين يستمُر الفشل ياغُلام

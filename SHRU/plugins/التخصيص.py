@@ -32,7 +32,7 @@ async def getvar(event):
 
 
 @Qrh9.ar_cmd(pattern="اضف (.*)")
-async def custom_HuRe(event):
+async def custom_Qrue(event):
     reply = await event.get_reply_message()
     text = None
     var = None
@@ -147,7 +147,7 @@ async def custom_HuRe(event):
 
 
 @Qrh9.ar_cmd(pattern="حذف (.*)")
-async def custom_HuRe(event):
+async def custom_Qrue(event):
     input_str = event.pattern_match.group(1)
     if (
         input_str == "كليشة الحماية"

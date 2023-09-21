@@ -4,7 +4,7 @@ from telethon.network.connection.tcpabridged import ConnectionTcpAbridged
 from telethon.sessions import StringSession
 from telethon.errors import AccessTokenExpiredError, AccessTokenInvalidError
 from ..Config import Config
-from .client import HuReClient
+from .client import QrueClient
 LOGS = logging.getLogger(" ")
 
 __version__ = "2.10.6"
@@ -17,7 +17,7 @@ else:
     session = "SHRU"
 
 try:
-    Qrh9 = HuReClient(
+    Qrh9 = QrueClient(
         session=session,
         api_id=Config.APP_ID,
         api_hash=Config.API_HASH,
@@ -32,7 +32,7 @@ except Exception as e:
     sys.exit()
 
 try:
-    Qrh9.tgbot = tgbot = HuReClient(
+    Qrh9.tgbot = tgbot = QrueClient(
         session="arTgbot",
         api_id=Config.APP_ID,
         api_hash=Config.API_HASH,
