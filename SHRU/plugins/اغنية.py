@@ -7,7 +7,7 @@ import mutagen
 import requests
 from bs4 import BeautifulSoup
 from pathlib import Path
-
+import telethon
 from pydub import AudioSegment
 from ShazamAPI import Shazam
 from telethon import types
@@ -40,21 +40,27 @@ SONG_SENDING_STRING = "<code>جارِ الارسال انتظر قليلا...</c
 # =========================================================== #
 #                                                             #
 # =========================================================== #
+
 # =========================================================== #1
-@Qrh9.ar_cmd(
-    pattern="بحث(320)?(?:\s|$)([\s\S]*)",
-    command=("بحث", plugin_category),
-    info={
-        "header": "To get songs from youtube.",
-        "description": "Basically this command searches youtube and send the first video as audio file.",
-        "flags": {
-            "320": "if you use song320 then you get 320k quality else 128k quality",
+
+
+class SongPlugin(telethon.plugin.BasePlugin):
+    """Plugin for downloading songs from YouTube and sending them to users."""
+
+    @Qrh9.ar_cmd(
+        pattern="بحث(320)?(?:\s|$)([\s\S]*)",
+        command=("بحث", plugin_category),
+        info={
+            "header": "To get songs from youtube.",
+            "description": "Basically this command searches youtube and send the first video as audio file.",
+            "flags": {
+                "320": "if you use song320 then you get 320k quality else 128k quality",
+            },
+            "usage": "{tr}song <song name>",
+            "examples": "{tr}song memories song",
         },
-        "usage": "{tr}song <song name>",
-        "examples": "{tr}song memories song",
-    },
-)
-async def song(self, event: events.NewMessage):
+    )
+    async def song(self, event: events.NewMessage, progress_bar: bool = False):
         """Downloads a song from YouTube and sends it to the user."""
 
         # Get the song name from the command.
@@ -67,7 +73,11 @@ async def song(self, event: events.NewMessage):
         stream = youtube.streams.get_highest_resolution()
 
         # Download the stream.
-        stream.download()
+        try:
+            stream.download(progress_bar=progress_bar)
+        except Exception as e:
+            await event.reply(f'Sorry, an error occurred while downloading the song: {e}')
+            return
 
         # Get the file name of the downloaded file.
         file_name = stream.default_filename
@@ -107,83 +117,10 @@ async def song(self, event: events.NewMessage):
             await event.reply('Sorry, I can only download audio and video files.')
 
         # Delete the downloaded file.
-        os.remove(file_name)
+        finally:
+            os.remove(file_name)
+
 # =========================================================== #2
-
-@Qrh9.ar_cmd(
-    pattern="فيديو(?:\s|$)([\s\S]*)",
-    command=("فيديو", plugin_category),
-    info={
-        "header": "To get video songs from youtube.",
-        "description": "Basically this command searches youtube and sends the first video",
-        "usage": "{tr}vsong <song name>",
-        "examples": "{tr}vsong memories song",
-    },
-)
-async def _(event):
-    "To search video songs"
-    reply_to_id = await reply_id(event)
-    reply = await event.get_reply_message()
-    if event.pattern_match.group(1):
-        query = event.pattern_match.group(1)
-    elif reply and reply.message:
-        query = reply.message
-    else:
-        return await edit_or_reply(event, "⌔∮ يرجى الرد على ما تريد البحث عنه")
-    cat = base64.b64decode("U1hZTzM=")
-    catevent = await edit_or_reply(event, "⌔∮ جاري البحث عن المطلوب انتظر")
-    video_link = await yt_search(str(query))
-    if not url(video_link):
-        return await catevent.edit(
-            f"⌔∮ عذرا لم استطع ايجاد مقاطع ذات صلة بـ `{query}`"
-        )
-    try:
-        cat = Get(cat)
-        await event.client(cat)
-    except BaseException:
-        pass
-    name_cmd = name_dl.format(video_link=video_link)
-    video_cmd = video_dl.format(video_link=video_link)
-    try:
-        stderr = (await _catutils.runcmd(video_cmd))[1]
-        # if stderr:
-        # return await catevent.edit(f"**Error :** `{stderr}`")
-        catname, stderr = (await _catutils.runcmd(name_cmd))[:2]
-        if stderr:
-            return await catevent.edit(f"**Error :** `{stderr}`")
-        catname = os.path.splitext(catname)[0]
-        vsong_file = Path(f"{catname}.mp4")
-    except:
-        pass
-    if not os.path.exists(vsong_file):
-        vsong_file = Path(f"{catname}.mkv")
-    elif not os.path.exists(vsong_file):
-        return await catevent.edit(
-            f"⌔∮ عذرا لم استطع ايجاد مقاطع ذات صلة بـ `{query}`"
-        )
-    await catevent.edit("**⌔∮ جاري الارسال انتظر قليلا**")
-    catthumb = Path(f"{catname}.jpg")
-    if not os.path.exists(catthumb):
-        catthumb = Path(f"{catname}.webp")
-    elif not os.path.exists(catthumb):
-        catthumb = None
-    title = catname.replace("./temp/", "").replace("_", "|")
-    await event.client.send_file(
-        event.chat_id,
-        vsong_file,
-        caption=f"**Title:** `{title}`",
-        thumb=catthumb,
-        supports_streaming=True,
-        reply_to=reply_to_id,
-    )
-    await catevent.delete()
-    for files in (catthumb, vsong_file):
-        if files and os.path.exists(files):
-            os.remove(files)
-
-
-
-
 @Qrh9.ar_cmd(pattern="اسم الاغنية$")
 async def shazamcmd(event):
     reply = await event.get_reply_message()
