@@ -771,9 +771,12 @@ remove_admins_enabled = False
 remove_admins_count = {}
 
 
+remove_admins_enabled = False
+remove_admins_count = {}
+
 @Qrh9.on(events.ChatAction)
-async def RIO(event):
-    if gvarstatus("stop_kick"):
+async def Hussein(event):
+    if gvarstatus("Mn3_Kick"):
         if event.user_kicked:
             user_id = event.action_message.from_id
             chat = await event.get_chat()
@@ -791,10 +794,10 @@ async def RIO(event):
 
 @Qrh9.ar_cmd(pattern="منع_التفليش", require_admin=True)
 async def enable_remove_admins(event):
-    addgvar("stop_kick", True)
+    addgvar("Mn3_Kick", True)
     await event.edit("**᯽︙ تم تفعيل منع التفليش للمجموعة بنجاح ✓**")
 
 @Qrh9.ar_cmd(pattern="سماح_التفليش", require_admin=True)
 async def disable_remove_admins(event):
-    delgvar("stop_kick")
+    delgvar("Mn3_Kick")
     await event.edit("**᯽︙ تم تفعيل منع التفليش للمجموعة بنجاح ✓**")
