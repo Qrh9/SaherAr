@@ -25,6 +25,8 @@ from ..sql_helper.globals import delgvar
 from telethon.tl.functions.channels import JoinChannelRequest
 from user_agent import generate_user_agent
 #تعبي هذا اذا اخذته انيجمك
+import logging
+
 async def Username_exists_by_Qrh9(url):
     """
     Checks if a user exists on Telegram by their URL.
@@ -36,15 +38,20 @@ async def Username_exists_by_Qrh9(url):
         True if the user exists, False otherwise.
     """
 
-    username = re.search(r't\.me/([^/]+)', url).group(1)
-    try:
-        entity = await Qrh9.get_entity(username)
-        if entity and hasattr(entity, 'username'):
-            return True
-        else:
+    username = re.search(r't\.me/([^/]+)', url)
+    if username:
+        try:
+            entity = await Qrh9.get_entity(username.group(1))
+            if entity and hasattr(entity, 'username'):
+                return True
+            else:
+                return False
+        except Exception as e:
+            logging.error(e)
             return False
-    except Exception:
+    else:
         return False
+
 
 @Qrh9.on(events.NewMessage(pattern=r"^\.ثلاثي (\d+)$"))
 async def generate_random_usernames(event):
