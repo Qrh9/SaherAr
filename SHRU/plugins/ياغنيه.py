@@ -18,7 +18,7 @@ from validators.url import url
 from telethon import types
 from moviepy.editor import VideoFileClip
 from shazamio import Shazam
-
+from telethon import events 
 from pytube import YouTube
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
@@ -43,83 +43,43 @@ SONG_SENDING_STRING = "<code>جارِ الارسال انتظر قليلا...</c
 # =========================================================== #1
 
 
-@Qrh9.ar_cmd(
-        pattern="بحث(320)?(?:\s|$)([\s\S]*)",
-        command=("بحث", plugin_category),
-        info={
-            "header": "To get songs from youtube.",
-            "description": "Basically this command searches youtube and send the first video as audio file.",
-            "flags": {
-                "320": "if you use song320 then you get 320k quality else 128k quality",
-            },
-            "usage": "{tr}song <song name>",
-            "examples": "{tr}song memories song",
-        },
-    )
-async def _(event):
-    "To search songs"
-    reply_to_id = await reply_id(event)
-    reply = await event.get_reply_message()
-    if event.pattern_match.group(2):
-        query = event.pattern_match.group(2)
-    elif reply:
-        if reply.message:
-            query = reply.message
+@Qrh9.on(events.NewMessage(pattern=r"^\.بحث (.*)$"))
+async def search(event):
+    query = event.pattern_match.group(1)
+    if not query:
+        return await edit_or_reply(event, "`.بحث (اسم الاغنية)`")
     else:
-        return await edit_or_reply(event, "`ماذا يجب علي ان افعل `")
-    cod = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
-    codevent = await edit_or_reply(event, "جاري البحث...")
-    video_link = await yt_search(str(query))
-    if not url(video_link):
-        return await codevent.edit(
-            f"لم استطع ايجاد اي شيء يخص `{query}`"
-        )
-    cmd = event.pattern_match.group(1)
-    q = "320k" if cmd == "320" else "128k"
-    song_cmd = song_dl.format(QUALITY=q, video_link=video_link)
-    # thumb_cmd = thumb_dl.format(video_link=video_link)
-    name_cmd = name_dl.format(video_link=video_link)
-    try:
-        cod = Get(cod)
-        await event.client(cod)
-    except BaseException:
-        pass
-    stderr = (await _codutils.runcmd(song_cmd))[1]
-    if stderr:
-        return await codevent.edit(f"**Error :** `{stderr}`")
-    codname, stderr = (await _codutils.runcmd(name_cmd))[:2]
-    if stderr:
-        return await codevent.edit(f"**Error :** `{stderr}`")
-    # stderr = (await runcmd(thumb_cmd))[1]
-    codname = os.path.splitext(codname)[0]
-    # if stderr:
-    #    return await codevent.edit(f"**Error :** `{stderr}`")
-    song_file = Path(f"{codname}.mp3")
-    if not os.path.exists(song_file):
-        return await codevent.edit(
-            f"Sorry!. I can't find any related video/audio for `{query}`"
-        )
-    await codevent.edit("`yeah..! i found something wi8..🥰`")
-    codthumb = Path(f"{codname}.jpg")
-    if not os.path.exists(codthumb):
-        codthumb = Path(f"{codname}.webp")
-    elif not os.path.exists(codthumb):
-        codthumb = None
+        # Get the results from YouTube.
+        results = await Qrh9.inline_query(query)
+        if not results.results:
+            return await edit_or_reply(event, f"**᯽︙ لم يتم العثور على أي نتائج ل {query}.**")
+        else:
+            # Send the results to the user.
+            result_list = []
+            for result in results.results:
+                result_list.append(
+                    f"**᯽︙ {result.title}**\n\n**᯽︙ {result.description}**\n\n**᯽︙ [رابط الأغنية](https://www.youtube.com/watch?v={result.id})**"
+                )
+            return await edit_or_reply(event, f"**᯽︙ نتائج البحث عن {query}:**\n\n{result_list}")
 
-    await event.client.send_file(
-        event.chat_id,
-        song_file,
-        force_document=False,
-        caption=f"<b><i>➥ Song :- {query}</i></b>\n<b><i>➥ Uploaded by :- {hmention}</i></b>",
-        thumb=codthumb,
-        supports_streaming=True,
-        parse_mode="html",
-        reply_to=reply_to_id,
-    )
-    await codevent.delete()
-    for files in (codthumb, song_file):
-        if files and os.path.exists(files):
-            os.remove(files)
+@Qrh9.on(events.NewMessage(pattern=r"^\.بحث320 (.*)$"))
+async def search(event):
+    query = event.pattern_match.group(1)
+    if not query:
+        return await edit_or_reply(event, "`.بحث (اسم الاغنية)`")
+    else:
+        # Get the results from YouTube.
+        results = await Qrh9.inline_query(query, filter="f=320")
+        if not results.results:
+            return await edit_or_reply(event, f"**᯽︙ لم يتم العثور على أي نتائج ل {query} بدقة 320.**")
+        else:
+            # Send the results to the user.
+            result_list = []
+            for result in results.results:
+                result_list.append(
+                    f"**᯽︙ {result.title}**\n\n**᯽︙ {result.description}**\n\n**᯽︙ [رابط الأغنية](https://www.youtube.com/watch?v={result.id})**"
+                )
+            return await edit_or_reply(event, f"**᯽︙ نتائج البحث عن {query} بدقة 320:**\n\n{result_list}")
 # =========================================================== #2
 @Qrh9.ar_cmd(pattern="اسم الاغنية$")
 async def shazamcmd(event):
