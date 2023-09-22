@@ -23,19 +23,31 @@ from ..sql_helper.global_collection import (
 )
 from ..sql_helper.globals import delgvar
 from telethon.tl.functions.channels import JoinChannelRequest
-
+from user_agent import generate_user_agent
 #تعبي هذا اذا اخذته انيجمك
 
 
-async def Username_exists_by_Qrh9(username):
-    try:
-        entity = await Qrh9.get_entity(username)
-        if entity and hasattr(entity, 'username'):
-            return True
-        else:
-            return False
-    except Exception:
+
+def Username_exists_by_Qrh9(username):
+    url = "https://t.me/" + str(username)
+    headers = {
+        "User-Agent": generate_user_agent(),
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "ar-EG,ar;q=0.9,en-US;q=0.8,en;q=0.7",
+    }
+
+    response = requests.get(url, headers=headers)
+    if (
+        response.text.find(
+            'If you have <strong>Telegram</strong>, you can contact <a class="tgme_username_link"'
+        )
+        >= 0
+    ):
+        return True
+    else:
         return False
+
 @Qrh9.on(events.NewMessage(pattern=r"^\.ثلاثي (\d+)$"))
 async def generate_random_usernames(event):
 
