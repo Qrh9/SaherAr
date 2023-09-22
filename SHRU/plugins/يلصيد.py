@@ -30,19 +30,19 @@ import logging
 
 async def Username_exists_by_Qrh9(username):
     """
-    Checks if a user exists on Telegram and fragments.com by their username.
+    Checks if a user exists in fragments but not on Telegram by their username.
 
     Args:
         username: The username of the user to check.
 
     Returns:
-        True if the user exists on either Telegram or fragments.com, False otherwise.
+        True if the user exists in fragments but not on Telegram, False otherwise.
     """
 
     try:
         entity = await Qrh9.get_entity(username)
         if entity and hasattr(entity, 'username'):
-            return True
+            return False
     except Exception:
         pass
 
