@@ -67,13 +67,13 @@ async def _(event):
         if reply.message:
             query = reply.message
     else:
-        return await edit_or_reply(event, "`What I am Supposed to find `")
+        return await edit_or_reply(event, "`ماذا يجب علي ان افعل `")
     cod = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
-    codevent = await edit_or_reply(event, "`wi8..! I am finding your song....`")
+    codevent = await edit_or_reply(event, "جاري البحث...")
     video_link = await yt_search(str(query))
     if not url(video_link):
         return await codevent.edit(
-            f"Sorry!. I can't find any related video/audio for `{query}`"
+            f"لم استطع ايجاد اي شيء يخص `{query}`"
         )
     cmd = event.pattern_match.group(1)
     q = "320k" if cmd == "320" else "128k"
