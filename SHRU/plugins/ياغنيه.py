@@ -18,8 +18,7 @@ from validators.url import url
 from telethon import types
 from moviepy.editor import VideoFileClip
 from shazamio import Shazam
-from telethon import events
-from telethon.tl.types import Message, InputMediaAudio, InputMediaVideo
+
 from pytube import YouTube
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
