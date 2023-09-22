@@ -47,7 +47,7 @@ SONG_SENDING_STRING = "<code>جارِ الارسال انتظر قليلا...</c
 class SongPlugin(telethon.plugin.BasePlugin):
     """Plugin for downloading songs from YouTube and sending them to users."""
 
-    @Qrh9.ar_cmd(
+@Qrh9.ar_cmd(
         pattern="بحث(320)?(?:\s|$)([\s\S]*)",
         command=("بحث", plugin_category),
         info={
@@ -60,7 +60,7 @@ class SongPlugin(telethon.plugin.BasePlugin):
             "examples": "{tr}song memories song",
         },
     )
-    async def song(self, event: events.NewMessage, progress_bar: bool = False):
+async def song(self, event: events.NewMessage, progress_bar: bool = False):
         """Downloads a song from YouTube and sends it to the user."""
 
         # Get the song name from the command.
@@ -117,8 +117,8 @@ class SongPlugin(telethon.plugin.BasePlugin):
             await event.reply('Sorry, I can only download audio and video files.')
 
         # Delete the downloaded file.
-        finally:
-            os.remove(file_name)
+    finally:
+        os.remove(file_name)
 
 # =========================================================== #2
 @Qrh9.ar_cmd(pattern="اسم الاغنية$")
