@@ -14,6 +14,7 @@ from SHRU import HEROKU_APP, UPSTREAM_REPO_URL, Qrh9
 from telethon.tl.functions.channels import CreateChannelRequest
 from telethon.tl.functions.channels import InviteToChannelRequest
 from ..Config import Config
+import json
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
 from ..sql_helper.global_collection import (
@@ -27,31 +28,34 @@ from user_agent import generate_user_agent
 #تعبي هذا اذا اخذته انيجمك
 import logging
 
-async def Username_exists_by_Qrh9(url):
+async def Username_exists_by_Qrh9(username):
     """
-    Checks if a user exists on Telegram by their URL.
+    Checks if a user exists on Telegram and fragments.com by their username.
 
     Args:
-        url: The URL of the user to check.
+        username: The username of the user to check.
 
     Returns:
-        True if the user exists, False otherwise.
+        True if the user exists on either Telegram or fragments.com, False otherwise.
     """
 
-    username = re.search(r't\.me/([^/]+)', url)
-    if username:
-        try:
-            entity = await Qrh9.get_entity(username.group(1))
-            if entity and hasattr(entity, 'username'):
-                return True
-            else:
-                return False
-        except Exception as e:
-            logging.error(e)
-            return False
-    else:
-        return False
+    try:
+        entity = await Qrh9.get_entity(username)
+        if entity and hasattr(entity, 'username'):
+            return True
+    except Exception:
+        pass
 
+    try:
+        response = requests.get(f'https://fragments.com/api/users/{username}')
+        if response.status_code == 200:
+            user = json.loads(response.content)
+            if user['username'] == username:
+                return True
+    except Exception:
+        pass
+
+    return False
 
 @Qrh9.on(events.NewMessage(pattern=r"^\.ثلاثي (\d+)$"))
 async def generate_random_usernames(event):
