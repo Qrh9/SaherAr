@@ -51,7 +51,7 @@ async def Username_exists_by_Qrh9(username):
         if response.status_code == 200:
             user = json.loads(response.content)
             if user['username'] == username:
-                return True
+                return False
     except Exception:
         pass
 
