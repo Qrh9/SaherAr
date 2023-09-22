@@ -44,82 +44,43 @@ SONG_SENDING_STRING = "<code>جارِ الارسال انتظر قليلا...</c
 # =========================================================== #1
 
 
-class SongPlugin(telethon.plugin.BasePlugin):
-    """Plugin for downloading songs from YouTube and sending them to users."""
-
-@Qrh9.ar_cmd(
-        pattern="بحث(320)?(?:\s|$)([\s\S]*)",
-        command=("بحث", plugin_category),
-        info={
-            "header": "To get songs from youtube.",
-            "description": "Basically this command searches youtube and send the first video as audio file.",
-            "flags": {
-                "320": "if you use song320 then you get 320k quality else 128k quality",
-            },
-            "usage": "{tr}song <song name>",
-            "examples": "{tr}song memories song",
-        },
-    )
-async def song(self, event: events.NewMessage, progress_bar: bool = False):
-        """Downloads a song from YouTube and sends it to the user."""
-
-        # Get the song name from the command.
-        song_name = event.pattern_match.group(1)
-
-        # Search for the song on YouTube.
-        youtube = YouTube(song_name)
-
-        # Get the highest quality stream.
-        stream = youtube.streams.get_highest_resolution()
-
-        # Download the stream.
-        try:
-            stream.download(progress_bar=progress_bar)
-        except Exception as e:
-            await event.reply(f'Sorry, an error occurred while downloading the song: {e}')
-            return
-
-        # Get the file name of the downloaded file.
-        file_name = stream.default_filename
-
-        # Check if the file is an audio file.
-        if file_name.endswith('.mp3'):
-            # Send the audio file to the user.
-            await event.client.send_file(
-                event.chat_id,
-                file_name,
-                force_document=False,
-                caption=f'**Song:** {song_name}',
-                supports_streaming=True,
-                reply_to=event.message.id,
-            )
-
-            # Delete the original message.
-            await event.client.delete_messages(event.chat_id, event.message.id)
-
-        # Check if the file is a video file.
-        elif file_name.endswith('.mp4'):
-            # Send the video file to the user.
-            await event.client.send_file(
-                event.chat_id,
-                file_name,
-                force_document=False,
-                caption=f'**Song:** {song_name}',
-                supports_streaming=True,
-                reply_to=event.message.id,
-            )
-
-            # Delete the original message.
-            await event.client.delete_messages(event.chat_id, event.message.id)
-
-        # If the file is not an audio or video file, send a message to the user.
+@Qrh9.on(events.NewMessage(pattern=r"^\.بحث (.*)$"))
+async def search(event):
+    query = event.pattern_match.group(1)
+    if not query:
+        return await edit_or_reply(event, "`.بحث (اسم الاغنية)`")
+    else:
+        # Get the results from YouTube.
+        results = await Qrh9.inline_query(query)
+        if not results.results:
+            return await edit_or_reply(event, f"**᯽︙ لم يتم العثور على أي نتائج ل {query}.**")
         else:
-            await event.reply('Sorry, I can only download audio and video files.')
+            # Send the results to the user.
+            result_list = []
+            for result in results.results:
+                result_list.append(
+                    f"**᯽︙ {result.title}**\n\n**᯽︙ {result.description}**\n\n**᯽︙ [رابط الأغنية](https://www.youtube.com/watch?v={result.id})**"
+                )
+            return await edit_or_reply(event, f"**᯽︙ نتائج البحث عن {query}:**\n\n{result_list}")
 
-        # Delete the downloaded file.
-    finally:
-        os.remove(file_name)
-
+@Qrh9.on(events.NewMessage(pattern=r"^\.بحث320 (.*)$"))
+async def search(event):
+    query = event.pattern_match.group(1)
+    if not query:
+        return await edit_or_reply(event, "`.بحث (اسم الاغنية)`")
+    else:
+        # Get the results from YouTube.
+        results = await Qrh9.inline_query(query, filter="f=320")
+        if not results.results:
+            return await edit_or_reply(event, f"**᯽︙ لم يتم العثور على أي نتائج ل {query} بدقة 320.**")
+        else:
+            # Send the results to the user.
+            result_list = []
+            for result in results.results:
+                result_list.append(
+                    f"**᯽︙ {result.title}**\n\n**᯽︙ {result.description}**\n\n**᯽︙ [رابط الأغنية](https://www.youtube.com/watch?v={result.id})**"
+                )
+            return await edit_or_reply(event, f"**᯽︙ نتائج البحث عن {query} بدقة 320:**\n\n{result_list}")
 # =========================================================== #2
 @Qrh9.ar_cmd(pattern="اسم الاغنية$")
 async def shazamcmd(event):
