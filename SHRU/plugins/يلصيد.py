@@ -25,28 +25,26 @@ from ..sql_helper.globals import delgvar
 from telethon.tl.functions.channels import JoinChannelRequest
 from user_agent import generate_user_agent
 #تعبي هذا اذا اخذته انيجمك
+async def Username_exists_by_Qrh9(url):
+    """
+    Checks if a user exists on Telegram by their URL.
 
+    Args:
+        url: The URL of the user to check.
 
+    Returns:
+        True if the user exists, False otherwise.
+    """
 
-import aiohttp
-
-async def Username_exists_by_Qrh9(username):
-    url = "https://t.me/" + str(username)
-    headers = {
-        "User-Agent": generate_user_agent(),
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Accept-Language": "ar-EG,ar;q=0.9,en-US;q=0.8,en;q=0.7",
-    }
-
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url, headers=headers) as response:
-            if response.status == 200:
-                html_content = await response.text()
-                return 'If you have <strong>Telegram</strong>, you can contact <a class="tgme_username_link"' in html_content
-            else:
-                return False
-
+    username = re.search(r't\.me/([^/]+)', url).group(1)
+    try:
+        entity = await Qrh9.get_entity(username)
+        if entity and hasattr(entity, 'username'):
+            return True
+        else:
+            return False
+    except Exception:
+        return False
 
 @Qrh9.on(events.NewMessage(pattern=r"^\.ثلاثي (\d+)$"))
 async def generate_random_usernames(event):
