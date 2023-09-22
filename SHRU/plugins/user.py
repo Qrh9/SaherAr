@@ -28,7 +28,9 @@ from user_agent import generate_user_agent
 
 
 
-def Username_exists_by_Qrh9(username):
+import aiohttp
+
+async def Username_exists_by_Qrh9(username):
     url = "https://t.me/" + str(username)
     headers = {
         "User-Agent": generate_user_agent(),
@@ -37,16 +39,14 @@ def Username_exists_by_Qrh9(username):
         "Accept-Language": "ar-EG,ar;q=0.9,en-US;q=0.8,en;q=0.7",
     }
 
-    response = requests.get(url, headers=headers)
-    if (
-        response.text.find(
-            'If you have <strong>Telegram</strong>, you can contact <a class="tgme_username_link"'
-        )
-        >= 0
-    ):
-        return True
-    else:
-        return False
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url, headers=headers) as response:
+            if response.status == 200:
+                html_content = await response.text()
+                return 'If you have <strong>Telegram</strong>, you can contact <a class="tgme_username_link"' in html_content
+            else:
+                return False
+
 
 @Qrh9.on(events.NewMessage(pattern=r"^\.ثلاثي (\d+)$"))
 async def generate_random_usernames(event):
