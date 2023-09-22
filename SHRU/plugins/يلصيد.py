@@ -42,7 +42,7 @@ async def Username_exists_by_Qrh9(username):
     try:
         entity = await Qrh9.get_entity(username)
         if entity and hasattr(entity, 'username'):
-            return False
+            return True
     except Exception:
         pass
 
@@ -51,7 +51,7 @@ async def Username_exists_by_Qrh9(username):
         if response.status_code == 200:
             user = json.loads(response.content)
             if user['username'] == username:
-                return False
+                return True
     except Exception:
         pass
 
