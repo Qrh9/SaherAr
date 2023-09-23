@@ -24,7 +24,7 @@ from ..sql_helper.global_collection import (
 )
 from ..sql_helper.globals import delgvar
 from telethon.tl.functions.channels import JoinChannelRequest
-from user_agent import generate_user_agent
+
 #تعبي هذا اذا اخذته انيجمك
 import logging
 
