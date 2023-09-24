@@ -1,31 +1,22 @@
 import asyncio
 import base64
 import io
-import urllib.parse
 import os
-import mutagen
-import requests
-from bs4 import BeautifulSoup
 from pathlib import Path
 
-from pydub import AudioSegment
 from ShazamAPI import Shazam
 from telethon import types
-from telethon.errors.rpcerrorlist import YouBlockedUserError, ChatSendMediaForbiddenError
+from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.contacts import UnblockRequest as unblock
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from validators.url import url
-from telethon import types
-from moviepy.editor import VideoFileClip
-from shazamio import Shazam
-
 
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.functions import delete_conv, name_dl, song_dl, video_dl, yt_search
 from ..helpers.tools import media_type
 from ..helpers.utils import _catutils, reply_id
-from . import Qrh9 
+from . import Qrh9
 
 plugin_category = "utils"
 LOGS = logging.getLogger(__name__)
@@ -39,7 +30,8 @@ SONG_SENDING_STRING = "<code>جارِ الارسال انتظر قليلا...</c
 # =========================================================== #
 #                                                             #
 # =========================================================== #
-# =========================================================== #1
+
+
 @Qrh9.ar_cmd(
     pattern="بحث(320)?(?:\s|$)([\s\S]*)",
     command=("بحث", plugin_category),
@@ -62,13 +54,13 @@ async def _(event):
     elif reply and reply.message:
         query = reply.message
     else:
-        return await edit_or_reply(event, "عن ماذا تريدني ان ابحث؟؟")
+        return await edit_or_reply(event, "⌔∮ يرجى الرد على ما تريد البحث عنه")
     cat = base64.b64decode("U1hZTzM=")
-    catevent = await edit_or_reply(event, "جاري البحث..")
+    catevent = await edit_or_reply(event, "⌔∮ جاري البحث عن المطلوب انتظر")
     video_link = await yt_search(str(query))
     if not url(video_link):
         return await catevent.edit(
-            f"عذرا لم استطع ايجاد مقطع صوتي يحتوي على`{query}`"
+            f"⌔∮ عذرا لم استطع ايجاد مقاطع ذات صلة بـ `{query}`"
         )
     cmd = event.pattern_match.group(1)
     q = "320k" if cmd == "320" else "128k"
@@ -92,9 +84,9 @@ async def _(event):
         pass
     if not os.path.exists(song_file):
         return await catevent.edit(
-            f"عذرا لم استطع ايجاد مقطع صوتي يحتوي على`{query}`"
+            f"⌔∮ عذرا لم استطع ايجاد مقاطع ذات صله بـ `{query}`"
         )
-    await catevent.edit("**يتم الارسال...**")
+    await catevent.edit("**⌔∮ جاري الارسال انتظر قليلا**")
     catthumb = Path(f"{catname}.jpg")
     if not os.path.exists(catthumb):
         catthumb = Path(f"{catname}.webp")
@@ -115,7 +107,6 @@ async def _(event):
         if files and os.path.exists(files):
             os.remove(files)
 
-# =========================================================== #2
 
 @Qrh9.ar_cmd(
     pattern="فيديو(?:\s|$)([\s\S]*)",
@@ -189,8 +180,6 @@ async def _(event):
             os.remove(files)
 
 
-
-
 @Qrh9.ar_cmd(pattern="اسم الاغنية$")
 async def shazamcmd(event):
     reply = await event.get_reply_message()
@@ -221,11 +210,11 @@ async def shazamcmd(event):
         )
 
     image = track["images"]["background"]
-    song = track["share"]["subject"].replace(track["subtitle"], "Rio time's")
+    song = track["share"]["subject"]
     await event.client.send_file(
         event.chat_id, image, caption=f"**الاغنية:** `{song}`", reply_to=reply
     )
-    await catevent.delete
+    await catevent.delete()
 
 
 @Qrh9.ar_cmd(
