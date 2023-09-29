@@ -5,7 +5,8 @@ import os
 from pathlib import Path
 from SHRU.helpers.functions.musictool import song_download
 from SHRU.helpers.functions.utube import yt_search
-
+from telethon.tl.functions.messages import GetBotCallbackAnswerRequest
+import re
 from ShazamAPI import Shazam
 from telethon import types
 from telethon.errors.rpcerrorlist import YouBlockedUserError
@@ -199,3 +200,39 @@ async def _(event):
         )
         await catevent.delete()
         await delete_conv(event, chat, purgeflag)
+@Qrh9.ar_cmd(
+    pattern=r"مرر$",
+    command=("مرر", plugin_category),
+    info={
+        "header": "Repeat Clicking on Links",
+        "description": "Clicks on links in a message repeatedly until there are no more links.",
+        "usage": ".مرر (reply to a message with links)",
+        "examples": [".مرر (reply to a message with links)"],
+    },
+)
+async def repeat_links(event):
+    msg = await event.get_reply_message()
+
+    if msg is None:
+        await event.edit("wwwq.")
+        return
+
+    repetitions = 0
+
+    while re.search(r'https?://\S+', msg.text):
+        link_match = re.search(r'https?://\S+', msg.text)
+
+        if link_match:
+            url = link_match.group()
+
+            await event.client(GetBotCallbackAnswerRequest(
+                event.chat_id,
+                msg.id,
+                data=msg.reply_markup.rows[0].buttons[0].url,
+            ))
+
+            repetitions += 1
+
+            msg = await event.get_reply_message()
+
+    await event.edit(f"Clicked on {repetitions} links.")
