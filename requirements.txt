@@ -1,2 +1,2 @@
 googletrans==3.1.0a0
-python-minifier
+git+https://github.com/yt-dlp/yt-dlp
