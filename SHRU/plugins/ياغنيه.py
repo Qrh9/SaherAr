@@ -32,9 +32,7 @@ SONG_SENDING_STRING = "<code>جارِ الارسال انتظر قليلا...</c
 # =========================================================== #
 #                                                             #
 # =========================================================== #
-
-
-@Qrh9.ar_cmd(
+@jepiq.ar_cmd(
     pattern="بحث(320)?(?:\s|$)([\s\S]*)",
     command=("بحث", plugin_category),
     info={
@@ -56,33 +54,60 @@ async def _(event):
     elif reply and reply.message:
         query = reply.message
     else:
-        return await edit_or_reply(
-            event,
-            "**مالذي تريد البحث عنه؟**",
-        )
+        return await edit_or_reply(event, "⌔∮ يرجى الرد على ما تريد البحث عنه")
     cat = base64.b64decode("U1hZTzM=")
-    rioevent = await edit_or_reply(event, "**⌔∮ جـار البحث يرجى الانتظار ...**")
+    catevent = await edit_or_reply(event, "⌔∮ جاري البحث عن المطلوب انتظر")
     video_link = await yt_search(str(query))
     if not url(video_link):
-        return await rioevent.edit(f"**عـذراً لـم استطـع ايجـاد** {query}")
+        return await catevent.edit(
+            f"⌔∮ عذرا لم استطع ايجاد مقاطع ذات صلة بـ `{query}`"
+        )
     cmd = event.pattern_match.group(1)
     q = "320k" if cmd == "320" else "128k"
-    song_file, riothumb, title = await song_download(
-        video_link, rioevent, quality=q
-    )
+    song_cmd = song_dl.format(QUALITY=q, video_link=video_link)
+    name_cmd = name_dl.format(video_link=video_link)
+    try:
+        cat = Get(cat)
+        await event.client(cat)
+    except BaseException:
+        pass
+    try:
+        stderr = (await _catutils.runcmd(song_cmd))[1]
+        catname, stderr = (await _catutils.runcmd(name_cmd))[:2]
+        if stderr:
+            return await catevent.edit(f"**خطأ :** `{stderr}`")
+        catname = os.path.splitext(catname)[0]
+        song_file = Path(f"{catname}.mp3")
+    except:
+        pass
+    if not os.path.exists(song_file):
+        return await catevent.edit(
+            f"⌔∮ عذرا لم استطع ايجاد مقاطع ذات صله بـ `{query}`"
+        )
+    await catevent.edit("**⌔∮ جاري الارسال انتظر قليلا**")
+    catthumb = Path(f"{catname}.jpg")
+    if not os.path.exists(catthumb):
+        catthumb = Path(f"{catname}.webp")
+    elif not os.path.exists(catthumb):
+        catthumb = None
+    title = catname.replace("./temp/", "").replace("_", "|")
     await event.client.send_file(
         event.chat_id,
         song_file,
         force_document=False,
         caption=f"**العنوان:** `{title}`",
-        thumb=riothumb,
+        thumb=catthumb,
         supports_streaming=True,
         reply_to=reply_to_id,
     )
-    await rioevent.delete()
-    for files in (riothumb, song_file):
+    await catevent.delete()
+    for files in (catthumb, song_file):
         if files and os.path.exists(files):
             os.remove(files)
+
+
+
+
 @Qrh9.ar_cmd(pattern="اسم الاغنية$")
 async def shazamcmd(event):
     reply = await event.get_reply_message()
