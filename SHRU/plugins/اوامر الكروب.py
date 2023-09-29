@@ -767,9 +767,6 @@ async def reply_to_hussein(event):
             response = requests.get(f'https://gptzaid.zaidbot.repl.co/1/text={text}').text
             await asyncio.sleep(4)
             await event.reply(response)
-remove_admins_enabled = False
-remove_admins_count = {}
-
 
 remove_admins_enabled = False
 remove_admins_count = {}
