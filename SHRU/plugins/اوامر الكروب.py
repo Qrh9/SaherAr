@@ -783,7 +783,7 @@ async def Hussein(event):
             if chat and user_id:
                 now = datetime.now()
                 if user_id in remove_admins_count:
-                    if (now - remove_admins_count[user_id]).seconds < 3:
+                    if (now - remove_admins_count[user_id]).seconds < 1:
                         admin_info = await event.client.get_entity(user_id)
                         await event.reply(f"**᯽︙ تم تنزيل المشرف {admin_info.first_name} بسبب محاوله فاشله للتفليش**")
                         await event.client.edit_admin(chat, user_id, change_info=False)
