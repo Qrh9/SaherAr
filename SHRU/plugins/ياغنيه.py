@@ -211,28 +211,43 @@ async def _(event):
     },
 )
 async def repeat_links(event):
+    # Get the message containing a link
     msg = await event.get_reply_message()
 
+    # Check if there is a message to reply to
     if msg is None:
-        await event.edit("wwwq.")
+        await event.edit("Please reply to a message containing a link.")
         return
 
+    # Initialize a variable to store the number of repetitions
     repetitions = 0
 
+    # Loop until there are no more links in the message
     while re.search(r'https?://\S+', msg.text):
+        # Find the first link in the message
         link_match = re.search(r'https?://\S+', msg.text)
 
         if link_match:
+            # Get the URL from the match
             url = link_match.group()
 
-            await event.client(GetBotCallbackAnswerRequest(
-                event.chat_id,
-                msg.id,
-                data=msg.reply_markup.rows[0].buttons[0].url,
-            ))
+            # Check if the message has a reply markup
+            if msg.reply_markup:
+                # Click on the link using the GetBotCallbackAnswerRequest
+                await event.client(GetBotCallbackAnswerRequest(
+                    event.chat_id,
+                    msg.id,
+                    data=msg.reply_markup.rows[0].buttons[0].url,
+                ))
 
+            # Increment the repetitions counter
             repetitions += 1
 
+            # Get the updated message after clicking the link
             msg = await event.get_reply_message()
 
+    # Edit the message to indicate the number of repetitions
     await event.edit(f"Clicked on {repetitions} links.")
+
+# Add the command to the plugin category
+plugin_category = "your_category_here"
