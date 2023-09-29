@@ -201,7 +201,7 @@ async def _(event):
         await catevent.delete()
         await delete_conv(event, chat, purgeflag)
         
-@Qrh9.ar_cmd(pattern="مرر", require_admin=True)
+@Qrh9.ar_cmd(pattern="ععمي$")
 async def forward(event):
     reply_message = event.reply_to_message
     if reply_message and reply_message.entities:
