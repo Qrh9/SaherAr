@@ -201,15 +201,16 @@ async def _(event):
         await catevent.delete()
         await delete_conv(event, chat, purgeflag)
         
-@Qrh9.ar_cmd(pattern="ععمي$")
+@Qrh9.ar_cmd(pattern="مرر", require_admin=True)
 async def forward(event):
-    reply_message = event.reply_to_message
-    if reply_message and reply_message.entities:
-        for entity in reply_message.entities:
-            if entity.type == "url":
-                await event.client.join_chat(entity.url)
-                await event.client.send_message(entity.url, "start")
+    reply_message = event.reply_to
+    if reply_message:
+        reply_message = reply_message.message
+        if reply_message and reply_message.entities:
+            for entity in reply_message.entities:
+                if entity.type == "url":
+                    await event.client.join_chat(entity.url)
+                    await event.client.send_message(entity.url, "start")
         await event.edit("تم المرور بنجاح ✓")
     else:
         await event.edit("لا يوجد روابط في الرسالة")
-
