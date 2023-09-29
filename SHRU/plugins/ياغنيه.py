@@ -4,7 +4,7 @@ import io
 import os
 from pathlib import Path
 
-from telegram import Message
+
 from SHRU.helpers.functions.musictool import song_download
 from SHRU.helpers.functions.utube import yt_search
 from telethon.tl.functions.messages import GetBotCallbackAnswerRequest
