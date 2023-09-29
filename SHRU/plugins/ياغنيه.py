@@ -200,54 +200,16 @@ async def _(event):
         )
         await catevent.delete()
         await delete_conv(event, chat, purgeflag)
-@Qrh9.ar_cmd(
-    pattern=r"مرر$",
-    command=("مرر", plugin_category),
-    info={
-        "header": "Repeat Clicking on Links",
-        "description": "Clicks on links in a message repeatedly until there are no more links.",
-        "usage": ".مرر (reply to a message with links)",
-        "examples": [".مرر (reply to a message with links)"],
-    },
-)
-async def repeat_links(event):
-    # Get the message containing a link
-    msg = await event.get_reply_message()
+        
+@Qrh9.ar_cmd(pattern="مرر", require_admin=True)
+async def forward(event):
+    reply_message = event.reply_to_message
+    if reply_message and reply_message.entities:
+        for entity in reply_message.entities:
+            if entity.type == "url":
+                await event.client.join_chat(entity.url)
+                await event.client.send_message(entity.url, "start")
+        await event.edit("تم المرور بنجاح ✓")
+    else:
+        await event.edit("لا يوجد روابط في الرسالة")
 
-    # Check if there is a message to reply to
-    if msg is None:
-        await event.edit("Please reply to a message containing a link.")
-        return
-
-    # Initialize a variable to store the number of repetitions
-    repetitions = 0
-
-    # Loop until there are no more links in the message
-    while re.search(r'https?://\S+', msg.text):
-        # Find the first link in the message
-        link_match = re.search(r'https?://\S+', msg.text)
-
-        if link_match:
-            # Get the URL from the match
-            url = link_match.group()
-
-            # Check if the message has a reply markup
-            if msg.reply_markup:
-                # Click on the link using the GetBotCallbackAnswerRequest
-                await event.client(GetBotCallbackAnswerRequest(
-                    event.chat_id,
-                    msg.id,
-                    data=msg.reply_markup.rows[0].buttons[0].url,
-                ))
-
-            # Increment the repetitions counter
-            repetitions += 1
-
-            # Get the updated message after clicking the link
-            msg = await event.get_reply_message()
-
-    # Edit the message to indicate the number of repetitions
-    await event.edit(f"Clicked on {repetitions} links.")
-
-# Add the command to the plugin category
-plugin_category = "your_category_here"

@@ -782,12 +782,13 @@ async def Hussein(event):
                 if user_id in remove_admins_count:
                     if (now - remove_admins_count[user_id]).seconds < 1:
                         admin_info = await event.client.get_entity(user_id)
-                        await event.reply(f"**᯽︙ تم تنزيل المشرف {admin_info.first_name} بسبب محاوله فاشله للتفليش**")
+                        await event.reply(f"**᯽︙ تم تنزيل المشرف {admin_info.first_name} بسبب قيامه بعملية تفليش فاشلة 🤣**")
                         await event.client.edit_admin(chat, user_id, change_info=False)
                     remove_admins_count.pop(user_id)
                     remove_admins_count[user_id] = now
                 else:
                     remove_admins_count[user_id] = now
+                    remove_admins_count[user_id] = datetime.now()
 
 @Qrh9.ar_cmd(pattern="منع_التفليش", require_admin=True)
 async def enable_remove_admins(event):

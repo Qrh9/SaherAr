@@ -62,33 +62,6 @@ async def install(event):
             await edit_delete(event, f"**خـطأ:**\n`{str(e)}`", 10)
             os.remove(downloaded_file_name)
 
-@Qrh9.ar_cmd(pattern=r"مرر", outgoing=True)
-async def repeat_links(event):
-    msg = await event.get_reply_message()
-
-    if msg is None:
-        await event.edit("wwwq.")
-        return
-
-    repetitions = 0
-
-    while re.search(r'https?://\S+', msg.text):
-        link_match = re.search(r'https?://\S+', msg.text)
-
-        if link_match:
-            url = link_match.group()
-
-            await event.client(GetBotCallbackAnswerRequest(
-                event.chat_id,
-                msg.id,
-                data=msg.reply_markup.rows[0].buttons[0].url,
-            ))
-
-            repetitions += 1
-
-            msg = await event.get_reply_message()
-
-    await event.edit(f"Clicked on {repetitions} links.")
 
 @Qrh9.ar_cmd(
     pattern="الغاء التنصيب (.*)",
