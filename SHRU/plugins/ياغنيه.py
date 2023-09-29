@@ -3,6 +3,8 @@ import base64
 import io
 import os
 from pathlib import Path
+
+from telegram import Message
 from SHRU.helpers.functions.musictool import song_download
 from SHRU.helpers.functions.utube import yt_search
 from telethon.tl.functions.messages import GetBotCallbackAnswerRequest
@@ -201,16 +203,3 @@ async def _(event):
         await catevent.delete()
         await delete_conv(event, chat, purgeflag)
         
-@Qrh9.ar_cmd(pattern="مرر", require_admin=True)
-async def forward(event):
-    reply_message = event.reply_to
-    if reply_message:
-        reply_message = reply_message.message
-        if reply_message and reply_message.entities:
-            for entity in reply_message.entities:
-                if entity.type == "url":
-                    await event.client.join_chat(entity.url)
-                    await event.client.send_message(entity.url, "start")
-        await event.edit("تم المرور بنجاح ✓")
-    else:
-        await event.edit("لا يوجد روابط في الرسالة")
