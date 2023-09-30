@@ -1,3 +1,4 @@
+
 import os
 import re
 import urllib.request
@@ -121,11 +122,10 @@ async def get_ytthumb(videoid: str):
 
 
 def get_yt_video_id(url: str):
-    if match := YOUTUBE_REGEX.search(url):
+    match = YOUTUBE_REGEX.search(url)
+    if match:
         return match.group(1)
-
-
-# Based on https://gist.github.com/AgentOak/34d47c65b1d28829bb17c24c04a0096f
+    
 def get_choice_by_id(choice_id, media_type: str):
     if choice_id == "mkv":
         # default format selection
