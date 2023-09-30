@@ -63,7 +63,7 @@ async def _(event):
         return await catevent.edit(
             f"⌔∮ عذرا لم استطع ايجاد مقاطع ذات صلة بـ `{query}`"
         )
-    cmd = event.pattern_match.group(1)
+    cmd = event.pattern_match.group(1) #
     q = "320k" if cmd == "320" else "128k"
     song_cmd = song_dl.format(QUALITY=q, video_link=video_link)
     name_cmd = name_dl.format(video_link=video_link)
