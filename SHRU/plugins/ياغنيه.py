@@ -1,4 +1,4 @@
-حـ³¹³ـسو, [9/30/2023 2:13 PM]
+
 import asyncio
 import base64
 import io
