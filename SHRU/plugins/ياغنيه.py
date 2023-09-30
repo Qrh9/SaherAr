@@ -1,24 +1,21 @@
+حـ³¹³ـسو, [9/30/2023 2:13 PM]
 import asyncio
 import base64
 import io
+import urllib.parse
 import os
 from pathlib import Path
 
-
-from SHRU.helpers.functions.musictool import song_download
-from SHRU.helpers.functions.utube import yt_search
-from telethon.tl.functions.messages import GetBotCallbackAnswerRequest
-import re
 from ShazamAPI import Shazam
 from telethon import types
-from telethon.errors.rpcerrorlist import YouBlockedUserError
+from telethon.errors.rpcerrorlist import YouBlockedUserError, ChatSendMediaForbiddenError
 from telethon.tl.functions.contacts import UnblockRequest as unblock
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from validators.url import url
 
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
-from ..helpers.functions import delete_conv, name_dl, song_dl, video_dl
+from ..helpers.functions import delete_conv, name_dl, song_dl, video_dl, yt_search
 from ..helpers.tools import media_type
 from ..helpers.utils import _catutils, reply_id
 from . import Qrh9
@@ -35,6 +32,7 @@ SONG_SENDING_STRING = "<code>جارِ الارسال انتظر قليلا...</c
 # =========================================================== #
 #                                                             #
 # =========================================================== #
+
 @Qrh9.ar_cmd(
     pattern="بحث(320)?(?:\s|$)([\s\S]*)",
     command=("بحث", plugin_category),
@@ -76,40 +74,44 @@ async def _(event):
         pass
     try:
         stderr = (await _catutils.runcmd(song_cmd))[1]
+        # if stderr:
+        # await catevent.edit(f"**خطأ :** `{stderr}`")
         catname, stderr = (await _catutils.runcmd(name_cmd))[:2]
         if stderr:
             return await catevent.edit(f"**خطأ :** `{stderr}`")
         catname = os.path.splitext(catname)[0]
         song_file = Path(f"{catname}.mp3")
+        catname = urllib.parse.unquote(catname)
     except:
         pass
     if not os.path.exists(song_file):
         return await catevent.edit(
             f"⌔∮ عذرا لم استطع ايجاد مقاطع ذات صله بـ `{query}`"
         )
-    await catevent.edit("**⌔∮ جاري الارسال انتظر قليلا**")
+    await catevent.edit("**⌔∮ جارِ الارسال انتظر قليلاً**")
     catthumb = Path(f"{catname}.jpg")
     if not os.path.exists(catthumb):
         catthumb = Path(f"{catname}.webp")
     elif not os.path.exists(catthumb):
         catthumb = None
     title = catname.replace("./temp/", "").replace("_", "|")
-    await event.client.send_file(
-        event.chat_id,
-        song_file,
-        force_document=False,
-        caption=f"**العنوان:** `{title}`",
-        thumb=catthumb,
-        supports_streaming=True,
-        reply_to=reply_to_id,
-    )
-    await catevent.delete()
-    for files in (catthumb, song_file):
-        if files and os.path.exists(files):
-            os.remove(files)
-
-
-
+    try:
+        await event.client.send_file(
+            event.chat_id,
+            song_file,
+            force_document=False,
+            caption=f"**العنوان:** `{title}`",
+            thumb=catthumb,
+            supports_streaming=True,
+            reply_to=reply_to_id,
+        )
+        await catevent.delete()
+        for files in (catthumb, song_file):
+            if files and os.path.exists(files):
+                os.remove(files)
+    except ChatSendMediaForbiddenError as err:
+        await catevent.edit("لا يمكن ارسال المقطع الصوتي هنا")
+        LOGS.error(str(err))
 
 @Qrh9.ar_cmd(pattern="اسم الاغنية$")
 async def shazamcmd(event):
