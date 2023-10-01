@@ -1,25 +1,21 @@
 from SHRU import Qrh9
 from telethon import events
-import asyncio
 from telethon.tl.functions.channels import JoinChannelRequest
-
-@Qrh9.on(events.NewMessage(pattern=r"^.مرر$", outgoing=True))
-async def forward_to_channels(event):
-    if event.reply_to_msg_id:
-        replied_msg = await event.get_reply_message()
-
-        if replied_msg:
-            if replied_msg.from_id.bot and replied_msg.text:
-                import re
-                links = re.findall(r'https?://[^\s]+', replied_msg.text)
-
-                for link in links:
-                    try:
-                        await Qrh9(JoinChannelRequest(link))
-                        await Qrh9.send_message(link, '\start')
-                    except Exception as e:
-                        print(f"Error: {str(e)}")
-                    finally:
-                        await asyncio.sleep(2)
+from telethon.tl.types import Message
+@Qrh9.ar_cmd(pattern=r"ميو")
+async def forward(event):
+    reply_message = event.reply_to
+    if reply_message:
+        if isinstance(reply_message, Message):
+            reply_message = reply_message.message
+        if reply_message and reply_message.entities:
+            for entity in reply_message.entities:
+                if entity.type == "url":
+                    if "t.me/c/" in entity.url or "t.me/g/" in entity.url or "t.me/s/" in entity.url:
+                        await event.client.join_chat(entity.url)
+                        await event.client.send_message(entity.url, "\start")
+            await forward(event)
+        else:
+            await event.edit("لا يوجد روابط في الرسالة")
     else:
-        await event.reply("رد على رسالة اشتراك اجباري.")
+        await event.edit("لا يوجد روابط في الرسالة")
