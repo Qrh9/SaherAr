@@ -4,11 +4,11 @@ from telethon.tl.functions.channels import JoinChannelRequest
 from telethon.tl.types import Message
 @Qrh9.ar_cmd(pattern=r"مرر")
 async def forward_bot(event):
-    reply_message = event.reply_to
+    reply_message = await event.get_reply_message()
     if reply_message:
         if isinstance(reply_message, Message):
             reply_message = reply_message.message
-        if reply_message and reply_message.entities:
+        if reply_message.entities:
             for entity in reply_message.entities:
                 if entity.type == "url":
                     if "t.me/c/" in entity.url or "t.me/g/" in entity.url or "t.me/s/" in entity.url:
