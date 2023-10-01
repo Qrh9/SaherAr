@@ -1,7 +1,4 @@
-#by Hussein For SHRU-SHRU
-#   IDK
-# يمنع منعاً باتاً تخمط الملف خلي عندك كرامه ولتسرقة
-# Added some f. by ريو
+
 from SHRU import Qrh9
 from telethon.tl.functions.messages import GetHistoryRequest
 from telethon.tl.functions.channels import JoinChannelRequest
