@@ -1,4 +1,4 @@
-import Qrh9
+from SHRU import Qrh9
 from telethon import events
 import asyncio
 from telethon.tl.functions.channels import JoinChannelRequest
