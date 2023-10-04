@@ -73,7 +73,7 @@ async def startup_process():
 
 async def externalrepo():
     if Config.VCMODE:
-        await install_externalrepo("https://github.com/Qrh9/music", "main", "alsaherVC")
+        await install_externalrepo("https://github.com/Qrh9/music", "main", "music")
 
 Qrh9.loop.run_until_complete(externalrepo())
 Qrh9.loop.run_until_complete(startup_process())
