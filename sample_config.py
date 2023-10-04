@@ -129,7 +129,7 @@ class Config(object):
     # SpamWatch, CAS, SpamProtection ban Needed or not
     ANTISPAMBOT_BAN = os.environ.get("ANTISPAMBOT_BAN", False)
     # is dual logging needed or not true or false
-    DUAL_LOG = os.environ.get("DUAL_LOG", False)
+    DUAL_LOG = os.environ.get("DUAL_LOG", False)#
     # progress bar progress
     FINISHED_PROGRESS_STR = os.environ.get("FINISHED_PROGRESS_STR", "▰")
     UNFINISHED_PROGRESS_STR = os.environ.get("UNFINISHED_PROGRESS_STR", "▱")
