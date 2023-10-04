@@ -11,19 +11,7 @@ from . import Qrh9, edit_delete, reply_id
 plugin_category = "tools"
 BTN_URL_REGEX = re.compile(r"(\[([^\[]+?)\]\<buttonurl:(?:/{0,2})(.+?)(:same)?\>)")
 
-@Qrh9.ar_cmd(
-    pattern="لستة(?: |$)(.*)",
-    command=("لستة", plugin_category),
-    info={
-        "header": "To create button posts via inline",
-        "note": f"Markdown is Default to html",
-        "options": "If you button to be in same row as other button then follow this <buttonurl:link:same> in 2nd button.",
-        "usage": [
-            "{tr}ibutton <text> [Name on button]<buttonurl:link you want to open>",
-        ],
-        "examples": "{tr}لستة قنواتي الرسمية ["𝘼𝙇𝙨𝙖𝙝𝙚𝙧"]<buttonurl:t.me/SXYO3> ["𝘼𝙇𝙨𝙖𝙝𝙚𝙧"]<buttonurl:t.me/SXYO3> ",
-    },
-)
+@Qrh9.ar_cmd(pattern="لستة$")
 async def _(event):
     "To create button posts via inline"
     reply_to_id = await reply_id(event)
