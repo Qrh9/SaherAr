@@ -24,28 +24,41 @@ from ..sql_helper.global_collection import (
 )
 from ..sql_helper.globals import delgvar
 from telethon.tl.functions.channels import JoinChannelRequest
+ #تعبي هذا اذا اخذته انيجمك
+ import logging
 
-#تعبي هذا اذا اخذته انيجمك
-import logging
+ async def Username_exists_by_Qrh9(username):
+     """
+     Checks if a user exists in fragments but not on Telegram by their username.
+     Args:
+         username: The username of the user to check.
+     Returns:
+         True if the user exists in fragments but not on Telegram, False otherwise.
+     """
 
-async def
-Username_exists_by_Qrh9(username):
-    url = f'https://fragment.com/?query={username}'
-    response = requests.get(url)
-    if response.status_code == 200:
+     try:
+         entity = await Qrh9.get_entity(username)
+         if entity and hasattr(entity, 'username'):
+             return True
+     except Exception:
+         pass
 
-        return True
-    else:
+     try:
+         response = requests.get(f'https://fragments.com/api/users/{username}')
+         if response.status_code == 200:
+             user = json.loads(response.content)
+             if user['username'] == username:
+                 return True
+     except Exception:
+         pass
 
-        return False
+     return False
 
-@Qrh9.on(events.NewMessage(pattern=r"^\.ثلاثي (\d+)$"))
-async def generate_random_usernames(event):
-
+ @Qrh9.on(events.NewMessage(pattern=r"^\.ثلاثي (\d+)$"))
+ async def generate_random_usernames(event):
     count = int(event.pattern_match.group(1))  # Get the number from the command
     abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
     abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-
     generated_usernames = []
     while count > 0:
         v1 = ''.join((random.choice(abc1) for _ in range(1)))
@@ -56,17 +69,14 @@ async def generate_random_usernames(event):
         if not await Username_exists_by_Qrh9(username):
             generated_usernames.append(username)
             count -= 1
-
     if generated_usernames:
         usernames_text = "\n".join([f"@{username}" for username in generated_usernames])
         await event.edit(f"**᯽︙ تم انشاء {len(generated_usernames)} يوزر جديد**\n\n{usernames_text}")
 @Qrh9.on(events.NewMessage(pattern=r"^\.رباعي (\d+)$"))
 async def generate_random_usernames(event):
-
     count = int(event.pattern_match.group(1))  # Get the number from the command
     abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
     abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-
     generated_usernames = []
     while count > 0:
         v1 = ''.join((random.choice(abc1) for _ in range(1)))
@@ -77,7 +87,6 @@ async def generate_random_usernames(event):
         if not await Username_exists_by_Qrh9(username):
             generated_usernames.append(username)
             count -= 1
-
     if generated_usernames:
         usernames_text = "\n".join([f"@{username}" for username in generated_usernames])
         await event.edit(f"**᯽︙ تم انشاء {len(generated_usernames)} يوزر جديد**\n\n{usernames_text}")
@@ -86,7 +95,6 @@ async def generate_random_usernames(event):
     count = int(event.pattern_match.group(1))  # اذا تخمط انت فرخ😆
     abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
     abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-
     generated_usernames = []
     while count > 0:
         v1 = ''.join((random.choice(abc1) for _ in range(1)))
@@ -96,19 +104,15 @@ async def generate_random_usernames(event):
         if not await Username_exists_by_Qrh9(username):
             generated_usernames.append(username)
             count -= 1
-
     if generated_usernames:
         usernames_text = "\n".join([f"@{username}" for username in generated_usernames])
         await event.edit(f"**᯽︙ تم انشاء {len(generated_usernames)} يوزر جديد**\n\n{usernames_text}")
     
-
 @Qrh9.on(events.NewMessage(pattern=r"^\.خماسي (\d+)$"))
 async def generate_random_usernames(event):
-
     count = int(event.pattern_match.group(1))  # Get the number from the command
     abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
     abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-
     generated_usernames = []
     while count > 0:
         v1 = ''.join((random.choice(abc1) for _ in range(1)))
@@ -119,17 +123,14 @@ async def generate_random_usernames(event):
         if not await Username_exists_by_Qrh9(username):
             generated_usernames.append(username)
             count -= 1
-
     if generated_usernames:
         usernames_text = "\n".join([f"@{username}" for username in generated_usernames])
         await event.edit(f"**᯽︙ تم انشاء {len(generated_usernames)} يوزر جديد**\n\n{usernames_text}")
 @Qrh9.on(events.NewMessage(pattern=r"^\.سداسي (\d+)$"))
 async def generate_random_usernames(event):
-
     count = int(event.pattern_match.group(1))  # Get the number from the command
     abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
-
     generated_usernames = []
     while count > 0:
         v1 = ''.join((random.choice(abc) for _ in range(1)))
@@ -140,33 +141,6 @@ async def generate_random_usernames(event):
         if not await Username_exists_by_Qrh9(username):
             generated_usernames.append(username)
             count -= 1
-
     if generated_usernames:
         usernames_text = "\n".join([f"@{username}" for username in generated_usernames])
         await event.edit(f"**᯽︙ تم انشاء {len(generated_usernames)} يوزر جديد**\n\n{usernames_text}")
-
-@Qrh9.on(events.NewMessage(pattern=r'\.cci', incoming=True))
-async def Qrhis9(event):
-    user = event.sender
-    if isinstance(user, types.UserFull):
-        full_name = user.user.first_name + ' ' + user.user.last_name if user.user.last_name else user.user.first_name
-    else:
-        full_name = user.first_name + ' ' + user.last_name if user.last_name else user.first_name
-        usernames = []
-
-        
-        probable_user_mention_entity = event.message.entities
-        if probable_user_mention_entity and isinstance(probable_user_mention_entity[0], types.MessageEntityMentionName):
-            usernames.append(user.username)
-
-        # فكرة السيد حسين مطور الجوكر
-        async for username in Qrh9.iter_usernames(user.user_id):
-            if not any(time in username.username for time in ["11:11"]):
-                usernames.append(username.username)
-
-        if not usernames:
-            message = f'**Full Name**: {full_name}\n**Usernames**: No valid usernames found'
-        else:
-            message = f'**Full Name**: {full_name}\n**Usernames**: {", ".join(usernames)}'
-
-        await event.reply(message, parse_mode=None)
