@@ -28,8 +28,8 @@ from telethon.tl.functions.channels import JoinChannelRequest
 #تعبي هذا اذا اخذته انيجمك
 import logging
 
-async def check_username_availability(username):
- 
+async def
+Username_exists_by_Qrh9(username):
     url = f'https://fragment.com/?query={username}'
     response = requests.get(url)
     if response.status_code == 200:
