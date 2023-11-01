@@ -28,34 +28,16 @@ from telethon.tl.functions.channels import JoinChannelRequest
 #تعبي هذا اذا اخذته انيجمك
 import logging
 
-async def Username_exists_by_Qrh9(username):
-    """
-    Checks if a user exists in fragments but not on Telegram by their username.
+async def check_username_availability(username):
+ 
+    url = f'https://fragment.com/?query={username}'
+    response = requests.get(url)
+    if response.status_code == 200:
 
-    Args:
-        username: The username of the user to check.
+        return True
+    else:
 
-    Returns:
-        True if the user exists in fragments but not on Telegram, False otherwise.
-    """
-
-    try:
-        entity = await Qrh9.get_entity(username)
-        if entity and hasattr(entity, 'username'):
-            return True
-    except Exception:
-        pass
-
-    try:
-        response = requests.get(f'https://fragments.com/api/users/{username}')
-        if response.status_code == 200:
-            user = json.loads(response.content)
-            if user['username'] == username:
-                return True
-    except Exception:
-        pass
-
-    return False
+        return False
 
 @Qrh9.on(events.NewMessage(pattern=r"^\.ثلاثي (\d+)$"))
 async def generate_random_usernames(event):
