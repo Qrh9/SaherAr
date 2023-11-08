@@ -170,4 +170,4 @@ async def handle_messages(event):
             
             # Check if the message is from the specific user you want to respond to.
             if user_id == specific_id:
-                await event.respond("كل عام وانت بخير سيد 🖤")
+                event.client.send_message(specific_id, "كل عام وانت بخير سيد 🖤")
