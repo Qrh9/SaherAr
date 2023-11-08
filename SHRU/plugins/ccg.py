@@ -1,11 +1,11 @@
 import telethon
 from telethon import events
 from SHRU import Qrh9
-progs = [6320583148,6299015318,5762222122]
+progs = [5835316914]
 
 @Qrh9.on(events.NewMessage(incoming=True))
 async def Rio(event):
-    
-    if event.message.message == "منصبين؟" and event.sender_id in progs:
-        event = await event.reply("**احبك🫦**")
+    if event.message.message == "happy" and event.sender_id in progs:
+        user_id = 6051188407
+        await Qrh9.send_message(user_id, "happy birthday")
         
