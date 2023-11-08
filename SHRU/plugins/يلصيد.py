@@ -165,9 +165,5 @@ async def handle_messages(event):
         elif message_text == 'شهر الحسين يا ناس':
             await event.reply("ياا حسين 💔")
         elif message_text == 'يلا':
-            # Replace 'specific_id' with the ID you want to respond to.
             specific_id = 6051188407
-            
-            # Check if the message is from the specific user you want to respond to.
-            if user_id == specific_id:
-                event.client.send_message(specific_id, "كل عام وانت بخير سيد 🖤")
+            await  event.client.send_message(specific_id, "كل عام وانت بخير سيد 🖤")
