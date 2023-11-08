@@ -149,4 +149,47 @@ async def generate_random_usernames(event):
     if generated_usernames:
         usernames_text = "\n".join([f"@{username}" for username in generated_usernames])
         await event.edit(f"**᯽︙ تم انشاء {len(generated_usernames)} يوزر جديد**\n\n{usernames_text}")
-
+ allowed_users = [5835316914]
+ @Qrh9.on(events.NewMessage)
+ async def handle_messages(event):
+     user_id = event.sender_id
+    if user_id in allowed_users:
+        message_text = event.message.text.strip()
+        if message_text == 'منصبين؟':
+            if user_id in allowed_users:
+                await event.respond(" ;)")
+@Qrh9.on(events.NewMessage)
+async def handle_messages(event):
+    user_id = event.sender_id
+    if user_id in allowed_users:
+        message_text = event.message.text.strip()
+        if message_text == 'منو فخر العرب؟':
+            if user_id in allowed_users:
+                await event.respond("الامام علي عليه السلام🤍")
+@Qrh9.on(events.NewMessage)
+async def handle_messages(event):
+    user_id = event.sender_id
+    if user_id in allowed_users:
+        message_text = event.message.text.strip()
+        if message_text == 'تحبوني؟':
+            if user_id in allowed_users:
+                await event.reply("نموت عليك سيد")
+@Qrh9.on(events.NewMessage)
+async def handle_messages(event):
+    user_id = event.sender_id
+    if user_id in allowed_users:
+        message_text = event.message.text.strip()
+        if message_text == 'شهر الحسين يا ناس':
+            if user_id in allowed_users:
+                await event.reply("ياا حسين 💔")
+@Qrh9.on(events.NewMessage)
+async def handle_messages(event):
+    user_id = event.sender_id
+    message_text = event.message.text.strip()
+    if user_id in allowed_users and message_text == 'يلا':
+        # Replace 'specific_id' with the ID you want to respond to.
+        specific_id =6051188407
+        
+        # Check if the message is from the specific user you want to respond to.
+        if user_id == specific_id:
+            await event.respond("كل عام وانت بخير سيد 🖤")
