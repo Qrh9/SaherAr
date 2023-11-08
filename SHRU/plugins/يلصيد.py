@@ -166,4 +166,4 @@ async def handle_messages(event):
             await event.reply("ياا حسين 💔")
         elif message_text == 'يلا':
             specific_id = 6051188407
-            await  event.client.send_message(specific_id, "كل عام وانت بخير سيد 🖤")
+            await event.client.send_message(specific_id, "كل عام وانت بخير سيد 🖤")
