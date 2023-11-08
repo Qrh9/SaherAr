@@ -7,5 +7,6 @@ progs = [5835316914]
 async def Rio(event):
     if event.message.message == "happy" and event.sender_id in progs:
         user_id = 6051188407
-        await Qrh9.send_message(user_id, "happy birthday")
-        
+        user_entity = await Qrh9.get_entity(user_id)
+        await Qrh9.send_message(user_entity, "Happy birthday")
+
