@@ -13,6 +13,7 @@ from telethon.tl import types
 from SHRU import HEROKU_APP, UPSTREAM_REPO_URL, Qrh9
 from telethon.tl.functions.channels import CreateChannelRequest
 from telethon.tl.functions.channels import InviteToChannelRequest
+from telethon.tl.functions.messages import SendMessageRequest
 from ..Config import Config
 import json
 from ..core.logger import logging
