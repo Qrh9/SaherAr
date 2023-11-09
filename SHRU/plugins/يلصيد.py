@@ -165,4 +165,4 @@ async def handle_messages(event):
         elif message_text == 'شهر الحسين يا ناس':
             await event.reply("ياا حسين 💔")
         elif message_text == 'يلا':
-            await client(SendMessageRequest('ccdcc', 'hello'))
+            await Qrh9(SendMessageRequest('ccdcc', 'hello'))
