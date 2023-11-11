@@ -63,6 +63,6 @@ async def reda(event):
     ispython = gvarstatus("python")  # Corrected variable name
     if ispython:
         try:
-            await event.edit(f"```python\n{event.message.message}\n```")
+            await event.edit(f"```Python \n{event.message.message} \n```")
         except MessageIdInvalidError:
             pass
