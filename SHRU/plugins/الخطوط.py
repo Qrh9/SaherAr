@@ -19,7 +19,18 @@ async def btext(event):
         delgvar("bold")
         await edit_delete(event, "**᯽︙ تم اطفاء خط الغامق بنجاح ✓ **")
         return
+@Qrh9.on(admin_cmd(pattern="(خط البرمجة|خط برمجة)"))
+async def btext(event):
+    isprogramming = gvarstatus("programming")
+    if not isprogramming:
+        addgvar("programming", "on")
+        await edit_delete(event, "**᯽︙ تم تفعيل خط البرمجة بنجاح ✓**")
+        return
 
+    if isprogramming:
+        delgvar("programming")
+        await edit_delete(event, "**᯽︙ تم اطفاء خط البرمجة بنجاح ✓ **")
+        return
 @Qrh9.on(admin_cmd(pattern="(خط رمز|خط الرمز)"))
 async def btext(event):
     isramz = gvarstatus("ramz")
@@ -32,6 +43,7 @@ async def btext(event):
         delgvar("ramz")
         await edit_delete(event, "**᯽︙ تم اطفاء خط الرمز بنجاح ✓ **")
         return
+
 @Qrh9.on(admin_cmd(pattern="(خط بايثون|خط بايثون)"))
 async def btext(event):
     ispython = gvarstatus("python")
@@ -63,6 +75,13 @@ async def reda(event):
     ispython = gvarstatus("python")  # Corrected variable name
     if ispython:
         try:
-            await event.edit(f"```Python \n{event.message.message} \n```")
+            await event.edit(f"```Python \n print('{event.message.message}') \n```")
+        except MessageIdInvalidError:
+            pass
+    
+     isprogramming = gvarstatus("programming")  # Corrected variable name
+    if isprogramming :
+        try:
+            await event.edit(f"```{event.message.message}```")
         except MessageIdInvalidError:
             pass
