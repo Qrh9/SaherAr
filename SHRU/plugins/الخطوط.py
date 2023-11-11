@@ -32,7 +32,18 @@ async def btext(event):
         delgvar("ramz")
         await edit_delete(event, "**᯽︙ تم اطفاء خط الرمز بنجاح ✓ **")
         return
+@Qrh9.on(admin_cmd(pattern="(خط بايثون|خط بايثون)"))
+async def btext(event):
+    ispython = gvarstatus("python")
+    if not ispython:
+        addgvar ("python", "on")
+        await edit_delete(event, "**᯽︙ تم تفعيل خط بايثون بنجاح ✓**")
+        return
 
+    if ispython:
+        delgvar("python")
+        await edit_delete(event, "**᯽︙ تم اطفاء خط بايثون بنجاح ✓ **")
+        return
 @Qrh9.on(events.NewMessage(outgoing=True))
 async def reda(event):
     isbold = gvarstatus("bold")
@@ -45,5 +56,11 @@ async def reda(event):
     if isramz:
         try:
             await event.edit(f"`{event.message.message}`")
+        except MessageIdInvalidError:
+            pass
+            ispython = gvarstatus("python")
+    if ispython:
+        try:
+            await event.edit(f"```python\n{event.message.message}\n```")
         except MessageIdInvalidError:
             pass
