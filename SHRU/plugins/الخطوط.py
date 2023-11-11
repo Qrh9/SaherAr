@@ -52,13 +52,15 @@ async def reda(event):
             await event.edit(f"**{event.message.message}**")
         except MessageIdInvalidError:
             pass
+
     isramz = gvarstatus("ramz")
     if isramz:
         try:
             await event.edit(f"`{event.message.message}`")
         except MessageIdInvalidError:
             pass
-            ispython = gvarstatus("python")
+
+    ispython = gvarstatus("python")  # Corrected variable name
     if ispython:
         try:
             await event.edit(f"```python\n{event.message.message}\n```")
