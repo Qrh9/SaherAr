@@ -26,25 +26,23 @@ from ..sql_helper.global_collection import (
 )
 from ..sql_helper.globals import delgvar
 from telethon.tl.functions.channels import JoinChannelRequest
-
-from telethon import events
-
-from telethon import events
-
 @Qrh9.ar_cmd(pattern=r"uplod$")
 async def upload_story(event):
     if event.is_reply:
         reply_msg = await event.get_reply_message()
 
-        # Check if the replied message contains media
-        if reply_msg.media:
-            # Upload the media as a story
-            story = await event.client.upload_file(reply_msg.media)
 
-            # Get story duration
+        if reply_msg.media:
+
+            file = helpers._FileStream(reply_msg.media.document, reply_msg.media.document.size)
+
+
+            story = await event.client.upload_file(file)
+
+
             duration = reply_msg.media.document.attributes[0].duration
 
-            # Get story description if there's text
+
             description = reply_msg.text if reply_msg.text else "**none**"
 
             # Edit the message
@@ -57,6 +55,6 @@ async def upload_story(event):
                 f"```"
             )
         else:
-            await event.edit("Please reply to a photo or video to upload as a story.")
+            await event.edit("Please reply to a supported media type (photo, video) to upload as a story.")
     else:
         await event.edit("Please reply to a photo or video to upload as a story.")
