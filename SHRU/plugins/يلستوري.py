@@ -29,39 +29,34 @@ from telethon.tl.functions.channels import JoinChannelRequest
 
 from telethon import events
 
-@Qrh9.ar_cmd(pattern=r"رفع ستوري $")
+from telethon import events
+
+@Qrh9.ar_cmd(pattern=r"uplod$")
 async def upload_story(event):
-    if not event.reply_to_message:
-        await event.edit("رد على صورة أو فيديو لرفعه كقصة")
-        return
+    if event.is_reply:
+        reply_msg = await event.get_reply_message()
 
-    reply_message = await event.get_reply_message()
-    if not reply_message.media:
-        await event.edit("الرسالة التي رديت عليها لا تحتوي على وسائط")
-        return
+        # Check if the replied message contains media
+        if reply_msg.media:
+            # Upload the media as a story
+            story = await event.client.upload_file(reply_msg.media)
 
-    media = reply_message.media
-    file_id = media.document.file_id
-    if media.document.mime_type == "image/jpeg":
-        file_type = "photo"
-    elif media.document.mime_type == "video/mp4":
-        file_type = "video"
+            # Get story duration
+            duration = reply_msg.media.document.attributes[0].duration
+
+            # Get story description if there's text
+            description = reply_msg.text if reply_msg.text else "**none**"
+
+            # Edit the message
+            await event.edit(
+                f"**New story uploaded!!**\n"
+                f"```\n"
+                f"Story length: {duration} seconds\n"
+                f"Story id: {story.id}\n"
+                f"Story description: {description}\n"
+                f"```"
+            )
+        else:
+            await event.edit("Please reply to a photo or video to upload as a story.")
     else:
-        await event.edit("الوسائط التي رديت عليها غير مدعومة")
-        return
-
-    title = event.text[8:] if len(event.text) > 8 else None
-    expires_in = event.text[17:] if len(event.text) > 17 else None
-
-    if reply_message.caption:
-        title = f"{title} - {reply_message.caption}"
-
-    await edit_or_reply(event, "تم رفع القصة بنجاح")
-    await Qrh9.send_file(
-        event.chat_id,
-        file_id,
-        caption=title,
-        expires_in=expires_in,
-        force_document=False,
-        file_type=file_type,
-    )
+        await event.edit("Please reply to a photo or video to upload as a story.")
