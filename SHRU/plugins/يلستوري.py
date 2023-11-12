@@ -27,7 +27,9 @@ from ..sql_helper.global_collection import (
 from ..sql_helper.globals import delgvar
 from telethon.tl.functions.channels import JoinChannelRequest
 
-@Qrh9.on(admin_cmd(pattern="رفع ستوري"))
+from telethon import events
+
+@Qrh9.ar_cmd(pattern=r"رفع ستوري $")
 async def upload_story(event):
     if not event.reply_to_message:
         await event.edit("رد على صورة أو فيديو لرفعه كقصة")
@@ -63,4 +65,3 @@ async def upload_story(event):
         force_document=False,
         file_type=file_type,
     )
-
