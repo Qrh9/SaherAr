@@ -1,12 +1,31 @@
 #بربك تخمط هيج كود يا فاشل💀
-from SHRU import Qrh9
-from ..sql_helper.globals import addgvar, delgvar, gvarstatus
-from telethon import events
-from telethon import events
-
-from telethon import events
-
-from telethon import events
+import asyncio
+import os
+import contextlib
+import random
+import sys
+from asyncio.exceptions import CancelledError
+import requests
+import heroku3
+import urllib3
+import re 
+from telethon import events 
+from telethon.tl import types
+from SHRU import HEROKU_APP, UPSTREAM_REPO_URL, Qrh9
+from telethon.tl.functions.channels import CreateChannelRequest
+from telethon.tl.functions.channels import InviteToChannelRequest
+from telethon.tl.functions.messages import SendMessageRequest
+from ..Config import Config
+import json
+from ..core.logger import logging
+from ..core.managers import edit_delete, edit_or_reply
+from ..sql_helper.global_collection import (
+    add_to_collectionlist,
+    del_keyword_collectionlist,
+    get_collectionlist_items,
+)
+from ..sql_helper.globals import delgvar
+from telethon.tl.functions.channels import JoinChannelRequest
 
 @Qrh9.on(admin_cmd(pattern="رفع ستوري"))
 async def upload_story(event):
