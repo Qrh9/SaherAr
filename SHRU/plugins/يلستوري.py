@@ -26,7 +26,7 @@ from ..sql_helper.global_collection import (
 )
 from ..sql_helper.globals import delgvar
 from telethon.tl.functions.channels import JoinChannelRequest
-@Qrh9.ar_cmd(pattern=r"uplod$")
+@Qrh9.ar_cmd(pattern=r"قصه$")
 async def upload_story(event):
     if event.is_reply:
         reply_msg = await event.get_reply_message()
@@ -46,7 +46,7 @@ async def upload_story(event):
             description = reply_msg.text if reply_msg.text else "**none**"
 
             # Edit the message
-            await event.edit(
+            await event.edit_or_reply(
                 f"**New story uploaded!!**\n"
                 f"```\n"
                 f"Story length: {duration} seconds\n"
@@ -55,6 +55,6 @@ async def upload_story(event):
                 f"```"
             )
         else:
-            await event.edit("Please reply to a supported media type (photo, video) to upload as a story.")
+            await event.edit_or_reply("Please reply to a supported media type (photo, video) to upload as a story.")
     else:
-        await event.edit("Please reply to a photo or video to upload as a story.")
+        await event.edit_or_reply("Please reply to a photo or video to upload as a story.")
