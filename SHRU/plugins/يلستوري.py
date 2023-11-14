@@ -46,7 +46,7 @@ async def upload_story(event):
             description = reply_msg.text if reply_msg.text else "**none**"
 
             # Edit the message
-            await event.edit_or_reply(
+            await edit_or_reply(
                 f"**New story uploaded!!**\n"
                 f"```\n"
                 f"Story length: {duration} seconds\n"
