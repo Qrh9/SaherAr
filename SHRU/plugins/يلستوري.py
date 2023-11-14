@@ -55,6 +55,6 @@ async def upload_story(event):
                 f"```"
             )
         else:
-            await event.edit_or_reply("Please reply to a supported media type (photo, video) to upload as a story.")
+            await edit_or_reply("Please reply to a supported media type (photo, video) to upload as a story.")
     else:
-        await event.edit_or_reply("Please reply to a photo or video to upload as a story.")
+        await edit_or_reply("Please reply to a photo or video to upload as a story.")
