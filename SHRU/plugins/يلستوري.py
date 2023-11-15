@@ -26,35 +26,42 @@ from ..sql_helper.global_collection import (
 )
 from ..sql_helper.globals import delgvar
 from telethon.tl.functions.channels import JoinChannelRequest
-@Qrh9.ar_cmd(pattern=r"قصه$")
+from SHRU import Qrh9
+
+@Qrh9.ar_cmd(pattern="^.قصه$")
 async def upload_story(event):
-    if event.is_reply:
-        reply_msg = await event.get_reply_message()
+    """Uploads a photo or video as a story."""
 
+    reply_message = await event.get_reply_message()
 
-        if reply_msg.media:
+    if not reply_message:
+        await event.reply("Please reply to a photo or video to upload it as a story.")
+        return
 
-            file = helpers._FileStream(reply_msg.media.document, reply_msg.media.document.size)
+    media = reply_message.media
 
+    if not media:
+        await event.reply("Please reply to a photo or video to upload it as a story.")
+        return
 
-            story = await event.client.upload_file(file)
-
-
-            duration = reply_msg.media.document.attributes[0].duration
-
-
-            description = reply_msg.text if reply_msg.text else "**none**"
-
-            # Edit the message
-            await edit_or_reply(
-                f"**New story uploaded!!**\n"
-                f"```\n"
-                f"Story length: {duration} seconds\n"
-                f"Story id: {story.id}\n"
-                f"Story description: {description}\n"
-                f"```"
-            )
-        else:
-            await edit_or_reply("Please reply to a supported media type (photo, video) to upload as a story.")
+    if media.photo:
+        story_caption = reply_message.text or "No caption provided"
+        story = await event.client.upload_story(media.photo, caption=story_caption)
+    elif media.video:
+        story_caption = reply_message.text or "No caption provided"
+        story = await event.client.upload_story(media.video, caption=story_caption)
     else:
-        await edit_or_reply("Please reply to a photo or video to upload as a story.")
+        await event.reply("Please reply to a photo or video to upload it as a story.")
+        return
+
+    story_length = str(story.duration) + " seconds" if story.video else "N/A"
+
+    story_info = f"""
+**Story Upload Successful**
+
+Story length: {story_length}
+Story ID: {story.id}
+Story description: {story_caption}
+"""
+
+    await event.edit(story_info)
