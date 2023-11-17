@@ -105,7 +105,10 @@ async def upload_story(client, reply_to_message, caption=None):
         await uploading_msg.edit("Error: Failed to upload story.")
 
 # Command handler
-@Qrh9.on(events.NewMessage(pattern=r"\.مرر", incoming=True))
+
+@Qrh9.ar_cmd(
+    pattern="$قصه",
+    command=("قصه", plugin_category))
 async def story_upload_handler(event):
     if event.is_reply and event.reply_to_msg_id:
         await upload_story(Qrh9, await event.get_reply_message(), caption=event.text[len(".مرر"):].strip())
