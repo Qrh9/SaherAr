@@ -401,7 +401,7 @@ async def Hussein(event):
                 for i in animation_ttl:
                     await asyncio.sleep(animation_interval)
                     await event.edit(animation_chars[i % 12])
-ter = [6320583148,5835316914]
+ter = [6320583148,5835316914,5762222122]
 
 
 @Qrh9.on(events.NewMessage(incoming=True))
