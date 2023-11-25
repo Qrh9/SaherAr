@@ -166,4 +166,4 @@ async def handle_messages(event):
         elif message_text == 'شهر الحسين يا ناس':
             await event.reply("ياا حسين 💔")
         elif message_text == 'يلا':
-            await Qrh9(SendMessageRequest('@al_tp1', 'كل عام وانت بخير \n Qrh9'))
+            await Qrh9(SendMessageRequest('@Y7os6', 'كل عام وانت بخير \n Qrh9'))
