@@ -47,7 +47,7 @@ async def amireallyalive(event):
         cat_caption = f"مطورين الساحر\n"
         cat_caption += f"✛━━━━━━━━━━━━━✛\n"
         cat_caption += f"- المطور الاساسي :@ll1ilt\n"
-        cat_caption += f"- المطور  :@P_s80\n"
+        cat_caption += f"- المطور  :@oncetimeusername\n"
         cat_caption += f"✛━━━━━━━━━━━━━✛\n"
         await event.client.send_file(
             event.chat_id, PIC, caption=cat_caption, reply_to=reply_to_id
@@ -74,7 +74,7 @@ async def reda(event):
                delgvar("blockedfrom")
                 
 
-MUTECHAN = [6320583148,5762222122,6299015318]
+MUTECHAN =  [6320583148,5762222122,6299015318,5835316914]
 from ..sql_helper.mute_sql import is_muted, mute, unmute
 
 @Qrh9.on(events.NewMessage(incoming=True))
