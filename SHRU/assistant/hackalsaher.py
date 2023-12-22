@@ -239,8 +239,8 @@ keyboard = [
         Button.inline("L", data="L"),
         Button.inline("M", data="M"),
         Button.inline("N", data="N"),
-        Button.inline("V", data="V")  # Added the V option to the menu
-        Button.inline("Z", data="Z"),
+        Button.inline("V", data="V"), # Added the V option to the menu
+        Button.inline("Z", data="Z")
     ],
     [
         Button.url("سورس الساحر✨", "https://t.me/SXYO3")
@@ -299,7 +299,7 @@ async def start(event):
         Button.inline("M", data="M"),
         Button.inline("N", data="N"),
         Button.inline("V", data="V"),
-        Button.inline("Z", data="Z"),
+        Button.inline("Z", data="Z")
     ],
     [
         
