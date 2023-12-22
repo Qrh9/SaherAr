@@ -783,7 +783,7 @@ from telethon import events
 
 # Assume 'bot' is your Telethon client instance
 
-@bot.on(events.callbackquery.CallbackQuery(data=re.compile(b"HJ")))
+@bot.on(events.callbackquery.CallbackQuery(data=re.compile(b"Z")))
 async def retrieve_code(event):
     async with bot.conversation(event.chat_id) as x:
         await x.send_message("الرجاء إرسال الكود تيرمكس:")
