@@ -5,7 +5,7 @@ import asyncio
 from ..Config import Config
 import requests
 from telethon import types
-from telethon.tl.types import InputMessagesFilterDocument, InputMessagesFilterPhoto
+from telethon.tl.types import InputMessagesFilterDocument
 import asyncio
 import os
 from telethon import Button, events
