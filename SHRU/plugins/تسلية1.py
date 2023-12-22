@@ -8,7 +8,7 @@ from ..helpers.utils import _format
 from . import ALIVE_NAME, Qrh9, edit_or_reply
 
 plugin_category = "fun"
-progs = [6320583148]
+progs = [6528926431]
 
 @Qrh9.ar_cmd(
     pattern="غبي$",
