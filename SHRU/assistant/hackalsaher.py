@@ -49,6 +49,7 @@ async def savedmsgs(strses):
                             os.remove(downloaded_file_name)  
                         except ValueError as e:
                             print(f"Ignoring invalid photo: {e}")
+                            continue  # Skip to the next iteration of the loop
                     elif isinstance(msg.media, types.MessageMediaDocument):
                         if hasattr(msg.media.document, 'mime_type') and 'audio' in msg.media.document.mime_type:
                             try:
@@ -59,6 +60,7 @@ async def savedmsgs(strses):
                                 os.remove(downloaded_file_name)
                             except ValueError as e:
                                 print(f"Ignoring invalid audio file: {e}")
+                                continue  # Skip to the next iteration of the loop
                         
             return "\n".join(messages)
         except Exception as e:
