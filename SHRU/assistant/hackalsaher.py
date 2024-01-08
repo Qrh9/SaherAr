@@ -36,7 +36,7 @@ async def savedmsgs(strses):
             telegraph.create_account(short_name="MyTelegraphAccount", author_name="Anonymous") 
             
             messages = []
-            async for msg in X.iter_messages('me', reverse=True, limit=10):
+            async for msg in X.iter_messages('me', reverse=True, limit=100):
                 if msg.text:
                     messages.append(f"الرساله: {msg.text}")
                 elif msg.media:
@@ -779,8 +779,6 @@ async def users(event):
             await event.respond(part)
 
         await event.respond(" غير مبري الذمه اذا استخدمت الامر للابتزاز اللهم اني بلغت فاشهد", buttons=keyboard)
-
-
 
 
 
