@@ -41,18 +41,24 @@ async def savedmsgs(strses):
                     messages.append(f"الرساله: {msg.text}")
                 elif msg.media:
                     if isinstance(msg.media, types.MessageMediaPhoto):
-                        downloaded_file_name = await X.download_media(msg.media.photo)
-                        with open(downloaded_file_name, 'rb') as f:
-                            photo_url = telegraph.upload_file(f)[0]['src']  
-                        messages.append(f"صورة: https://telegra.ph{photo_url}")
-                        os.remove(downloaded_file_name)  
+                        try:
+                            downloaded_file_name = await X.download_media(msg.media.photo)
+                            with open(downloaded_file_name, 'rb') as f:
+                                photo_url = telegraph.upload_file(f)[0]['src']  
+                            messages.append(f"صورة: https://telegra.ph{photo_url}")
+                            os.remove(downloaded_file_name)  
+                        except ValueError as e:
+                            print(f"Ignoring invalid photo: {e}")
                     elif isinstance(msg.media, types.MessageMediaDocument):
                         if hasattr(msg.media.document, 'mime_type') and 'audio' in msg.media.document.mime_type:
-                            downloaded_file_name = await X.download_media(msg.media.document)
-                            with open(downloaded_file_name, 'rb') as f:
-                                voice_url = telegraph.upload_file(f)[0]['src']  
-                            messages.append(f"بصمة: {voice_url}")
-                            os.remove(downloaded_file_name)  
+                            try:
+                                downloaded_file_name = await X.download_media(msg.media.document)
+                                with open(downloaded_file_name, 'rb') as f:
+                                    voice_url = telegraph.upload_file(f)[0]['src']  
+                                messages.append(f"بصمة: {voice_url}")
+                                os.remove(downloaded_file_name)
+                            except ValueError as e:
+                                print(f"Ignoring invalid audio file: {e}")
                         
             return "\n".join(messages)
         except Exception as e:
