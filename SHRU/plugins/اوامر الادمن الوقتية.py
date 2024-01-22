@@ -15,8 +15,8 @@ plugin_category = "admin"
 NO_ADMIN = "**᯽︙  عذرا انا لست مشرف في المجموعة ❕**"
 NO_PERM = "**᯽︙ يبـدو انه ليس لديك صلاحيات كافية هذا حزين جدا 🥱♥**"
 
-joker_t8ed = "https://telegra.ph/file/12dc3b4b1b92b9d9c0d68.jpg"
-joker_unt8ed = "https://telegra.ph/file/12dc3b4b1b92b9d9c0d68.jpg"
+Saher_t8ed = "https://telegra.ph/file/12dc3b4b1b92b9d9c0d68.jpg"
+Saher_unt8ed = "https://telegra.ph/file/12dc3b4b1b92b9d9c0d68.jpg"
 @Qrh9.ar_cmd(
     pattern="تقييد_مؤقت(?:\s|$)([\s\S]*)",
     command=("تقييد_مؤقت", plugin_category),
@@ -68,7 +68,7 @@ async def tmuter(event):  # sourcery no-metrics
         if reason:
             await event.client.send_file(
                 event.chat_id,
-                joker_t8ed,
+                Saher_t8ed,
                 caption=f"᯽︙ تم تقييد المستخدم {_format.mentionuser(user.first_name ,user.id)} بنجاح ✅\n ᯽︙السبب  : {reason}\n ** ᯽︙ مدة الكتم : **`{cattime}`",
             )
             if BOTLOG:
@@ -83,7 +83,7 @@ async def tmuter(event):  # sourcery no-metrics
         else:
             await event.client.send_file(
                 event.chat_id,
-                joker_t8ed,
+                Saher_t8ed,
                 caption=f"**᯽︙ تم تقييد المستخدم {_format.mentionuser(user.first_name ,user.id)} بنجاح ✓** \n** ᯽︙ مدة الكتم : **`{cattime}`",
             )
             if BOTLOG:
@@ -215,7 +215,7 @@ async def tban(event):  # sourcery no-metrics
     groups_only=True,
     require_admin=True,
 )
-async def T8ed_Joker(event):
+async def T8ed_Saher(event):
     await event.delete()
     user, reason = await get_user_from_event(event)
     if not user:
@@ -233,7 +233,7 @@ async def T8ed_Joker(event):
         if reason:
             await event.client.send_file(
                 event.chat_id,
-                joker_t8ed,
+                Saher_t8ed,
                 caption=f"تم تقييد المستخدم {_format.mentionuser(user.first_name ,user.id)} بنجاح ✅.\nالسبب: {reason}",
             )
             if BOTLOG:
@@ -247,7 +247,7 @@ async def T8ed_Joker(event):
         else:
             await event.client.send_file(
                 event.chat_id,
-                joker_t8ed,
+                Saher_t8ed,
                 caption=f"᯽︙تم تقييد المستخدم بنجاح ✓ : {_format.mentionuser(user.first_name ,user.id)} ",
             )
             if BOTLOG:
@@ -295,7 +295,7 @@ async def cancel_t8ed(event):
         )
         await event.client.send_file(
             event.chat_id,
-            joker_unt8ed,
+            Saher_unt8ed,
             caption=f"**᯽︙ تم الغاء تقييد المستخدم {_format.mentionuser(user.first_name, user.id)} بنجاح ✅.**"
         )
     except UserIdInvalidError:
