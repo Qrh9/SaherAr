@@ -11,12 +11,10 @@ from ..core.managers import edit_delete
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 
 Mn3_sb = [
-    "عير", "كواد", "تنيج", "كسمك", "فرخ", "خنجه", "استنياج", "سرسري",
-    "عريض", "خنيث", "بلاع", "عيوره", "طيزك", "المنيوج", "المنيوك", "تناحه",
-    "الديوث", "قريخ", "كحاب", "كحبه" , " كس "
+    " عير ", " كواد ", " تنيج ", " كسمك ", " فرخ ", " خنجه ", " استنياج ", " سرسري ",
+    " عريض ", " خنيث ", " بلاع ", " عيوره ", " طيزك ", " المنيوج ", " المنيوك ", " تناحه ",    " الديوث ", " قريخ ", " كحاب ", " كحبه " , " كس " 
+ " كسختك ", " ديوث "  
 ]
-
-
 @Qrh9.on(events.NewMessage)
 async def Hussein(event):
     if gvarstatus("delete_enabled") and any(word in event.raw_text for word in Mn3_sb):
