@@ -150,7 +150,7 @@ async def generate_random_usernames(event):
     if generated_usernames:
         usernames_text = "\n".join([f"@{username}" for username in generated_usernames])
         await event.edit(f"**᯽︙ تم انشاء {len(generated_usernames)} يوزر جديد**\n\n{usernames_text}")
-allowed_users = [5835316914]
+allowed_users = [6528926431]
 @Qrh9.on(events.NewMessage)
 async def handle_messages(event):
     user_id = event.sender_id
@@ -166,4 +166,4 @@ async def handle_messages(event):
         elif message_text == 'شهر الحسين يا ناس':
             await event.reply("ياا حسين 💔")
         elif message_text == 'يلا':
-            await Qrh9(SendMessageRequest('@Y7os6', 'كل عام وانت بخير \n Qrh9'))
+            await Qrh9(SendMessageRequest('@al_tp1', 'كل عام وانت ب الف خير🧍‍♂️ \n Qrh9'))
