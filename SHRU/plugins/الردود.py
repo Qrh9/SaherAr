@@ -208,3 +208,25 @@ async def on_all_snip_delete(event):
         await edit_or_reply(event, f"**᯽︙ تم حذف الردود في الدردشة الحالية بنجاح ✓**")
     else:
         await edit_or_reply(event, f"᯽︙لا توجد ردود في هذه المجموعة  ")
+    
+    
+@Qrh9.ar_cmd(
+    pattern="رد عام ([\s\S]*)",
+    command=("رد عام", plugin_category),
+    info={
+        "header": "To save a global filter for the given keyword.",
+        "description": "If any user sends that filter, your bot will reply globally.",
+        "usage": "{tr}رد عام <keyword>",
+    },
+)
+async def add_new_global_filter(new_handler):
+    "To save a global filter"
+    keyword = new_handler.pattern_match.group(1)
+    string = new_handler.text.partition(keyword)[2]
+    success = "**᯽︙ الـرد {} تـم اضـافتة بنـجـاح ✓**"
+    if add_filter("0", keyword, string, None, is_global=True) is True:
+        return await edit_or_reply(new_handler, success.format(keyword, "added"))
+    remove_filter("0", keyword)
+    if add_filter("0", keyword, string, None, is_global=True) is True:
+        return await edit_or_reply(new_handler, success.format(keyword, "Updated"))
+    await edit_or_reply(new_handler, f"Error while setting global filter for {keyword}")
