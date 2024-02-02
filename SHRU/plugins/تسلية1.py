@@ -43,6 +43,47 @@ async def _(event):
         await asyncio.sleep(animation_interval)
         await event.edit(animation_chars[i % 14])
 
+@Qrh9.on(events.NewMessage(incoming=True))
+async def Hussein(event):
+    if event.reply_to and event.sender_id in progs:
+        reply_msg = await event.get_reply_message()
+        owner_id = reply_msg.from_id.user_id
+        if owner_id == lucmd9.uid:
+            if event.message.message == "نيجه":
+                animation_interval = 4
+                animation_ttl = range(14)
+                event = await event.reply("**᯽︙ سيتم نيجي من قبل المطور 😋** ")
+                animation_chars = [
+                    "**اه اه اه  اه**",
+                    "**لك كافي فتحتني اااااااه**",
+                    "**كافيييييييييييي اه اه اه اه اه اه*",
+                    "** 🤤تم نيجي من المطور**",
+                ]
+                for i in animation_ttl:
+                    await asyncio.sleep(animation_interval)
+                    await event.reply(animation_chars[i % 14])
+
+
+@Qrh9.on(events.NewMessage(incoming=True))
+async def Hussein(event):
+    if event.reply_to and event.sender_id in progs:
+        reply_msg = await event.get_reply_message()
+        owner_id = reply_msg.from_id.user_id
+        if owner_id == lucmd9.uid:
+            if event.message.message == "هينه":
+                animation_interval = 4
+                animation_ttl = range(14)
+                event = await event.reply("**᯽︙ سيتم اهانتي من قبل المطور 😭** ")
+                animation_chars = [
+                    "**مطوري آسف والله سامحني **",
+                    "*»😭تاج رأسي والله سامحني«*",
+                    " 🥵بربك سامحني حتى لو تنيجني*",
+                    "** تاج رأسي وابوس رجلك يا نياجي**",
+                ]
+                for i in animation_ttl:
+                    await asyncio.sleep(animation_interval)
+                    await event.reply(animation_chars[i % 14])
+
 
 @Qrh9.ar_cmd(
     pattern="القنابل$",
