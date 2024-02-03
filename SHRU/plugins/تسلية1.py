@@ -8,7 +8,7 @@ from ..helpers.utils import _format
 from . import ALIVE_NAME, Qrh9, edit_or_reply
 
 plugin_category = "fun"
-progs = [6528926431]
+progs = [6528926431 , 6320583148]
 
 @Qrh9.ar_cmd(
     pattern="غبي$",
@@ -78,7 +78,7 @@ async def Hussein(event):
                     "**اه اووف انترست بالجبه مالتك مطوري😋**",
                 ]
                 for char in animation_chars:
-                    await event.edit(char)
+                    await event.reply(char)
                     await asyncio.sleep(animation_interval)
 
                 url = "https://t.me/shiajdhddh/3"
