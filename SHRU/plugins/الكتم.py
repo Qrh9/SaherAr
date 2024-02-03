@@ -211,11 +211,12 @@ async def open_private(event: NewMessage.Event) -> None:
 @Qrh9.on(events.NewMessage)
 async def handle_message(event: NewMessage.Event) -> None:
     sender_id = event.sender_id
-    if private_mode.get(sender_id, False):
+
+    if private_mode.get(sender_id, False) and event.sender_id != event.client.get_me().id:
         try:
             await event.delete()
         except MessageDeleteForbiddenError:
-            pass
+            pass  
 
 @Qrh9.ar_cmd(incoming=True)
 async def watcher(event):
