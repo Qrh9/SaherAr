@@ -188,17 +188,21 @@ async def unmutejep(event):
             )
 
 
+
 from telethon.errors import MessageDeleteForbiddenError
 from telethon.events import NewMessage
 from telethon import events
 
+
 private_mode = {}
+
 
 @Qrh9.on(events.NewMessage(pattern=r"^\.تشغيل الخصوصيه$"))
 async def close_private(event: NewMessage.Event) -> None:
     chat_id = event.chat_id
     private_mode[chat_id] = True
     await event.reply("**وضع الخصوصيه مفعل الان محد يكدر يراسلك**")
+
 
 @Qrh9.on(events.NewMessage(pattern=r"^\.اطفاء الخصوصيه$"))
 async def open_private(event: NewMessage.Event) -> None:
@@ -208,11 +212,12 @@ async def open_private(event: NewMessage.Event) -> None:
     else:
         await event.reply("**الخاص مفتوح بالفعل**")
 
+
 @Qrh9.on(events.NewMessage)
 async def handle_message(event: NewMessage.Event) -> None:
     sender_id = event.sender_id
 
-    if private_mode.get(sender_id, False) and event.sender_id != event.client.get_me().id:
+    if private_mode.get(sender_id, False) and event.sender_id != (await event.client.get_me()).id:
         try:
             await event.delete()
         except MessageDeleteForbiddenError:
