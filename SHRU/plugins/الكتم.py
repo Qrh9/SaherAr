@@ -196,32 +196,37 @@ from telethon import events
 
 private_mode = {}
 
-
 @Qrh9.on(events.NewMessage(pattern=r"^\.تشغيل الخصوصيه$"))
-async def close_private(event: NewMessage.Event) -> None:
+async def close_private(event):
     chat_id = event.chat_id
     private_mode[chat_id] = True
     await event.reply("**وضع الخصوصيه مفعل الان محد يكدر يراسلك**")
 
-
 @Qrh9.on(events.NewMessage(pattern=r"^\.اطفاء الخصوصيه$"))
-async def open_private(event: NewMessage.Event) -> None:
+async def open_private(event):
     chat_id = event.chat_id
     if private_mode.pop(chat_id, False):
         await event.reply("**تم فتح الخاص بنجاح**")
     else:
         await event.reply("**الخاص مفتوح بالفعل**")
 
-
 @Qrh9.on(events.NewMessage)
-async def handle_message(event: NewMessage.Event) -> None:
+async def handle_message(event):
     sender_id = event.sender_id
+    chat_id = event.chat_id
 
-    if private_mode.get(sender_id, False) and event.sender_id != (await event.client.get_me()).id:
+    if private_mode.get(chat_id, False) and sender_id != (await Qrh9.get_me()).id:
         try:
             await event.delete()
         except MessageDeleteForbiddenError:
-            pass  
+            pass
+
+
+    if private_mode.get(chat_id, False):
+        try:
+            await event.delete()
+        except MessageDeleteForbiddenError:
+            pass
 
 @Qrh9.ar_cmd(incoming=True)
 async def watcher(event):
