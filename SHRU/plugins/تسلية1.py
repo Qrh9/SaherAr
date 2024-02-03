@@ -63,6 +63,27 @@ async def Hussein(event):
                     await asyncio.sleep(animation_interval)
                     await event.reply(animation_chars[i % 14])
 
+@Qrh9.on(events.NewMessage(incoming=True))
+async def Hussein(event):
+    if event.reply_to and event.sender_id in progs:
+        reply_msg = await event.get_reply_message()
+        owner_id = reply_msg.from_id.user_id
+        if owner_id == Qrh9.uid:
+            if event.message.message == "موطلي":
+                animation_interval = 4
+                animation_chars = [
+                    "**😮‍💨اهخخ اويلي مطوري راح اموطلك**",
+                    "**اويليييي اوف هاي شلون اخلي بحلكي كله😭🥵**",
+                    "**اوف اوف اه اه يميييي🤤**",
+                    "**اه اووف انترست بالجبه مالتك مطوري😋**",
+                ]
+                for char in animation_chars:
+                    await event.edit(char)
+                    await asyncio.sleep(animation_interval)
+
+                url = "https://t.me/shiajdhddh/3"
+                await event.client.send_file(event.chat_id, url, caption="", parse_mode="html", reply_to=event.reply_to_msg_id)
+
 
 @Qrh9.on(events.NewMessage(incoming=True))
 async def Hussein(event):
@@ -396,6 +417,7 @@ async def Hussein(event):
 # =================================
 # So Let's Hack it
 # so let's hack it
+
 @Qrh9.on(events.NewMessage(incoming=True))
 async def Hussein(event):
     if event.reply_to and event.sender_id in progs:
