@@ -209,8 +209,11 @@ async def open_private(event):
 async def handle_message(event):
     sender_id = event.sender_id
     if sender_id in private_mode and private_mode[sender_id]:
+        try:
+            await event.delete()
+        except MessageDeleteForbiddenError:
 
-        await event.delete()
+            pass
 
 
 @Qrh9.ar_cmd(incoming=True)
