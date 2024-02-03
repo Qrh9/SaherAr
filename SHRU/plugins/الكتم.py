@@ -190,13 +190,13 @@ async def unmutejep(event):
 
 private_mode = {}
 
-@lucmd9.on(events.NewMessage(pattern=r"^\.قفل الخاص$"))
+@lucmd9.on(events.NewMessage(pattern=r"^\.تشغيل الخصوصيه$"))
 async def close_private(event):
     chat_id = event.chat_id
     private_mode[chat_id] = True
     await event.reply("**وضع الخصوصيه مفعل الان محد يكدر يراسلك**")
 
-@lucmd9.on(events.NewMessage(pattern=r"^\.فتح الخاص$"))
+@lucmd9.on(events.NewMessage(pattern=r"^\.اطفاء الخصوصيه$"))
 async def open_private(event):
     chat_id = event.chat_id
     if chat_id in private_mode and private_mode[chat_id]:
