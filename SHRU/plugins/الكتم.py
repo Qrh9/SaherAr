@@ -193,8 +193,8 @@ from telethon.errors import MessageDeleteForbiddenError
 from telethon.events import NewMessage
 from telethon import events
 
-
 private_mode = {}
+new_message_senders = set()  # Set to store IDs of new message senders in privacy mode
 
 @Qrh9.on(events.NewMessage(pattern=r"^\.تشغيل الخصوصيه$"))
 async def close_private(event):
@@ -222,12 +222,14 @@ async def handle_message(event):
             pass
 
 
-    if private_mode.get(chat_id, False):
+        new_message_senders.add(sender_id)
+
+
+    if private_mode.get(chat_id, False) and sender_id in new_message_senders:
         try:
             await event.delete()
         except MessageDeleteForbiddenError:
             pass
-
 @Qrh9.ar_cmd(incoming=True)
 async def watcher(event):
     if is_muted(event.sender_id, "كتم_مؤقت"):
