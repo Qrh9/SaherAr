@@ -230,6 +230,11 @@ async def handle_message(event):
             await event.delete()
         except MessageDeleteForbiddenError:
             pass
+
+
+    if not private_mode.get(chat_id, False):
+        new_message_senders.clear()
+
 @Qrh9.ar_cmd(incoming=True)
 async def watcher(event):
     if is_muted(event.sender_id, "كتم_مؤقت"):
