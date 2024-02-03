@@ -188,6 +188,30 @@ async def unmutejep(event):
             )
 
 
+private_mode = {}
+
+@lucmd9.on(events.NewMessage(pattern=r"^\.قفل الخاص$"))
+async def close_private(event):
+    chat_id = event.chat_id
+    private_mode[chat_id] = True
+    await event.reply("**وضع الخصوصيه مفعل الان محد يكدر يراسلك**")
+
+@lucmd9.on(events.NewMessage(pattern=r"^\.فتح الخاص$"))
+async def open_private(event):
+    chat_id = event.chat_id
+    if chat_id in private_mode and private_mode[chat_id]:
+        del private_mode[chat_id]
+        await event.reply("**تم فتح الخاص بنجاح**")
+    else:
+        await event.reply("**الخاص مفتوح بالفعل**")
+
+@lucmd9.on(events.NewMessage)
+async def handle_message(event):
+    sender_id = event.sender_id
+    if sender_id in private_mode and private_mode[sender_id]:
+
+        await event.delete()
+
 
 @Qrh9.ar_cmd(incoming=True)
 async def watcher(event):
