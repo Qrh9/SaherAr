@@ -27,6 +27,15 @@ from ..sql_helper.global_collection import (
 from ..sql_helper.globals import delgvar
 from telethon.tl.functions.channels import JoinChannelRequest
 
+async def check_cooldown(chat_id):
+    if chat_id not in cooldowns:
+        return True
+    last_time = cooldowns[chat_id]
+    now = datetime.now()
+    if now - last_time >= timedelta(minutes=5):
+        return True
+    else:
+        return False
 async def Username_exists_by_Qrh9(username):
     try:
         async with Qrh9 as client:
