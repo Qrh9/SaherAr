@@ -47,105 +47,191 @@ async def Username_exists_by_Qrh9(username):
 
 @Qrh9.on(events.NewMessage(pattern=r"^\.ثلاثي (\d+)$"))
 async def generate_random_usernames(event):
+    chat_id = event.chat_id
+    if not await check_cooldown(chat_id):
+        await event.edit("**انتظر 5 دقايق بين كل انشاء **")
+        return
+    cooldowns[chat_id] = datetime.now()
 
-    count = int(event.pattern_match.group(1))  # Get the number from the command
-    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
-    abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    count = int(event.pattern_match.group(1))  # شكد ممضرط
+    if count > 10:
+        await event.edit("**لا يمكنك انشاء اكثر من 10 يوزرات بالوقت نفسه**")
+        return
 
-    generated_usernames = []
-    while count > 0:
-        v1 = ''.join((random.choice(abc1) for _ in range(1)))
-        v2 = ''.join((random.choice(abc) for _ in range(1)))
-        v3 = ''.join((random.choice(abc) for _ in range(1)))
-        v4 = ''.join((random.choice(abc) for _ in range(1)))
-        username = f"{v1}_{v2}_{v3}"
-        if not await Username_exists_by_Qrh9(username):
-            generated_usernames.append(username)
-            count -= 1
+# رسالة الانتطار 
+    message = await event.edit("**جاري الانشاء.**")
+    for i in range(3):
+        await asyncio.sleep(3)
+        if message.text != f"**جاري الانشاء{'.' * (i + 1)}**":
+            await message.edit(f"**جاري الانشاء{'.' * (i + 1)}**")
 
-    if generated_usernames:
-        usernames_text = "\n".join([f"@{username}" for username in generated_usernames])
-        await event.edit(f"**᯽︙ تم انشاء {len(generated_usernames)} يوزر جديد**\n\n{usernames_text}")
+    async with event.client.action(event.chat_id, "typing"):
+        abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
+        abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        generated_usernames = []
+        while count > 0:
+            v1 = ''.join((random.choice(abc1) for _ in range(1)))
+            v2 = ''.join((random.choice(abc) for _ in range(1)))
+            v3 = ''.join((random.choice(abc) for _ in range(1)))
+            username = f"{v1}_{v2}_{v3}"
+            if not await Username_exists_by_Qrh9(username):
+                generated_usernames.append(username)
+                count -= 1
+
+        if generated_usernames:
+            usernames_text = "\n".join([f"@{username}" for username in generated_usernames])
+            if message.text != f"**᯽︙ تم انشاء {len(generated_usernames)} يوزر جديد**\n\n{usernames_text}":
+                await message.edit(f"**᯽︙ تم انشاء {len(generated_usernames)} يوزر جديد**\n\n{usernames_text}")
 @Qrh9.on(events.NewMessage(pattern=r"^\.رباعي (\d+)$"))
 async def generate_random_usernames(event):
+    chat_id = event.chat_id
+    if not await check_cooldown(chat_id):
+        await event.edit("**انتظر 5 دقايق بين كل انشاء **")
+        return
+    cooldowns[chat_id] = datetime.now()
 
-    count = int(event.pattern_match.group(1))  # Get the number from the command
-    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
-    abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    count = int(event.pattern_match.group(1))  # شكد ممضرط
+    if count > 10:
+        await event.edit("**لا يمكنك انشاء اكثر من 10 يوزرات بالوقت نفسه**")
+        return
 
-    generated_usernames = []
-    while count > 0:
-        v1 = ''.join((random.choice(abc1) for _ in range(1)))
-        v2 = ''.join((random.choice(abc) for _ in range(1)))
-        v3 = ''.join((random.choice(abc) for _ in range(1)))
-        v4 = ''.join((random.choice(abc) for _ in range(1)))
-        username = f"{v1}{v2}_{v1}{v3}"
-        if not await Username_exists_by_Qrh9(username):
-            generated_usernames.append(username)
-            count -= 1
+# رسالة الانتطار 
+    message = await event.edit("**جاري الانشاء.**")
+    for i in range(3):
+        await asyncio.sleep(3)
+        if message.text != f"**جاري الانشاء{'.' * (i + 1)}**":
+            await message.edit(f"**جاري الانشاء{'.' * (i + 1)}**")
 
-    if generated_usernames:
-        usernames_text = "\n".join([f"@{username}" for username in generated_usernames])
-        await event.edit(f"**᯽︙ تم انشاء {len(generated_usernames)} يوزر جديد**\n\n{usernames_text}")
+    async with event.client.action(event.chat_id, "typing"):
+        abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
+        abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        generated_usernames = []
+        while count > 0:
+            v1 = ''.join((random.choice(abc1) for _ in range(1)))
+            v2 = ''.join((random.choice(abc) for _ in range(1)))
+            v3 = ''.join((random.choice(abc) for _ in range(1)))
+            username = f"{v1}_{v2}_{v2}_{v3}"
+            if not await Username_exists_by_Qrh9(username):
+                generated_usernames.append(username)
+                count -= 1
+
+        if generated_usernames:
+            usernames_text = "\n".join([f"@{username}" for username in generated_usernames])
+            if message.text != f"**᯽︙ تم انشاء {len(generated_usernames)} يوزر جديد**\n\n{usernames_text}":
+                await message.edit(f"**᯽︙ تم انشاء {len(generated_usernames)} يوزر جديد**\n\n{usernames_text}")
 @Qrh9.on(events.NewMessage(pattern=r"^\.يوزربوت (\d+)$"))
 async def generate_random_usernames(event):
-    count = int(event.pattern_match.group(1))  # اذا تخمط انت فرخ😆
-    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
-    abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    chat_id = event.chat_id
+    if not await check_cooldown(chat_id):
+        await event.edit("**انتظر 5 دقايق بين كل انشاء **")
+        return
+    cooldowns[chat_id] = datetime.now()
 
-    generated_usernames = []
-    while count > 0:
-        v1 = ''.join((random.choice(abc1) for _ in range(1)))
-        v2 = ''.join((random.choice(abc) for _ in range(1)))
-        v3 = ''.join((random.choice(abc) for _ in range(1)))
-        username = f"{v1}_{v2}_bot"
-        if not await Username_exists_by_Qrh9(username):
-            generated_usernames.append(username)
-            count -= 1
+    count = int(event.pattern_match.group(1))  # شكد ممضرط
+    if count > 10:
+        await event.edit("**لا يمكنك انشاء اكثر من 10 يوزرات بالوقت نفسه**")
+        return
 
-    if generated_usernames:
-        usernames_text = "\n".join([f"@{username}" for username in generated_usernames])
-        await event.edit(f"**᯽︙ تم انشاء {len(generated_usernames)} يوزر جديد**\n\n{usernames_text}")
+# رسالة الانتطار 
+    message = await event.edit("**جاري الانشاء.**")
+    for i in range(3):
+        await asyncio.sleep(3)
+        if message.text != f"**جاري الانشاء{'.' * (i + 1)}**":
+            await message.edit(f"**جاري الانشاء{'.' * (i + 1)}**")
+
+    async with event.client.action(event.chat_id, "typing"):
+        abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
+        abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        generated_usernames = []
+        while count > 0:
+            v1 = ''.join((random.choice(abc1) for _ in range(1)))
+            v2 = ''.join((random.choice(abc) for _ in range(1)))
+            v3 = ''.join((random.choice(abc) for _ in range(1)))
+            username = f"{v1}_{v2}_bot"
+            if not await Username_exists_by_Qrh9(username):
+                generated_usernames.append(username)
+                count -= 1
+
+        if generated_usernames:
+            usernames_text = "\n".join([f"@{username}" for username in generated_usernames])
+            if message.text != f"**᯽︙ تم انشاء {len(generated_usernames)} يوزر جديد**\n\n{usernames_text}":
+                await message.edit(f"**᯽︙ تم انشاء {len(generated_usernames)} يوزر جديد**\n\n{usernames_text}")
     
 
 @Qrh9.on(events.NewMessage(pattern=r"^\.خماسي (\d+)$"))
 async def generate_random_usernames(event):
+    chat_id = event.chat_id
+    if not await check_cooldown(chat_id):
+        await event.edit("**انتظر 5 دقايق بين كل انشاء **")
+        return
+    cooldowns[chat_id] = datetime.now()
 
-    count = int(event.pattern_match.group(1))  # Get the number from the command
-    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
-    abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    count = int(event.pattern_match.group(1))  # شكد ممضرط
+    if count > 10:
+        await event.edit("**لا يمكنك انشاء اكثر من 10 يوزرات بالوقت نفسه**")
+        return
 
-    generated_usernames = []
-    while count > 0:
-        v1 = ''.join((random.choice(abc1) for _ in range(1)))
-        v2 = ''.join((random.choice(abc) for _ in range(1)))
-        v3 = ''.join((random.choice(abc) for _ in range(1)))
-        v4 = ''.join((random.choice(abc) for _ in range(1)))
-        username = f"{v1}{v1}{v1}{v2}{v1}"
-        if not await Username_exists_by_Qrh9(username):
-            generated_usernames.append(username)
-            count -= 1
+# رسالة الانتطار 
+    message = await event.edit("**جاري الانشاء.**")
+    for i in range(3):
+        await asyncio.sleep(3)
+        if message.text != f"**جاري الانشاء{'.' * (i + 1)}**":
+            await message.edit(f"**جاري الانشاء{'.' * (i + 1)}**")
 
-    if generated_usernames:
-        usernames_text = "\n".join([f"@{username}" for username in generated_usernames])
-        await event.edit(f"**᯽︙ تم انشاء {len(generated_usernames)} يوزر جديد**\n\n{usernames_text}")
+    async with event.client.action(event.chat_id, "typing"):
+        abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
+        abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        generated_usernames = []
+        while count > 0:
+            v1 = ''.join((random.choice(abc1) for _ in range(1)))
+            v2 = ''.join((random.choice(abc) for _ in range(1)))
+            v3 = ''.join((random.choice(abc) for _ in range(1)))
+            username = f"{v1}_{v2}_{v1}_{v1}_{v2}"
+            if not await Username_exists_by_Qrh9(username):
+                generated_usernames.append(username)
+                count -= 1
+
+        if generated_usernames:
+            usernames_text = "\n".join([f"@{username}" for username in generated_usernames])
+            if message.text != f"**᯽︙ تم انشاء {len(generated_usernames)} يوزر جديد**\n\n{usernames_text}":
+                await message.edit(f"**᯽︙ تم انشاء {len(generated_usernames)} يوزر جديد**\n\n{usernames_text}")
 @Qrh9.on(events.NewMessage(pattern=r"^\.سداسي (\d+)$"))
 async def generate_random_usernames(event):
+    chat_id = event.chat_id
+    if not await check_cooldown(chat_id):
+        await event.edit("**انتظر 5 دقايق بين كل انشاء **")
+        return
+    cooldowns[chat_id] = datetime.now()
 
-    count = int(event.pattern_match.group(1))  # Get the number from the command
-    abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
+    count = int(event.pattern_match.group(1))  # شكد ممضرط
+    if count > 10:
+        await event.edit("**لا يمكنك انشاء اكثر من 10 يوزرات بالوقت نفسه**")
+        return
 
-    generated_usernames = []
-    while count > 0:
-        v1 = ''.join((random.choice(abc) for _ in range(1)))
-        v2 = ''.join((random.choice(abc) for _ in range(1)))
-        v3 = ''.join((random.choice(abc1) for _ in range(1)))
-        v4 = ''.join((random.choice(abc) for _ in range(1)))
-        username = f"{v1}{v1}{v3}{v1}{v1}{v1}"
-        if not await Username_exists_by_Qrh9(username):
-            generated_usernames.append(username)
-            count -= 1
+# رسالة الانتطار 
+    message = await event.edit("**جاري الانشاء.**")
+    for i in range(3):
+        await asyncio.sleep(3)
+        if message.text != f"**جاري الانشاء{'.' * (i + 1)}**":
+            await message.edit(f"**جاري الانشاء{'.' * (i + 1)}**")
+
+    async with event.client.action(event.chat_id, "typing"):
+        abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
+        abc1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        generated_usernames = []
+        while count > 0:
+            v1 = ''.join((random.choice(abc1) for _ in range(1)))
+            v2 = ''.join((random.choice(abc) for _ in range(1)))
+            v3 = ''.join((random.choice(abc) for _ in range(1)))
+            username = f"{v1}_{v2}_{v1}_{v2}_{v1}_{v1}"
+            if not await Username_exists_by_Qrh9(username):
+                generated_usernames.append(username)
+                count -= 1
+
+        if generated_usernames:
+            usernames_text = "\n".join([f"@{username}" for username in generated_usernames])
+            if message.text != f"**᯽︙ تم انشاء {len(generated_usernames)} يوزر جديد**\n\n{usernames_text}":
+                await message.edit(f"**᯽︙ تم انشاء {len(generated_usernames)} يوزر جديد**\n\n{usernames_text}")
 
     if generated_usernames:
         usernames_text = "\n".join([f"@{username}" for username in generated_usernames])
