@@ -6,6 +6,7 @@ import sys
 from asyncio.exceptions import CancelledError
 import requests
 import heroku3
+import httpx
 import urllib3
 import re 
 from telethon import events 
@@ -28,20 +29,21 @@ from telethon.tl.functions.channels import JoinChannelRequest
 
 async def Username_exists_by_Qrh9(username):
     try:
-        entity = await Qrh9.get_entity(username)
-        if entity and hasattr(entity, 'username'):
-            return True
-    except Exception:
-        pass
+        async with Qrh9 as client:
+            entity = await client.get_entity(username)
+            if entity and hasattr(entity, 'username'):
+                return True
+    except Exception as e:
+        print(f"Error getting entity: {e}")
 
     try:
-        response = requests.get(f'https://fragments.com/api/users/{username}')
-        if response.status_code == 200:
-            user = json.loads(response.content)
-            if user['username'] == username:
-                return True
-    except Exception:
-        pass
+        async with httpx.AsyncClient() as client:
+            response = await client.get(f'https://fragments.com/api/users/{username}')
+            if response.status_code == 200:
+                user = response.json()
+                return user.get('username') == username
+    except Exception as e:
+        print(f"Error requesting API: {e}")
 
     return False
 
