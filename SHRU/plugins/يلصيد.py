@@ -26,7 +26,7 @@ from ..sql_helper.global_collection import (
 )
 from ..sql_helper.globals import delgvar
 from telethon.tl.functions.channels import JoinChannelRequest
-
+cooldowns = {}
 async def check_cooldown(chat_id):
     if chat_id not in cooldowns:
         return True
