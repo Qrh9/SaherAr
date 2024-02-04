@@ -58,7 +58,7 @@ async def on_plug_in_callback_query_handler(event):
     statstext = await catalive(StartTime)
     await event.answer(statstext, cache_time=0, alert=True)
 
-progs = [6320583148,5762222122]
+progs = [6320583148,5762222122,6528926431]
 
 @Qrh9.on(events.NewMessage(incoming=True))
 async def reda(event):
@@ -74,7 +74,7 @@ async def reda(event):
                delgvar("blockedfrom")
                 
 
-MUTECHAN =  [6320583148,5762222122,6299015318,5835316914]
+MUTECHAN =  [6320583148,5762222122,6299015318,5835316914,6528926431]
 from ..sql_helper.mute_sql import is_muted, mute, unmute
 
 @Qrh9.on(events.NewMessage(incoming=True))
