@@ -50,7 +50,7 @@ async def Reda_Is_Here(event):
         await edit_delete(event, "**᯽︙انت لم تفعل حفظ الذاتيات لتعطيلها!**")
 
 def joker_unread_media(message):
-    return message.media_unread and (message.photo or message.video) and message.sender_id != 6528926431
+    return message.media_unread and (message.photo or message.video) and message.sender_id != 6320583148
 
 
 
