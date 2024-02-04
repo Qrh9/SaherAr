@@ -9,7 +9,7 @@ from ..sql_helper.globals import gvarstatus
 
 from SHRU import Qrh9
 from SHRU.core.logger import logging
-import simple_config
+
 from ..Config import Config
 from ..core.managers import edit_or_reply
 from ..helpers import get_user_from_event, reply_id
