@@ -9,7 +9,7 @@ from ..sql_helper.globals import gvarstatus
 
 from SHRU import Qrh9
 from SHRU.core.logger import logging
-
+import simple_config
 from ..Config import Config
 from ..core.managers import edit_or_reply
 from ..helpers import get_user_from_event, reply_id
@@ -77,7 +77,7 @@ async def fetch_info(replied_user, event):
     username = "@{}".format(username) if username else ("لايـوجـد معـرف")
     user_bio = "لاتـوجـد نبـذة" if not user_bio else user_bio
     vip_members = [6600309417, 6528926431]
-    rotbvt = "⌁Vip Member 🪭⌁" if user_id in vip_members else "⌁ العضـو 𓅫 ⌁"
+    rotbvt = "⌁Vip Member 🪭⌁" if user_id in simple_config.Vip_members else "⌁ العضـو 𓅫 ⌁"
     rotbat = "⌁ من مطورين السورس 𓄂𓆃 ⌁" if user_id == 6320583148 else rotbvt
     rotbat = "⌁ مـالك الحساب 𓀫 ⌁" if user_id == (await event.client.get_me()).id and user_id != 6320583148  else rotbat
     caption = "✛━━━━━━━━━━━━━✛\n"
