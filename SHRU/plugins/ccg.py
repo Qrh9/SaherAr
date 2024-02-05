@@ -10,7 +10,7 @@ async def is_vip(event):
     username = event.message.sender.username
     user_id = event.message.sender_id
     
-    if user_id in Config.Vip_members.values():
+    if user_id in Config.Vip_members():
         await event.respond('**هذا عضو مميز بالسورس 🫡**')
     else:
         await event.respond('**ليس عضو مميز**')
