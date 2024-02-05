@@ -6,7 +6,7 @@ import urllib.parse
 import os
 from pathlib import Path
 
-from ShazamAPI import Shazam
+
 from telethon import types
 from telethon.errors.rpcerrorlist import YouBlockedUserError, ChatSendMediaForbiddenError
 from telethon.tl.functions.contacts import UnblockRequest as unblock
