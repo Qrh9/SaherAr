@@ -258,6 +258,6 @@ from telethon import events
 async def check_vip(event):
     user_id = event.sender_id
     if user_id in Config.Vip_members:
-        await event.respond("You are a VIP member!")
+        await edit_or_reply("You are a VIP member!")
     else:
-        await event.respond("You are not a VIP member.")
+        await edit_or_reply("You are not a VIP member.")
