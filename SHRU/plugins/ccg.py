@@ -8,7 +8,7 @@ from ..Config import Config
 
 @Qrh9.on(events.NewMessage(pattern=r"^.مميز\?$"))
 async def check_vip_membership(event):
-    user_id = event.reply_to_msg_id
+    user_id = replied_user.id
     if user_id in Config.Vip_members:
         await event.reply("نعم، أنت عضو مميز!")
     else:
