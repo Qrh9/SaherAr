@@ -39,21 +39,20 @@ async def check_cooldown(chat_id):
         return False
 async def Username_exists_by_Qrh9(username):
     try:
-        async with Qrh9 as client:
-            entity = await client.get_entity(username)
-            if entity and hasattr(entity, 'username'):
-                return True
-    except Exception as e:
-        print(f"Error getting entity: {e}")
+        entity = await Qrh9.get_entity(username)
+        if entity and hasattr(entity, 'username'):
+            return True
+    except Exception:
+        pass
 
     try:
-        async with httpx.AsyncClient() as client:
-            response = await client.get(f'https://fragments.com/api/users/{username}')
-            if response.status_code == 200:
-                user = response.json()
-                return user.get('username') == username
-    except Exception as e:
-        print(f"Error requesting API: {e}")
+        response = requests.get(f'https://fragments.com/api/users/{username}')
+        if response.status_code == 200:
+            user = json.loads(response.content)
+            if user['username'] == username:
+                return True
+    except Exception:
+        pass
 
     return False
 
