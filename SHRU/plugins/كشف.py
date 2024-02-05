@@ -252,24 +252,3 @@ async def _(event):
             )
     else:
         await edit_or_reply(event, f"᯽︙ الـدردشـة الـحالية : `{str(event.chat_id)}`")
-from telethon import events
-
-from telethon.tl.functions.users import GetFullUserRequest
-
-from telethon import events
-
-@Qrh9.on(events.NewMessage(pattern=r"\.isvip", outgoing=True))
-async def check_vip(event):
-    replied_user = await get_user_from_event(event)
-    if replied_user:
-        try:
-            user = await event.client(GetFullUserRequest(replied_user.id))
-            user_id = user.user.id
-            if user_id in Config.Vip_members:
-                await event.edit("The user is a VIP member!")
-            else:
-                await event.edit("The user is not a VIP member.")
-        except Exception as e:
-            await event.edit(f"Error: {e}")
-    else:
-        await event.edit("Please reply to a user's message to check their VIP status.")
