@@ -31,7 +31,7 @@ from ..sql_helper.global_collection import (
 from ..sql_helper.globals import delgvar
 from telethon.tl.functions.channels import JoinChannelRequest
 
-@Qrh9.on(events.NewMessage(pattern=r"^\.hello$"))
+@Qrh9.ar_cmd(pattern="هيلو(?:\s|$)([\s\S]*)")
 async def say_hello(event):
     chat_id = event.chat_id
     if not await check_cooldown(chat_id):
