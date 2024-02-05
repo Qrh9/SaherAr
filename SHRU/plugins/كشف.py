@@ -254,10 +254,12 @@ async def _(event):
         await edit_or_reply(event, f"᯽︙ الـدردشـة الـحالية : `{str(event.chat_id)}`")
 from telethon import events
 
+from telethon.tl.functions.users import GetFullUserRequest
+
 @Qrh9.on(events.NewMessage(pattern=r"\.isvip", outgoing=True))
 async def check_vip(event):
-    replied_user = event.message.reply_to_message.sender if event.message.reply_to_message else None
-    if replied_user:
+    if event.message.reply_to_message:
+        replied_user = event.message.reply_to_message.sender
         try:
             replied_user = await event.client(GetFullUserRequest(replied_user.id))
             user_id = replied_user.user.id
