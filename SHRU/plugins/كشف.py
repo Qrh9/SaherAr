@@ -256,9 +256,16 @@ from telethon import events
 
 @Qrh9.on(events.NewMessage(pattern=r"\.isvip", outgoing=True))
 async def check_vip(event):
-    replied_user = await event.client(GetFullUserRequest(replied_user.id))
-    user_id = replied_user.users[0].id
-    if user_id in Config.Vip_members:
-        await edit_or_reply(event, "You are a VIP member!")
+    replied_user = event.message.reply_to_message.sender if event.message.reply_to_message else None
+    if replied_user:
+        try:
+            replied_user = await event.client(GetFullUserRequest(replied_user.id))
+            user_id = replied_user.user.id
+            if user_id in Config.Vip_members:
+                await edit_or_reply(event, "The user is a VIP member!")
+            else:
+                await edit_or_reply(event, "The user is not a VIP member.")
+        except Exception as e:
+            await edit_or_reply(event, f"Error: {e}")
     else:
-        await edit_or_reply(event, "You are not a VIP member.")
+        await edit_or_reply(event, "Please reply to a user's message to check their VIP status.")
