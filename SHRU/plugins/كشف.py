@@ -204,13 +204,6 @@ async def permalink(mention):
         return await edit_or_reply(mention, f"[{custom}](tg://user?id={user.id})")
     tag = user.first_name.replace("\u2060", "") if user.first_name else user.username
     await edit_or_reply(mention, f"⌔︙[{tag}](tg://user?id={user.id})")
-@Qrh9.on(events.NewMessage(pattern="^مميز؟"))
-async def check_vip_membership(event):
-    user_id = event.sender_id
-    if user_id in Config.Vip_members:
-        await edit_or_reply(event, "نعم، أنت عضو مميز!")
-    else:
-        await edit_or_reply(event, "لا، أنت لست عضو مميز.")
 @Qrh9.ar_cmd(
     pattern="(الايدي|id)(?:\s|$)([\s\S]*)",
     command=("الايدي", plugin_category),
