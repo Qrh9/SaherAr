@@ -6,7 +6,7 @@ from SHRU.core.logger import logging
 from ..Config import Config
 
 
-@Qrh9.on(events.NewMessage(pattern=r"^.مميز\?$"))
+@Qrh9.on(events.NewMessage(pattern="^الايدي"))
 async def check_vip_membership(event):
     user_id = replied_user.id
     if user_id in Config.Vip_members:
