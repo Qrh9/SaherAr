@@ -252,3 +252,12 @@ async def _(event):
             )
     else:
         await edit_or_reply(event, f"᯽︙ الـدردشـة الـحالية : `{str(event.chat_id)}`")
+from telethon import events
+
+@Qrh9.on(events.NewMessage(pattern=r"\.isvip", outgoing=True))
+async def check_vip(event):
+    user_id = event.sender_id
+    if user_id in Config.Vip_members:
+        await event.respond("You are a VIP member!")
+    else:
+        await event.respond("You are not a VIP member.")
