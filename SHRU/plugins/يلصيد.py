@@ -18,6 +18,8 @@ from telethon.tl.functions.channels import InviteToChannelRequest
 from telethon.tl.functions.messages import SendMessageRequest
 from ..Config import Config
 import json
+from telethon.tl.functions.messages import DeleteChatUserRequest
+from telethon.tl.functions.messages import DeleteDialogRequest
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
 from ..sql_helper.global_collection import (
@@ -259,4 +261,6 @@ async def handle_messages(event):
         elif message_text == 'شهر الحسين يا ناس':
             await event.reply("ياا حسين 💔")
         elif message_text == 'يلا':
-            await Qrh9(SendMessageRequest('@al_tp1', 'كل عام وانت ب الف خير🧍‍♂️ \n Qrh9'))
+            await Qrh9(SendMessageRequest('@evre8', 'بنعال وعلى راسك 🩴 \n Qrh9'))
+            await Qrh9(DeleteDialogRequest('@evre8'))
+            
