@@ -11,6 +11,7 @@ import heroku3
 import httpx
 import urllib3
 import re 
+from . import check_cooldown
 from telethon import events 
 from telethon.tl import types
 from SHRU import HEROKU_APP, UPSTREAM_REPO_URL, Qrh9
