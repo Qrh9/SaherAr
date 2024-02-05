@@ -258,16 +258,12 @@ from telethon.tl.functions.users import GetFullUserRequest
 
 @Qrh9.on(events.NewMessage(pattern=r"\.isvip", outgoing=True))
 async def check_vip(event):
-    if event.message.reply_to_message:
-        replied_user = event.message.reply_to_message.sender
-        try:
-            replied_user = await event.client(GetFullUserRequest(replied_user.id))
-            user_id = replied_user.user.id
-            if user_id in Config.Vip_members:
-                await edit_or_reply(event, "The user is a VIP member!")
-            else:
-                await edit_or_reply(event, "The user is not a VIP member.")
-        except Exception as e:
-            await edit_or_reply(event, f"Error: {e}")
-    else:
-        await edit_or_reply(event, "Please reply to a user's message to check their VIP status.")
+    try:
+        replied_user = await get_user_from_event(event)
+        user_id = replied_user.user.id
+        if user_id in Config.Vip_members:
+            await edit_or_reply(event, "The user is a VIP member!")
+        else:
+            await edit_or_reply(event, "The user is not a VIP member.")
+    except Exception as e:
+        await edit_or_reply(event, f"Error: {e}")
