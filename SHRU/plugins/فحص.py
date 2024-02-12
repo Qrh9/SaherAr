@@ -34,7 +34,7 @@ else:
     with open(file_path, "w") as file:
         file.write(installation_time)
 
-@Qrh9.ar_cmd(pattern="فحص(?:\s|$)([\s\S]*)")@Qrh9.ar_cmd(pattern="فحص(?:\s|$)([\s\S]*)")
+@Qrh9.ar_cmd(pattern="فحص(?:\s|$)([\s\S]*)")
 async def amireallyalive(event):
     reply_to_id = await reply_id(event)
     uptime = await get_readable_time((time.time() - StartTime))
@@ -49,9 +49,9 @@ async def amireallyalive(event):
     Qrh9_caption = gvarstatus("ALIVE_TEMPLATE") or temp
 
     
-    vip_members = gvarstatus("Vip_members") or []
+    vip_members = Config.Vip_members
     if Qrh9 in vip_members:
-        Qrue_IMG = "https://telegra.ph/file/another_telegraph_pic.jpg"
+        Qrue_IMG = "https://telegra.ph/file/6ed55c28a7dc22cbcaedb.jpg"
 
     caption = Qrh9_caption.format(
         ALIVE_TEXT=ALIVE_TEXT,
