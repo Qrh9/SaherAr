@@ -50,9 +50,9 @@ async def amireallyalive(event):
 
     
     vip_members = Config.Vip_members
-    if str(Qrh9.id) in vip_members or Qrh9.username in vip_members:
-    Qrue_IMG = "https://telegra.ph/file/6ed55c28a7dc22cbcaedb.jpg"
-    caption = Qrh9_caption.format(
+    if str(Qrh9.id) in vip_members:
+        Qrue_IMG = "https://telegra.ph/file/6ed55c28a7dc22cbcaedb.jpg"
+        caption = Qrh9_caption.format(
         ALIVE_TEXT=ALIVE_TEXT,
         EMOJI=EMOJI,
         mention=mention,
