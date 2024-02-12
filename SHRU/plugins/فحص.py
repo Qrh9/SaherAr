@@ -34,8 +34,7 @@ else:
     with open(file_path, "w") as file:
         file.write(installation_time)
 
-@Qrh9.ar_cmd(pattern="فحص(?:\s|$)([\s\S]*)")
-
+@Qrh9.ar_cmd(pattern="فحص(?:\s|$)([\s\S]*)")@Qrh9.ar_cmd(pattern="فحص(?:\s|$)([\s\S]*)")
 async def amireallyalive(event):
     reply_to_id = await reply_id(event)
     uptime = await get_readable_time((time.time() - StartTime))
@@ -48,6 +47,12 @@ async def amireallyalive(event):
     ALIVE_TEXT = gvarstatus("ALIVE_TEXT") or "**父[ 𝘼𝙇𝙨𝙖𝙝𝙚𝙧 𝙸𝚂 𝚆𝙾𝚁𝙺𝙸𝙽𝙶 ✓ ](t.me/SXYO3)父**"
     Qrue_IMG = gvarstatus("ALIVE_PIC") or Config.A_PIC or "https://telegra.ph/file/4d3a48331f232ad0246f3.mp4"
     Qrh9_caption = gvarstatus("ALIVE_TEMPLATE") or temp
+
+    
+    vip_members = gvarstatus("Vip_members") or []
+    if Qrh9 in vip_members:
+        Qrue_IMG = "https://telegra.ph/file/another_telegraph_pic.jpg"
+
     caption = Qrh9_caption.format(
         ALIVE_TEXT=ALIVE_TEXT,
         EMOJI=EMOJI,
@@ -78,7 +83,6 @@ async def amireallyalive(event):
             event,
             caption,
         )
-
 
 temp = """{ALIVE_TEXT}
 **‎{EMOJI}‌‎𝙽𝙰𝙼𝙴 𖠄 {mention}** ٫
