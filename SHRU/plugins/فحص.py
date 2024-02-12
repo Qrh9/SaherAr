@@ -45,9 +45,9 @@ async def amireallyalive(event):
     ms = (end - start).microseconds / 1000
     _, check_sgnirts = check_data_base_heal_th()
     EMOJI = gvarstatus("ALIVE_EMOJI") or "⿻┊‌‎"
-    ALIVE_TEXT = gvarstatus("ALIVE_TEXT") or "**父[ 𝘼𝙇𝙨𝙖𝙝𝙚𝙧 𝙸𝚂 𝚆𝙾𝚁𝙺𝙸𝙽𝙶 ✓ ](t.me/SXYO3)父**"
+    ALIVE_TEXT = gvarstatus("ALIVE_TEXT") or "[**父 Vip member🎖️父**](t.me/SXYO3)" if user.id in Config.Vip_members else "父[𝘼𝙇𝙨𝙖𝙝𝙚𝙧 𝙸𝚂 𝚆𝙾𝚁𝙺𝙸𝙽𝙶 ✓](t.me/Sxyo3)父"
     Qrue_IMG = gvarstatus("ALIVE_PIC") or Config.A_PIC or "https://telegra.ph/file/4d3a48331f232ad0246f3.mp4"
-    Qrh9_caption = gvarstatus("ALIVE_TEMPLATE") or temp
+    Qrh9_caption = gvarstatus("ALIVE_TEMPLATE") or Temp_Vip if user.id in Config.Vip_members else temp
     caption = Qrh9_caption.format(
         ALIVE_TEXT=ALIVE_TEXT,
         EMOJI=EMOJI,
@@ -79,6 +79,14 @@ async def amireallyalive(event):
             caption,
         )
 
+Temp_Vip = """{ALIVE_TEXT}
+**‎{EMOJI}‌‎ الأسم  𖠄 {mention}** ٫
+**‌‎{EMOJI}‌‎ اصدار البايثون 𖠄 `{pyver}`** ٫
+**‌‎{EMOJI}‌‎ الساحر 𖠄 `{telever}`** ٫
+**‌‎{EMOJI}‌‎ وقت التشغيل 𖠄 `{uptime}`** ٫
+‌‎**{EMOJI}‌‎‌‎ البنك 𖠄 `{ping}`** ٫
+‌‎**{EMOJI}‌‎‌‎ التاريخ 𖠄 `{Tare5}`** ٫
+** Vip Member **"""
 
 temp = """{ALIVE_TEXT}
 **‎{EMOJI}‌‎𝙽𝙰𝙼𝙴 𖠄 {mention}** ٫
