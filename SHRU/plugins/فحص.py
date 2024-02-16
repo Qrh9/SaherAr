@@ -5,19 +5,6 @@ import asyncio
 import os
 from datetime import datetime
 from platform import python_version
-from requests import get#
-from telethon.tl.functions.photos import GetUserPhotosRequest
-from telethon.tl.functions.users import GetFullUserRequest
-from telethon.utils import get_input_location
-
-from SHRU import Qrh9
-from Qrh9.razan.resources.strings import *
-from telethon import events
-from ..Config import Config
-from ..core.managers import edit_or_reply
-from ..helpers import get_user_from_event, reply_id
-from telethon.utils import get_display_name
-from ..helpers.utils import reply_id, _catutils, parse_pre, yaml_format, install_pip, get_user_from_event, _format
 from telethon import version
 from telethon.errors.rpcerrorlist import (
     MediaEmptyError,
@@ -25,16 +12,15 @@ from telethon.errors.rpcerrorlist import (
     WebpageMediaEmptyError,
 )
 from telethon.events import CallbackQuery
-
-from SHRU import StartTime, JEPVERSION
+from SHRU import StartTime, Qrh9, JEPVERSION
+from ..Config import Config
 from ..core.managers import edit_or_reply
-from ..helpers.functions import catalive, check_data_base_health, get_readable_time
+from ..helpers.functions import catalive, check_data_base_heal_th, get_readable_time
 from ..helpers.utils import reply_id
 from ..sql_helper.globals import gvarstatus
 from . import mention
  
 plugin_category = "utils"
-#كتـابة وعـديل:  @ll1iltت
 file_path = "installation_date.txt"
 if os.path.exists(file_path) and os.path.getsize(file_path) > 0:
     with open(file_path, "r") as file:
