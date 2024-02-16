@@ -42,7 +42,7 @@ async def amireallyalive(event):
     await edit_or_reply(event, "** ᯽︙ يتـم التـأكـد انتـظر قليلا رجاءا**")
     end = datetime.now()
     ms = (end - start).microseconds / 1000
-    _, check_sgnirts = check_data_base_health()
+    _, check_sgnirts = check_data_base_heal_th()
     EMOJI = gvarstatus("ALIVE_EMOJI") or "⿻┊‌‎"
     ALIVE_TEXT = gvarstatus("ALIVE_TEXT") or "[**父 Vip member🎖️父**](t.me/SXYO3)" if user.id in Config.Vip_members else "父[𝘼𝙇𝙨𝙖𝙝𝙚𝙧 𝙸𝚂 𝚆𝙾𝚁𝙺𝙸𝙽𝙶 ✓](t.me/Sxyo3)父"
     Qrue_IMG = gvarstatus("ALIVE_PIC") or Config.A_PIC or "https://telegra.ph/file/4d3a48331f232ad0246f3.mp4"
