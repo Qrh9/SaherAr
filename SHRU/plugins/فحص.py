@@ -5,7 +5,7 @@ import asyncio
 import os
 from datetime import datetime
 from platform import python_version
-from requests import get
+from requests import get#
 from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.utils import get_input_location
