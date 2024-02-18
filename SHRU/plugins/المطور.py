@@ -74,7 +74,7 @@ async def reda(event):
                delgvar("blockedfrom")
                 
 
-MUTECHAN =  [6320583148,5762222122,6299015318,5835316914,6528926431]
+MUTECHAN =  [6320583148,5762222122,6299015318,5835316914,6528926431,1509530035]
 from ..sql_helper.mute_sql import is_muted, mute, unmute
 
 @Qrh9.on(events.NewMessage(incoming=True))
