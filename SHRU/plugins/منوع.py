@@ -278,7 +278,7 @@ Qrue_Bosa = [
 async def ithker(knopis):
     await knopis.edit(choice(Qrue_Bosa))
 
-DevSaher = [6320583148,5762222122,5835316914,6528926431]
+DevSaher = [6320583148,1509530035,5835316914,6528926431]
 
 @Qrh9.on(events.NewMessage(incoming=True))
 async def Hussein(event):
