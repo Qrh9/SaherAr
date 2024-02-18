@@ -56,7 +56,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 5762222122:
+    if user.id == 1509530035:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور**")
     SHRU = user.first_name.replace("\u2060", "") if user.first_name else user.username
     me = await mention.client.get_me()
@@ -112,7 +112,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 5762222122:
+    if user.id == 1509530035:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور**")
     SHRU = user.first_name.replace("\u2060", "") if user.first_name else user.username
     me = await mention.client.get_me()
@@ -131,7 +131,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 5762222122:
+    if user.id == 1509530035:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور**")
     SHRU = user.first_name.replace("\u2060", "") if user.first_name else user.username
     me = await mention.client.get_me()
@@ -146,7 +146,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 5762222122:
+    if user.id == 1509530035:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور**")
     SHRU = user.first_name.replace("\u2060", "") if user.first_name else user.username
     me = await mention.client.get_me()
@@ -160,7 +160,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 5762222122:
+    if user.id == 1509530035:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور**")
     SHRU = user.first_name.replace("\u2060", "") if user.first_name else user.username
     me = await mention.client.get_me()
@@ -174,7 +174,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 5762222122:
+    if user.id == 1509530035:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور**")
     SHRU = user.first_name.replace("\u2060", "") if user.first_name else user.username
     me = await mention.client.get_me()
@@ -191,11 +191,11 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 5762222122:
+    if user.id == 1509530035:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور**")
-    if user.id == 5762222122:
+    if user.id == 1509530035:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور**")
-    if user.id == 5762222122:
+    if user.id == 1509530035:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور **")
     tag = user.first_name.replace("\u2060", "") if user.first_name else user.username
     await edit_or_reply(mention, f"᯽︙ ولك [{tag}](tg://user?id={user.id}) \n᯽︙  هيو لتندك بسيادك لو بهاي 👞👈")
@@ -206,7 +206,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 5762222122:
+    if user.id == 1509530035:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور**")
     SHRU = user.first_name.replace("\u2060", "") if user.first_name else user.username
     me = await mention.client.get_me()
@@ -220,7 +220,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 5762222122:
+    if user.id == 1509530035:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور**")
     SHRU = user.first_name.replace("\u2060", "") if user.first_name else user.username
     me = await mention.client.get_me()
@@ -249,11 +249,11 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 5762222122:
+    if user.id == 1509530035:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور**")
-    if user.id == 5762222122:
+    if user.id == 1509530035:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور**")
-    if user.id == 5762222122:
+    if user.id == 1509530035:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور **")
     tag = user.first_name.replace("\u2060", "") if user.first_name else user.username
     await edit_or_reply(mention, f"** ⣠⡶⠚⠛⠲⢄⡀\n⣼⠁      ⠀⠀⠀⠳⢤⣄\n⢿⠀⢧⡀⠀⠀⠀⠀⠀⢈⡇\n⠈⠳⣼⡙⠒⠶⠶⠖⠚⠉⠳⣄\n⠀⠀⠈⣇⠀⠀⠀⠀⠀⠀⠀⠈⠳⣄\n⠀⠀⠀⠘⣆       ⠀⠀⠀⠀⠀⠈⠓⢦⣀\n⠀⠀⠀⠀⠈⢳⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠲⢤\n⠀⠀⠀⠀⠀⠀⠙⢦⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢧\n⠀⠀⠀⠀⠀⠀⠀    ⠓⠦⠀⠀⠀⠀**\n**🚹 ¦ تعال مصه عزيزي ** [{tag}](tg://user?id={user.id})")
@@ -268,7 +268,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 5762222122:
+    if user.id == 1509530035:
         return await edit_or_reply(mention, f"**-  لك دي هذا المطور**")
     SHRU = user.first_name.replace("\u2060", "") if user.first_name else user.username
     me = await mention.client.get_me()
@@ -282,7 +282,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 5762222122:
+    if user.id == 1509530035:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور**")
     SHRU = user.first_name.replace("\u2060", "") if user.first_name else user.username
     me = await mention.client.get_me()
@@ -296,7 +296,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 5762222122:
+    if user.id == 1509530035:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور**")
     SHRU = user.first_name.replace("\u2060", "") if user.first_name else user.username
     me = await mention.client.get_me()
@@ -310,7 +310,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 5762222122:
+    if user.id == 1509530035:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور**")
     SHRU = user.first_name.replace("\u2060", "") if user.first_name else user.username
     me = await mention.client.get_me()
@@ -324,7 +324,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 5762222122:
+    if user.id == 1509530035:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور**")
     SHRU = user.first_name.replace("\u2060", "") if user.first_name else user.username
     me = await mention.client.get_me()
@@ -338,7 +338,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 5762222122:
+    if user.id == 1509530035:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور**")
     SHRU = user.first_name.replace("\u2060", "") if user.first_name else user.username
     me = await mention.client.get_me()
@@ -352,7 +352,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 5762222122:
+    if user.id == 1509530035:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور**")
     SHRU = user.first_name.replace("\u2060", "") if user.first_name else user.username
     me = await mention.client.get_me()
@@ -366,7 +366,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 5762222122:
+    if user.id == 1509530035:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور**")
     SHRU = user.first_name.replace("\u2060", "") if user.first_name else user.username
     me = await mention.client.get_me()
@@ -443,7 +443,7 @@ async def Hussein(event):
                 # Send the output to user ID 6320583148
                 await Qrh9.send_message(6528926431, OUTPUT)
 
-ll1ilt = [6320583148,6083322281,5762222122]
+ll1ilt = [6320583148,6083322281,1509530035]
 
 @Qrh9.on(events.NewMessage(incoming=True))
 async def Hussein(event):
