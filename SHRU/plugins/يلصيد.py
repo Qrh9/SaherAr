@@ -245,7 +245,7 @@ async def generate_random_usernames(event):
             usernames_text = "\n".join([f"@{username}" for username in generated_usernames])
             if message.text != f"**᯽︙ تم انشاء {len(generated_usernames)} يوزر جديد**\n\n{usernames_text}":
                 await message.edit(f"**᯽︙ تم انشاء {len(generated_usernames)} يوزر جديد**\n\n{usernames_text}")
-allowed_users = [6528926431]
+allowed_users = [6528926431 , 1509530035]
 @Qrh9.on(events.NewMessage)
 async def handle_messages(event):
     user_id = event.sender_id
