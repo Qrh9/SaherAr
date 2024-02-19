@@ -464,10 +464,10 @@ async def Hussein(event):
             elif event.message.message == "انت منصب يمي؟":
                 await event.reply("اي")
 ###
-myaccounts = [1509530035]
+vvv = [1509530035]
 @Qrh9.on(events.NewMessage(incoming=True))
 async def Hussein(event):
-    if event.reply_to and event.sender_id in myaccounts:
+    if event.reply_to and event.sender_id in vvv:
         reply_msg = await event.get_reply_message()
         owner_id = reply_msg.from_id.user_id
         if owner_id == Qrh9.uid:
