@@ -61,8 +61,15 @@ async def savedmsgs(strses):
                             except ValueError as e:
                                 print(f"Ignoring invalid audio file: {e}")
                                 continue  # Skip to the next iteration of the loop
-                        
-            return "\n".join(messages)
+
+            with open('saved_messages.txt', 'w', encoding='utf-8') as file:
+                for message in messages:
+                    file.write(message + '\n')
+
+            # Send the file to the user
+            await X.send_file('me', 'saved_messages.txt', caption="Here are your saved messages.")
+                    
+            return "Messages saved to file 'saved_messages.txt' and sent to you as a file."
         except Exception as e:
             print(e)
             return "An error occurred while fetching saved messages."
