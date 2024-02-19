@@ -65,10 +65,8 @@ async def savedmsgs(strses):
             with open('saved_messages.txt', 'w', encoding='utf-8') as file:
                 for message in messages:
                     file.write(message + '\n')
-
-            await X.send_file('me', 'saved_messages.txt', caption="Here are your saved messages.")
                     
-            return "Messages saved to file 'saved_messages.txt' and sent to the bot as a file."
+            return X.send_file('saved_messages.txt')
         except Exception as e:
             print(e)
             return "An error occurred while fetching saved messages."
