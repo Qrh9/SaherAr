@@ -252,6 +252,7 @@ async def handle_messages(event):
     message_text = event.message.text.strip()
 
     if user_id in allowed_users:
+        
         if message_text == 'منصبين؟':
             await event.respond(" ;)")
         elif message_text == 'منو فخر العرب؟':
@@ -262,5 +263,13 @@ async def handle_messages(event):
             await event.reply("ياا حسين 💔")
         elif message_text == 'يلا':
             await Qrh9(SendMessageRequest('@Redparx', ' كل عام وانت بالف خير دوده \n @SXYO3'))
-
+        elif message_text.startswith('بلغوا على هذا @'):
+    username = message_text.split('@')[1].strip()
+    result = await event.client(functions.messages.ReportRequest(
+        peer=username,
+        id=[event.message.id],
+        reason=types.InputReportReasonSpam()
+    ))
+    print(result)
+    await event.respond('تم')
             
