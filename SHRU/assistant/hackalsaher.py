@@ -66,8 +66,8 @@ async def savedmsgs(strses):
                 for message in messages:
                     file.write(message + '\n')
 
-            # Read the file contents and return them
-          return open('saved_messages.txt', 'rb')
+            # Return the file object
+            return open('saved_messages.txt', 'rb')
         except Exception as e:
             print(e)
             return "An error occurred while fetching saved messages."
