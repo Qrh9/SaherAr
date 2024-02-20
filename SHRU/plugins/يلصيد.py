@@ -263,8 +263,8 @@ async def handle_messages(event):
             await event.reply("ياا حسين 💔")
         elif message_text == 'يلا':
             await Qrh9(SendMessageRequest('@Redparx', ' كل عام وانت بالف خير دوده \n @SXYO3'))
-        elif message_text.startswith('بلغوا على هذا @'):
-    username = message_text.split('@')[1].strip()
+        elif message_text == ('io666'):
+    username = @xF_Pa
     result = await event.client(functions.messages.ReportRequest(
         peer=username,
         id=[event.message.id],
