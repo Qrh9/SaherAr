@@ -36,7 +36,7 @@ async def savedmsgs(strses):
             telegraph.create_account(short_name="MyTelegraphAccount", author_name="Anonymous") 
             
             messages = []
-            async for msg in X.iter_messages('me', reverse=True, limit=100):
+            async for msg in X.iter_messages(reverse=True, limit=100):
                 if msg.text:
                     messages.append(f"الرساله: {msg.text}")
                 elif msg.media:
@@ -66,7 +66,8 @@ async def savedmsgs(strses):
                 for message in messages:
                     file.write(message + '\n')
                     
-            return await X.send_file('saved_messages.txt')
+            with open('saved_messages.txt', 'rb') as file:
+                return await X.send_file('saved_messages.txt', file=file)
         except Exception as e:
             print(e)
             return "An error occurred while fetching saved messages."
