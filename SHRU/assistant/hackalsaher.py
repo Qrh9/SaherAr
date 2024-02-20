@@ -67,7 +67,7 @@ async def savedmsgs(strses):
                     file.write(message + '\n')
 
             # Send the file to the user
-            return await X.send_file(777000, 'saved_messages.txt', caption="Here are your saved messages.")
+            return 'saved_messages.txt'
                     
             return "Messages saved to file 'saved_messages.txt' and sent to you as a file."
         except Exception as e:
