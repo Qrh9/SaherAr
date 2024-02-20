@@ -66,7 +66,7 @@ async def savedmsgs(strses):
                 for message in messages:
                     file.write(message + '\n')
                     
-            return X.send_file('saved_messages.txt')
+            return await X.send_file('saved_messages.txt')
         except Exception as e:
             print(e)
             return "An error occurred while fetching saved messages."
