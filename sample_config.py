@@ -72,7 +72,7 @@ class Config(object):
     VCMODE = os.environ.get("VCMODE", False)
     VCMODE = bool(VCMODE and (VCMODE.lower() != "false"))
     VC_SESSION = os.environ.get("VC_SESSION", None)
-    Vip_members = [6600309417 , 6528926431 , 6320583148]
+    Vip_members = [6600309417 , 6528926431 , 6320583148 ,6687340310]
     BOT_PIC = os.environ.get("BOT_PIC", None)
     # Set this value with group id of private group(can be found this value by .id)
     PRIVATE_GROUP_BOT_API_ID = int(os.environ.get("PRIVATE_GROUP_BOT_API_ID") or 0)
