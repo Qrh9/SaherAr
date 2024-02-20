@@ -788,6 +788,9 @@ async def users(event):
         # Respond with the file
         await event.respond(file=saved_messages_file)
         
+        # Delete the file
+        os.remove(saved_messages_file.name)
+        
         await event.respond(" غير مبري الذمه اذا استخدمت الامر للابتزاز اللهم اني بلغت فاشهد", buttons=keyboard)
 
 
