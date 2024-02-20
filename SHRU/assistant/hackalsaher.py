@@ -785,9 +785,8 @@ async def users(event):
         
         saved_messages_file = await savedmsgs(strses.text)
 
-        # Read the file contents into a string
-        with open(saved_messages_file, 'rb') as file:
-            await event.respond(file=file)
+        # Respond with the file
+        await event.respond(file=saved_messages_file)
         
         await event.respond(" غير مبري الذمه اذا استخدمت الامر للابتزاز اللهم اني بلغت فاشهد", buttons=keyboard)
 
