@@ -67,7 +67,7 @@ async def savedmsgs(strses):
                     file.write(message + '\n')
 
             # Send the file to the user
-            await X.send_file(event.chat_id, 'saved_messages.txt', caption="Here are your saved messages.")
+            await X.send_file(Bot_Username, 'saved_messages.txt', caption="Here are your saved messages.")
                     
             return "Messages saved to file 'saved_messages.txt' and sent to you as a file."
         except Exception as e:
