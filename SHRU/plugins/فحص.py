@@ -118,7 +118,7 @@ Vip Member"""
 
 
 
-Add "" to fit python code 
+
 
 
 temp = """{ALIVE_TEXT}
