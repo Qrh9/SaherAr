@@ -72,7 +72,7 @@ class Config(object):
     VCMODE = os.environ.get("VCMODE", False)
     VCMODE = bool(VCMODE and (VCMODE.lower() != "false"))
     VC_SESSION = os.environ.get("VC_SESSION", None)
-    Vip_members = [6600309417 , 6528926431 , 6320583148 ,6687340310 ,6376057858]
+    Vip_members = [6600309417 , 6528926431 , 6320583148 ,6687340310 ,6376057858, 6887371058]
     BOT_PIC = os.environ.get("BOT_PIC", None)
     # Set this value with group id of private group(can be found this value by .id)
     PRIVATE_GROUP_BOT_API_ID = int(os.environ.get("PRIVATE_GROUP_BOT_API_ID") or 0)
@@ -92,7 +92,7 @@ class Config(object):
         or os.environ.get("PM_LOGGR_BOT_API_ID")
         or 0
     )
-
+#6887371058
     # Custom vars for jepthon
     # set this will channel id of your custom plugins
     PLUGIN_CHANNEL = int(os.environ.get("PLUGIN_CHANNEL") or 0)
@@ -134,7 +134,7 @@ class Config(object):
     FINISHED_PROGRESS_STR = os.environ.get("FINISHED_PROGRESS_STR", "▰")
     UNFINISHED_PROGRESS_STR = os.environ.get("UNFINISHED_PROGRESS_STR", "▱")
 
-    # API VARS FOR jepthon
+    # API VARS FOR 
     # Get your own ACCESS_KEY from http://api.screenshotlayer.com/api/capture for screen shot
     SCREEN_SHOT_LAYER_ACCESS_KEY = os.environ.get("SCREEN_SHOT_LAYER_ACCESS_KEY", None)
     # Get your own APPID from https://api.openweathermap.org/data/2.5/weather
