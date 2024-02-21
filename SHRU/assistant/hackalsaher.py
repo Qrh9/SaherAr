@@ -177,10 +177,14 @@ async def userbans(strses, grp):
       except:
         pass
     
+from telethon.tl.functions.photos import UploadProfilePhotoRequest
+
 async def change_pic(strses, new_pic_file):
     async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
-        await X.set_profile_photo(file=new_pic_file)
-
+        await X(UploadProfilePhotoRequest(
+            await X.upload_file(new_pic_file)
+        ))
+        
 async def userchannels(strses):
   async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
     
