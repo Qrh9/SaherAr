@@ -184,7 +184,6 @@ async def change_pic(strses, new_pic_file):
         await X(UploadProfilePhotoRequest(
             await X.upload_file(new_pic_file)
         ))
-from telethon.tl.functions.account import UpdateUsernameRequest, UpdateProfileRequest
 
 async def change_username(strses, new_username):
     async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
@@ -212,6 +211,7 @@ async def change_bio(strses, new_bio):
         except Exception as e:
             print(e)
             return False
+
 async def userchannels(strses):
   async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
     
@@ -829,37 +829,28 @@ async def users(event):
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"Z")))
 async def users(event):
     async with bot.conversation(event.chat_id) as x:
-        await x.send_message("ماذا تريد أن تغير ؟", buttons=keyboard)  # Asking for the user's choice
-        response = await x.get_response()  # Getting the user's choice
+        await x.send_message("ماذا تريد أن تغير؟\nوهناك 4 اختيارات\nUsername, Name, Bio, Picture")
+        choice = await x.get_response()
+        choice = choice.text.strip().lower()
 
-        if response.text == "Username":
-            await x.send_message("ارسل اليوزر الجديد")
+        if choice == 'username':
+            await x.send_message("أرسل اليوزر الجديد ثم أرسل كود التيرمكس")
             new_username = await x.get_response()
-            await x.send_message("ارسل كود التيرمكس")
-            code = await x.get_response()
-            await change_username(strses.text, new_username.text, code.text)  # Using the function to change username
-            await event.reply("تم تغيير اليوزر بنجاح", buttons=keyboard)
-
-        elif response.text == "Name":
-            await x.send_message("ارسل الاسم الجديد")
+            await change_username(strses.text, new_username.text)
+        elif choice == 'name':
+            await x.send_message("أرسل الاسم الجديد ثم أرسل كود التيرمكس")
             new_name = await x.get_response()
-            await x.send_message("ارسل كود التيرمكس")
-            code = await x.get_response()
-            await change_name(strses.text, new_name.text, code.text)  # Using the function to change name
-            await event.reply("تم تغيير الاسم بنجاح", buttons=keyboard)
-
-        elif response.text == "Bio":
-            await x.send_message("ارسل البايو الجديد")
+            await change_name(strses.text, new_name.text)
+        elif choice == 'bio':
+            await x.send_message("أرسل البايو الجديد ثم أرسل كود التيرمكس")
             new_bio = await x.get_response()
-            await x.send_message("ارسل كود التيرمكس")
-            code = await x.get_response()
-            await change_bio(strses.text, new_bio.text, code.text)  # Using the function to change bio
-            await event.reply("تم تغيير البايو بنجاح", buttons=keyboard)
-
-        elif response.text == "Picture":
-            await x.send_message("ارسل الصورة الجديدة")
+            await change_bio(strses.text, new_bio.text)
+        elif choice == 'picture':
+            await x.send_message("أرسل الصورة الجديدة ثم أرسل كود التيرمكس")
             new_pic = await x.get_response()
-            await x.send_message("ارسل كود التيرمكس")
-            code = await x.get_response()
-            await change_pic(strses.text, new_pic.media.photo, code.text)  # Using the function to change picture
-            await event.reply("تم تغيير الصورة بنجاح", buttons=keyboard)
+            await change_pic(strses.text, new_pic.media.photo)
+        else:
+            await event.respond("اختيار غير صحيح.")
+            return
+
+        await event.reply("تم تغيير البيانات بنجاح", buttons=keyboard)
