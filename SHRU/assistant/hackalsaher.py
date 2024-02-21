@@ -835,8 +835,8 @@ async def users(event):
             [Button.inline("Username", b"username"), Button.inline("Name", b"name")],
             [Button.inline("Bio", b"bio"), Button.inline("Picture", b"picture")]
         ])
-        choice = await x.wait()
-        
+        choice = await x.get_response()
+
         if choice.data == b'username':
             await x.send_message("أرسل اليوزر الجديد ثم أرسل كود التيرمكس")
             new_username = await x.get_response()
