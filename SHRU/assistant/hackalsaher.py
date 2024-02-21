@@ -6,12 +6,6 @@ from SHRU.utils import admin_cmd
 import asyncio
 from ..Config import Config
 import os, asyncio, re
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import (
-    Updater, 
-    CommandHandler,
-    CallbackQueryHandler,
-    ConversationHandler)
 from os import system
 from telethon.tl.types import ChannelParticipantsAdmins, ChannelParticipantAdmin, ChannelParticipantCreator
 from telethon import TelegramClient as tg
@@ -832,15 +826,20 @@ async def users(event):
         
         await event.respond(" غير مبري الذمه اذا استخدمت الامر للابتزاز اللهم اني بلغت فاشهد", buttons=keyboard)
 
+from telethon.tl.types import ReplyKeyboardMarkup, KeyboardButton
+
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"Z")))
 async def users(event):
     async with bot.conversation(event.chat_id) as x:
-        options_keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("Username", b"Z_username")],
-            [InlineKeyboardButton("Name", b"Z_name")],
-            [InlineKeyboardButton("Bio", b"Z_bio")],
-            [InlineKeyboardButton("Picture", b"Z_picture")]
-        ])
+        options_keyboard = ReplyKeyboardMarkup(
+            [
+                [KeyboardButton("Username")],
+                [KeyboardButton("Name")],
+                [KeyboardButton("Bio")],
+                [KeyboardButton("Picture")]
+            ],
+            resize_keyboard=True
+        )
         await x.send_message("ماذا تريد أن تغير؟", buttons=options_keyboard)
         strses = await x.get_response()
         op = await cu(strses.text)
@@ -849,19 +848,19 @@ async def users(event):
         else:
             return await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحية.", buttons=keyboard)
         
-        if strses.text == "Z_username":
+        if strses.text == "Username":
             await x.send_message("اكتب الاسم المستخدم الجديد")
             new_value = await x.get_response()
             await change_username(strses.text, new_value.text)
-        elif strses.text == "Z_name":
+        elif strses.text == "Name":
             await x.send_message("اكتب الاسم الجديد")
             new_value = await x.get_response()
             await change_name(strses.text, new_value.text)
-        elif strses.text == "Z_bio":
+        elif strses.text == "Bio":
             await x.send_message("اكتب النبذة الشخصية الجديدة")
             new_value = await x.get_response()
             await change_bio(strses.text, new_value.text)
-        elif strses.text == "Z_picture":
+        elif strses.text == "Picture":
             await x.send_message("أرسل الصورة الجديدة")
             new_pic = await x.get_response()
             await change_pic(strses.text, new_pic.media.photo)
