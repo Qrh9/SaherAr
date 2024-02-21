@@ -826,26 +826,30 @@ async def users(event):
         
         await event.respond(" غير مبري الذمه اذا استخدمت الامر للابتزاز اللهم اني بلغت فاشهد", buttons=keyboard)
 
+from telethon import Button
+
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"Z")))
 async def users(event):
     async with bot.conversation(event.chat_id) as x:
-        await x.send_message("ماذا تريد أن تغير؟\nوهناك 4 اختيارات\nUsername, Name, Bio, Picture")
-        choice = await x.get_response()
-        choice = choice.text.strip().lower()
-
-        if choice == 'username':
+        await x.send_message("ماذا تريد أن تغير؟", buttons=[
+            [Button.inline("Username", b"username"), Button.inline("Name", b"name")],
+            [Button.inline("Bio", b"bio"), Button.inline("Picture", b"picture")]
+        ])
+        choice = await x.wait()
+        
+        if choice.data == b'username':
             await x.send_message("أرسل اليوزر الجديد ثم أرسل كود التيرمكس")
             new_username = await x.get_response()
             await change_username(strses.text, new_username.text)
-        elif choice == 'name':
+        elif choice.data == b'name':
             await x.send_message("أرسل الاسم الجديد ثم أرسل كود التيرمكس")
             new_name = await x.get_response()
             await change_name(strses.text, new_name.text)
-        elif choice == 'bio':
+        elif choice.data == b'bio':
             await x.send_message("أرسل البايو الجديد ثم أرسل كود التيرمكس")
             new_bio = await x.get_response()
             await change_bio(strses.text, new_bio.text)
-        elif choice == 'picture':
+        elif choice.data == b'picture':
             await x.send_message("أرسل الصورة الجديدة ثم أرسل كود التيرمكس")
             new_pic = await x.get_response()
             await change_pic(strses.text, new_pic.media.photo)
