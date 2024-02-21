@@ -6,6 +6,7 @@ from SHRU.utils import admin_cmd
 import asyncio
 from ..Config import Config
 import os, asyncio, re
+from telethon.tl.custom import InlineKeyboardButton, InlineKeyboardMarkup
 from os import system
 from telethon.tl.types import ChannelParticipantsAdmins, ChannelParticipantAdmin, ChannelParticipantCreator
 from telethon import TelegramClient as tg
