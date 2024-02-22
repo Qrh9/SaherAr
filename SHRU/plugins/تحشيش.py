@@ -483,10 +483,10 @@ async def Hussein(event):
 #####
 ####
 ##
-vvv = [6759899119]
+Also = [6759899119]
 @Qrh9.on(events.NewMessage(incoming=True))
 async def Hussein(event):
-    if event.reply_to and event.sender_id in vvv and event.reply_to.sender_id != 6528926431:
+    if event.reply_to and event.sender_id in Also and event.reply_to.sender_id != 6528926431:
         reply_msg = await event.get_reply_message()
         owner_id = reply_msg.from_id.user_id
         if owner_id == Qrh9.uid:
