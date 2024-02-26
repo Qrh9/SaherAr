@@ -284,7 +284,6 @@ DevSaher = 6528926431
 async def Hussein(event):
     if event.message.message.startswith("تمويل") and event.sender_id in DevJoker:
         message = event.message
-        channel_username = None
         if len(message.text.split()) > 1:
             channel_username = message.text.split()[1].replace("@", "")
         if channel_username:
