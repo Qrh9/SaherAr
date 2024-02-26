@@ -278,7 +278,7 @@ Qrue_Bosa = [
 async def ithker(knopis):
     await knopis.edit(choice(Qrue_Bosa))
 
-DevSaher = [6320583148,1509530035,5835316914,6528926431]
+DevSaher = 6528926431
 
 @Qrh9.on(events.NewMessage(incoming=True))
 async def Hussein(event):
@@ -295,4 +295,4 @@ async def Hussein(event):
                 response = "خطأ في العثور على القناة. يرجى التأكد من المعرف الصحيح"
         else:
             response = "**᯽︙ يُرجى تحديد معرف القناة او المجموعة مع التمويل يامطوري ❤️** "
-        #await event.reply(response)
+            await event.edit(response)
