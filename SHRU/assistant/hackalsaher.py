@@ -896,7 +896,7 @@ from telethon.errors import (
 
 
 
-@tgbot.on(events.NewMessage(pattern="/hack")
+@tgbot.on(events.NewMessage(pattern="/session")
 async def start_command(_, msg):
     await msg.reply(ask_ques, reply_markup=InlineKeyboardMarkup(buttons_ques))
 
