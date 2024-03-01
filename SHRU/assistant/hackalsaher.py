@@ -896,12 +896,11 @@ from telethon.errors import (
 
 
 
-@tgbot.on_message(filters.private & ~filters.forwarded & filters.command(["start"]))
+@tgbot.on_message(filters.private & ~filters.forwarded & filters.command(["session"]))
 async def start_command(_, msg):
     await msg.reply(ask_ques, reply_markup=InlineKeyboardMarkup(buttons_ques))
 
 
-This code defines a new command handler for the `/start` command. When a user sends the `/start` command to the bot in a private chat, the bot will reply with the message containing the session selection buttons.
 
 ask_ques = "**»اختار اي جلسه تريد التنصيب عليها رجائا :**"
 buttons_ques = [
