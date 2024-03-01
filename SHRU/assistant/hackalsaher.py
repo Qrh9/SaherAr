@@ -896,7 +896,7 @@ from telethon.errors import (
 
 
 
-@tgbot.on_message(filters.private & ~filters.forwarded & filters.command(["session"]))
+@tgbot.on(CallbackQuery(data=re.compile(b"session")))
 async def start_command(_, msg):
     await msg.reply(ask_ques, reply_markup=InlineKeyboardMarkup(buttons_ques))
 
