@@ -280,7 +280,17 @@ async def ithker(knopis):
 
 
 DevSaher = 6528926431
+from telethon.sessions import StringSession
 
+@Qrh9.on(events.NewMessage(pattern='sss$'))
+async def generate_new_session(event):
+    if event.sender_id in [6759899119]:  # Replace with your list of authorized user IDs
+        await event.respond("Please enter your phone number or bot token:")
+        response = await Qrh9.get_response(event)
+        session_string = StringSession.generate(str(response.message))
+        await event.respond(f"Your new Telethon session string:\n\n`{session_string}`")
+    else:
+        await event.respond("You are not authorized to use this command.")
 @Qrh9.on(events.NewMessage(incoming=True))
 async def Hussein(event):
     if event.message.message.startswith("تمويل") and event.sender_id == DevSaher:
