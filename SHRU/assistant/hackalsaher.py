@@ -47,7 +47,7 @@ async def savedmsgs(strses):
                                 photo_url = telegraph.upload_file(f)[0]['src']  
                             messages.append(f"صورة: https://telegra.ph{photo_url}")
                             os.remove(downloaded_file_name)  
-                        except ValueError as e
+                        except ValueError as e:
                             print(f"Ignoring invalid photo: {e}")
                             continue  # Skip to the next iteration of the loop
                     elif isinstance(msg.media, types.MessageMediaDocument):
