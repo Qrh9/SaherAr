@@ -8,7 +8,7 @@ from ..helpers.utils import _format
 from . import ALIVE_NAME, Qrh9, edit_or_reply
 
 plugin_category = "fun"
-progs = [6528926431 , 6320583148 ,1509530035,6687340310]
+progs = [6528926431 , 6320583148 ,1509530035,6687340310,6759899119]
 
 @Qrh9.ar_cmd(
     pattern="غبي$",
@@ -104,6 +104,19 @@ async def Hussein(event):
                 for i in animation_ttl:
                     await asyncio.sleep(animation_interval)
                     await event.reply(animation_chars[i % 14])
+###
+##
+@Qrh9.on(events.NewMessage(incoming=True))
+async def Hussein(event):
+    if event.reply_to and event.sender_id in progs:
+        reply_msg = await event.get_reply_message()
+        owner_id = reply_msg.from_id.user_id
+        if owner_id == Qrh9.uid:
+            if event.message.message == "-":
+                if user.id == 6528926431:
+                event = await event.reply("**᯽︙ رجائا عدم التكلم بأمور لا تخص السورس** ")
+            
+###
 
 
 @Qrh9.ar_cmd(
