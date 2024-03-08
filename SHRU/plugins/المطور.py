@@ -61,7 +61,7 @@ async def on_plug_in_callback_query_handler(event):
     statstext = await catalive(StartTime)
     await event.answer(statstext, cache_time=0, alert=True)
 
-progs = in Config.Cash_Dev
+progs = Config.Cash_Dev
 
 @Qrh9.on(events.NewMessage(incoming=True))
 async def reda(event):
