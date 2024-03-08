@@ -1,9 +1,9 @@
-import asyncio
+
 from collections import deque
 from telethon import events
 import asyncio
-from telethon import events
 import random
+from ..Config import Config
 from ..helpers.utils import _format
 
 from . import ALIVE_NAME, Qrh9, edit_or_reply
