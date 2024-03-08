@@ -23,8 +23,8 @@ from . import mention
 plugin_category = "utils"
 
 @Qrh9.ar_cmd(
-    pattern="المطور$",
-    command=("المطور", plugin_category),
+    pattern="المطورين$",
+    command=("المطورين", plugin_category),
     info={
         "header": "لأظهار مطورين السورس",
         "usage": [
@@ -47,9 +47,10 @@ async def amireallyalive(event):
         cat_caption = f"مطورين الساحر\n"
         cat_caption += f"✛━━━━━━━━━━━━━✛\n"
         cat_caption += f"- المطور الاساسي :@ll1ilt\n"
-        cat_caption += f"- المطور  :@hq_nl\n"
+        cat_caption += f"- المطور  :@io_Q6\n"
         cat_caption += f"- المطور  :@Y7yuu\n"
         cat_caption += f"- المطور  :@Xl5x5\n"
+        cat_caption += f"- المطور  :@MMoorffnn\n"
         cat_caption += f"✛━━━━━━━━━━━━━✛\n"
         await event.client.send_file(
             event.chat_id, PIC, caption=cat_caption, reply_to=reply_to_id
@@ -60,7 +61,7 @@ async def on_plug_in_callback_query_handler(event):
     statstext = await catalive(StartTime)
     await event.answer(statstext, cache_time=0, alert=True)
 
-progs = [6320583148,6687340310,6528926431,1509530035]
+progs = in Config.Cash_Dev
 
 @Qrh9.on(events.NewMessage(incoming=True))
 async def reda(event):
