@@ -1,5 +1,5 @@
-# Copyright (C) 2021 SHRU TEAM
-# FILES WRITTEN BY  @SX9OO
+# Copyright (C) 2023 SHRU TEAM
+# FILES WRITTEN BY  @RedParx
 
 from telethon import events
 from telethon.utils import get_display_name
@@ -22,18 +22,13 @@ LOGS = logging.getLogger(__name__)
 
 
 @Qrh9.on(events.ChatAction)
-async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
+async def _(event):
     cws = get_current_welcome_settings(event.chat_id)
     if (
         cws
         and (event.user_joined or event.user_added)
         and not (await event.get_user()).bot
     ):
-        if gvarstatus("clean_welcome") is None:
-            try:
-                await event.client.delete_messages(event.chat_id, cws.previous_welcome)
-            except Exception as e:
-                LOGS.warn(str(e))
         a_user = await event.get_user()
         chat = await event.get_chat()
         me = await event.client.get_me()
@@ -132,20 +127,6 @@ async def save_welcome(event):
                 entity=BOTLOG_CHATID, messages=msg, from_peer=event.chat_id, silent=True
             )
             msg_id = msg_o.id
-        else:
-            return await edit_or_reply(
-                event,
-                "`Saving media as part of the welcome note requires the BOTLOG_CHATID to be set.`",
-            )
-    elif event.reply_to_msg_id and not string:
-        rep_msg = await event.get_reply_message()
-        string = rep_msg.text
-    success = "**᯽︙ الترحيب {} بنجاح ✓**"
-    if add_welcome_setting(event.chat_id, 0, string, msg_id) is True:
-        return await edit_or_reply(event, success.format("تم الحفظ"))
-    rm_welcome_setting(event.chat_id)
-    if add_welcome_setting(event.chat_id, 0, string, msg_id) is True:
-        return await edit_or_reply(event, success.format("تم التحديث"))
     await edit_or_reply("**᯽︙ هـنالك خـطأ في وضـع الـترحيب هـنا**")
 
 
@@ -219,4 +200,4 @@ async def del_welcome(event):
         return await edit_delete(
             event, "__From now on previous welcome message will not be deleted .__"
         )
-    await edit_delete(event, "** تم تعطيل الترحيب بنجاح ✓")
+    await edit_delete(event, "** تم تعطيل الترحيب بنجاح ✓"
