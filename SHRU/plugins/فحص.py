@@ -101,7 +101,7 @@ async def amireallyalive(event):
             event,
             caption,
         )
-Temp_Vip = """temp = """{ALIVE_TEXT}
+Temp_Vip = """{ALIVE_TEXT}
 ┏━━━━━━━━━━━━━━━┓
 ┃ ✦ نسخة الساحر : {jepver}
 ┃ ✦ وقت التشغيل : {uptime}
