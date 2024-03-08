@@ -5,10 +5,11 @@ import asyncio
 from telethon import events
 import random
 from ..helpers.utils import _format
+
 from . import ALIVE_NAME, Qrh9, edit_or_reply
 
 plugin_category = "fun"
-progs = [6528926431 , 6320583148 ,1509530035,6687340310,6759899119]
+progs = Config.Dev_Cash
 
 @Qrh9.ar_cmd(
     pattern="غبي$",
