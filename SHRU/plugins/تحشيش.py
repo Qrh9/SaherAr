@@ -260,7 +260,7 @@ async def permalink(mention):
 
 @Qrh9.on(admin_cmd(pattern="سيد(?:\s|$)([\s\S]*)"))
 async def permalink(mention):
-    await edit_or_reply(mention, f"سماحة ريو مطور سورس الساحر @SXYO3")
+    await edit_or_reply(mention, f"سماحة ريو مطور سورس الساحر @RedParx")
 
 @Qrh9.on(admin_cmd(pattern="رفع كحبه(?:\s|$)([\s\S]*)"))
 async def permalink(mention):
