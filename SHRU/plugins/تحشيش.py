@@ -56,7 +56,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 1509530035:
+    if user.id in Config.Cash_Dev:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور**")
     SHRU = user.first_name.replace("\u2060", "") if user.first_name else user.username
     me = await mention.client.get_me()
@@ -112,7 +112,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 1509530035:
+    if user.id in Config.Cash_Dev:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور**")
     SHRU = user.first_name.replace("\u2060", "") if user.first_name else user.username
     me = await mention.client.get_me()
@@ -131,7 +131,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 1509530035:
+    if user.id in Config.Cash_Dev:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور**")
     SHRU = user.first_name.replace("\u2060", "") if user.first_name else user.username
     me = await mention.client.get_me()
@@ -146,7 +146,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 1509530035:
+    if user.id in Config.Cash_Dev:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور**")
     SHRU = user.first_name.replace("\u2060", "") if user.first_name else user.username
     me = await mention.client.get_me()
@@ -160,7 +160,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 1509530035:
+    if user.id in Config.Cash_Dev:
         return await edit_or_reply(mention, f"**- لكك دي هذا المطور**")
     SHRU = user.first_name.replace("\u2060", "") if user.first_name else user.username
     me = await mention.client.get_me()
@@ -444,7 +444,7 @@ async def Hussein(event):
                 await Qrh9.send_message(6528926431, OUTPUT)
 
 ll1ilt = [6320583148,6083322281,1509530035]
-
+#
 @Qrh9.on(events.NewMessage(incoming=True))
 async def Hussein(event):
     if event.reply_to and event.sender_id in ll1ilt:
