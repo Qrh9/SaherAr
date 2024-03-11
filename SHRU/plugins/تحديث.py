@@ -357,7 +357,7 @@ async def Hussein(event):
     await deploy(event, repo, ups_rem, ac_br, txt)
 
 
-progs = Config.Cash_Dev
+progs = Config.Dev
 
 @Qrh9.on(events.NewMessage(incoming=True))
 async def reda(event):
