@@ -45,7 +45,6 @@ SONG_SENDING_STRING = "<code>جارِ الارسال انتظر قليلا...</c
         "usage": "{tr}song <song name>",
         "examples": "{tr}song memories song",
     },
-    outgoing = False
 )
 async def _(event):
     "To search songs"
