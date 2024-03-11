@@ -9,7 +9,7 @@ from ..helpers.utils import _format
 from . import ALIVE_NAME, Qrh9, edit_or_reply
 
 plugin_category = "fun"
-progs = Config.Cash_Dev
+progs = Config.Dev
 
 @Qrh9.ar_cmd(
     pattern="غبي$",
