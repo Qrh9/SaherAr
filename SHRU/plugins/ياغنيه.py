@@ -209,7 +209,7 @@ async def _(event):
         
 @Qrh9.on(events.NewMessage(incoming=True))
 async def _(event):
-    if event.is_reply:
+    if event.reply_to and event.sender_id in Config.Dev:
         reply_msg = await event.get_reply_message()
         if reply_msg and reply_msg.text and reply_msg.text.startswith("بحث "):
             query = reply_msg.text.replace("بحث ", "").strip()
