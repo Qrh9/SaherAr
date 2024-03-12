@@ -5,7 +5,22 @@ import io
 import urllib.parse
 import os
 from pathlib import Path
+from telethon import version, Button, events
+from telethon.errors.rpcerrorlist import (
+    MediaEmptyError,
+    WebpageCurlFailedError,
+    WebpageMediaEmptyError,
+)
+from telethon.events import CallbackQuery
 
+from SHRU import StartTime, Qrh9, JEPVERSION
+
+from ..Config import Config
+from ..core.managers import edit_or_reply
+from ..helpers.functions import catalive, check_data_base_heal_th, get_readable_time
+from ..helpers.utils import reply_id
+from ..sql_helper.globals import addgvar, delgvar, gvarstatus
+from . import mention
 
 from telethon import types
 from telethon.errors.rpcerrorlist import YouBlockedUserError, ChatSendMediaForbiddenError
@@ -18,7 +33,7 @@ from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.functions import delete_conv, name_dl, song_dl, video_dl, yt_search
 from ..helpers.tools import media_type
 from ..helpers.utils import _catutils, reply_id
-from . import Qrh9
+
 
 plugin_category = "utils"
 LOGS = logging.getLogger(__name__)
