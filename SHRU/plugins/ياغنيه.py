@@ -208,13 +208,16 @@ async def _(event):
 
 @Qrh9.on(events.NewMessage(incoming=True))
 async def _(event):
-    if event.reply_to and event.sender_id in Config.Dev:
-        reply_msg = await event.get_reply_message()
-        if reply_msg and reply_msg.text and reply_msg.text.startswith("بحث "):
-            query = reply_msg.text.replace("بحث ", "").strip()
-            await event.reply("⌔∮ جاري البحث عن المطلوب انتظر")
-            # Run the function to search and send the music
-            await search_and_send_music(event, query)
+    try:
+        if event.reply_to and event.sender_id in Config.Dev:
+            reply_msg = await event.get_reply_message()
+            if reply_msg and reply_msg.text and reply_msg.text.startswith("بحث "):
+                query = reply_msg.text.replace("بحث ", "").strip()
+                await event.reply("⌔∮ جاري البحث عن المطلوب انتظر")
+                await search_and_send_music(event, query)
+    except Exception as e:
+        LOGS.error(str(e))
+        await event.reply(f"**Error:** `{str(e)}`")
 
 async def search_and_send_music(event, query):
     cat = base64.b64decode("U1hZTzM=")
