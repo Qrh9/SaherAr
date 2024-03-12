@@ -2,7 +2,7 @@ from SHRU import Qrh9
 from ..core.managers import edit_or_reply
 from datetime import datetime
 
-
+plugin_category = "fun"
 prayer_times = {
     "الامساك": "04:45",
     "الفجر": "04:55",
