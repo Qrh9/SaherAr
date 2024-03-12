@@ -200,4 +200,4 @@ async def del_welcome(event):
         return await edit_delete(
             event, "__From now on previous welcome message will not be deleted .__"
         )
-    await edit_delete(event, "** تم تعطيل الترحيب بنجاح ✓"
+    await edit_delete(event, "** تم تعطيل الترحيب بنجاح ✓")
