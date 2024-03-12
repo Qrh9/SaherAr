@@ -9,7 +9,7 @@ prayer_times = {
     "الشروق": "06:17",
     "الظهر": "12:13",
     "العصر": "15:36",
-    "المغرب": "18:09",
+    "المغرب (الفطور)": "18:09",
     "العشاء": "19:27"
 }
 
@@ -17,13 +17,13 @@ prayer_times = {
     pattern="كم باقي$",
     command=("كم باقي", plugin_category),
     info={
-        "header": "الوقت المتبقي للصلاة التالية",
+        "header": "الوقت المتبقي للصلاة او الافطار",
         "description": "يعرض الوقت الحالي والوقت المتبقي للصلاة التالية.",
         "usage": "{tr}كم باقي",
     },
 )
 async def countdown_next_prayer(event):
-    """Countdown to the next prayer time."""
+    """عد تنازلي للصلاة."""
     now = datetime.now()
     current_time_str = now.strftime("%H:%M")
     remaining_time = None
