@@ -4,7 +4,6 @@ from datetime import datetime
 
 plugin_category = "fun"
 prayer_times = {
-    "الامساك": "04:45",
     "الفجر": "04:55",
     "الشروق": "06:17",
     "الظهر": "12:13",
