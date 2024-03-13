@@ -69,11 +69,10 @@ async def countdown_next_prayer(event):
             next_prayer = prayer
             break
     if remaining_time and next_prayer:
-        message = f"الوقت الحالي: {current_time_str}\nالوقت المتبقي لاذان  {next_prayer}: {remaining_time}"
+        message = (f"الوقت الحالي: {current_time_str}\nالوقت المتبقي لأذان {next_prayer}: {remaining_time.seconds // 3600} ساعة و {(remaining_time.seconds % 3600) // 60} دقيقة متبقية")
     else:
         message = "لا يوجد صلوات متبقية اليوم."
     await edit_or_reply(event, message)
-
 
 
 
