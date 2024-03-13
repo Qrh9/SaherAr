@@ -4,7 +4,7 @@ from datetime import datetime
 import random
 
 plugin_category = "fun"
-
+#str 122939
 quranic_verses = [
     "إِنَّ اللَّهَ مَعَ الصَّابِرِينَ - البقرة 153",
     "وَاصْبِرْ وَمَا صَبْرُكَ إِلَّا بِاللَّهِ - النحل 127",
