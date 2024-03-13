@@ -19,7 +19,7 @@ from telethon.tl.functions.messages import SendMessageRequest
 from ..Config import Config
 import json
 
-
+from telethon.errors import UsernameNotOccupiedError
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
 from ..sql_helper.global_collection import (
@@ -39,25 +39,29 @@ async def check_cooldown(chat_id):
         return True
     else:
         return False
-async def Username_exists_by_Qrh9(username):
+
+
+
+async def username_exists_by_qrh9(username):
     try:
+
         entity = await Qrh9.get_entity(username)
         if entity and hasattr(entity, 'username'):
             return True
-    except Exception:
-        pass
+    except UsernameNotOccupiedError:
+        pass  #مموجود بالتلي
 
     try:
+        # منصه
         response = requests.get(f'https://fragments.com/api/users/{username}')
         if response.status_code == 200:
-            user = json.loads(response.content)
-            if user['username'] == username:
+            user = response.json()
+            if user.get('username') == username:
                 return True
-    except Exception:
-        pass
+    except Exception as e:
+        print(f"Error checking Fragment: {e}")
 
     return False
-
 @Qrh9.on(events.NewMessage(pattern=r"^\.ثلاثي (\d+)$"))
 async def generate_random_usernames(event):
     chat_id = event.chat_id
