@@ -40,28 +40,31 @@ async def check_cooldown(chat_id):
     else:
         return False
 
+import asyncio
 
+async def username_exists_on_telegram(username):
+    try:
+        entity = await Qrh9.get_entity(username)
+        return entity and hasattr(entity, 'username')
+    except UsernameNotOccupiedError:
+        return False
+
+async def username_exists_on_fragment(username):
+    try:
+        response = requests.get(f'https://fragments.com/api/users/{username}')
+        return response.status_code == 200 and response.json().get('username') == username
+    except Exception:
+        return False
 
 async def username_exists_by_qrh9(username):
-    try:
+    checks = await asyncio.gather(
+        username_exists_on_telegram(username),
+        username_exists_on_fragment(username)
+    )
+    return any(checks)
 
-        entity = await Qrh9.get_entity(username)
-        if entity and hasattr(entity, 'username'):
-            return True
-    except UsernameNotOccupiedError:
-        pass  #مموجود بالتلي
 
-    try:
-        # منصه
-        response = requests.get(f'https://fragments.com/api/users/{username}')
-        if response.status_code == 200:
-            user = response.json()
-            if user.get('username') == username:
-                return True
-    except Exception as e:
-        print(f"Error checking Fragment: {e}")
 
-    return False
 @Qrh9.on(events.NewMessage(pattern=r"^\.ثلاثي (\d+)$"))
 async def generate_random_usernames(event):
     chat_id = event.chat_id
