@@ -5,7 +5,6 @@ from datetime import datetime
 plugin_category = "fun"
 prayer_times = {
     "الفجر": "04:55",
-    "الشروق": "06:17",
     "الظهر": "12:13",
     "العصر": "15:36",
     "المغرب (الفطور)": "18:09",
@@ -34,7 +33,7 @@ async def countdown_next_prayer(event):
             next_prayer = prayer
             break
     if remaining_time and next_prayer:
-        message = f"الوقت الحالي: {current_time_str}\nالوقت المتبقي لصلاة {next_prayer}: {remaining_time}"
+        message = f"الوقت الحالي: {current_time_str}\nالوقت المتبقي ل  {next_prayer}: {remaining_time}"
     else:
         message = "لا يوجد صلوات متبقية اليوم."
     await edit_or_reply(event, message)
