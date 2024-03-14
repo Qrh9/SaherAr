@@ -2,7 +2,7 @@ from SHRU import Qrh9
 from ..core.managers import edit_or_reply
 from datetime import datetime
 import random
-
+from telethon import events
 plugin_category = "fun"
 #str 122939
 quranic_verses = [
@@ -109,26 +109,22 @@ async def random_hadith(event):
     #بوكهن ميخالف لان حتى هاي متدبرها وحدك
 
 
-@Qrh9.ar_cmd(
-    pattern="سباق$",
-    command=("سباق", plugin_category),
-    info={
-        "header": "Start an emoji race.",
-        "description": "Sends a random emoji and starts a race to see who can send it back first.",
-        "usage": "{tr}سباق",
-    },
-)
+
+
+@Qrh9.on(events.NewMessage(pattern='.سباق'))
 async def emoji_race(event):
-    eomji = ["🍉", "🍎", "🍌", "🍇", "🍓", "🍍", "🍊", "🍐", "🍒", "🥝"]
-    race_Emoji = random.choice(eomji)
+    emojis = ["🍉", "🍎", "🍌", "🍇", "🍓", "🍍", "🍊", "🍐", "🍒", "🥝"]
+    race_Emoji = random.choice(emojis)
     race_start_time = datetime.now()
-    message = await edit_or_reply(event, f"اول واحد يرسل هذا الايموجي {race_Emoji} يربح نقطه!!")
-    
-    def Rio_Response(msg):
-        return msg.text == race_Emoji and msg.sender_id != event.sender_id
-    
-    response = await Qrh9.wait_for(events.NewMessage(pattern=race_Emoji, func=Rio_Response))
+    await event.reply(f"اول واحد يرسل هذا الايموجي {race_Emoji}  يربح نقطه!!")
+
+    with Qrh9.conversation(event.chat_id) as conv:
+        while True:
+            response = await conv.wait_event(events.NewMessage(pattern=race_Emoji))
+            if response.sender_id != event.sender_id:
+                break
+
     race_end_time = datetime.now()
     time_taken = (race_end_time - race_start_time).total_seconds()
     winner = await Qrh9.get_entity(response.sender_id)
-    await message.edit(f"🎉 مبروك {winner.first_name}فزت بالسباق يا \nالثواني:{time_taken}  ")
+    await event.reply(f"🎉 مبروك {winner.first_name}! لقد فزت بالسباق في {time_taken} ثواني! لقد فزت وحصلت على نقطة!")
