@@ -116,15 +116,15 @@ async def emoji_race(event):
     emojis = ["🍉", "🍎", "🍌", "🍇", "🍓", "🍍", "🍊", "🍐", "🍒", "🥝"]
     race_Emoji = random.choice(emojis)
     race_start_time = datetime.now()
-    await event.reply(f"اول واحد يرسل هذا الايموجي {race_Emoji}  يربح نقطه!!")
+    await edit_or_reply(event,f"اول واحد يرسل هذا الايموجي {race_Emoji} يربح نقطة!")
 
-    with Qrh9.conversation(event.chat_id) as conv:
+    async with Qrh9.conversation(event.chat_id) as conv:
         while True:
-            response = await conv.wait_event(events.NewMessage(pattern=race_Emoji))
+            response = await conv.wait_event(events.NewMessage(incoming=True, pattern=race_Emoji))
             if response.sender_id != event.sender_id:
                 break
 
     race_end_time = datetime.now()
     time_taken = (race_end_time - race_start_time).total_seconds()
     winner = await Qrh9.get_entity(response.sender_id)
-    await event.reply(f"🎉 مبروك {winner.first_name}! لقد فزت بالسباق في {time_taken} ثواني! لقد فزت وحصلت على نقطة!")
+    await edit_or_reply(event,f"🎉 مبروك {winner.first_name}! لقد فزت بالسباق في {time_taken} ثواني! لقد فزت وحصلت على نقطة!")
