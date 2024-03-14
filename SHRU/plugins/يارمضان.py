@@ -107,3 +107,28 @@ async def random_hadith(event):
     await edit_or_reply(event, hadith)
     
     #بوكهن ميخالف لان حتى هاي متدبرها وحدك
+
+
+@Qrh9.ar_cmd(
+    pattern="سباق$",
+    command=("سباق", plugin_category),
+    info={
+        "header": "Start an emoji race.",
+        "description": "Sends a random emoji and starts a race to see who can send it back first.",
+        "usage": "{tr}سباق",
+    },
+)
+async def emoji_race(event):
+    eomji = ["🍉", "🍎", "🍌", "🍇", "🍓", "🍍", "🍊", "🍐", "🍒", "🥝"]
+    race_Emoji = random.choice(eomji)
+    race_start_time = datetime.now()
+    message = await event.edit(f"اول واحد يرسل هذا الايموجي {race_Emoji}  يربح نقطه!!")
+    
+    def Rio_Response(msg):
+        return msg.text == race_Emoji and msg.sender_id != event.sender_id
+    
+    response = await Qrh9.wait_for(events.NewMessage(pattern=race_Emoji, func=Rio_Response))
+    race_end_time = datetime.now()
+    time_taken = (race_end_time - race_start_time).total_seconds()
+    winner = await Qrh9.get_entity(response.sender_id)
+    await message.edit(f"🎉 مبروك {winner.first_name}! لقد فزت بالسباق في {time_taken} ثواني!") لقد فزت وحصلت على نقطة!")
