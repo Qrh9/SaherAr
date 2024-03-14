@@ -127,4 +127,4 @@ async def emoji_race(event):
     race_end_time = datetime.now()
     time_taken = (race_end_time - race_start_time).total_seconds()
     winner = await Qrh9.get_entity(response.sender_id)
-    await edit_or_reply(event,f"🎉 مبروك {winner.first_name}! لقد فزت بالسباق في {time_taken} ثواني! لقد فزت وحصلت على نقطة!")
+    await message.reply(f"🎉 مبروك {winner.first_name}! لقد فزت بالسباق في {time_taken} ثواني! لقد فزت وحصلت على نقطة!")
