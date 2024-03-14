@@ -122,7 +122,7 @@ async def emoji_race(event):
     eomji = ["🍉", "🍎", "🍌", "🍇", "🍓", "🍍", "🍊", "🍐", "🍒", "🥝"]
     race_Emoji = random.choice(eomji)
     race_start_time = datetime.now()
-    message = await event.edit(f"اول واحد يرسل هذا الايموجي {race_Emoji}  يربح نقطه!!")
+    message = await edit_or_reply(event, f"اول واحد يرسل هذا الايموجي {race_Emoji} يربح نقطه!!")
     
     def Rio_Response(msg):
         return msg.text == race_Emoji and msg.sender_id != event.sender_id
@@ -131,4 +131,4 @@ async def emoji_race(event):
     race_end_time = datetime.now()
     time_taken = (race_end_time - race_start_time).total_seconds()
     winner = await Qrh9.get_entity(response.sender_id)
-    await message.edit(f"🎉 مبروك {winner.first_name}! لقد فزت بالسباق في {time_taken} ثواني!") لقد فزت وحصلت على نقطة!")
+    await message.edit(f"🎉 مبروك {winner.first_name}! لقد فزت بالسباق في {time_taken} ثواني! لقد فزت وحصلت على نقطة!")
