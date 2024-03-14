@@ -1,8 +1,6 @@
 from ..core.managers import edit_or_reply
 from SHRU import Qrh9
 from telethon import events
-
-from telethon.sync import TelegramClient
 from telethon import functions, types
 
 @Qrh9.on(events.NewMessage(pattern='.قصة'))
