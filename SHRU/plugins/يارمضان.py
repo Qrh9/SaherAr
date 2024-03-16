@@ -184,7 +184,7 @@ async def car_race(event):
         await asyncio.sleep(1)
         moving_car = random.randint(0, 4)
         track[moving_car] = "-" + track[moving_car]
-        await race_message.reply(
+        await race_message.edit(
             "السباق يبدأ الآن!\n" + "\n".join([f"{i+1}- {track[i]} [{racers[i][1]}](https://t.me/{racers[i][1]})" for i in range(5)])
         )
 
