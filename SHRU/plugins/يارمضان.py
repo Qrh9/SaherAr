@@ -153,3 +153,30 @@ async def rock_paper_scissors(event):
         result = "😢 لقد خسرت. حاول مرة أخرى."
 
     await edit_or_reply(event, f"اختيارك: {user_choice}\nاختيار الساحر: {bot_choice}\nنتيجة اللعبة: {result}")
+    
+    
+    
+    
+from telethon import events
+import random
+
+@Qrh9.on(events.NewMessage(pattern='.تخمين'))
+async def guess_the_number(event):
+    lower_bound = random.randint(1, 50)
+    upper_bound = random.randint(51, 100)
+    secret_number = random.randint(lower_bound, upper_bound)
+    await edit_or_reply(event, f"لقد اخترت رقمًا بين {lower_bound} و {upper_bound}. حاول تخمينه!")
+
+    attempts = 0
+    while True:
+        response = await Qrh9.get_response(event.chat_id)
+        guess = int(response.text)
+        attempts += 1
+
+        if guess < secret_number:
+            await response.reply("أعلى! حاول مرة أخرى.")
+        elif guess > secret_number:
+            await response.reply("أقل! حاول مرة أخرى.")
+        else:
+            await response.reply(f"🎉 مبروك! لقد خمنت الرقم بنجاح في {attempts} محاولات.")
+            break
