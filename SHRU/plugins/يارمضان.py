@@ -164,7 +164,8 @@ async def rock_paper_scissors(event):
 @Qrh9.on(events.NewMessage(pattern='.سيارات'))
 async def car_race(event):
     racers = []
-    await edit_or_reply(event,"التسجيل بدأ ارسل 1 للانضمام")
+    Kk = None
+    await edit_or_reply(event, "التسجيل بدأ ارسل 1 للانضمام")
 
     async with Qrh9.conversation(event.chat_id) as conv:
         while len(racers) < 5:
@@ -172,23 +173,23 @@ async def car_race(event):
             if response.sender_id not in [r[0] for r in racers]:
                 racer_entity = await Qrh9.get_entity(response.sender_id)
                 racers.append((response.sender_id, racer_entity.username or racer_entity.first_name))
-                await response.reply("تم التسجيل بنجاح")
+                Kk = await response.reply("تم التسجيل بنجاح")
 
     track = ["🏎️" for _ in range(5)]
-    race_message = await edit_or_reply(
-        event,
-        "السباق يبدأ الآن!\n" + "\n".join([f"{i+1}- {track[i]} [{racers[i][1]}](https://t.me/{racers[i][1]})" for i in range(5)])
+    await Kk.edit(
+        "السباق يبدأ الآن!\n" +
+        "\n".join([f"{i+1}- {track[i]} [{racers[i][1]}](https://t.me/{racers[i][1]})" for i in range(5)])
     )
 
     for _ in range(10):
         await asyncio.sleep(1)
         moving_car = random.randint(0, 4)
         track[moving_car] = "-" + track[moving_car]
-        await race_message.edit(
+        await Kk.edit(
             "السباق يبدأ الآن!\n" + "\n".join([f"{i+1}- {track[i]} [{racers[i][1]}](https://t.me/{racers[i][1]})" for i in range(5)])
         )
 
     winner = racers[moving_car]
-    await race_message.reply(
+    await Kk.edit(
         f"🎉 مبروك [{winner[1]}](https://t.me/{winner[1]})! لقد فزت بالسباق!"
     )
