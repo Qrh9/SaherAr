@@ -193,3 +193,27 @@ async def car_race(event):
     await Kk.edit(
         f"🎉 مبروك [{winner[1]}](https://t.me/{winner[1]})! لقد فزت بالسباق!"
     )
+    
+#بالحظ
+@Qrh9.ar_cmd(
+    pattern="تحدي$",
+    command=("تحدي", plugin_category),
+    info={
+        "header": "Challenge another user to a duel.",
+        "description": "Randomly selects a winner between the challenger and the opponent.",
+        "usage": "{tr}تحدي",
+    },
+)
+async def challenge(event):
+    if not event.reply_to_msg_id:
+        await edit_or_reply(event, "يرجى الرد على رسالة المستخدم الذي تريد تحديه.")
+        return
+
+    reply_message = await event.get_reply_message()
+    opponent = reply_message.sender_id
+    challenger = event.sender_id
+
+    winner = random.choice([challenger, opponent])
+    winner_entity = await Qrh9.get_entity(winner)
+
+    await edit_or_reply(event, f"🎊 تهانينا [{winner_entity.first_name}](tg://user?id={winner})! لقد فزت في التحدي!")
