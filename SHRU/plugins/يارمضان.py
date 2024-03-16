@@ -164,7 +164,7 @@ async def rock_paper_scissors(event):
 @Qrh9.on(events.NewMessage(pattern='.سيارات'))
 async def car_race(event):
     racers = []
-    await edit_or_reply(event,"التسجيل بدأ ارسل 1 للانضمام")
+    await event.reply("التسجيل بدأ ارسل 1 للانضمام")
 
     async with Qrh9.conversation(event.chat_id) as conv:
         while len(racers) < 5:
@@ -184,7 +184,7 @@ async def car_race(event):
         await asyncio.sleep(1)
         moving_car = random.randint(0, 4)
         track[moving_car] = "-" + track[moving_car]
-        await race_message.edit(
+        await race_message.reply(
             "السباق يبدأ الآن!\n" + "\n".join([f"{i+1}- {track[i]} [{racers[i][1]}](https://t.me/{racers[i][1]})" for i in range(5)])
         )
 
