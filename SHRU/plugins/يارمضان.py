@@ -153,12 +153,6 @@ async def rock_paper_scissors(event):
         result = "😢 لقد خسرت. حاول مرة أخرى."
 
     await edit_or_reply(event, f"اختيارك: {user_choice}\nاختيار الساحر: {bot_choice}\nنتيجة اللعبة: {result}")
-    
-    
-    
-    
-from telethon import events
-import random
 
 @Qrh9.on(events.NewMessage(pattern='.تخمين'))
 async def guess_the_number(event):
