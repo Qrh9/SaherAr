@@ -128,3 +128,29 @@ async def emoji_race(event):
     time_taken = (race_end_time - race_start_time).total_seconds()
     winner = await Qrh9.get_entity(response.sender_id)
     await response.reply(f"🎉 مبروك [{winner.first_name}](tg://user?id={winner.id}) \n- ثواني: {int(time_taken)} !!", parse_mode="md")
+    
+    from telethon import events
+import random
+
+@Qrh9.on(events.NewMessage(pattern='.حجرة'))
+async def rock_paper_scissors(event):
+    choices = {
+        "حجرة": "ورقة",
+        "ورقة": "مقص",
+        "مقص": "حجرة"
+    }
+    user_choice = event.text.split()[-1]
+
+    if user_choice not in choices:
+        await edit_or_reply(event, "يرجى اختيار واحد من الخيارات التالية: حجرة، ورقة، أو مقص.")
+        return
+
+    bot_choice = random.choice(list(choices.keys()))
+    if user_choice == bot_choice:
+        result = "تعادل!"
+    elif choices[user_choice] == bot_choice:
+        result = "🎉 مبروك! لقد فزت."
+    else:
+        result = "😢 لقد خسرت. حاول مرة أخرى."
+
+    await edit_or_reply(event, f"اختيارك: {user_choice}\nاختيار البوت: {bot_choice}\nنتيجة اللعبة: {result}")
