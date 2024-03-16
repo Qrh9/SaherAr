@@ -2,6 +2,7 @@ from SHRU import Qrh9
 from ..core.managers import edit_or_reply
 from datetime import datetime
 import random
+import asyncio
 from telethon import events
 plugin_category = "fun"
 #str 122939
@@ -156,6 +157,10 @@ async def rock_paper_scissors(event):
 
 
 
+
+
+
+
 @Qrh9.on(events.NewMessage(pattern='.سيارات'))
 async def car_race(event):
     racers = []
@@ -165,18 +170,22 @@ async def car_race(event):
 
         while len(racers) < 5:
             response = await conv.wait_event(events.NewMessage(incoming=True, pattern="1"))
-            if response.sender_id not in racers:
-                racers.append(response.sender_id)
+            if response.sender_id not in [r[0] for r in racers]:
+                racer_entity = await Qrh9.get_entity(response.sender_id)
+                racers.append((response.sender_id, racer_entity.username or racer_entity.first_name))
                 await response.reply("تم التسجيل بنجاح")
 
 
-    race_message = await event.reply("السباق يبدأ الآن!\n" + "\n".join([f"{i+1}- 🏎️" for i in range(5)]))
+    track = ["🏎️" for _ in range(5)]
+    race_message = await event.reply("السباق يبدأ الآن!\n" + "\n".join([f"{i+1}- {track[i]} {racers[i][1]}" for i in range(5)]))
     
 
-    for i in range(1, 6):
-        await asyncio.sleep(1)  # Wait for a second before updating the positions
-        await race_message.edit("السباق يبدأ الآن!\n" + "\n".join([f"{j+1}- 🏎️" if j != i else f"🏁 {j+1}- 🏎️" for j in range(5)]))
+    for _ in range(10):
+        await asyncio.sleep(1)
+        moving_car = random.randint(0, 4)
+        track[moving_car] = "-" + track[moving_car]
+        await race_message.edit("السباق يبدأ الآن!\n" + "\n".join([f"{i+1}- {track[i]} {racers[i][1]}" for i in range(5)]))
 
 
-    winner = await Qrh9.get_entity(racers[4])
-    await race_message.edit(f"🎉 مبروك {winner.first_name}! لقد فزت بالسباق!")
+    winner = racers[moving_car]
+    await race_message.edit(f"🎉 مبروك {winner[1]}! لقد فزت بالسباق!")
