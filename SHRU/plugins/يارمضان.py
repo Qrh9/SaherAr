@@ -153,3 +153,27 @@ async def rock_paper_scissors(event):
         result = "😢 لقد خسرت. حاول مرة أخرى."
 
     await edit_or_reply(event, f"اختيارك: {user_choice}\nاختيار الساحر: {bot_choice}\nنتيجة اللعبة: {result}")
+
+@Qrh9.on(events.NewMessage(pattern='.سيارات'))
+async def car_race(event):
+    racers = []
+    await event.reply("التسجيل بدأ ارسل 1 للانضمام")
+
+
+    while len(racers) < 5:
+        response = await conv.wait_event(events.NewMessage(incoming=True, pattern="1"))
+        if response.sender_id not in racers:
+            racers.append(response.sender_id)
+            await edit_or_reply(event,"تم التسجيل بنجاح")
+
+
+    race_message = await edit_or_reply(event,"السباق يبدأ الآن!\n" + "\n".join([f"{i+1}- 🏎️" for i in range(5)]))
+    
+
+    for i in range(1, 6):
+        await asyncio.sleep(1)  
+        await race_message.edit("السباق يبدأ الآن!\n" + "\n".join([f"{j+1}- 🏎️" if j != i else f"🏁 {j+1}- 🏎️" for j in range(5)]))
+
+
+    winner = await Qrh9.get_entity(racers[4])
+    await race_message.edit(f"🎉 مبروك {winner.first_name}! لقد فزت بالسباق!")
