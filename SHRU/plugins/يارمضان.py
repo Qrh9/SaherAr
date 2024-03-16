@@ -167,7 +167,6 @@ async def car_race(event):
     await event.reply("التسجيل بدأ ارسل 1 للانضمام")
 
     async with Qrh9.conversation(event.chat_id) as conv:
-
         while len(racers) < 5:
             response = await conv.wait_event(events.NewMessage(incoming=True, pattern="1"))
             if response.sender_id not in [r[0] for r in racers]:
@@ -175,23 +174,21 @@ async def car_race(event):
                 racers.append((response.sender_id, racer_entity.username or racer_entity.first_name))
                 await response.reply("تم التسجيل بنجاح")
 
-
     track = ["🏎️" for _ in range(5)]
-    race_message = await event.reply("السباق يبدأ الآن!\n" + "\n".join([f"{i+1}- {track[i]} {racers[i][1]}" for i in range(5)]))
-    
+    race_message = await edit_or_reply(
+        event,
+        "السباق يبدأ الآن!\n" + "\n".join([f"{i+1}- {track[i]} [{racers[i][1]}](https://t.me/{racers[i][1]})" for i in range(5)])
+    )
 
     for _ in range(10):
         await asyncio.sleep(1)
         moving_car = random.randint(0, 4)
         track[moving_car] = "-" + track[moving_car]
-race_message = await edit_or_reply(
-    event,
-    "السباق يبدأ الآن!\n" +
-    "\n".join([f"{i+1}- {track[i]} [{racers[i][1]}](https://t.me/{racers[i][1]})" for i in range(5)])
-)
-
+        await race_message.edit(
+            "السباق يبدأ الآن!\n" + "\n".join([f"{i+1}- {track[i]} [{racers[i][1]}](https://t.me/{racers[i][1]})" for i in range(5)])
+        )
 
     winner = racers[moving_car]
-await race_message.edit(
-    f"🎉 مبروك [{winner[1]}](https://t.me/{winner[1]})! لقد فزت بالسباق!"
-)
+    await race_message.edit(
+        f"🎉 مبروك [{winner[1]}](https://t.me/{winner[1]})! لقد فزت بالسباق!"
+    )
