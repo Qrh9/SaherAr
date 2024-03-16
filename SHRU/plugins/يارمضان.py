@@ -5,7 +5,7 @@ import random
 import asyncio
 from telethon import events
 plugin_category = "fun"
-#str 122939
+#str 122939#
 quranic_verses = [
     "إِنَّ اللَّهَ مَعَ الصَّابِرِينَ - البقرة 153",
     "وَاصْبِرْ وَمَا صَبْرُكَ إِلَّا بِاللَّهِ - النحل 127",
