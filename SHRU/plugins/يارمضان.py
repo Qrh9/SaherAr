@@ -5,7 +5,7 @@ import random
 import asyncio
 from telethon import events
 plugin_category = "fun"
-#str 122939#
+#str 122939#المليون
 quranic_verses = [
     "إِنَّ اللَّهَ مَعَ الصَّابِرِينَ - البقرة 153",
     "وَاصْبِرْ وَمَا صَبْرُكَ إِلَّا بِاللَّهِ - النحل 127",
@@ -234,12 +234,12 @@ qq = [
 ]
 
 @Qrh9.ar_cmd(
-    pattern="معلومات$",
-    command=("معلومات", plugin_category),
+    pattern="المليون$",
+    command=("المليون", plugin_category),
     info={
         "header": "Play a million game.",
         "description": "لعبه مثل مال من سيربح المليون",
-        "usage": "{tr}معلومات",
+        "usage": "{tr}المليون",
     },
 )
 async def million(event):
