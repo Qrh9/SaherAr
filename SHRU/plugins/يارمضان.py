@@ -268,6 +268,8 @@ qq = [
     {"question": "كم عدد الكواكب في نظامنا الشمسي؟", "choices": ["8", "9", "10"], "answer": "8"},
 ]
 
+
+
 @Qrh9.ar_cmd(
     pattern="المليون$",
     command=("المليون", plugin_category),
@@ -280,13 +282,15 @@ qq = [
 async def million(event):
     Bq = qq + A_qq
     question = random.choice(Bq)
-    choices_text = "\n".join([f"{i+1}. {choice}" for i, choice in enumerate(question["choices"])])
+    choices = question["choices"][:]
+    random.shuffle(choices)
+    choices_text = "\n".join([f"{i+1}. {choice}" for i, choice in enumerate(choices)])
     await edit_or_reply(event, f"{question['question']}\n\n{choices_text}\n\nاكتب رقم الإجابة الصحيحة:")
 
     async with Qrh9.conversation(event.chat_id) as conv:
         response = await conv.wait_event(events.NewMessage(pattern=r'^[1-3]$', from_users=event.sender_id))
         answer_index = int(response.text) - 1
-        if question["choices"][answer_index] == question["answer"]:
+        if choices[answer_index] == question["answer"]:
             await response.reply("🎉 صحيح! إجابتك صحيحة.")
         else:
             await response.reply(f"❌ خطأ! الإجابة الصحيحة هي: {question['answer']}")
