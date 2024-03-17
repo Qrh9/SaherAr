@@ -2,7 +2,7 @@ from SHRU import Qrh9
 from ..core.managers import edit_or_reply
 from datetime import datetime
 import random
-import asyncio
+import asyncio#
 from telethon import events
 plugin_category = "fun"
 #str 122939#المليون
