@@ -132,7 +132,7 @@ async def emoji_race(event):
     
 
 
-@Qrh9.on(events.NewMessage(pattern='.حجرة'))
+@Qrh9.on(events.NewMessage(pattern='.يد'))
 async def rock_paper_scissors(event):
     choices = {
         "حجرة": "ورقة",
