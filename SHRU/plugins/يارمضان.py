@@ -217,3 +217,41 @@ async def challenge(event):
     winner_entity = await Qrh9.get_entity(winner)
 
     await edit_or_reply(event, f"🎊 تهانينا [{winner_entity.first_name}](tg://user?id={winner})! لقد فزت في التحدي!")
+    
+    
+#تكدر تضيف بعد وره ال plus
+A_qq = [
+    {"question": "ما هو أعلى جبل في العالم؟", "choices": ["جبل إيفرست", "كيه تو", "جبل كليمنجارو"], "answer": "جبل إيفرست"},
+    {"question": "ما هي العاصمة السياسية لمصر؟", "choices": ["القاهرة", "الإسكندرية", "الجيزة"], "answer": "القاهرة"},
+    {"question": "ما هو الكوكب الرابع في المجموعة الشمسية؟", "choices": ["المريخ", "الزهرة", "المشتري"], "answer": "المريخ"},
+    {"question": "من هو العالم الذي اكتشف قانون الجاذبية؟", "choices": ["إسحاق نيوتن", "ألبرت أينشتاين", "جاليليو جاليلي"], "answer": "إسحاق نيوتن"},
+    {"question": "ما هي أطول كلمة في اللغة العربية؟", "choices": ["أفاستسقيناكموها", "أفعوانيات", "مستشفى"], "answer": "أفاستسقيناكموها"},
+]
+qq = [
+    {"question": "ما هو أطول نهر في العالم؟", "choices": ["النيل", "الأمازون", "المسيسيبي"], "answer": "الأمازون"},
+    {"question": "من هو مؤلف رواية 'البؤساء'؟", "choices": ["فيكتور هوغو", "تشارلز ديكنز", "ليو تولستوي"], "answer": "فيكتور هوغو"},
+    {"question": "كم عدد الكواكب في نظامنا الشمسي؟", "choices": ["8", "9", "10"], "answer": "8"},
+]
+
+@Qrh9.ar_cmd(
+    pattern="معلومات$",
+    command=("معلومات", plugin_category),
+    info={
+        "header": "Play a million game.",
+        "description": "لعبه مثل مال من سيربح المليون",
+        "usage": "{tr}معلومات",
+    },
+)
+async def million(event):
+    Bq = qq + A_qq
+    question = random.choice(Bq)
+    choices_text = "\n".join([f"{i+1}. {choice}" for i, choice in enumerate(question["choices"])])
+    await edit_or_reply(event, f"{question['question']}\n\n{choices_text}\n\nاكتب رقم الإجابة الصحيحة:")
+
+    async with Qrh9.conversation(event.chat_id) as conv:
+        response = await conv.wait_event(events.NewMessage(pattern=r'^[1-3]$', from_users=event.sender_id))
+        answer_index = int(response.text) - 1
+        if question["choices"][answer_index] == question["answer"]:
+            await response.reply("🎉 صحيح! إجابتك صحيحة.")
+        else:
+            await response.reply(f"❌ خطأ! الإجابة الصحيحة هي: {question['answer']}")
