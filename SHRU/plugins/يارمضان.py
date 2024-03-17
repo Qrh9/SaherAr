@@ -131,7 +131,6 @@ async def emoji_race(event):
     await response.reply(f"🎉 مبروك [{winner.first_name}](tg://user?id={winner.id}) \n- ثواني: {int(time_taken)} !!", parse_mode="md")
     
 
-
 @Qrh9.on(events.NewMessage(pattern='.يد'))
 async def rock_paper_scissors(event):
     choices = {
@@ -148,7 +147,7 @@ async def rock_paper_scissors(event):
     bot_choice = random.choice(list(choices.keys()))
     if user_choice == bot_choice:
         result = "تعادل!"
-    elif choices[user_choice] == bot_choice:
+    elif choices[bot_choice] == user_choice:
         result = "🎉 مبروك! لقد فزت."
     else:
         result = "😢 لقد خسرت. حاول مرة أخرى."
