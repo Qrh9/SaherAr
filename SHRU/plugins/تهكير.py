@@ -5,12 +5,36 @@ import asyncio
 from telethon import events
 from SHRU import Qrh9
 import random
+import os 
+from docx2pdf import convert
 from ..core.managers import edit_or_reply
 from ..helpers.utils import _format
 from . import ALIVE_NAME
 
 plugin_category = "fun"
 
+@Qrh9.on(events.NewMessage(pattern=".Pdf"))
+async def Rio(event):
+    if not event.reply_to_msg_id:
+        await event.reply("لازم ترد على ملف ورد حياتي")
+        return
+
+    reply_message = await event.get_reply_message()
+    if not reply_message.file or not reply_message.file.name.endswith(".docx"):
+        await event.reply("لازم الملف ينتهي ب (.docx).")
+        return
+
+    await edit_or_reply(event,"يتم التحويل...")
+
+    IM = await Qrh9.download_media(reply_message)
+    UM = IM.replace(".docx", ".pdf")
+
+    convert(IM, UM)
+
+    await event.reply("تم التحويل ", file=UM)#outputshit should os 
+    os.remove(IM)
+    os.remove(UM)
+    
 
 @Qrh9.ar_cmd(
     pattern="تهكير$",
