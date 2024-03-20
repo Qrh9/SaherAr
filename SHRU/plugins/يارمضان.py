@@ -131,7 +131,7 @@ async def emoji_race(event):
     await response.reply(f"🎉 مبروك [{winner.first_name}](tg://user?id={winner.id}) \n- ثواني: {int(time_taken)} !!", parse_mode="md")
     
 
-@Qrh9.on(events.NewMessage(pattern='.يد'))
+@Qrh9.on(events.NewMessage(pattern='.اصابع'))
 async def rock_paper_scissors(event):
     choices = {
         "حجرة": "ورقة",
