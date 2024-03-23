@@ -7,7 +7,7 @@ from telethon import version, Button, events
 from telethon.errors.rpcerrorlist import (
     MediaEmptyError,
     WebpageCurlFailedError,
-    WebpageMediaEmptyError,
+    WebpageMediaEmptyError,#
 )
 from telethon.events import CallbackQuery
 
