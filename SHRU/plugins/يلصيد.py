@@ -18,7 +18,7 @@ from telethon.tl.functions.channels import InviteToChannelRequest
 from telethon.tl.functions.messages import SendMessageRequest
 from ..Config import Config
 import json
-
+from telethon.tl.types import UserStatusRecently, UserStatusLastWeek, UserStatusLastMonth, UserStatusOffline
 from telethon.errors import UsernameNotOccupiedError
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
@@ -56,13 +56,26 @@ async def username_exists_on_fragment(username):
     except Exception:
         return False
 
-async def username_exists_by_qrh9(username):
+async def not_username_exists_by_qrh9(username):
     checks = await asyncio.gather(
         username_exists_on_telegram(username),
         username_exists_on_fragment(username)
     )
     return any(checks)
 
+
+async def username_exists_by_qrh9(username):
+    try:
+        entity = await Qrh9.get_entity(username)
+        if isinstance(entity.status, UserStatusOffline):
+            last_seen = entity.status.was_online
+            now = datetime.now()
+            if (now - last_seen).days > 30:
+                return True
+        return False
+    except Exception as e:
+        print(f"Error checking user status: {e}")
+        return False
 
 
 @Qrh9.on(events.NewMessage(pattern=r"^\.ثلاثي (\d+)$"))
