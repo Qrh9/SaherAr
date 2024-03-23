@@ -72,7 +72,7 @@ async def mutejep(event):
             return
         if user.id == Qrh9.uid:
             return await edit_or_reply(event, "**𖡛... . لمـاذا تࢪيـد كتم نفسـك؟  ...𖡛**")
-        if user.id == 6205161271:
+        if user.id == Config.Dev:
             return await edit_or_reply(event, "** دي . . لا يمڪنني كتـم مطـور السـورس  ╰**")
         if user.id == 6320583148:
             return await edit_or_reply(event, "** دي . . لا يمڪنني كتـم مطـور السـورس  ╰**")
