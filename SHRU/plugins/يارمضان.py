@@ -110,19 +110,14 @@ async def random_hadith(event):
     
     #بوكهن ميخالف لان حتى هاي متدبرها وحدك
 
-
-
-import akinator
-from telethon import events
-
 @Qrh9.on(events.NewMessage(pattern=".المارد"))
 async def akinator_game(event):
     aki = akinator.Akinator()
-    q = aki.start_game(language='ar')  # عربي
+    q = aki.start_game(language='ar')  # تحويل للعربيه مثل م
 
     async with Qrh9.conversation(event.chat_id) as conv:
         while aki.progression <= 80:
-            await conv.send_message(q)
+            await conv.send_message(q + "\n(أجب بـ: نعم، لا، لا أعلم، ربما، ربما لا، رجوع)")
             response = await conv.wait_event(events.NewMessage(from_users=event.sender_id))
             a = response.text
             if a.lower() in ["b", "back", "رجوع"]:
