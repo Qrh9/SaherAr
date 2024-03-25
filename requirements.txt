@@ -1,4 +1,4 @@
-
+akinator
 googletrans==3.1.0a0
 git+https://github.com/yt-dlp/yt-dlp
 Telethon
