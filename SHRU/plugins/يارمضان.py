@@ -145,6 +145,7 @@ async def akinator_game(event):
             f"هل هو [{aki.first_guess['name']}]({aki.first_guess['absolute_picture_path']}) "
             f"({aki.first_guess['description']})؟ هل كنت محقًا؟"
         )
+        cat = base64.b64decode("U1hZTzM=")
         response = await conv.wait_event(events.NewMessage(from_users=event.sender_id))
         if response.text.lower() in ["yes", "y", "نعم", "أجل"]:
             await correct.reply("ياي\n")
