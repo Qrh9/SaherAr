@@ -162,10 +162,8 @@ async def rock_paper_scissors(event):
 @Qrh9.on(events.NewMessage(pattern='.سيارات'))
 async def car_race(event):
     racers = []
-    Kk = None
-    G = event.sender_id
-
-    await edit_or_reply(event, "التسجيل بدأ ارسل 1 للانضمام")
+    GT = event.sender_id
+    GR = await edit_or_reply(event, "التسجيل بدأ ارسل 1 للانضمام")
 
     async with Qrh9.conversation(event.chat_id) as conv:
         while len(racers) < 5:
@@ -173,9 +171,10 @@ async def car_race(event):
             if response.sender_id not in [r[0] for r in racers]:
                 racer_entity = await Qrh9.get_entity(response.sender_id)
                 racers.append((response.sender_id, racer_entity.username or racer_entity.first_name))
-                if response.sender_id == G:  
-                    Kk = await response.reply("تم التسجيل بنجاح")
-
+                if response.sender_id == GT:  
+                    await GR.reply("تم التسجيل بنجاح")
+                else:
+                    await response.reply("تم التسجيل بنجاح")
 
     track = ["🏎️" for _ in range(5)]
     await Kk.edit(
