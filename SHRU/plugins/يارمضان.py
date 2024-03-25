@@ -2,7 +2,8 @@ from SHRU import Qrh9
 from ..core.managers import edit_or_reply
 from datetime import datetime
 import random
-import asyncio#
+import asyncio
+import akinator
 from telethon import events
 plugin_category = "fun"
 #str 122939#المليون
@@ -109,33 +110,35 @@ async def random_hadith(event):
     
     #بوكهن ميخالف لان حتى هاي متدبرها وحدك
 
-import akinator
 
 
-@Qrh9.on(events.NewMessage(pattern=".المارد"))
+@Qrh9.on(events.NewMessage(pattern=".akinator"))
 async def akinator_game(event):
     aki = akinator.Akinator()
-    q = aki.start_game(language='ar')  # عربيه
+    q = await aki.start_game(language='ar')  # Set language to Arabic
 
-    while aki.progression <= 80:
-        await event.reply(q)
-        response = await Qrh9.wait_for(events.NewMessage(from_users=event.sender_id))
-        a = response.text
-        if a.lower() in ["b", "back", "رجوع"]:
-            try:
-                q = aki.back()
-            except akinator.CantGoBackAnyFurther:
-                pass
+    async with Qrh9.conversation(event.chat_id) as conv:
+        while aki.progression <= 80:
+            await conv.send_message(q)
+            response = await conv.wait_event(events.NewMessage(from_users=event.sender_id))
+            a = response.text
+            if a.lower() in ["b", "back", "رجوع"]:
+                try:
+                    q = await aki.back()
+                except akinator.CantGoBackAnyFurther:
+                    pass
+            else:
+                q = await aki.answer(a)
+        await aki.win()
+
+        correct = await conv.send_message(f"هل هو {aki.first_guess['name']} ({aki.first_guess['description']})؟ هل كنت محقًا؟\n{aki.first_guess['absolute_picture_path']}")
+        response = await conv.wait_event(events.NewMessage(from_users=event.sender_id))
+        if response.text.lower() in ["yes", "y", "نعم", "أجل"]:
+            await correct.reply("ياي\n")
         else:
-            q = aki.answer(a)
-    aki.win()
+            await correct.reply("أوف\n")
+            
 
-    correct = await event.reply(f"هل هو {aki.first_guess['name']} ({aki.first_guess['description']})؟ هل كنت محقًا؟\n{aki.first_guess['absolute_picture_path']}")
-    response = await Qrh9.wait_for(events.NewMessage(from_users=event.sender_id))
-    if response.text.lower() in ["yes", "y", "نعم", "أجل"]:
-        await correct.reply("ياي\n")
-    else:
-        await correct.reply("أوف\n")
 @Qrh9.on(events.NewMessage(pattern='.سباق'))
 async def emoji_race(event):
     emojis = ["🍉", "🍎", "🍌", "🍇", "🍓", "🍍", "🍊", "🍐", "🍒", "🥝"]
