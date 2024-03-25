@@ -158,7 +158,10 @@ async def random_hadith(event):
     hadith = random.choice(hadiths)
     await edit_or_reply(event, hadith)
     
+
     #بوكهن ميخالف لان حتى هاي متدبرها وحدك
+
+
 @Qrh9.ar_cmd(
     pattern="المارد$",
     command=("المارد", plugin_category),
@@ -173,35 +176,48 @@ async def akinator_game(event):
     q = aki.start_game(language='ar')
 
     async with Qrh9.conversation(event.chat_id) as conv:
+        question_msg = await edit_or_reply(event,
+            f"{q}\n\n"
+            "اجب ب:\n"
+            "`y` = نعم\n"
+            "`n` = لا\n"
+            "`idk` = لا اعلم\n"
+            "`p` = من الممكن\n"
+            "`c` = انهاء اللعبة\n"
+            "`b` = رجوع"
+        )
         while aki.progression <= 80:
-            await conv.send_message(
-                q + "\n(اجب ب `y` لنعم، `n` للا، `idk` للا اعلم، `p` لربما، `c` لالغاء اللعبة)"
-            )
             response = await conv.wait_event(events.NewMessage(from_users=event.sender_id))
             a = response.text
+            await response.delete()
             if a.lower() == "c":
-                await conv.send_message("لقد ألغيت اللعبة.")
+                await question_msg.edit("لقد ألغيت اللعبة.")
                 return
-            elif a.lower() in ["b", "back", "رجوع"]:
+            elif a.lower() == "b":
                 try:
                     q = aki.back()
                 except akinator.CantGoBackAnyFurther:
                     pass
             else:
                 q = aki.answer(a)
+            await question_msg.edit(
+                f"{q}\n\n"
+                "اجب ب:\n"
+                "`y` = نعم\n"
+                "`n` = لا\n"
+                "`idk` = لا اعلم\n"
+                "`p` = من الممكن\n"
+                "`c` = انهاء اللعبة\n"
+                "`b` = رجوع"
+            )
         aki.win()
 
-        correct = await conv.send_message(
-            f"هل هو [{aki.first_guess['name']}]({aki.first_guess['absolute_picture_path']}) "
-            f"({aki.first_guess['description']})؟ هل كنت محقًا؟"
-        )
-        cat = base64.b64decode("U1hZTzM=")
+        correct = await edit_or_reply(event, f"هل هو [{aki.first_guess['name']}]({aki.first_guess['absolute_picture_path']}) ({aki.first_guess['description']})؟ هل كنت محقًا؟")
         response = await conv.wait_event(events.NewMessage(from_users=event.sender_id))
         if response.text.lower() in ["yes", "y", "نعم", "أجل"]:
             await correct.reply("ياي\n")
         else:
             await correct.reply("أوف\n")
-            
 
 @Qrh9.on(events.NewMessage(pattern='.سباق'))
 async def emoji_race(event):
