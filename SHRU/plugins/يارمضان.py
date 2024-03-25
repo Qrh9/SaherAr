@@ -110,14 +110,22 @@ async def random_hadith(event):
     
     #بوكهن ميخالف لان حتى هاي متدبرها وحدك
 
-@Qrh9.on(events.NewMessage(pattern=".المارد"))
+@Qrh9.ar_cmd(
+    pattern="المارد$",
+    command=("المارد", plugin_category),
+    info={
+        "header":"امر المارد السحري الازرك.",
+        "description": "مكتبة المارد الازرق ا .",
+        "usage": "{tr}المارد",
+    },
+)
 async def akinator_game(event):
     aki = akinator.Akinator()
     q = aki.start_game(language='ar')  # تحويل للعربيه مثل م
 
     async with Qrh9.conversation(event.chat_id) as conv:
         while aki.progression <= 80:
-            await conv.send_message(q + "\n(أجب بـ: نعم، لا، لا أعلم، ربما، ربما لا، رجوع)")
+            await conv.send_message(q + "\n( اجب ب `y` ل نعم \n اجب ب `n` ل لا \n اجب ب `idk` ل لا اعلم \n اجب ب `p` ل ربما )")
             response = await conv.wait_event(events.NewMessage(from_users=event.sender_id))
             a = response.text
             if a.lower() in ["b", "back", "رجوع"]:
@@ -129,7 +137,7 @@ async def akinator_game(event):
                 q = aki.answer(a)
         aki.win()
 
-        correct = await conv.send_message(f"هل هو {aki.first_guess['name']} ({aki.first_guess['description']})؟ هل كنت محقًا؟\n{aki.first_guess['absolute_picture_path']}")
+        correct = await conv.send_message(f"هل هو [{aki.first_guess['name']}]({aki.first_guess['absolute_picture_path']}) ({aki.first_guess['description']})؟ هل كنت محقًا؟")
         response = await conv.wait_event(events.NewMessage(from_users=event.sender_id))
         if response.text.lower() in ["yes", "y", "نعم", "أجل"]:
             await correct.reply("ياي\n")
