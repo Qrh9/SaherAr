@@ -127,8 +127,8 @@ async def emoji_race(event):
 
     race_end_time = datetime.now()
     time_taken = (race_end_time - Po).total_seconds()
-    winner = await Qrh9.get_entity(response.sender_id)
-    await response.reply(f"🎉 مبروك [{winner.first_name}](tg://user?id={winner.id}) \n- ثواني: {int(time_taken)} !!", parse_mode="md")
+    Wi = await Qrh9.get_entity(response.sender_id)
+    await response.reply(f"🎉 مبروك [{Wi.first_name}](tg://user?id={Wi.id}) \n- ثواني: {int(time_taken)} !!", parse_mode="md")
     
 
 @Qrh9.on(events.NewMessage(pattern='.اصابع'))
@@ -161,38 +161,38 @@ async def rock_paper_scissors(event):
 
 @Qrh9.on(events.NewMessage(pattern='.سيارات'))
 async def car_race(event):
-    racers = []
-    GT = event.sender_id
-    GR = await edit_or_reply(event, "التسجيل بدأ ارسل 1 للانضمام")
+    RS = []
+    KU = event.sender_id
+    Vr = await edit_or_reply(event, "التسجيل بدأ ارسل 1 للانضمام")
 
     async with Qrh9.conversation(event.chat_id) as conv:
-        while len(racers) < 5:
+        while len(RS) < 5:
             response = await conv.wait_event(events.NewMessage(incoming=True, pattern="1"))
-            if response.sender_id not in [r[0] for r in racers]:
-                racer_entity = await Qrh9.get_entity(response.sender_id)
-                racers.append((response.sender_id, racer_entity.username or racer_entity.first_name))
-                if response.sender_id == GT:  
-                    await GR.reply("تم التسجيل بنجاح")
+            if response.sender_id not in [r[0] for r in RS]:
+                UO = await Qrh9.get_entity(response.sender_id)
+                RS.append((response.sender_id, UO.username or UO.first_name))
+                if response.sender_id == KU:
+                    await Vr.reply("تم التسجيل بنجاح")
                 else:
                     await response.reply("تم التسجيل بنجاح")
 
     track = ["🏎️" for _ in range(5)]
-    await Kk.edit(
+    VT = await Vr.reply(
         "السباق يبدأ الآن!\n" +
-        "\n".join([f"{i+1}- {track[i]} [{racers[i][1]}](https://t.me/{racers[i][1]})" for i in range(5)])
+        "\n".join([f"{i+1}- {track[i]} [{RS[i][1]}](https://t.me/{RS[i][1]})" for i in range(5)])
     )
 
     for _ in range(10):
         await asyncio.sleep(1)
-        moving_car = random.randint(0, 4)
-        track[moving_car] = "-" + track[moving_car]
-        await Kk.edit(
-            "السباق يبدأ الآن!\n" + "\n".join([f"{i+1}- {track[i]} [{racers[i][1]}](https://t.me/{racers[i][1]})" for i in range(5)])
+        TM = random.randint(0, 4)
+        track[TM] = "-" + track[TM]
+        await VT.edit(
+            "السباق يبدأ الآن!\n" + "\n".join([f"{i+1}- {track[i]} [{RS[i][1]}](https://t.me/{RS[i][1]})" for i in range(5)])
         )
 
-    winner = racers[moving_car]
-    await Kk.edit(
-        f"🎉 مبروك [{winner[1]}](https://t.me/{winner[1]})! لقد فزت بالسباق!"
+    Wi = RS[TM]
+    await VT.edit(
+        f"🎉 مبروك [{Wi[1]}](https://t.me/{Wi[1]})! لقد فزت بالسباق!"
     )
     
 #بالحظ
@@ -201,7 +201,7 @@ async def car_race(event):
     command=("تحدي", plugin_category),
     info={
         "header": "Challenge another user to a duel.",
-        "description": "Randomly selects a winner between the challenger and the opponent.",
+        "description": "Randomly selects a Wi between the challenger and the opponent.",
         "usage": "{tr}تحدي",
     },
 )
@@ -214,10 +214,10 @@ async def challenge(event):
     opponent = reply_message.sender_id
     challenger = event.sender_id
 
-    winner = random.choice([challenger, opponent])
-    winner_entity = await Qrh9.get_entity(winner)
+    Wi = random.choice([challenger, opponent])
+    Wi_entity = await Qrh9.get_entity(Wi)
 
-    await edit_or_reply(event, f"🎊 تهانينا [{winner_entity.first_name}](tg://user?id={winner})! لقد فزت في التحدي!")
+    await edit_or_reply(event, f"🎊 تهانينا [{Wi_entity.first_name}](tg://user?id={Wi})! لقد فزت في التحدي!")
     
     
 #تكدر تضيف بعد وره ال plus
