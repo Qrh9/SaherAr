@@ -168,32 +168,34 @@ async def car_race(event):
         while len(racers) < 5:
             response = await conv.wait_event(events.NewMessage(incoming=True, pattern="1"))
             if response.sender_id not in [r[0] for r in racers]:
-                racer_entity = await Qrh9.get_entity(response.sender_id)
-                racers.append((response.sender_id, racer_entity.username or racer_entity.first_name))
-                if response.sender_id == GT:  
-                    await GR.reply("تم التسجيل بنجاح")
-                else:
-                    await response.reply("تم التسجيل بنجاح")
+                try:
+                    racer_entity = await Qrh9.get_entity(response.sender_id)
+                    racers.append((response.sender_id, racer_entity.username or racer_entity.first_name))
+                    if response.sender_id == GT:  
+                        await GR.reply("تم التسجيل بنجاح")
+                    else:
+                        await response.reply("تم التسجيل بنجاح")
+                except Exception as e:
+                    await response.reply(f"Error getting user info: {str(e)}")
 
-    track = ["🏎️" for _ in range(5)]
-    await GR.edit(
-        "السباق يبدأ الآن!\n" +
-        "\n".join([f"{i+1}- {track[i]} [{racers[i][1]}](https://t.me/{racers[i][1]})" for i in range(5)])
-    )
-
-    for _ in range(10):
-        await asyncio.sleep(1)
-        moving_car = random.randint(0, 4)
-        track[moving_car] = "-" + track[moving_car]
+        track = ["🏎️" for _ in range(5)]
         await GR.edit(
-            "السباق يبدأ الآن!\n" + "\n".join([f"{i+1}- {track[i]} [{racers[i][1]}](https://t.me/{racers[i][1]})" for i in range(5)])
+            "السباق يبدأ الآن!\n" +
+            "\n".join([f"{i+1}- {track[i]} [{racers[i][1]}](https://t.me/{racers[i][1]})" for i in range(5)])
         )
 
-    winner = racers[moving_car]
-    await GR.edit(
-        f"🎉 مبروك [{winner[1]}](https://t.me/{winner[1]})! لقد فزت بالسباق!"
-    )
+        for _ in range(10):
+            await asyncio.sleep(1)
+            moving_car = random.randint(0, 4)
+            track[moving_car] = "-" + track[moving_car]
+            await GR.edit(
+                "السباق يبدأ الآن!\n" + "\n".join([f"{i+1}- {track[i]} [{racers[i][1]}](https://t.me/{racers[i][1]})" for i in range(5)])
+            )
 
+        winner = racers[moving_car]
+        await GR.edit(
+            f"🎉 مبروك [{winner[1]}](https://t.me/{winner[1]})! لقد فزت بالسباق!"
+        )
     
 #بالحظ
 @Qrh9.ar_cmd(
