@@ -112,10 +112,13 @@ async def random_hadith(event):
 
 
 
-@Qrh9.on(events.NewMessage(pattern=".akinator"))
+import akinator
+from telethon import events
+
+@Qrh9.on(events.NewMessage(pattern=".المارد"))
 async def akinator_game(event):
     aki = akinator.Akinator()
-    q = await aki.start_game(language='ar')  # Set language to Arabic
+    q = aki.start_game(language='ar')  # عربي
 
     async with Qrh9.conversation(event.chat_id) as conv:
         while aki.progression <= 80:
@@ -124,12 +127,12 @@ async def akinator_game(event):
             a = response.text
             if a.lower() in ["b", "back", "رجوع"]:
                 try:
-                    q = await aki.back()
+                    q = aki.back()
                 except akinator.CantGoBackAnyFurther:
                     pass
             else:
-                q = await aki.answer(a)
-        await aki.win()
+                q = aki.answer(a)
+        aki.win()
 
         correct = await conv.send_message(f"هل هو {aki.first_guess['name']} ({aki.first_guess['description']})؟ هل كنت محقًا؟\n{aki.first_guess['absolute_picture_path']}")
         response = await conv.wait_event(events.NewMessage(from_users=event.sender_id))
