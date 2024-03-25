@@ -109,26 +109,30 @@ async def random_hadith(event):
     await edit_or_reply(event, hadith)
     
     #بوكهن ميخالف لان حتى هاي متدبرها وحدك
-
 @Qrh9.ar_cmd(
     pattern="المارد$",
     command=("المارد", plugin_category),
     info={
-        "header":"امر المارد السحري الازرك.",
+        "header": "امر المارد السحري الازرك.",
         "description": "مكتبة المارد الازرق ا .",
         "usage": "{tr}المارد",
     },
 )
 async def akinator_game(event):
     aki = akinator.Akinator()
-    q = aki.start_game(language='ar')  # تحويل للعربيه مثل م
+    q = aki.start_game(language='ar')
 
     async with Qrh9.conversation(event.chat_id) as conv:
         while aki.progression <= 80:
-            await conv.send_message(q + "\n( اجب ب `y` ل نعم \n اجب ب `n` ل لا \n اجب ب `idk` ل لا اعلم \n اجب ب `p` ل ربما )")
+            await conv.send_message(
+                q + "\n(اجب ب `y` لنعم، `n` للا، `idk` للا اعلم، `p` لربما، `c` لالغاء اللعبة)"
+            )
             response = await conv.wait_event(events.NewMessage(from_users=event.sender_id))
             a = response.text
-            if a.lower() in ["b", "back", "رجوع"]:
+            if a.lower() == "c":
+                await conv.send_message("لقد ألغيت اللعبة.")
+                return
+            elif a.lower() in ["b", "back", "رجوع"]:
                 try:
                     q = aki.back()
                 except akinator.CantGoBackAnyFurther:
@@ -137,7 +141,10 @@ async def akinator_game(event):
                 q = aki.answer(a)
         aki.win()
 
-        correct = await conv.send_message(f"هل هو [{aki.first_guess['name']}]({aki.first_guess['absolute_picture_path']}) ({aki.first_guess['description']})؟ هل كنت محقًا؟")
+        correct = await conv.send_message(
+            f"هل هو [{aki.first_guess['name']}]({aki.first_guess['absolute_picture_path']}) "
+            f"({aki.first_guess['description']})؟ هل كنت محقًا؟"
+        )
         response = await conv.wait_event(events.NewMessage(from_users=event.sender_id))
         if response.text.lower() in ["yes", "y", "نعم", "أجل"]:
             await correct.reply("ياي\n")
