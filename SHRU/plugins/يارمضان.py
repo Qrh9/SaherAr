@@ -334,18 +334,18 @@ async def Ah(event):
     participants = [event.sender_id]
     await edit_or_reply(event, "للانضمام إلى اللعبة، اكتب `أنا`.\nلبدء اللعبة، اكتب `تم`.")
 
-    game_started = False
     async with Qrh9.conversation(event.chat_id) as conv:
-        while not game_started:
+        while True:
             response = await conv.wait_event(events.NewMessage(incoming=True, chats=event.chat_id))
             if response.text.lower() == "أنا" and response.sender_id not in participants:
                 participants.append(response.sender_id)
                 await response.reply("تم إضافتك إلى القائمة.")
             elif response.text.lower() == "تم" and response.sender_id == event.sender_id:
-                game_started = True
+                break
 
-    await Qrh9.send_message(event.chat_id, "تم بدأ اللعبه!")
-
+    if len(participants) < 2:
+        await event.reply("لم ينضم أحد إلى اللعبة لا يمكن بدء اللعبة.")
+        return
 
     Lista = await edit_or_reply(event, "جاري اختيار الشخص المحكوم عليه...")
     for _ in range(5):
@@ -365,7 +365,6 @@ async def Ah(event):
     TheG = f"@{TYJ.username}" if TYJ.username else TYJ.first_name
 
     await Lista.edit(f"⛓️ الشخص المحكوم عليه هو {TheGU}!\n😈 الحاكم هو {TheG}!")
-
 
 @Qrh9.ar_cmd(
     pattern="المليون$",
