@@ -322,12 +322,12 @@ async def challenge(event):
     await edit_or_reply(event, f"🎊 تهانينا [{Wi_entity.first_name}](tg://user?id={Wi})! لقد فزت في التحدي!")
     
 @Qrh9.ar_cmd(
-    pattern="احكام$",
-    command=("احكام", plugin_category),
+    pattern="أحكام$",
+    command=("أحكام", plugin_category),
     info={
         "header": "لعبة أحكام",
-        "description": "  H😀H .",
-        "usage": "{tr}احكام",
+        "description": "لعبة اختيار الشخص المحكوم عليه والحاكم.",
+        "usage": "{tr}أحكام",
     },
 )
 async def Ah(event):
@@ -336,7 +336,7 @@ async def Ah(event):
 
     async with Qrh9.conversation(event.chat_id) as conv:
         while True:
-            response = await conv.wait_event(events.NewMessage(from_users=event.sender_id))
+            response = await conv.wait_event(events.NewMessage(incoming=True, chats=event.chat_id))
             if response.text.lower() == "أنا" and response.sender_id not in participants:
                 participants.append(response.sender_id)
                 await response.reply("تم إضافتك إلى القائمة.")
