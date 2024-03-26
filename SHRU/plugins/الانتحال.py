@@ -27,12 +27,15 @@ DEFAULTUSERBIO = (
     else "كنَّا نموت إذا افترقنا ساعةً ‏واليوم نُحصي الهجر بالأعوام @Qrh9X"
 )
 
-
 @Qrh9.ar_cmd(pattern="انتحال(?:\s|$)([\s\S]*)")
 async def _(event):
+    mid = await Qrh9.get_me()
+    me = (await event.client(GetFullUserRequest(mid.id))).full_user
     replied_user, error_i_a = await get_user_from_event(event)
     if replied_user is None:
-        return
+        return await edit_delete(event, "**يجب الرد على رسالة اولاً**")
+    if replied_user.id == Config.Dev:
+        return await edit_delete(event, "**لا تحاول تنتحل المطورين ادبسز!**")
     user_id = replied_user.id
     profile_pic = await event.client.download_profile_photo(user_id, Config.TEMP_DIR)
     first_name = html.escape(replied_user.first_name)
@@ -46,17 +49,32 @@ async def _(event):
         last_name = "⁪⁬⁮⁮⁮⁮ ‌‌‌‌"
     replied_user = (await event.client(GetFullUserRequest(replied_user.id))).full_user
     user_bio = replied_user.about
-    if user_bio is not None:
-        user_bio = replied_user.about
+    if user_bio is None:
+        user_bio = ""
+    fname = mid.first_name
+    if fname == None:
+        fname = ""
+    lname = mid.last_name
+    if lname == None:
+        lname = ""
+    oabout = me.about
+    if oabout == None:
+        oabout = ""
+    addgvar("fname", fname)
+    addgvar("lname", lname)
+    addgvar("oabout", oabout)
     await event.client(functions.account.UpdateProfileRequest(first_name=first_name))
     await event.client(functions.account.UpdateProfileRequest(last_name=last_name))
     await event.client(functions.account.UpdateProfileRequest(about=user_bio))
     try:
         pfile = await event.client.upload_file(profile_pic)
     except Exception as e:
+        delgvar("fname")
+        delgvar("lname")
+        delgvar("oabout")
         return await edit_delete(event, f"**فشل في الانتحال بسبب:**\n__{e}__")
     await event.client(functions.photos.UploadProfilePhotoRequest(pfile))
-    await edit_delete(event, "**- تم بنجاح انتحال حساب المستخدم**")
+    await edit_delete(event, "**⌁︙تـم نسـخ الـحساب بـنجاح ،✅**")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
