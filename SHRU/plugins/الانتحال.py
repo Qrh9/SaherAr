@@ -110,7 +110,7 @@ async def _(event):
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID, f"⌁︙تـم اعادة الـحساب الى وضـعه الاصلـي ،✅")
-#Reda
+
 jeps = ["SHRU", "Qruesupport"]
 @Qrh9.ar_cmd(pattern="انتحال_الدردشه")
 async def reda(event):
