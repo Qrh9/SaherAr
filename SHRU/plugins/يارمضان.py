@@ -322,7 +322,46 @@ async def challenge(event):
     await edit_or_reply(event, f"🎊 تهانينا [{Wi_entity.first_name}](tg://user?id={Wi})! لقد فزت في التحدي!")
     
 
+@Qrh9.ar_cmd(
+    pattern="أحكام$",
+    command=("أحكام", plugin_category),
+    info={
+        "header": "لعبة أحكام",
+        "description": " Hoاحكام   .",#Yui💅🏻
+        "usage": "{tr}أحكام",
+    },
+)
+async def Ah(event):
+    participants = [event.sender_id]
+    await edit_or_reply(event, "للانضمام إلى اللعبة، اكتب `أنا`.\nلبدء اللعبة، اكتب `تم`.")
 
+    async with Qrh9.conversation(event.chat_id) as conv:
+        while True:
+            response = await conv.wait_event(events.NewMessage(from_users=event.sender_id))
+                if response.text.lower() == "أنا" and response.sender_id not in participants:
+                participants.append(response.sender_id)
+                await response.reply("تم إضافتك إلى القائمة.")
+            elif response.text.lower() == "تم" and response.sender_id == event.sender_id:
+                break
+                
+    Lista = await edit_or_reply(event, "جاري اختيار الشخص المحكوم عليه...")
+    for _ in range(5):  # Rio👋🏻
+        await asyncio.sleep(1)  # Yui💅🏻
+        TTrivra = random.choice(participants)
+        PEnta = await Qrh9.get_entity(TTrivra)
+        username = f"@{PEnta.username}" if PEnta.username else PEnta.first_name
+        await Lista.edit("\n".join([f"{i+1}- {username if p == TTrivra else '...'}" for i, p in enumerate(participants)]))
+
+    TheQU = TTrivra
+    TheUI = await Qrh9.get_entity(TheQU)
+    TheGU = f"@{TheUI.username}" if TheUI.username else TheUI.first_name
+
+    Part = [p for p in participants if p != TheQU]
+    TheL = random.choice(Part)
+    TYJ = await Qrh9.get_entity(TheL)
+    TheG = f"@{TYJ.username}" if TYJ.username else TYJ.first_name
+
+    await Lista.edit(f"⛓️ الشخص المحكوم عليه هو {TheGU}!\n😈 الحاكم هو {TheG}!")
 
 
 @Qrh9.ar_cmd(
