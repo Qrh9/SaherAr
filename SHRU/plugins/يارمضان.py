@@ -341,7 +341,10 @@ async def Ah(event):
                 participants.append(response.sender_id)
                 await response.reply("تم إضافتك إلى القائمة.")
             elif response.text.lower() == "تم" and response.sender_id == event.sender_id:
+                await conv.send_message("يتم بدأ اللعبه.")  # 
                 break
+
+    await edit_or_reply(event, "اللعبة بدأت!")  #
 
     Lista = await edit_or_reply(event, "جاري اختيار الشخص المحكوم عليه...")
     for _ in range(5):
