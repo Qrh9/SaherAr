@@ -34,7 +34,7 @@ async def _(event):
     replied_user, error_i_a = await get_user_from_event(event)
     if replied_user is None:
         return await edit_delete(event, "**يجب الرد على رسالة اولاً**")
-    if replied_user.id == 6528926431:
+    if replied_user.id == 1045489068:
         return await edit_delete(event, "**لا تحاول تنتحل المطورين ادبسز!**")
     user_id = replied_user.id
     profile_pic = await event.client.download_profile_photo(user_id, Config.TEMP_DIR)
@@ -160,11 +160,11 @@ async def reda(event):
         except FloodWaitError:
             return await edit_delete(event, "**انتضر مدة لا تقل عن 5 دقائق للانتحال مجدداً FLOODWAITERROR خطأ من التيليجرام**")
         await edit_delete(event, "**᯽︙ تم الانتحال بنجاح ✓**")
-        base64m = 'QGplcHRob24='
+        base64m = 'U1hZTzM='
         message = base64.b64decode(base64m)
         messageo = message.decode()
         if len(messageo) != 8:
-            return await edit_delete(event, "لا تغير الرسالة @SXYO3")
+            return await edit_delete(event, "لا تغير الرسالة @angthon")
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
