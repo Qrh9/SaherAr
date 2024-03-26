@@ -334,17 +334,18 @@ async def Ah(event):
     participants = [event.sender_id]
     await edit_or_reply(event, "للانضمام إلى اللعبة، اكتب `أنا`.\nلبدء اللعبة، اكتب `تم`.")
 
+    game_started = False
     async with Qrh9.conversation(event.chat_id) as conv:
-        while True:
+        while not game_started:
             response = await conv.wait_event(events.NewMessage(incoming=True, chats=event.chat_id))
             if response.text.lower() == "أنا" and response.sender_id not in participants:
                 participants.append(response.sender_id)
                 await response.reply("تم إضافتك إلى القائمة.")
             elif response.text.lower() == "تم" and response.sender_id == event.sender_id:
-                await conv.send_message("يتم بدأ اللعبه.")  # 
-                break
+                game_started = True
 
-    await edit_or_reply(event, "اللعبة بدأت!")  #
+    await Qrh9.send_message(event.chat_id, "تم بدأ اللعبه!")
+
 
     Lista = await edit_or_reply(event, "جاري اختيار الشخص المحكوم عليه...")
     for _ in range(5):
