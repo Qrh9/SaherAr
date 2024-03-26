@@ -322,12 +322,12 @@ async def challenge(event):
     await edit_or_reply(event, f"🎊 تهانينا [{Wi_entity.first_name}](tg://user?id={Wi})! لقد فزت في التحدي!")
     
 @Qrh9.ar_cmd(
-    pattern="أحكام$",
-    command=("أحكام", plugin_category),
+    pattern="احكام$",
+    command=("احكام", plugin_category),
     info={
         "header": "لعبة أحكام",
-        "description": "لعبة اختيار الشخص المحكوم عليه والحاكم.",
-        "usage": "{tr}أحكام",
+        "description": "Yui.",
+        "usage": "{tr}احكام",#Yui💅🏻
     },
 )
 async def Ah(event):
@@ -360,7 +360,7 @@ async def Ah(event):
     TYJ = await Qrh9.get_entity(TheL)
     TheG = f"@{TYJ.username}" if TYJ.username else TYJ.first_name
 
-    await Lista.edit(f"⛓️ الشخص المحكوم عليه هو {TheGU}!\n😈 الحاكم هو {TheG}!")#Yui💅🏻
+    await Lista.edit(f"⛓️ الشخص المحكوم عليه هو {TheGU}!\n😈 الحاكم هو {TheG}!")
 
 
 @Qrh9.ar_cmd(
