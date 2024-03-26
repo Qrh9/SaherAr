@@ -264,7 +264,41 @@ async def rock_paper_scissors(event):
 
 
 
+@Qrh9.ar_cmd(
+    pattern="اكس او$",
+    command=("اكس او", plugin_category),
+    info={
+        "header": "لعبة XO للاعبين.",
+        "description": "ابدأ لعبة XO مع لاعب آخر.",
+        "usage": "{tr}اكس او",
+    },
+)
+async def Xo(event):
+    await edit_or_reply(event, "اللاعب الأول: اختر X أو O بإرسالها. اللاعب الثاني: انضم بقول 'اكس او'.")
+    XF = await Qrh9.wait_event(events.NewMessage(from_users=event.sender_id, pattern=r"^[اكس او]$"))
+    OY = XF.text.upper()
+    await XF.reply(f"لقد اخترت {OY}. انتظر اللاعب الثاني للانضمام.")
 
+    second_player = await Qrh9.wait_event(events.NewMessage(pattern="اكس او"))
+    await second_player.reply(f"لقد انضممت إلى اللعبة. اللاعب الأول يستخدم {OY}. تبدأ اللعبة الآن!")
+
+    TAola = [["⬜️" for _ in range(3)] for _ in range(3)]
+    TAola_T = "\n".join([f"{i+1}-{''.join(row)}" for i, row in enumerate(TAola)]) + "\n  4--5--6"
+    message = await edit_or_reply(event, f"لوحة اللعبة:\n{TAola_T}")
+
+    TP = XF.sender_id
+    other_OY = "O" if OY == "X" else "X"
+    while True:
+        response = await Qrh9.wait_event(events.NewMessage(from_users=TP, pattern=r"^[1-3]-[4-6]$"))
+        row, col = map(int, response.text.split("-"))
+        if TAola[row - 1][col - 4] == "⬜️":
+            TAola[row - 1][col - 4] = OY if TP == XF.sender_id else other_OY
+            TAola_T = "\n".join([f"{i+1}-{''.join(row)}" for i, row in enumerate(TAola)]) + "\n  4--5--6"
+            await message.edit(f"لوحة اللعبة:\n{TAola_T}")
+# تع تع تزعه
+            TP = second_player.sender_id if TP == XF.sender_id else XF.sender_id
+        else:
+            await response.reply("الخانة محجوزة بالفعل. حاول مرة أخرى.")
 
 @Qrh9.on(events.NewMessage(pattern='.سيارات'))
 async def car_race(event):
