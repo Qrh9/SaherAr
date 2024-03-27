@@ -13,7 +13,7 @@ from ..Config import Config
 c = requests.session()
 bot_username = '@EEObot'#المليار
 bot_username2 = '@A_MAN9300BOT'#الجوكر
-bot_username3 = '@MARKTEBOT'# العقاب
+bot_username3 = '@TTNBOT'# العقاب
 bot_username4 = '@qweqwe1919bot'#المليون
 bot_username5 = '@xnsex21bot'#العرب
 bot_username6 = '@YY8bot'#السلطان
