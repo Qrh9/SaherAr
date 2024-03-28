@@ -64,7 +64,7 @@ async def not_username_exists_by_qrh9(username):
     return any(checks)
 
 
-async def username_exists_by_qrh9(username):
+async def username_exists_by_Qrh9(username):
     try:
         entity = await Qrh9.get_entity(username)
         if isinstance(entity.status, UserStatusOffline):
