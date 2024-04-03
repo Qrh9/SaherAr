@@ -114,7 +114,6 @@ async def Hussein(event):
         owner_id = reply_msg.from_id.user_id
         if owner_id == Qrh9.uid:
             if event.message.message == "-":
-                if event.sender_id == 6528926431:
                     await event.reply("**᯽︙ رجائا عدم التكلم بأمور لا تخص السورس** ")
             
 ###
