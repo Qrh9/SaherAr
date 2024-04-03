@@ -248,25 +248,6 @@ async def tmeme(event):
             )
 
 
-@Qrh9.on(events.NewMessage(pattern=r"^.تكرار (\d+) (\d+) (.+)"))
-async def repeat_messages(event):
-    time_interval = int(event.pattern_match.group(1))
-    message_count = int(event.pattern_match.group(2))
-    text = event.pattern_match.group(3)
-
-    addgvar("spamwork", True)
-
-    for _ in range(message_count):
-        if gvarstatus("spamwork") is None:
-            break
-        await event.client.send_message(event.chat_id, text)
-        await asyncio.sleep(time_interval)
-
-    if BOTLOG:
-        await event.client.send_message(
-            BOTLOG_CHATID, f"تم تكرار الرسالة {message_count} ثواني  {time_interval}."
-        )
-
 @Qrh9.ar_cmd(pattern="وسبام (.*)")
 async def tmeme(event):
     wspam = str("".join(event.text.split(maxsplit=1)[1:]))
@@ -290,25 +271,53 @@ async def tmeme(event):
                 "**⌔∮ تكرار بالكلمه : **\n"
                 + f"**⌔∮ تم تنفيذ التكرار بواسطة الڪلمات في   :** {get_display_name(await event.get_chat())}(`{event.chat_id}`) **الدردشة مع :** `{message}`",
             )
-
-@Qrh9.on(events.NewMessage(pattern=r"^.نقل (\d+) (\d+) (.+)"))
-async def forward_messages(event):
+            
+@Qrh9.on(events.NewMessage(pattern=r"^.تكرار (\d+) (\d+) (.+)"))
+async def share_messages(event):
     time_interval = int(event.pattern_match.group(1))
     message_count = int(event.pattern_match.group(2))
     group_link = event.pattern_match.group(3)
 
     try:
-        entity = await event.client.get_entity(group_link)
+        entity = await Qrh9.get_entity(group_link)
     except ValueError:
-        await event.reply("رابط المجموعة أو اسم المستخدم غير صالح.")
+        await event.reply("⌔∮ رابط المجموعة خاطئ.")
         return
 
     reply_message = await event.get_reply_message()
-
     if not reply_message:
-        await event.reply("الرجاء الرد على الرسالة التي تريد نقلها.")
+        await event.reply("⌔∮ !يجب الرد على الرسالة التي تريد تكرارها.")
         return
 
+    await event.reply(f"⌔∮ بدأت عملية التكرار... {time_interval} ثانية كل {message_count} مرة.")
+    addgvar("spamwork", True)
+
+    for _ in range(message_count):
+        if gvarstatus("spamwork") is None:
+            break
+        sent_message = await event.client.send_message(entity, reply_message.text)
+        await asyncio.sleep(time_interval)
+
+    await event.reply(f"⌔∮ تم التكرار بنجاح")
+
+@Qrh9.on(events.NewMessage(pattern=r"^.نقل (\d+) (\d+) (.+)"))
+async def share_messages(event):
+    time_interval = int(event.pattern_match.group(1))
+    message_count = int(event.pattern_match.group(2))
+    group_link = event.pattern_match.group(3)
+
+    try:
+        entity = await Qrh9.get_entity(group_link)
+    except ValueError:
+        await event.reply("⌔∮ رابط المجموعة أو اسم المستخدم غير صالح.")
+        return
+
+    reply_message = await event.get_reply_message()
+    if not reply_message:
+        await event.reply("⌔∮ الرجاء الرد على الرسالة التي تريد نقلها.")
+        return
+
+    await event.reply(f"⌔∮ بدأ عملية النقل... {time_interval} ثانية كل {message_count} مرة.")
     addgvar("spamwork", True)
 
     for _ in range(message_count):
@@ -317,10 +326,7 @@ async def forward_messages(event):
         await event.client.forward_messages(entity, reply_message)
         await asyncio.sleep(time_interval)
 
-    if BOTLOG:
-        await event.client.send_message(
-            BOTLOG_CHATID, f"تم نقل الرسالة {message_count} مرات بفاصل {time_interval} ثواني."
-        )
+    await event.reply(f"⌔∮ تم التكرار بنجاح")
 
 @Qrh9.ar_cmd(pattern="ايقاف التكرار ?(.*)")
 async def stopspamrz(event):
