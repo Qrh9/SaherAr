@@ -47,7 +47,6 @@ async def amireallyalive(event):
         cat_caption = f"مطورين الساحر\n"
         cat_caption += f"✛━━━━━━━━━━━━━✛\n"
         cat_caption += f"- المطور الاساسي :@ll1ilt\n"
-        cat_caption += f"- المطور  :@io_Q6\n"
         cat_caption += f"- المطور  :@Y7yuu\n"
         cat_caption += f"- المطور  :@Xl5x5\n"
         cat_caption += f"- المطور  :@Morffn\n"
