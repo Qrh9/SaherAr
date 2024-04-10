@@ -40,8 +40,6 @@ async def check_cooldown(chat_id):
     else:
         return False
 
-import asyncio
-
 async def username_exists_on_telegram(username):
     try:
         entity = await Qrh9.get_entity(username)
@@ -64,7 +62,7 @@ async def not_username_exists_by_qrh9(username):
     return any(checks)
 
 
-async def username_exists_by_Qrh9(username):
+async def Username_exists_by_Qrh9(username):
     try:
         entity = await Qrh9.get_entity(username)
         if isinstance(entity.status, UserStatusOffline):
