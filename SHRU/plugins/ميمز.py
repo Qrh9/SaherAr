@@ -565,17 +565,9 @@ async def jepmeme(memejep):
   url = f"https://t.me/memesoundalsaher/4"
   await memejep.client.send_file(memejep.chat_id,url,caption="",parse_mode="html",reply_to=Jep)
   await memejep.delete()
-from telethon import events
-
-allowed_emojis = ["❤️", "👍", "😄", "🥰"]  # Add the emojis you want to use
-
-@Qrh9.on(events.NewMessage(pattern=r"^\.(emoji|رد)$"))
-async def react_with_emojis(event):
-    if event.is_reply and event.text in [".emoji", ".رد"]:
-        reply_msg = await event.get_reply_message()
-        if reply_msg and reply_msg.sender_id != event.sender_id:
-            for emoji in allowed_emojis:
-                await reply_msg.react(emoji)
-                await asyncio.sleep(2)  # Wait for a moment between each reaction
-
-            await event.delete()  # Delete the .emoji or .رد command message
+@Qrh9.on(admin_cmd(outgoing=True, pattern="كحبه$"))
+async def jepmeme(memejep):
+  Jep = await reply_id(memejep)
+  url = f"https://t.me/ThisGroupforanything/2877"
+  await memejep.client.send_file(memejep.chat_id,url,caption="",parse_mode="html",reply_to=Jep)
+  await memejep.delete()
