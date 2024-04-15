@@ -275,7 +275,7 @@ async def handle_messages(event):
         elif message_text == 'منو فخر العرب؟':
             await event.respond("الامام علي عليه السلام🤍")
         elif message_text == 'تحبوني؟':
-            await event.reply("نموت عليك سيد")
+            await event.reply("نموت عليك بيبي")
         elif message_text == 'شهر الحسين يا ناس':
             await event.reply("ياا حسين 💔")
         elif message_text == 'يلا':
