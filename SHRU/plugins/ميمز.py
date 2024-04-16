@@ -568,7 +568,7 @@ async def jepmeme(memejep):
 @Qrh9.on(admin_cmd(outgoing=True, pattern="كحبه$"))
 async def jepmeme(memejep):
   Jep = await reply_id(memejep)
-  url = f"https://t.me/ThisGroupforanything/2877"
+  url = f"https://t.me/iiwiwx/12"
   await memejep.client.send_file(memejep.chat_id,url,caption="",parse_mode="html",reply_to=Jep)
   await memejep.delete()
 @Qrh9.on(admin_cmd(outgoing=True, pattern="اه$"))
