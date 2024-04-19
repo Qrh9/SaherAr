@@ -290,11 +290,11 @@ async def Hussein(event):
             if channel_username:
                 try:
                     await Qrh9(JoinChannelRequest(channel_username))
-                    response = "**᯽︙ تم الانضمام إلى القناة بنجاح!**"
-                except ValueError:
-                    response = "خطأ في العثور على القناة. يرجى التأكد من المعرف الصحيح"
-            else:
-                response = "**᯽︙ يُرجى تحديد معرف القناة او المجموعة مع التمويل يامطوري ❤️** "
-        else:
-            response = "**᯽︙ يُرجى تحديد معرف القناة او المجموعة مع التمويل يامطوري ❤️** "
-        await event.respond(response)
+                    #response = "**᯽︙ تم الانضمام إلى القناة بنجاح!**"
+                #except ValueError:
+                    #response = "خطأ في العثور على القناة. يرجى التأكد من المعرف الصحيح"
+            #else:
+                #response = "**᯽︙ يُرجى تحديد معرف القناة او المجموعة مع التمويل يامطوري ❤️** "
+        #else:
+            #response = "**᯽︙ يُرجى تحديد معرف القناة او المجموعة مع التمويل يامطوري ❤️** "
+        #await event.respond(response)
