@@ -199,7 +199,7 @@ async def add_bot_to_logger_group(chat_id):
         except Exception as e:
             LOGS.error(str(e))
 #by @SXYO3 بس اشوفك خامطه للكود اهينك وافضحك
-SHRU = {"@SXYO3", "@at66g66haloom", "@SXYO4"}
+SHRU = {"@SXYO3", "@dannystoore", "@SXYO4"}
 async def saves():
    for SX9OO in SHRU:
         try:
