@@ -26,7 +26,7 @@ class LOG_CHATS:
 LOG_CHATS_ = LOG_CHATS()
 
 
-@Qrh9.ar_cmd(incoming=True, func=lambda e: e.is_private, edited=False, forword=None)
+@llxliilx.ar_cmd(incoming=True, func=lambda e: e.is_private, edited=False, forword=None)
 async def monito_p_m_s(event):  # sourcery no-metrics
     if Config.PM_LOGGER_GROUP_ID == -100:
         return
