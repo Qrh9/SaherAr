@@ -1,6 +1,6 @@
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
 
-RR9R7 = "**˛ 𝘼𝙇𝙨𝙖𝙝𝙚𝙧 . .**\n"            #ساد
+RR9R7 = "**˛ Maria. .**\n"            #ساد
 sad = "https://telegra.ph/file/4a59106d0ade82859136b.mp4"
 sad2 = "https://telegra.ph/file/6e6f59bac38be6b983f56.mp4"
 sad3 = "https://telegra.ph/file/fa1d3bf72e1f7a1e08474.mp4"
@@ -13,7 +13,7 @@ sad9 = "https://telegra.ph/file/edf483bb182e4e328c5d4.mp4"
 
 #━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━#
 
-ROZA = "** 𝘼𝙇𝙨𝙖𝙝𝙚𝙧 . .**\n"           #كيوت
+ROZA = "** maria . .**\n"           #كيوت
 cute = "https://telegra.ph/file/bf2d2cb360b0bc05dd7c2.mp4"
 cute2 = "https://telegra.ph/file/17c92862ca1283914a91f.mp4"
 cute3 = "https://telegra.ph/file/89dc704a356b4b0f6fe89.mp4"
