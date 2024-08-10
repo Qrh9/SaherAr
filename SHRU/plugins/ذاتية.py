@@ -5,7 +5,7 @@ import datetime
 from telethon import events
 from SHRU import *
 #ها يالفاشل شعدك داخل هنا 🫣 اعتمد ع نفسك لتخلي سورس الساحر مصدر طشت سورسك
-ALSAHER_Asbo3 = {
+maria_Asbo3 = {
     'Monday': 'الاثنين',
     'Tuesday': 'الثلاثاء',
     'Wednesday': 'الأربعاء',
@@ -15,7 +15,7 @@ ALSAHER_Asbo3 = {
     'Sunday': 'الأحد'
 }
 
-@Qrh9.on(admin_cmd(pattern="(جلب الصورة|جلب الصوره|ذاتيه|ذاتية|حفظ)"))
+@llxliilx.on(admin_cmd(pattern="(جلب الصورة|جلب الصوره|ذاتيه|ذاتية|حفظ)"))
 async def dato(event):
     if not event.is_reply:
         return await event.edit("..")
@@ -27,12 +27,12 @@ async def dato(event):
         caption=f"""
 - تـم حفظ الصـورة بنجـاح ✓ 
 - غير مبري الذمه اذا استخدمت الامر للابتزاز
-- CH: @SXYO3
-- Dev: @ll1ilt
+- CH: @llxliilx
+- Dev: @llxliilx
   """,
     )
     await event.delete()
-#By @SXYO3 For You 🌹
+#By @llxliilx For You 🌹
 @Qrh9.on(admin_cmd(pattern="(الذاتية تشغيل|ذاتية تشغيل)"))
 async def reda(event):
     if gvarstatus ("savepicforme"):
@@ -74,7 +74,7 @@ async def Reda(event):
         caption = """**
            ✨  غير مبري الذمة اذا استعملته للأبتزاز  ✨
 ✨ تم حفظ الذاتية بنجاح ✓
-✨ تم الصنع : @SXYO3
+✨ تم الصنع : @llxliilx
 ✨ أسم المرسل : [{0}](tg://user?id={1})
 ✨  تاريخ الذاتية : `{2}`
 ✨  أرسلت في يوم `{3}`

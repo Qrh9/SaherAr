@@ -19,7 +19,7 @@ async def reda(event):
     list = "**قائمة المكاتب المثبته**\n"
     for i in installed_packages_list:
         list += f"{i}\n"
-    list += "**سورس الساحر**"
+    list += "**سورس ماريا**"
     await edit_or_reply(event, list)
 
 @Qrh9.ar_cmd(
@@ -34,7 +34,7 @@ async def _(event):
     "To list all plugins in SHRU"
     cmd = "ls SHRU/plugins"
     o = (await _catutils.runcmd(cmd))[0]
-    OUTPUT = f"**[الساحر](tg://need_update_for_some_feature/) الـمـلفـات:**\n{o}"
+    OUTPUT = f"**[ماريا](tg://need_update_for_some_feature/) الـمـلفـات:**\n{o}"
     await edit_or_reply(event, OUTPUT)
 
 wjis = [6320583148]
@@ -52,7 +52,7 @@ async def _(event):
     cmd = "env"
     o = (await _catutils.runcmd(cmd))[0]
     OUTPUT = (
-        f"**[الساحر](tg://need_update_for_some_feature/) قـائمـة الـفـارات:**\n\n\n{o}\n\n**انتبه هنالك معلومات حساسة لا تُعطِها لشخص غير موثوق**"
+        f"**[ماريا](tg://need_update_for_some_feature/) قـائمـة الـفـارات:**\n\n\n{o}\n\n**انتبه هنالك معلومات حساسة لا تُعطِها لشخص غير موثوق**"
     )
     await edit_or_reply(event, "**تم ارسال المعلومات في الرسائل المحفوضة \nانتبه من الاشخاص الي يطلبون منك كتابة هذا الامر يريد ان يخترقك!**")
     await Qrh9.send_message("me", OUTPUT)
