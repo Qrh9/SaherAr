@@ -1,5 +1,6 @@
 import sys
-import SHRU
+import asyncio
+import randomstuff
 from SHRU import BOTLOG_CHATID, HEROKU_APP, PM_LOGGER_GROUP_ID
 from .Config import Config
 from .core.logger import logging
@@ -23,30 +24,35 @@ print("Licensed under the terms of the " + SHRU.__license__)
 
 cmdhr = Config.COMMAND_HAND_LER
 
+# إنشاء العميل بشكل غير متزامن
+async def create_rs_client():
+    return randomstuff.AsyncClient(api_key=Config.RANDOM_STUFF_API_KEY, version="4")
+
+# محاولة تشغيل البوت
 try:
     LOGS.info("جارِ بدء بوت الساحر ✓")
     Qrh9.loop.run_until_complete(setup_bot())
     LOGS.info("تم اكتمال تنصيب البوت ✓")
 except Exception as e:
-    LOGS.error(f"{str(e)}")
+    LOGS.error(f"Error during bot setup: {str(e)}")
     sys.exit()
 
+# محاولة تفعيل وضع الانلاين
 try:
     LOGS.info("يتم تفعيل وضع الانلاين")
     Qrh9.loop.run_until_complete(mybot())
     LOGS.info("تم تفعيل وضع الانلاين بنجاح ✓")
 except Exception as jep:
     LOGS.error(f"- {jep}")
-    sys.exit()    
+    sys.exit()
 
 class CatCheck:
     def __init__(self):
         self.sucess = True
 
-
 Catcheck = CatCheck()
 
-
+# العمليات الغير متزامنة عند بدء البوت
 async def startup_process():
     check = await ipchange()
     if check is not None:
@@ -71,20 +77,28 @@ async def startup_process():
     Catcheck.sucess = True
     return
 
+# استيراد repository خارجي
 async def externalrepo():
     if Config.VCMODE:
         await install_externalrepo("https://github.com/Qrh9/music", "main", "music")
 
-Qrh9.loop.run_until_complete(externalrepo())
-Qrh9.loop.run_until_complete(startup_process())
+# تشغيل العميل الخارجي
+async def main():
+    await externalrepo()
+    await startup_process()
 
-if len(sys.argv) not in (1, 3, 4):
-    Qrh9.disconnect()
-elif not Catcheck.sucess:
-    if HEROKU_APP is not None:
-        HEROKU_APP.restart()
-else:
-    try:
-        Qrh9.run_until_disconnected()
-    except ConnectionError:
-        pass
+# تشغيل الحدث الرئيسي
+if __name__ == "__main__":
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+
+    if len(sys.argv) not in (1, 3, 4):
+        Qrh9.disconnect()
+    elif not Catcheck.sucess:
+        if HEROKU_APP is not None:
+            HEROKU_APP.restart()
+    else:
+        try:
+            Qrh9.run_until_disconnected()
+        except ConnectionError:
+            pass
