@@ -24,11 +24,9 @@ print("Licensed under the terms of the " + SHRU.__license__)
 
 cmdhr = Config.COMMAND_HAND_LER
 
-# إنشاء العميل بشكل غير متزامن
 async def create_rs_client():
     return randomstuff.AsyncClient(api_key=Config.RANDOM_STUFF_API_KEY, version="4")
 
-# محاولة تشغيل البوت
 try:
     LOGS.info("جارِ بدء بوت الساحر ✓")
     Qrh9.loop.run_until_complete(setup_bot())
@@ -37,7 +35,6 @@ except Exception as e:
     LOGS.error(f"Error during bot setup: {str(e)}")
     sys.exit()
 
-# محاولة تفعيل وضع الانلاين
 try:
     LOGS.info("يتم تفعيل وضع الانلاين")
     Qrh9.loop.run_until_complete(mybot())
@@ -52,7 +49,6 @@ class CatCheck:
 
 Catcheck = CatCheck()
 
-# العمليات الغير متزامنة عند بدء البوت
 async def startup_process():
     check = await ipchange()
     if check is not None:
@@ -77,17 +73,14 @@ async def startup_process():
     Catcheck.sucess = True
     return
 
-# استيراد repository خارجي
 async def externalrepo():
     if Config.VCMODE:
         await install_externalrepo("https://github.com/Qrh9/music", "main", "music")
 
-# تشغيل العميل الخارجي
 async def main():
     await externalrepo()
     await startup_process()
 
-# تشغيل الحدث الرئيسي
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
     loop.run_until_complete(main())
