@@ -111,3 +111,4 @@ async def mute_unmute(event):
 @Qrh9.on(events.NewMessage(func=lambda e: is_muted(e.sender_id, e.chat_id)))
 async def automatic_message_deletion(event):
     await event.delete()
+#loveyou
