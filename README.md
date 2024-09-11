@@ -1,3 +1,7 @@
-<p align="center"><img src="https://i0.wp.com/images.hive.blog/DQmZgGvu6YXrMNyDb4wVURLV14WNNSYs58R1kY64HNMSmCL/hive-didver1.gif"></p>
-غير مبري الذمة الي ياخذله حرف واحد وينسبه لنفسه ويكول من كتابتي خصيمه يوم القيامه ريو @SX9OO
-<p align="center"><img src="https://i0.wp.com/images.hive.blog/DQmZgGvu6YXrMNyDb4wVURLV14WNNSYs58R1kY64HNMSmCL/hive-didver1.gif"></p>
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=Qrh9&show_icons=true)
+![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=Qrh9&theme=react-dark)
+![Followers](https://img.shields.io/github/followers/Qrh9?style=social)
+![License](https://img.shields.io/github/license/Qrh9/SaherAr?color=blue)
+![GitHub Stars](https://img.shields.io/github/stars/Qrh9/SaherAr?style=social)
+![GitHub Forks](https://img.shields.io/github/forks/Qrh9/SaherAr?style=social)
+
