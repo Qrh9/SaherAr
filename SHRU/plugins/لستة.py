@@ -1,44 +1,49 @@
+from telethon.tl.types import InputPeerChannel
 from telethon import events
-from telethon.tl.functions.channels import JoinChannelRequest
+from telethon.tl.functions.channels import JoinChannelRequest, GetFullChannelRequest
 from telethon.tl.functions.messages import ForwardMessagesRequest
 from SHRU import Qrh9
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
-from SHRU.utils import admin_cmd
 
-riochannel = {}
+copied_channels = {}
 
 @Qrh9.on(admin_cmd(pattern=r".تقليد_قناة(?: |$)(.*)"))
-async def clone_channel(event):
+async def savatage(event):
     channel_username = event.pattern_match.group(1)
     if not channel_username:
         return await event.edit("⌔∮ يرجى تحديد اسم مستخدم القناة لتقليدها.")
     
     try:
-        await event.client(JoinChannelRequest(channel_username))
+        channel = await event.client(JoinChannelRequest(channel_username))
+        full_channel = await event.client(GetFullChannelRequest(channel.channel_id))
+        copied_channels[full_channel.chats[0].id] = event.chat_id
+        await event.edit(f"⌔∮ تم تقليد القناة: {channel_username}.\nأي منشور جديد سيتم نشره في قناتك.")
     except Exception as e:
-        return await event.edit(f"⌔∮ حدث خطأ أثناء الانضمام للقناة: {str(e)}")
-    
-    riochannel[channel_username] = event.chat_id
-    await event.edit(f"⌔∮ تم تقليد القناة: {channel_username}.\nأي منشور جديد سيتم نشره في قناتك.")
+        await event.edit(f"⌔∮ حدث خطأ: {str(e)}")
 
 @Qrh9.on(admin_cmd(pattern=r".حذف_التقليد(?: |$)(.*)"))
-async def remove_cloning(event):
+async def riome(event):
     channel_username = event.pattern_match.group(1)
-    if not channel_username or channel_username not in riochannel:
-        return await event.edit("⌔∮ يرجى تحديد قناة قمت بتقليدها لحذف التقليد.")
+    if not channel_username:
+        return await event.edit("⌔∮ يرجى تحديد اسم مستخدم القناة لحذفها.")
     
-    del riochannel[channel_username]
-    await event.edit(f"⌔∮ تم حذف تقليد القناة: {channel_username}.")
+    try:
+        channel = await event.client(JoinChannelRequest(channel_username))
+        full_channel = await event.client(GetFullChannelRequest(channel.channel_id))
+        if full_channel.chats[0].id in copied_channels:
+            del copied_channels[full_channel.chats[0].id]
+            await event.edit(f"⌔∮ تم حذف تقليد القناة: {channel_username}.")
+        else:
+            await event.edit(f"⌔∮ القناة {channel_username} غير موجودة في قائمة القنوات المقلدة.")
+    except Exception as e:
+        await event.edit(f"⌔∮ حدث خطأ: {str(e)}")
 
-@Qrh9.on(events.NewMessage(chats=riochannel.keys()))
-async def forward_to_channel(event):
-    target_channel_id = riochannel.get(event.chat.username)
-    if target_channel_id:
-        try:
-            await Qrh9(ForwardMessagesRequest(
-                from_peer=event.chat_id,
-                id=[event.id],
-                to_peer=target_channel_id
-            ))
-        except Exception as e:
-            await event.client.send_message(target_channel_id, f"⌔∮ خطأ أثناء تقليد المنشور: {str(e)}")
+@Qrh9.on(events.NewMessage())
+async def nakl(event):
+    if event.chat_id in copied_channels:
+        target_chat_id = copied_channels[event.chat_id]
+        await event.client(ForwardMessagesRequest(
+            from_peer=event.chat_id,
+            id=[event.id],
+            to_peer=target_chat_id
+        ))
