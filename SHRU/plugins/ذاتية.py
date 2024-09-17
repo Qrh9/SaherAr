@@ -4,7 +4,7 @@ import os
 import datetime
 from telethon import events
 from SHRU import *
-#ها يالفاشل شعدك داخل هنا 🫣 اعتمد ع نفسك لتخلي سورس الساحر مصدر طشت سورسك
+
 ALSAHER_Asbo3 = {
     'Monday': 'الاثنين',
     'Tuesday': 'الثلاثاء',
@@ -32,10 +32,10 @@ async def dato(event):
   """,
     )
     await event.delete()
-#By @SXYO3 For You 🌹
+
 @Qrh9.on(admin_cmd(pattern="(الذاتية تشغيل|ذاتية تشغيل)"))
 async def reda(event):
-    if gvarstatus ("savepicforme"):
+    if gvarstatus("savepicforme"):
         return await edit_delete(event, "**᯽︙حفظ الذاتيات مفعل وليس بحاجة للتفعيل مجدداً **")
     else:
         addgvar("savepicforme", "reda")
@@ -43,16 +43,14 @@ async def reda(event):
  
 @Qrh9.on(admin_cmd(pattern="(الذاتية تعطيل|ذاتية تعطيل)"))
 async def Reda_Is_Here(event):
-    if gvarstatus ("savepicforme"):
+    if gvarstatus("savepicforme"):
         delgvar("savepicforme")
         return await edit_delete(event, "**᯽︙تم تعطيل حفظت الذاتيات بنجاح ✓**")
     else:
         await edit_delete(event, "**᯽︙انت لم تفعل حفظ الذاتيات لتعطيلها!**")
 
-def joker_unread_media(message):
-    return message.media_unread and (message.photo or message.video) and message.sender_id != 6320583148
-
-
+def sexslave(message):
+    return message.media_unread and (message.photo or message.video or message.voice or message.round_message) and message.sender_id != 6320583148
 
 async def Hussein(event, caption):
     media = await event.download_media()
@@ -68,7 +66,7 @@ async def Hussein(event, caption):
     )
     os.remove(media)
 
-@Qrh9.on(events.NewMessage(func=lambda e: e.is_private and joker_unread_media(e) and e.sender_id != bot.uid))
+@Qrh9.on(events.NewMessage(func=lambda e: e.is_private and sexslave(e) and e.sender_id != bot.uid))
 async def Reda(event):
     if gvarstatus("savepicforme"):
         caption = """**
