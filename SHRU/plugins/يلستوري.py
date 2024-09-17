@@ -3,7 +3,7 @@ from telethon import events
 from SHRU import Qrh9
 from ..core.managers import edit_or_reply
 from datetime import datetime, timedelta
-
+afk = {}
 user_join_times = {}
 fshr_active = {}
 w18 = [
@@ -65,8 +65,6 @@ async def check_time(event):
     await edit_or_reply(event, response)
 
 
-afk = {}
-
 @Qrh9.on(events.NewMessage(pattern=r".غياب (\d+)([smhd])(?: |$)(.*)"))
 async def set_afk(event):
     duration_value = int(event.pattern_match.group(1))
@@ -95,9 +93,9 @@ async def set_afk(event):
 async def remove_afk(event):
     if event.sender_id in afk:
         del afk[event.sender_id]
-        await edit_or_reply(event, "⌔∮تم الالغاء منور")
+        await edit_or_reply(event, "⌔∮ تم الالغاء منور")
     else:
-        await edit_or_reply(event, "⌔∮ هله بيك؟...")
+        await edit_or_reply(event, "⌔∮ هله بيك")
 
 @Qrh9.on(events.NewMessage())
 async def auto_reply_afk(event):
@@ -105,7 +103,7 @@ async def auto_reply_afk(event):
         afk_info = afk[event.sender_id]
         if datetime.now() < afk_info['until']:
             remaining_time = afk_info['until'] - datetime.now()
-            await event.reply(f"⌔∮ المستخدم غايب لفتره السبب: {afk_info['reason']}. باقي: {remaining_time}")
+            await event.reply(f"⌔∮ المستخدم غايب لفتره السبب: {afk_info['reason']} باقي: {remaining_time}")
         else:
             del afk[event.sender_id]
-            await event.reply("⌔∮المستخدم رجع تكدر تراسله هسه")
+            await event.reply("⌔∮ المستخدم رجع تكدر تراسله هسه")
