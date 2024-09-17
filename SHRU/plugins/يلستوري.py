@@ -1,55 +1,40 @@
-from telethon import events, functions, types
-from telethon.tl.functions.users import GetFullUserRequest
+import random
+from telethon import events
 from SHRU import Qrh9
-import asyncio
+from ..core.managers import edit_or_reply
 
-onichans = {}
+fshr_active = {}
+default_words = [
+    "⌔∮ عير بكسمك"
+]
 
-@Qrh9.on(events.NewMessage(pattern=r".مراقبة_حساب(?: |$)(.*)"))
-async def s12(event):
-    username = event.pattern_match.group(1)
-    if not username:
-        return await event.reply("⌔∮ يرجى إدخال اسم المستخدم.")
+@Qrh9.on(events.NewMessage(pattern=r".فشر(?: |$)(.*)"))
+async def fsh(event):
+    reply = await event.get_reply_message()
+    if not reply:
+        return await edit_or_reply(event, "⌔∮ يرجى الرد على رسالة الشخص")
     
-    user = await Qrh9(GetFullUserRequest(username))
-    user_id = user.user.id
-    onichans[user_id] = {
-        "photo": user.user.photo,
-        "bio": user.about,
-        "status": user.user.status
-    }
-
-    await event.reply(f"⌔∮ بدأ مراقبة حساب {username}.")
-    while user_id in onichans:
-        await asyncio.sleep(60)
-        new_user = await Qrh9(GetFullUserRequest(username))
-
-        if new_user.user.photo != onichans[user_id]["photo"]:
-            onichans[user_id]["photo"] = new_user.user.photo
-            await event.respond(f"⌔∮ {username} قام بتغيير صورته الشخصية!")
-
-        if new_user.about != onichans[user_id]["bio"]:
-            onichans[user_id]["bio"] = new_user.about
-            await event.respond(f"⌔∮ {username} قام بتحديث البايو!\nالبايو الجديد: {new_user.about}")
-
-        if new_user.user.status != onichans[user_id]["status"]:
-            onichans[user_id]["status"] = new_user.user.status
-            if isinstance(new_user.user.status, types.UserStatusOnline):
-                await event.respond(f"⌔∮ {username} متصل الآن!")
-            elif isinstance(new_user.user.status, types.UserStatusOffline):
-                await event.respond(f"⌔∮ {username} أصبح غير متصل!")
-
-@Qrh9.on(events.NewMessage(pattern=r".إيقاف_مراقبة(?: |$)(.*)"))
-async def stop_s12(event):
-    username = event.pattern_match.group(1)
-    if not username:
-        return await event.reply("⌔∮ يرجى إدخال اسم المستخدم.")
+    user_id = reply.sender_id
+    words = event.pattern_match.group(1) or random.choice(default_words)
     
-    user = await Qrh9(GetFullUserRequest(username))
-    user_id = user.user.id
+    fshr_active[user_id] = words
+    await edit_or_reply(event, f"⌔∮ تم تفعيل الفشار على الشخص، كل ما يرسل رسالة راح يجيه الرد: {words}")
 
-    if user_id in onichans:
-        del onichans[user_id]
-        await event.reply(f"⌔∮ تم إيقاف مراقبة حساب {username}.")
+@Qrh9.on(events.NewMessage(pattern=r".ايقاف"))
+async def fshar(event):
+    reply = await event.get_reply_message()
+    if not reply:
+        return await edit_or_reply(event, "⌔∮ يرجى الرد على رسالة")
+    
+    user_id = reply.sender_id
+    if user_id in fshr_active:
+        del fshr_active[user_id]
+        await edit_or_reply(event, "⌔∮ تم ايقاف الفشار عن الشخص")
     else:
-        await event.reply(f"⌔∮ لا يتم مراقبة حساب {username} حالياً.")
+        await edit_or_reply(event, "⌔∮ لا يوجد فشار مشغل لهذا ")
+
+@Qrh9.on(events.NewMessage())
+async def fashr(event):
+    if event.sender_id in fshr_active:
+        response = fshr_active.get(event.sender_id)
+        await event.reply(response)
