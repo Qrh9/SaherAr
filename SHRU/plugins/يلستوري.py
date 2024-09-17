@@ -20,7 +20,7 @@ async def fsh(event):
     fshr_active[user_id] = words
     await edit_or_reply(event, f"⌔∮ تم تفعيل الفشار على الشخص، كل ما يرسل رسالة راح يجيه الرد: {words}")
 
-@Qrh9.on(events.NewMessage(pattern=r".ايقاف"))
+@Qrh9.on(events.NewMessage(pattern=r".خلص"))
 async def fshar(event):
     reply = await event.get_reply_message()
     if not reply:
