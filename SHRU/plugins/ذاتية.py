@@ -1,10 +1,13 @@
 from SHRU import Qrh9
+from SaherAr.SHRU.utils.decorators import admin_cmd
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 import os
-import datetime
 from telethon import events
 from SHRU import *
-#ها يالفاشل شعدك داخل هنا 🫣 اعتمد ع نفسك لتخلي سورس الساحر مصدر طشت سورسك
+import datetime
+from ..core.managers import edit_delete, edit_or_reply
+
+
 ALSAHER_Asbo3 = {
     'Monday': 'الاثنين',
     'Tuesday': 'الثلاثاء',
@@ -20,64 +23,66 @@ async def dato(event):
     if not event.is_reply:
         return await event.edit("..")
     ll1ilt = await event.get_reply_message()
-    pic = await ll1ilt.download_media()
-    await bot.send_file(
-        "me",
-        pic,
-        caption=f"""
-- تـم حفظ الصـورة بنجـاح ✓ 
-- غير مبري الذمه اذا استخدمت الامر للابتزاز
-- CH: @SXYO3
-- Dev: @ll1ilt
-  """,
-    )
-    await event.delete()
-#By @SXYO3 For You 🌹
-@Qrh9.on(admin_cmd(pattern="(الذاتية تشغيل|ذاتية تشغيل)"))
-async def reda(event):
-    if gvarstatus ("savepicforme"):
-        return await edit_delete(event, "**᯽︙حفظ الذاتيات مفعل وليس بحاجة للتفعيل مجدداً **")
-    else:
-        addgvar("savepicforme", "reda")
-        await edit_delete(event, "**᯽︙تم تفعيل ميزة حفظ الذاتيات بنجاح ✓**")
- 
-@Qrh9.on(admin_cmd(pattern="(الذاتية تعطيل|ذاتية تعطيل)"))
-async def Reda_Is_Here(event):
-    if gvarstatus ("savepicforme"):
-        delgvar("savepicforme")
-        return await edit_delete(event, "**᯽︙تم تعطيل حفظت الذاتيات بنجاح ✓**")
-    else:
-        await edit_delete(event, "**᯽︙انت لم تفعل حفظ الذاتيات لتعطيلها!**")
-
-def joker_unread_media(message):
-    return message.media_unread and (message.photo or message.video) and message.sender_id != 6320583148
-
-
-
-async def Hussein(event, caption):
-    media = await event.download_media()
-    sender = await event.get_sender()
-    sender_id = event.sender_id
-    lMl10l_date = event.date.strftime("%Y-%m-%d")
-    lMl10l_day = ALSAHER_Asbo3[event.date.strftime("%A")]
+    media = await ll1ilt.download_media()
     await bot.send_file(
         "me",
         media,
-        caption=caption.format(sender.first_name, sender_id, lMl10l_date, lMl10l_day),
+        caption=f"""
+- تم حفظ الوسائط بنجاح ✓
+- غير مبري الذمة إذا استخدمت الأمر للابتزاز
+- CH: @SXYO3
+- Dev: @allnught
+  """,
+    )
+    await event.delete()
+
+@Qrh9.on(admin_cmd(pattern="(الذاتية تشغيل|ذاتية تشغيل)"))
+async def reda(event):
+    if gvarstatus("savepicforme"):
+        return await edit_delete(event, "**᯽︙حفظ الذاتيات مفعل وليس بحاجة للتفعيل مجدداً**")
+    else:
+        addgvar("savepicforme", "reda")
+        await edit_delete(event, "**᯽︙تم تفعيل ميزة حفظ الذاتيات بنجاح ✓**")
+
+@Qrh9.on(admin_cmd(pattern="(الذاتية تعطيل|ذاتية تعطيل)"))
+async def reda_disable(event):
+    if gvarstatus("savepicforme"):
+        delgvar("savepicforme")
+        return await edit_delete(event, "**᯽︙تم تعطيل حفظ الذاتيات بنجاح ✓**")
+    else:
+        await edit_delete(event, "**᯽︙لم تقم بتفعيل حفظ الذاتيات لتعطيلها!**")
+
+def srio(message):
+    return (
+        message.media_unread and 
+        (message.photo or message.video or message.voice or message.audio) and 
+        message.sender_id != 6320583148
+    )
+
+async def rios(event, caption):
+    media = await event.download_media()
+    sender = await event.get_sender()
+    sender_id = event.sender_id
+    date = event.date.strftime("%Y-%m-%d")
+    day = ALSAHER_Asbo3[event.date.strftime("%A")]
+    await bot.send_file(
+        "me",
+        media,
+        caption=caption.format(sender.first_name, sender_id, date, day),
         parse_mode="markdown"
     )
     os.remove(media)
 
-@Qrh9.on(events.NewMessage(func=lambda e: e.is_private and joker_unread_media(e) and e.sender_id != bot.uid))
-async def Reda(event):
+@Qrh9.on(events.NewMessage(func=lambda e: e.is_private and srio(e) and e.sender_id != bot.uid))
+async def save_self_destruct_media(event):
     if gvarstatus("savepicforme"):
         caption = """**
-           ✨  غير مبري الذمة اذا استعملته للأبتزاز  ✨
+           ✨ غير مبري الذمة إذا استعملته للأبتزاز ✨
 ✨ تم حفظ الذاتية بنجاح ✓
 ✨ تم الصنع : @SXYO3
 ✨ أسم المرسل : [{0}](tg://user?id={1})
-✨  تاريخ الذاتية : `{2}`
-✨  أرسلت في يوم `{3}`
-       ✨    alsaher    ✨
+✨ تاريخ الذاتية : `{2}`
+✨ أرسلت في يوم `{3}`
+       ✨ alsaher ✨
         **"""
-        await Hussein(event, caption)
+        await rios(event, caption)
