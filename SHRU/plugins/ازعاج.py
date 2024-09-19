@@ -1,7 +1,33 @@
 from telethon import events
 from telethon.tl.functions.messages import DeleteMessagesRequest
 from telethon.tl.functions.messages import SendReactionRequest
-from telethon.tl.types import ReactionEmoji
+class ReactionEmoji(TLObject):
+    CONSTRUCTOR_ID = 0x1b2286b8
+    SUBCLASS_OF_ID = 0x5da165a1
+
+    def __init__(self, emoticon: str):
+        """
+        Constructor for Reaction: Instance of either ReactionEmpty, ReactionEmoji, ReactionCustomEmoji.
+        """
+        self.emoticon = emoticon
+
+    def to_dict(self):
+        return {
+            '_': 'ReactionEmoji',
+            'emoticon': self.emoticon
+        }
+
+    def _bytes(self):
+        return b''.join((
+            b'\xb8\x86"\x1b',
+            self.serialize_bytes(self.emoticon),
+        ))
+
+    @classmethod
+    def from_reader(cls, reader):
+        _emoticon = reader.tgread_string()
+        return cls(emoticon=_emoticon)
+
 from SHRU import Qrh9
 import random 
 from SHRU.utils import admin_cmd
