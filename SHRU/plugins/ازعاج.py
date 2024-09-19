@@ -3,7 +3,6 @@ from telethon.tl.functions.messages import DeleteMessagesRequest
 from telethon.tl.functions.messages import SendReactionRequest
 from SHRU import Qrh9
 import random 
-from SHRU.utils import admin_cmd
 plugin_category = "utils"
 
 iz3aj_active = {}
