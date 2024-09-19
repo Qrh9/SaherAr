@@ -8,7 +8,8 @@ plugin_category = "utils"
 iz3aj_active = {}
 emoje = ["😂", "🤯", "👍", "😅"]
 
-@Qrh9.admin_cmd( 
+
+@Qrh9.ar_cmd( 
     pattern=r".ازعاج (.*)", 
     command=("ازعاج", plugin_category), 
     info={ 
