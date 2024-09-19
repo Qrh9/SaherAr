@@ -1,7 +1,6 @@
 from telethon import events
 from telethon.tl.functions.messages import DeleteMessagesRequest
 from telethon.tl.functions.messages import SendReactionRequest
-from telethon.tl.types import ReactionEmoji
 from SHRU import Qrh9
 import random 
 from SHRU.utils import admin_cmd
@@ -54,6 +53,7 @@ async def stop_iz3aj(event):
 async def iz3a(event):
     if event.sender_id in iz3aj_active:
         emoji = iz3aj_active.get(event.sender_id)
+        
         if not emoji:
             emoji = random.choice(emoje)
 
@@ -61,7 +61,7 @@ async def iz3a(event):
             await Qrh9(SendReactionRequest(
                 peer=event.chat_id,
                 msg_id=event.id,
-                reaction=[ReactionEmoji(emoticon=emoji)]
+                reaction=[emoji]
             ))
         except Exception as e:
-            await event.respond(f"خطأ: {str(e)}")
+            await event.respond(f"⌔∮ خطأ: {str(e)}")
