@@ -4,6 +4,8 @@ from telethon.tl.functions.messages import SendReactionRequest
 from telethon.tl.types import ReactionEmoji
 from SHRU import Qrh9
 import random 
+from SHRU.utils import admin_cmd
+
 iz3aj_active = {}
 emoje = ["😂", "🤯", "👍", "😅"]
 
