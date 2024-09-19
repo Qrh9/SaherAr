@@ -15,7 +15,7 @@ async def start_iz3aj(event):
         return await event.respond("⌔∮ يرجى الرد على رسالة الشخص.")
     
     user_id = reply.sender_id
-    iz3aj_active[user_id] = emoji or random.choice(emoje)  # استخدام إيموجي افتراضي إذا ماكو إيموجي
+    iz3aj_active[user_id] = emoji or random.choice(emoje)  
     await event.respond(f"⌔∮ تم تفعيل الإزعاج بهذا الإيموجي {emoji} للشخص.")
 
 @Qrh9.on(events.NewMessage(pattern=r".حذف_ازعاج"))
