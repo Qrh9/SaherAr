@@ -28,7 +28,7 @@ async def start_iz3aj(event):
     iz3aj_active[user_id] = emoji or random.choice(emoje)  
     await event.respond(f"⌔∮ تم تفعيل الإزعاج بهذا الإيموجي {emoji} للشخص.")
 
-@Qrh9.admin_cmd( 
+@Qrh9.ar_cmd( 
     pattern=r".حذف_ازعاج", 
     command=("حذف_ازعاج", plugin_category), 
     info={ 
