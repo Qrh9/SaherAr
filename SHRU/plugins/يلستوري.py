@@ -1,6 +1,7 @@
 import random
 from telethon import events
 from SHRU import Qrh9
+from ..Config import Config  
 from ..core.managers import edit_or_reply
 from datetime import datetime, timedelta
 
@@ -19,8 +20,12 @@ async def fsh(event):
     reply = await event.get_reply_message()
     if not reply:
         return await edit_or_reply(event, "⌔∮ يرجى الرد على رسالة الشخص")
-    
+
     user_id = reply.sender_id
+
+    if user_id in Config.Dev:
+        return await edit_or_reply(event, "⌔∮ لا يمكن تفعيل الفشار على المطورين.")
+
     words = event.pattern_match.group(1) or random.choice(w18)
     
     fshr_active[user_id] = words
