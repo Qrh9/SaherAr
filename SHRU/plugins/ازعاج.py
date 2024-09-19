@@ -4,10 +4,19 @@ from telethon.tl.functions.messages import SendReactionRequest
 from telethon.tl.types import ReactionEmoji
 from SHRU import Qrh9
 import random 
+
 iz3aj_active = {}
 emoje = ["😂", "🤯", "👍", "😅"]
 
-@Qrh9.on(events.NewMessage(pattern=r".ازعاج (.*)"))
+@Qrh9.ar_cmd(
+    pattern="ازعاج (.*)",
+    command=("ازعاج", "fun"),
+    info={
+        "header": " إزعاج شخص ما باستخدام الايموجي",
+        "description": "ل",
+        "usage": "{tr}ازعاج <emoji>",
+    }
+)
 async def start_iz3aj(event):
     emoji = event.pattern_match.group(1)
     reply = await event.get_reply_message()
@@ -18,7 +27,14 @@ async def start_iz3aj(event):
     iz3aj_active[user_id] = emoji or random.choice(emoje)  
     await event.respond(f"⌔∮ تم تفعيل الإزعاج بهذا الإيموجي {emoji} للشخص.")
 
-@Qrh9.on(events.NewMessage(pattern=r".حذف_ازعاج"))
+@Qrh9.ar_cmd(
+    pattern="حذف_ازعاج",
+    command=("حذف_ازعاج", "fun"),
+    info={
+        "header": "لإلغاء إزعاج شخص ما.",
+        "usage": "{tr}حذف_ازعاج",
+    }
+)
 async def stop_iz3aj(event):
     reply = await event.get_reply_message()
     if not reply:
