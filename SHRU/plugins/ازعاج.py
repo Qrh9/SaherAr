@@ -3,7 +3,8 @@ from telethon.tl.functions.messages import SendReactionRequest
 from telethon.tl.types import ReactionEmoji
 from SHRU import Qrh9
 import random
-from ..Config import Config  
+from ..Config import Config
+from ..core.managers import edit_or_reply
 
 iz3aj_active = {}
 emoje = ["😂", "🤯", "👍", "😅"]
@@ -20,16 +21,15 @@ async def start_iz3aj(event):
     emoji = event.pattern_match.group(1)
     reply = await event.get_reply_message()
     if not reply:
-        return await event.respond("⌔∮ يرجى الرد على رسالة الشخص.")
+        return await edit_or_reply(event, "⌔∮ يرجى الرد على رسالة الشخص.")
     
     user_id = reply.sender_id
 
-    # التحقق إذا كان الشخص من المطورين
     if user_id in Config.Dev:
-        return await event.respond("⌔∮ لا يمكن إزعاج المطورين.")
+        return await edit_or_reply(event, "⌔∮ لا يمكن إزعاج المطورين.")
     
     iz3aj_active[user_id] = emoji or random.choice(emoje)
-    await event.respond(f"⌔∮ تم تفعيل الإزعاج بهذا الإيموجي {emoji} للشخص.")
+    await edit_or_reply(event, f"⌔∮ تم تفعيل الإزعاج بهذا الإيموجي {emoji} للشخص.")
 
 @Qrh9.ar_cmd(
     pattern="حذف_ازعاج",
@@ -42,23 +42,24 @@ async def start_iz3aj(event):
 async def stop_iz3aj(event):
     reply = await event.get_reply_message()
     if not reply:
-        return await event.respond("⌔∮ يرجى الرد على رسالة الشخص.")
+        return await edit_or_reply(event, "⌔∮ يرجى الرد على رسالة الشخص.")
     
     user_id = reply.sender_id
 
     if user_id in iz3aj_active:
         del iz3aj_active[user_id]
-        await event.respond("⌔∮ تم إلغاء الإزعاج للشخص.")
+        await edit_or_reply(event, "⌔∮ تم إلغاء الإزعاج للشخص.")
     else:
-        await event.respond("⌔∮ لا يوجد إزعاج مفعّل لهذا الشخص.")
+        await edit_or_reply(event, "⌔∮ لا يوجد إزعاج مفعّل لهذا الشخص.")
 
 @Qrh9.on(events.NewMessage())
 async def iz3a(event):
-    if event.sender_id in iz3aj_active:
-        if event.sender_id in Config.Dev:
+    user_id = event.sender_id
+    if user_id in iz3aj_active:
+        if user_id in Config.Dev:
             return
 
-        emoji = iz3aj_active.get(event.sender_id)
+        emoji = iz3aj_active.get(user_id)
         if not emoji:
             emoji = random.choice(emoje)
 
@@ -69,4 +70,4 @@ async def iz3a(event):
                 reaction=[ReactionEmoji(emoticon=emoji)]
             ))
         except Exception as e:
-            await event.respond(f"خطأ: {str(e)}")
+            await edit_or_reply(event, f"خطأ: {str(e)}")
