@@ -1,6 +1,8 @@
 from telethon import events
 from telethon.tl.functions.messages import DeleteMessagesRequest
 from telethon.tl.functions.messages import SendReactionRequest
+from telethon.tl.types import TLObject
+
 class ReactionEmoji(TLObject):
     CONSTRUCTOR_ID = 0x1b2286b8
     SUBCLASS_OF_ID = 0x5da165a1
