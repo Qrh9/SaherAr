@@ -63,3 +63,4 @@ async def detect(event):
         link_preview=False,
         parse_mode="HTML",
      
+)
