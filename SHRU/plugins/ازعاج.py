@@ -7,7 +7,7 @@ import random
 iz3aj_active = {}
 emoje = ["😂", "🤯", "👍", "😅"]
 
-@Qrh9.on(events.NewMessage(pattern=r".ازعاج (.*)"))
+@Qrh9.on(admin_cmd(pattern=r".ازعاج (.*)"))
 async def start_iz3aj(event):
     emoji = event.pattern_match.group(1)
     reply = await event.get_reply_message()
@@ -18,7 +18,7 @@ async def start_iz3aj(event):
     iz3aj_active[user_id] = emoji or random.choice(emoje)  
     await event.respond(f"⌔∮ تم تفعيل الإزعاج بهذا الإيموجي {emoji} للشخص.")
 
-@Qrh9.on(events.NewMessage(pattern=r".حذف_ازعاج"))
+@Qrh9.on(admin_cmd(pattern=r".حذف_ازعاج"))
 async def stop_iz3aj(event):
     reply = await event.get_reply_message()
     if not reply:
