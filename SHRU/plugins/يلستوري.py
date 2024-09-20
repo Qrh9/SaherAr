@@ -1,9 +1,11 @@
+import os
 import random
 from telethon import events
 from SHRU import Qrh9
 from ..Config import Config  
 from ..core.managers import edit_or_reply
 from datetime import datetime, timedelta
+from PIL import Image
 
 afk = {}
 user_join_times = {}
@@ -125,3 +127,30 @@ async def auto_reply_afk(event):
         else:
             del afk[event.sender_id]
             await event.reply("⌔∮ المستخدم رجع تكدر تراسله هسه")
+
+
+@Qrh9.ar_cmd(
+    pattern="صورة$",
+    command=("صورة", "utils"),
+    info={
+        "header": "تحويل الملصق إلى صورة",
+        "usage": "{tr}صورة",
+    }
+)
+async def sticker_to_image(event):
+    reply = await event.get_reply_message()
+    
+    if not reply or not reply.sticker:
+        return await edit_or_reply(event, "⌔∮ يرجى الرد على ملصق")
+
+    msg = await edit_or_reply(event, "⌔∮ جاري التحويل...")
+
+    sticker_path = await reply.download_media(file="sticker.webp")
+
+    image = Image.open(sticker_path)
+    image_path = sticker_path.replace(".webp", ".png")
+    image.save(image_path, "PNG")
+    await Qrh9.send_file(event.chat_id, image_path, force_document=False)
+    os.remove(sticker_path)
+    os.remove(image_path)
+    await msg.delete()
