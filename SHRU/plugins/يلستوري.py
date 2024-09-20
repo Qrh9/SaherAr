@@ -130,11 +130,11 @@ async def auto_reply_afk(event):
 
 
 @Qrh9.ar_cmd(
-    pattern="صورة$",
-    command=("صورة", "utils"),
+    pattern="صوره$",
+    command=("صوره", "utils"),
     info={
-        "header": "تحويل الملصق إلى صورة",
-        "usage": "{tr}صورة",
+        "header": "تحويل الملصق إلى صوره",
+        "usage": "{tr}صوره",
     }
 )
 async def sticker_to_image(event):
