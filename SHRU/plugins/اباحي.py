@@ -6,7 +6,7 @@ from ..core.managers import edit_or_reply
 from ..Config import Config
 
 nsfw_status = {}
-scanned_files = set()
+scanned_files = {}
 
 def check_nsfw(image_path):
     api_url = 'https://api.sightengine.com/1.0/check.json'
@@ -56,23 +56,26 @@ async def check_for_nsfw(event):
         file_id = event.file.id
 
         if file_id in scanned_files:
+            if scanned_files[file_id] == 'nsfw':
+                await event.reply("⚠️ تم اكتشاف محتوى إباحي ")
             return
 
         try:
             image_path = await Qrh9.download_media(event.media)
             result = check_nsfw(image_path)
 
-            scanned_files.add(file_id)
-
             sexual_activity = result.get('nudity', {}).get('sexual_activity', 0)
             sexual_display = result.get('nudity', {}).get('sexual_display', 0)
 
             if sexual_activity >= 0.85 or sexual_display >= 0.85:
+                scanned_files[file_id] = 'nsfw'
                 if event.is_group:
                     if event.is_channel and event.client.has_permissions(event.chat_id, delete_messages=True):
                         await event.delete()
                     else:
-                        await event.reply("⚠️ تم اكتشاف محتوى غير لائق - يرجى اتخاذ إجراء @admin.")
+                        await event.reply("⚠️ تم اكتشاف محتوى إباحي - يرجى اتخاذ إجراء @admin.")
+            else:
+                scanned_files[file_id] = 'safe'
 
         except Exception as e:
             await event.reply(f"⚠️ حدث خطأ أثناء فحص الملف: {e}")
