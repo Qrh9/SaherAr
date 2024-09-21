@@ -7,15 +7,15 @@ API_USER = '1816055771'
 API_SECRET = 'EnGQHAX2SnQpyDH39rY6AmYSNuRbcGJG'
 nsfw_active = True
 
-def check_nsfw(image_url):
+def check_nsfw(image_path):
     api_url = 'https://api.sightengine.com/1.0/check.json'
     payload = {
         'models': 'nudity-2.0',
         'api_user': API_USER,
         'api_secret': API_SECRET,
-        'url': image_url
     }
-    response = requests.get(api_url, params=payload)
+    with open(image_path, 'rb') as image_file:
+        response = requests.post(api_url, files={'media': image_file}, data=payload)
     return response.json()
 
 @Qrh9.ar_cmd(
@@ -51,16 +51,15 @@ async def check_for_nsfw(event):
 
     if event.photo:
         try:
-            image_path = await Qrh9.download_media(event.photo, thumb=-1)
-            image_url = f"https://api.telegram.org/file/bot{event.client.api_key}/{image_path}"
-
-            result = check_nsfw(image_url)
+            image_path = await Qrh9.download_media(event.photo)
+            
+            result = check_nsfw(image_path)
 
             if result['nudity']['raw'] > 0.85:
                 if event.is_group:
                     if event.is_channel:
                         await event.delete()  
                     else:
-                        await event.reply("⚠️ صورة إباحية - @admin ")
+                        await event.reply("⚠️ صورة إباحية - @admin يرجى اتخاذ إجراء.")
         except Exception as e:
             await event.reply(f"⚠️ حدث خطأ أثناء فحص الصورة: {e}")
