@@ -54,8 +54,8 @@ async def check_for_nsfw(event):
             image_path = await Qrh9.download_media(event.photo)
             result = check_nsfw(image_path)
 
-            nudity_raw = result['nudity']['raw']
-            nudity_partial = result['nudity']['partial']
+            nudity_raw = result.get('nudity', {}).get('raw', 0)
+            nudity_partial = result.get('nudity', {}).get('partial', 0)
 
             if nudity_raw > 0.85 or nudity_partial > 0.85:
                 if event.is_group:
