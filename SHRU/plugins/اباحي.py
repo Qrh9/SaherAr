@@ -5,7 +5,7 @@ from ..core.managers import edit_or_reply
 
 API_USER = '1816055771'
 API_SECRET = 'EnGQHAX2SnQpyDH39rY6AmYSNuRbcGJG'
-nsfw_active = False
+nsfw_active = True
 
 def check_nsfw(image_url):
     api_url = 'https://api.sightengine.com/1.0/check.json'
@@ -51,7 +51,7 @@ async def check_for_nsfw(event):
 
     if event.photo:
         try:
-            image_path = await event.client.download_media(event.photo, thumb=-1)
+            image_path = await Qrh9.download_media(event.photo, thumb=-1)
             image_url = f"https://api.telegram.org/file/bot{event.client.api_key}/{image_path}"
 
             result = check_nsfw(image_url)
