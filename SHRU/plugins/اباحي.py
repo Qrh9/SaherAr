@@ -59,7 +59,7 @@ async def check_for_nsfw(event):
             nudity_raw = result.get('nudity', {}).get('raw', 0)
             nudity_partial = result.get('nudity', {}).get('partial', 0)
 
-            if nudity_raw > 0.85 or nudity_partial > 0.60:
+            if nudity_raw > 0.85 or nudity_partial > 0.85:
                 if event.is_group:
                     if event.is_channel:
                         await event.delete()  
