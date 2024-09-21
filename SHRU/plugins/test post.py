@@ -1,4 +1,5 @@
 import asyncio
+import random
 from telethon import events
 from SHRU import Qrh9
 from ..core.managers import edit_or_reply
@@ -7,11 +8,11 @@ ausa = {}
 rioishere = {}
 
 @Qrh9.ar_cmd(
-    pattern="نشر (https?://[^\s]+)",
+    pattern="نشر (https?://[^\s]+)(?: (\d+))?(?: (طبيعي|امن))?",
     command=("نشر", "utils"),
     info={
-        "header": "نشر تلقائي لرسالة كل دقيقة",
-        "usage": "{tr}نشر <رابط المجموعة> بالرد على رسالة",
+        "header": "نشر تلقائي لرسالة كل فترة زمنية معينة مع خيار امن.",
+        "usage": "{tr}نشر <رابط المجموعة> <عدد الثواني> <طبيعي/امن> بالرد على رسالة.",
     }
 )
 async def astaer(event):
@@ -19,48 +20,52 @@ async def astaer(event):
     if not reply:
         return await edit_or_reply(event, "⌔∮ يرجى الرد على رسالة ليتم نشرها.")
     
-    sqe = event.pattern_match.group(1)
-    sqe = sqe.strip()
+    speedrunminecraft = event.pattern_match.group(1).strip()
+    interval = int(event.pattern_match.group(2)) if event.pattern_match.group(2) else 60
+    mode = event.pattern_match.group(3) or "امن" 
 
-    if sqe in rioishere:
-        return await edit_or_reply(event, f"⌔∮ النشر قيد التنفيذ بالفعل لهذه المجموعة: {sqe}")
+    if speedrunminecraft in rioishere:
+        return await edit_or_reply(event, f"⌔∮ النشر قيد التنفيذ بالفعل لهذه المجموعة: {speedrunminecraft}")
 
-    rioishere[sqe] = reply.message
+    rioishere[speedrunminecraft] = reply.message
 
     async def posts():
-        while sqe in rioishere:
+        while speedrunminecraft in rioishere:
             try:
-                await Qrh9.send_message(sqe, rioishere[sqe])
-                await asyncio.sleep(60)  # الانتظار لمدة دقيقة
+                if mode == "امن":
+                    modified_message = wsasdas(reply.message)
+                    await Qrh9.send_message(speedrunminecraft, modified_message)
+                else:
+                    await Qrh9.send_message(speedrunminecraft, rioishere[speedrunminecraft])
+                await asyncio.sleep(interval)
             except Exception as e:
                 await edit_or_reply(event, f"⌔∮ حدث خطأ أثناء النشر: {str(e)}")
                 break
-    
-    task = asyncio.create_task(posts())
-    ausa[sqe] = task
 
-    await edit_or_reply(event, f"⌔∮ تم بدء النشر التلقائي لهذه المجموعة: {sqe}")
+    task = asyncio.create_task(posts())
+    ausa[speedrunminecraft] = task
+
+    await edit_or_reply(event, f"⌔∮ تم بدء النشر التلقائي لهذه المجموعة: {speedrunminecraft} كل {interval} ثانية، الوضع: {mode}.")
 
 
 @Qrh9.ar_cmd(
-    pattern="نشر_انهاء (https?://[^\s]+)",
-    command=("نشر_انهاء", "utils"),
+    pattern="ايقاف_نشر (https?://[^\s]+)",
+    command=("ايقاف_نشر", "utils"),
     info={
         "header": "إيقاف النشر التلقائي.",
-        "usage": "{tr}نشر_انهاء <رابط المجموعة>",
+        "usage": "{tr}ايقاف_نشر <رابط المجموعة>",
     }
 )
 async def unpot(event):
-    sqe = event.pattern_match.group(1)
-    sqe = sqe.strip()
+    speedrunminecraft = event.pattern_match.group(1).strip()
 
-    if sqe in rioishere:
-        del rioishere[sqe]
-        ausa[sqe].cancel()
-        del ausa[sqe]
-        await edit_or_reply(event, f"⌔∮ تم إيقاف النشر لهذه المجموعة: {sqe}")
+    if speedrunminecraft in rioishere:
+        del rioishere[speedrunminecraft]
+        ausa[speedrunminecraft].cancel()
+        del ausa[speedrunminecraft]
+        await edit_or_reply(event, f"⌔∮ تم إيقاف النشر لهذه المجموعة: {speedrunminecraft}")
     else:
-        await edit_or_reply(event, f"⌔∮ لا يوجد نشر قيد التنفيذ لهذه المجموعة: {sqe}")
+        await edit_or_reply(event, f"⌔∮ لا يوجد نشر قيد التنفيذ لهذه المجموعة: {speedrunminecraft}")
 
 
 @Qrh9.ar_cmd(
@@ -76,4 +81,10 @@ async def lis(event):
         active_groups = "\n".join(rioishere.keys())
         await edit_or_reply(event, f"⌔∮ قائمة المجموعات التي يتم النشر لها حاليًا:\n{active_groups}")
     else:
-        await edit_or_reply(event, "⌔∮ لا يوجد نشر قيد التنفيذ حاليا")
+        await edit_or_reply(event, "⌔∮ لا يوجد نشر قيد التنفيذ حاليًا.")
+
+#امك شلونها
+def wsasdas(message):
+    spyingonmystepsister = ["\u200B", "\u200C", "\u200D", "\u2060"]  
+    index = random.randint(0, len(message))
+    return message[:index] + random.choice(spyingonmystepsister) + message[index:]
