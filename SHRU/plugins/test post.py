@@ -9,6 +9,8 @@ from ..core.managers import edit_or_reply
 ausa = {}
 rioishere = {}
 
+DE = ["https://t.me/saherhelp"]  
+
 @Qrh9.ar_cmd(
     pattern="نشر (https?://[^\s]+)(?: (\d+))?(?: (طبيعي|امن))?",
     command=("نشر", "utils"),
@@ -20,9 +22,13 @@ rioishere = {}
 async def astaer(event):
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_or_reply(event, "⌔∮ يرجى الرد على رسالة ليتم نشرها")
+        return await edit_or_reply(event, "⌔∮ يرجى الرد على رسالة ليتم نشرها.")
     
     speedrunminecraft = event.pattern_match.group(1).strip()
+
+    if speedrunminecraft in DE:
+        return await edit_or_reply(event, "⌔∮ لا يمكن النشر في هذه المجموعة.")
+
     interval = int(event.pattern_match.group(2)) if event.pattern_match.group(2) else 60
     mode = event.pattern_match.group(3) or "طبيعي"  
 
@@ -58,7 +64,6 @@ async def astaer(event):
     ausa[speedrunminecraft] = task
 
     await edit_or_reply(event, f"⌔∮ تم بدء النشر التلقائي لهذه المجموعة: {speedrunminecraft} كل {interval} ثانية، الوضع: {mode}")
-
 
 @Qrh9.ar_cmd(
     pattern="ايقاف_نشر (https?://[^\s]+)",

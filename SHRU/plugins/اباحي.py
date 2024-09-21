@@ -1,66 +1,67 @@
-# ها حبيبي تره بعدني ممسوي لما اكمل اخمطه
-import os
-
 import requests
-
+from telethon import events
 from SHRU import Qrh9
+from ..core.managers import edit_or_reply
 
-from ..Config import Config
-from ..core.managers import edit_delete, edit_or_reply
+US = '1816055771'
+SECRT = 'EnGQHAX2SnQpyDH39rY6AmYSNuRbcGJG'
+nsfw_active = False
 
-plugin_category = "utils"
+def check_nsfw(image_url):
+    api_url = 'https://api.sightengine.com/1.0/check.json'
+    payload = {
+        'models': 'nudity',
+        'uS': US,
+        'sECRT': SECRT,
+        'url': image_url
+    }
+    response = requests.get(api_url, params=payload)
+    return response.json()
 
-@Qrh9.Rio_cmd(
-    pattern="اباحي$",
-    command=("اباحي", plugin_category),
+@Qrh9.ar_cmd(
+    pattern="اباحيه_تفعيل$",
+    command=("اباحيه_تفعيل", "utils"),
     info={
-        "header": "للكشف عن العري في الصورة المرتدة.",
-        "description": "أمر الكشف عن العري في أي صورة أو ملصق غير متحرك للكشف عن العري فيها",
-        "usage": "{tr}كشف",
-    },
+        "header": "تفعيل فلتر الصور الإباحية في المجموعة.",
+        "usage": "{tr}اباحيه_تفعيل"
+    }
 )
-async def detect(event):
-    "اكو استنياج لو لا؟."
-    if Config.DEEP_AI is None:
-        return await edit_delete(
-            event, "لازم تعين المتغير `DEEP_AI`تكدر تحصله منا    https://deepai.org/", 5
-        )
-    reply = await event.get_reply_message()
-    if not reply:
-        return await edit_delete(
-            event, "`رد على أي صورة أو ملصق  !`", 5
-        )
-    catevent = await edit_or_reply(event, "`ثواني حبيبي  ...`")
-    media = await event.client.download_media(reply)
-    if not media.endswith(("png", "jpg", "webp")):#اذا شسمه وذا مو شسمه شسمه
-        return await edit_delete(
-            event, "`رد على ملصق او صوره !`", 5
-        )
-    catevent = await edit_or_reply(event, "`الكشف عن الاباحي ...`")
-    r = requests.post(
-        "https://api.deepai.org/api/nsfw-detector",#كسمه
-        files={
-            "image": open(media, "rb"),
-        },
-        headers={"api-key": Config.DEEP_AI},
-    )
-    os.remove(media)
-    if "status" in r.json():
-        return await edit_delete(catevent, r.json()["status"])
-    r_json = r.json()["output"]
-    pic_id = r.json()["id"]
-    percentage = r_json["nsfw_score"] * 100
-    link = f"https://api.deepai.org/job-view-file/{pic_id}/inputs/image.jpg"
-    result = f"<b>تم اكتشاف الاباحي غطيها يمعود:</b>\n<a href='{link}'>>>></a> <code>{percentage:.3f}%</code>\n\n"
-    if detections := r_json["detections"]:
-        for parts in detections:
-            name = parts["name"]
-            confidence = int(float(parts["confidence"]) * 100)
-            result += f"<b>• {name}:</b>\n   <code>{confidence} %</code>\n"
-    await edit_or_reply(
-        catevent,
-        result,
-        link_preview=False,
-        parse_mode="HTML",
-     
+async def enable_nsfw(event):
+    global nsfw_active
+    nsfw_active = True
+    await edit_or_reply(event, "⌔∮ تم تفعيل فلتر الصور الإباحية.")
+
+@Qrh9.ar_cmd(
+    pattern="اباحيه_تعطيل$",
+    command=("اباحيه_تعطيل", "utils"),
+    info={
+        "header": "تعطيل فلتر الصور الإباحية في المجموعة.",
+        "usage": "{tr}اباحيه_تعطيل"
+    }
 )
+async def disable_nsfw(event):
+    global nsfw_active
+    nsfw_active = False
+    await edit_or_reply(event, "⌔∮ تم تعطيل فلتر الصور الإباحية.")
+
+@Qrh9.on(events.NewMessage(incoming=True))
+async def check_for_nsfw(event):
+    if not nsfw_active:
+        return
+
+    if event.photo:
+        try:
+            image_path = await event.client.download_media(event.photo, thumb=-1)
+            with open(image_path, 'rb') as f:
+                image_url = f"https://api.telegram.org/file/bot{event.client.api_key}/{image_path}"
+
+            result = check_nsfw(image_url)
+
+            if result['nudity']['safe'] < 0.85:
+                if event.is_group:
+                    if event.is_channel:
+                        await event.delete()  
+                    else:
+                        await event.reply("امسح @admin")
+        except Exception as e:
+            await event.reply(f" حدث خطأ أثناء فحص الصورة: {e}")
