@@ -51,17 +51,14 @@ async def check_for_nsfw(event):
 
     if event.photo:
         try:
-            image_path = await event.client.download_media(event.photo, thumb=-1)
-            with open(image_path, 'rb') as f:
-                image_url = f"https://api.telegram.org/file/bot{event.client.api_key}/{image_path}"
-
-            result = check_nsfw(image_url)
+            file = await event.client.download_media(event.photo, file="photo.jpg")
+            result = check_nsfw(file) 
 
             if result['nudity']['safe'] < 0.85:
                 if event.is_group:
                     if event.is_channel:
-                        await event.delete()  
+                        await event.delete()  # يمسح الرسالة إذا لديه صلاحية
                     else:
-                        await event.reply("امسح @admin")
+                        await event.reply("⚠️ ")
         except Exception as e:
-            await event.reply(f" حدث خطأ أثناء فحص الصورة: {e}")
+            await event.reply(f"⚠️ حدث خطأ أثناء فحص الصورة: {e}")
