@@ -54,14 +54,18 @@ async def check_for_nsfw(event):
             image_path = await Qrh9.download_media(event.photo)
             result = check_nsfw(image_path)
 
+            await event.reply(f"نتيجة الفحص: {result}")
+
             nudity_raw = result.get('nudity', {}).get('raw', 0)
             nudity_partial = result.get('nudity', {}).get('partial', 0)
 
-            if nudity_raw > 0.85 or nudity_partial > 0.85:
+            if nudity_raw > 0.85 or nudity_partial > 0.60:
                 if event.is_group:
                     if event.is_channel:
-                        await event.delete()  # حذف الصورة إذا كان البوت يمتلك الصلاحيات
+                        await event.delete()  
                     else:
-                        await event.reply("⚠️ تم اكتشاف صورة إباحية - يرجى اتخاذ إجراء @admin.")
+                        await event.reply("⚠️ تم اكتشاف صورة إباحية - يرجى اتخاذ إجراء @admin")
+            else:
+                await event.reply("الصورة لا تعتبر إباحية وفقًا للتحليل")
         except Exception as e:
             await event.reply(f"⚠️ حدث خطأ أثناء فحص الصورة: {e}")
