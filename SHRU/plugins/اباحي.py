@@ -54,7 +54,7 @@ async def check_for_nsfw(event):
             image_path = await Qrh9.download_media(event.photo)
             result = check_nsfw(image_path)
 
-            if result['nudity']['sexual'] > 0.85:
+            if result['nudity'] > 0.85:
                 if event.is_group:
                     if event.is_channel:
                         await event.delete()  
