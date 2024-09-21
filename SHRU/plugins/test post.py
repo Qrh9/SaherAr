@@ -1,6 +1,8 @@
 import asyncio
 import random
 from telethon import events
+from telethon.tl.functions.messages import SendReactionRequest
+from telethon.tl.types import ReactionEmoji
 from SHRU import Qrh9
 from ..core.managers import edit_or_reply
 
@@ -11,32 +13,42 @@ rioishere = {}
     pattern="نشر (https?://[^\s]+)(?: (\d+))?(?: (طبيعي|امن))?",
     command=("نشر", "utils"),
     info={
-        "header": "نشر تلقائي لرسالة كل فترة زمنية معينة مع خيار امن.",
-        "usage": "{tr}نشر <رابط المجموعة> <عدد الثواني> <طبيعي/امن> بالرد على رسالة.",
+        "header": "نشر تلقائي سادلايفو",
+        "usage": "{tr}نشر <رابط المجموعة> <عدد الثواني> <طبيعي/امن> بالرد على رسالة",
     }
 )
 async def astaer(event):
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_or_reply(event, "⌔∮ يرجى الرد على رسالة ليتم نشرها.")
+        return await edit_or_reply(event, "⌔∮ يرجى الرد على رسالة ليتم نشرها")
     
     speedrunminecraft = event.pattern_match.group(1).strip()
     interval = int(event.pattern_match.group(2)) if event.pattern_match.group(2) else 60
-    mode = event.pattern_match.group(3) or "امن" 
+    mode = event.pattern_match.group(3) or "طبيعي"  
 
     if speedrunminecraft in rioishere:
         return await edit_or_reply(event, f"⌔∮ النشر قيد التنفيذ بالفعل لهذه المجموعة: {speedrunminecraft}")
 
-    rioishere[speedrunminecraft] = reply.message
+    rioishere[speedrunminecraft] = reply
 
     async def posts():
         while speedrunminecraft in rioishere:
             try:
-                if mode == "امن":
-                    modified_message = wsasdas(reply.message)
-                    await Qrh9.send_message(speedrunminecraft, modified_message)
+                if reply.sticker:
+                    await Qrh9.send_file(speedrunminecraft, reply.media)
+                elif reply.reactions and reply.reactions.recent_reactions:
+                    for reaction in reply.reactions.recent_reactions:
+                        await Qrh9(SendReactionRequest(
+                            peer=speedrunminecraft,
+                            msg_id=reply.id,
+                            reaction=[ReactionEmoji(emoticon=reaction.emoticon)]
+                        ))
                 else:
-                    await Qrh9.send_message(speedrunminecraft, rioishere[speedrunminecraft])
+                    if mode == "امن":
+                        modified_message = wsasdas(reply.message)
+                        await Qrh9.send_message(speedrunminecraft, modified_message)
+                    else:
+                        await Qrh9.send_message(speedrunminecraft, rioishere[speedrunminecraft].message)
                 await asyncio.sleep(interval)
             except Exception as e:
                 await edit_or_reply(event, f"⌔∮ حدث خطأ أثناء النشر: {str(e)}")
@@ -45,7 +57,7 @@ async def astaer(event):
     task = asyncio.create_task(posts())
     ausa[speedrunminecraft] = task
 
-    await edit_or_reply(event, f"⌔∮ تم بدء النشر التلقائي لهذه المجموعة: {speedrunminecraft} كل {interval} ثانية، الوضع: {mode}.")
+    await edit_or_reply(event, f"⌔∮ تم بدء النشر التلقائي لهذه المجموعة: {speedrunminecraft} كل {interval} ثانية، الوضع: {mode}")
 
 
 @Qrh9.ar_cmd(
@@ -85,6 +97,6 @@ async def lis(event):
 
 #امك شلونها
 def wsasdas(message):
-    spyingonmystepsister = ["\u200B", "\u200C", "\u200D", "\u2060"]  
+    mystepsisistoooohot = ["\u200B", "\u200C", "\u200D", "\u2060"]  
     index = random.randint(0, len(message))
-    return message[:index] + random.choice(spyingonmystepsister) + message[index:]
+    return message[:index] + random.choice(mystepsisistoooohot) + message[index:]
