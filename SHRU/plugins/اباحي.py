@@ -3,8 +3,8 @@ from telethon import events
 from SHRU import Qrh9
 from ..core.managers import edit_or_reply
 
-US = '1816055771'
-SECRT = 'EnGQHAX2SnQpyDH39rY6AmYSNuRbcGJG'
+API_USER  = '1816055771'
+API_SECRET   = 'EnGQHAX2SnQpyDH39rY6AmYSNuRbcGJG'
 nsfw_active = False
 
 def check_nsfw(image_url):
