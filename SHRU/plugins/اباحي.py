@@ -56,16 +56,16 @@ async def check_for_nsfw(event):
 
             await event.reply(f"نتيجة الفحص: {result}")
 
-            nudity_raw = result.get('nudity', {}).get('raw', 0)
-            nudity_partial = result.get('nudity', {}).get('partial', 0)
+            sexual_activity = result.get('nudity', {}).get('sexual_activity', 0)
+            sexual_display = result.get('nudity', {}).get('sexual_display', 0)
 
-            if nudity_raw > 0.85 or nudity_partial > 0.85:
+            if sexual_activity >= 0.85 or sexual_display >= 0.85:
                 if event.is_group:
-                    if event.is_channel:
+                    if event.is_channel and event.client.has_permissions(event.chat_id, delete_messages=True):
                         await event.delete()  
                     else:
-                        await event.reply("⚠️ تم اكتشاف صورة إباحية - يرجى اتخاذ إجراء @admin")
+                        await event.reply("⚠️ تم اكتشاف صورة إباحية - يرجى اتخاذ إجراء @admin.")
             else:
-                await event.reply("الصورة لا تعتبر إباحية وفقًا للتحليل")
+                await event.reply("⚠️ الصورة لا تعتبر إباحية وفقًا للتحليل.")
         except Exception as e:
             await event.reply(f"⚠️ حدث خطأ أثناء فحص الصورة: {e}")
