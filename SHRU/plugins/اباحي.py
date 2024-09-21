@@ -50,9 +50,9 @@ async def check_for_nsfw(event):
     if not nsfw_status.get(chat_id, False):
         return
 
-    if event.photo:
+    if event.photo or event.gif or event.sticker:  
         try:
-            image_path = await Qrh9.download_media(event.photo)
+            image_path = await Qrh9.download_media(event.media)
             result = check_nsfw(image_path)
 
             sexual_activity = result.get('nudity', {}).get('sexual_activity', 0)
@@ -63,7 +63,7 @@ async def check_for_nsfw(event):
                     if event.is_channel and event.client.has_permissions(event.chat_id, delete_messages=True):
                         await event.delete()
                     else:
-                        await event.reply("⚠️ تم اكتشاف صورة إباحية - يرجى اتخاذ إجراء @admin.")
+                        await event.reply("⚠️ تم اكتشاف إباحية - يرجى اتخاذ إجراء @admin.")
 
         except Exception as e:
-            await event.reply(f"⚠️ حدث خطأ أثناء فحص الصورة: {e}")
+            await event.reply(f"⚠️ حدث خطأ أثناء فحص الوسائط: {e}")
