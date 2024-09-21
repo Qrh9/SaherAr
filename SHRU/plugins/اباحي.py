@@ -10,7 +10,7 @@ nsfw_active = False
 def check_nsfw(image_url):
     api_url = 'https://api.sightengine.com/1.0/check.json'
     payload = {
-        'models': 'nudity',
+        'models': 'nudity-2.1',
         'api_user': API_USER,
         'api_secret': API_SECRET,
         'url': image_url
@@ -51,14 +51,17 @@ async def check_for_nsfw(event):
 
     if event.photo:
         try:
-            file = await event.client.download_media(event.photo, file="photo.jpg")
-            result = check_nsfw(file) 
+            image_path = await event.client.download_media(event.photo, thumb=-1)
+            with open(image_path, 'rb') as f:
+                image_url = f"https://api.telegram.org/file/bot{event.client.api_key}/{image_path}"
 
-            if result['nudity']['safe'] < 0.85:
+            result = check_nsfw(image_url)
+
+            if result['nudity']['raw'] > 0.5 or result['nudity']['suggestive'] > 0.5:
                 if event.is_group:
                     if event.is_channel:
-                        await event.delete()  # يمسح الرسالة إذا لديه صلاحية
+                        await event.delete()  
                     else:
-                        await event.reply("⚠️ ")
+                        await event.reply("امسح @admin")
         except Exception as e:
-            await event.reply(f"⚠️ حدث خطأ أثناء فحص الصورة: {e}")
+            await event.reply(f"حدث خطأ أثناء فحص الصورة: {e}")
