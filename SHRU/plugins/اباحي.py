@@ -3,16 +3,16 @@ from telethon import events
 from SHRU import Qrh9
 from ..core.managers import edit_or_reply
 
-API_USER  = '1816055771'
-API_SECRET   = 'EnGQHAX2SnQpyDH39rY6AmYSNuRbcGJG'
+API_USER = '1816055771'
+API_SECRET = 'EnGQHAX2SnQpyDH39rY6AmYSNuRbcGJG'
 nsfw_active = False
 
 def check_nsfw(image_url):
     api_url = 'https://api.sightengine.com/1.0/check.json'
     payload = {
         'models': 'nudity',
-        'uS': US,
-        'sECRT': SECRT,
+        'api_user': API_USER,
+        'api_secret': API_SECRET,
         'url': image_url
     }
     response = requests.get(api_url, params=payload)
