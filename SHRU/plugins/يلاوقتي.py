@@ -1,380 +1,121 @@
-# اذا تخمط اذكر الحقوق رجـاءا  - 
-# كتابة وتعديل وترتيب  ~ @SX9OO
-# For ~ @SXYO3
-#تعديل Reda / رضا
-#من تعرف تخمط اذكر حقوق لتسوي نفسك مطور
-from ..sql_helper.group import auto_g, del_auto_g, get_auto_g
-import webcolors
 import asyncio
-import base64
-import os
-import shutil
-import time
-from datetime import datetime
+import random
 from telethon import events
-from ALSAHER import get_string
-from telethon.errors import ChatAdminRequiredError
-from PIL import Image, ImageDraw, ImageFont
-from pySmartDL import SmartDL
-from telethon.errors import FloodWaitError, ChannelInvalidError
-from telethon.tl import functions
-from telethon import types
-from SHRU import BOTLOG_CHATID
-from ..Config import Config
-from ..helpers.utils import _format
+from telethon.tl.functions.messages import SendReactionRequest
+from telethon.tl.types import ReactionEmoji
+from SHRU import Qrh9
+from ..core.managers import edit_or_reply
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
-from . import AUTONAME, DEFAULT_GROUP, DEFAULT_BIO, edit_delete, Qrh9, logging , edit_or_reply
-from colour import Color
 
-plugin_category = "tools"
-# لتخمط ابن الكحبة
-DEFAULTUSERBIO = DEFAULT_BIO or "﴿ لا تَحزَن إِنَّ اللَّهَ مَعَنا ﴾ "
-DEFAULTUSERGRO = DEFAULT_GROUP or ""
-DEFAULTUSER = AUTONAME or ""
-LOGS = logging.getLogger(__name__)
+ausa = {}
+rioishere = {}
 
-FONT_FILE_TO_USE = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"
+DE = ["https://t.me/saherhelp"]
 
-autopic_path = os.path.join(os.getcwd(), "SHRU", "original_pic.png")
-digitalpic_path = os.path.join(os.getcwd(), "SHRU", "digital_pic.png")
-digital_group_pic_path = os.path.join(os.getcwd(), "SHRU", "digital_group_pic.png")
-autophoto_path = os.path.join(os.getcwd(), "SHRU", "photo_pfp.png")
-auto_group_photo_path = os.path.join(os.getcwd(), "SHRU", "photo_pfp.png")
-
-digitalpfp = Config.DIGITAL_PIC or "https://telegra.ph/file/63a826d5e5f0003e006a0.jpg"
-digitalgrouppfp = Config.DIGITAL_GROUP_PIC or "https://telegra.ph/file/63a826d5e5f0003e006a0.jpg"
-SX9OO = Config.TIME_JEP or ""
-jep = Config.DEFAULT_PIC or "SHRU/helpers/styles/PaybAck.ttf"
-normzltext = "1234567890"
-namerzfont = Config.JP_FN or "𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵𝟬"
-namew8t = Config.NAME_ET or "اسم وقتي"
-biow8t = Config.BIO_ET or "بايو وقتي"
-phow8t = Config.PHOTO_ET or "الصورة الوقتية"
-
-def check_color(color):
-    try:
-        color = color.replace(" ", "")
-        Color(color)
-        return True
-    except ValueError:
-        return False
-
-async def digitalpicloop():
-    colorco = gvarstatus("digitalpiccolor") or Config.DIGITAL_PIC_COLOR
-    if colorco is None:
-        colorco = "white"
-    if not check_color(colorco):
-        colorco = "red"
-    colo = webcolors.name_to_rgb(colorco)
-    DIGITALPICSTART = gvarstatus("digitalpic") == "true"
-    i = 0
-    while DIGITALPICSTART:
-        if not os.path.exists(digitalpic_path):
-            downloader = SmartDL(digitalpfp, digitalpic_path, progress_bar=False)
-            downloader.start(blocking=False)
-            while not downloader.isFinished():
-                pass
-        shutil.copy(digitalpic_path, autophoto_path)
-        Image.open(autophoto_path)
-        current_time = datetime.now().strftime("%I:%M")
-        img = Image.open(autophoto_path)
-        drawn_text = ImageDraw.Draw(img)
-        fnt = ImageFont.truetype(jep, 65)
-        drawn_text.text((200, 200), current_time, font=fnt, fill=colo)
-        img.save(autophoto_path)
-        file = await Qrh9.upload_file(autophoto_path)
+async def posts(speedrunminecraft, reply, interval, mode):
+    while speedrunminecraft in rioishere:
         try:
-            if i > 0:
-                await Qrh9(
-                    functions.photos.DeletePhotosRequest(
-                        await Qrh9.get_profile_photos("me", limit=1)
-                    )
-                )
-            i += 1
-            await Qrh9(functions.photos.UploadProfilePhotoRequest(file))
-            os.remove(autophoto_path)
-            await asyncio.sleep(60)
-        except BaseException:
-            return
-        DIGITALPICSTART = gvarstatus("digitalpic") == "true"
-
-#Reda
-#اننننسخخخخخ هههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههههه
-async def digitalgrouppicloop():
-    "2KjZiNin2LPYt9ipINiz2YjYsdizINis2YrYqNir2YjZhiAo2KfYsNinINin2LPYqtio2K/ZhNiq2Ycg2LHYp9itINiq2KvYqNiqINmB2LTZhNmDKSDZhdi5INiq2K3Zitin2KrZiiDYp9iu2YjZg9mFINix2LbYpyBAcmQwcjA="
-
-    dgp = gvarstatus("digitalgrouppic")
-    colorco = gvarstatus("digitalgrouppiccolor") or Config.DIGITAL_PIC_COLOR
-    if colorco is None:
-        colorco = "white"
-    if not check_color(colorco):
-        colorco = "red"
-    colo = webcolors.name_to_rgb(colorco)
-    i = 0
-    DIGITALPICSTART = gvarstatus("digitalgrouppic") != None
-    while DIGITALPICSTART:
-        if not os.path.exists(digital_group_pic_path):
-            downloader = SmartDL(digitalgrouppfp, digital_group_pic_path, progress_bar=False)
-            downloader.start(blocking=False)
-            while not downloader.isFinished():
-                pass
-        shutil.copy(digital_group_pic_path, autophoto_path)
-        Image.open(auto_group_photo_path)
-        current_time = datetime.now().strftime("%I:%M")
-        img = Image.open(auto_group_photo_path)
-        drawn_text = ImageDraw.Draw(img)
-        fnt = ImageFont.truetype(jep, 65)
-        drawn_text.text((200, 200), current_time, font=fnt, fill=colo)
-        img.save(auto_group_photo_path)
-        file = await Qrh9.upload_file(auto_group_photo_path)
-        try:
-            if i > 0:
-                async for photo in Qrh9.iter_profile_photos(int(dgp), limit=1) :
-                    await Qrh9(
-                    functions.photos.DeletePhotosRequest(id=[types.InputPhoto( id=photo.id, access_hash=photo.access_hash, file_reference=photo.file_reference )])
-                    )
-            i += 1
-            await Qrh9(functions.channels.EditPhotoRequest(int(dgp), file))
-            os.remove(auto_group_photo_path)
-            await asyncio.sleep(60)
-        except ChatAdminRequiredError:
-            return await Qrh9.tgbot.send_message(BOTLOG_CHATID, "**يجب ان يكون لديك صلاحية تغيير صورة الكروب لتغيير صورة الكروب الوقتية •**")
-        except ChannelInvalidError:
-            return
-        except FloodWaitError:
-            return LOGS.warning("FloodWaitError! خطأ حظر مؤقت من التيليجرام")
-        DIGITALPICSTART = gvarstatus("digitalgrouppic") != None
-        base64m = 'QnkgQEplcHRob24gLyBSZWRhIEByZDByMCBkb24ndCByZW1vdmUgaXQ='
-        message = base64.b64decode(base64m)
-        messageo = message.decode()
-        LOGS.info(messageo)
-
-async def group_loop():
-    ag = get_auto_g()
-    AUTONAMESTAR = ag != None
-    while AUTONAMESTAR:
-        time.strftime("%d-%m-%y")
-        HM = time.strftime("%I:%M")
-        for normal in HM:
-            if normal in normzltext:
-                namefont = namerzfont[normzltext.index(normal)]
-                HM = HM.replace(normal, namefont)
-        name = f"{DEFAULTUSERGRO} {HM}"
-        try:
-            await Qrh9(functions.channels.EditTitleRequest(
-                channel=await Qrh9.get_entity(int(ag)),
-                title=name
-            ))
-        except ChatAdminRequiredError:
-            await Qrh9.tgbot.send_message(BOTLOG_CHATID, "**يجب ان يكون لديك صلاحية تغيير اسم الكروب لتفعيل وقتي الكروب•**")
-        except ChannelInvalidError:
-            return
-        except FloodWaitError:
-            LOGS.warning("FloodWaitError! خطأ حظر مؤقت من التيليجرام")
-        await asyncio.sleep(Config.CHANGE_TIME)
-        AUTONAMESTAR = get_auto_g() != None
-
-
-async def autoname_loop():
-    AUTONAMESTART = gvarstatus("autoname") == "true"
-    while AUTONAMESTART:
-        time.strftime("%d-%m-%y")
-        HM = time.strftime("%I:%M")
-        for normal in HM:
-            if normal in normzltext:
-                namefont = namerzfont[normzltext.index(normal)]
-                HM = HM.replace(normal, namefont)
-        name = f"{SX9OO} {HM}"
-        LOGS.info(name)
-        try:
-            await Qrh9(functions.account.UpdateProfileRequest(last_name=name))
-        except FloodWaitError as ex:
-            LOGS.warning(str(ex))
-            await asyncio.sleep(120)
-        await asyncio.sleep(Config.CHANGE_TIME)
-        AUTONAMESTART = gvarstatus("autoname") == "true"
-
-
-async def autobio_loop():
-    AUTOBIOSTART = gvarstatus("autobio") == "true"
-    while AUTOBIOSTART:
-        time.strftime("%d.%m.%Y")
-        HI = time.strftime("%I:%M")
-        for normal in HI:
-            if normal in normzltext:
-                namefont = namerzfont[normzltext.index(normal)]
-                HI = HI.replace(normal, namefont)
-        bio = f"{DEFAULTUSERBIO} {HI}"
-        LOGS.info(bio)
-        try:
-            await Qrh9(functions.account.UpdateProfileRequest(about=bio))
-        except FloodWaitError as ex:
-            LOGS.warning(str(ex))
-        await asyncio.sleep(Config.CHANGE_TIME)
-        AUTOBIOSTART = gvarstatus("autobio") == "true"
-
-
-
-@Qrh9.ar_cmd(
-    pattern="رسالة_وقتيه (.+)",
-    command=("msgt", plugin_category),
-    info={
-        "header": "Update the message with the current time in 12-hour format.",
-        "usage": [
-            "{tr}msgt <message>",
-        ],
-    },
-)
-async def msg_with_time(event):
-    "Update the message with the current time in 12-hour format."
-    msg = event.pattern_match.group(1)
-    current_time = datetime.now().strftime("%I:%M %p") 
-    edited_msg = f"{msg} {current_time}"
-    sent_msg = await event.edit(edited_msg)
-
-    while True:
-        try:
-            await asyncio.sleep(60)  
-            current_time = datetime.now().strftime("%I:%M %p") 
-            edited_msg = f"{msg} {current_time}"
-            await sent_msg.edit(edited_msg)
-        except asyncio.CancelledError:
+            if reply.sticker:
+                await Qrh9.send_file(speedrunminecraft, reply.media)
+            elif reply.reactions and reply.reactions.recent_reactions:
+                for reaction in reply.reactions.recent_reactions:
+                    await Qrh9(SendReactionRequest(
+                        peer=speedrunminecraft,
+                        msg_id=reply.id,
+                        reaction=[ReactionEmoji(emoticon=reaction.emoticon)]
+                    ))
+            else:
+                if mode == "امن":
+                    modified_message = wsasdas(reply.message)
+                    await Qrh9.send_message(speedrunminecraft, modified_message)
+                else:
+                    await Qrh9.send_message(speedrunminecraft, rioishere[speedrunminecraft].message)
+            await asyncio.sleep(interval)
+        except Exception as e:
+            print(f"Error during posting: {str(e)}")
             break
 
-@Qrh9.on(admin_cmd(pattern=f"{phow8t}(?:\s|$)([\s\S]*)"))
-async def _(event):
-    "To set random colour pic with time to profile pic"
-    downloader = SmartDL(digitalpfp, digitalpic_path, progress_bar=False)
-    downloader.start(blocking=False)
-    while not downloader.isFinished():
-        pass
-    if gvarstatus("digitalpic") is not None and gvarstatus("digitalpic") == "true":
-        return await edit_delete(event, "**الصـورة الـوقتية شغـالة بالأصـل 🧸♥**")
-    addgvar("digitalpic", True)
-    await edit_delete(event, "**تم تفـعيل الصـورة الـوقتية بنجـاح ✓**")
-    await digitalpicloop()
+@Qrh9.ar_cmd(
+    pattern="نشر (https?://[^\s]+)(?: (\d+))?(?: (طبيعي|امن))?",
+    command=("نشر", "utils"),
+    info={
+        "header": "نشر تلقائي سادلايفو",
+        "usage": "{tr}نشر <رابط المجموعة> <عدد الثواني> <طبيعي/امن> بالرد على رسالة",
+    }
+)
+async def astaer(event):
+    reply = await event.get_reply_message()
+    if not reply:
+        return await edit_or_reply(event, "⌔∮ يرجى الرد على رسالة ليتم نشرها")
+    
+    speedrunminecraft = event.pattern_match.group(1).strip()
 
-@Qrh9.on(admin_cmd(pattern="كروب وقتي"))
-async def _(event):
-    ison = get_auto_g()
-    if event.is_group or event.is_channel:
-        if ison is not None and ison == str(event.chat_id):
-            return await edit_delete(event, "**الاسم الوقتي شغال للكروب/القناة**")
-        chid = event.chat_id
-        auto_g(str(chid))
-        await edit_delete(event, "**تم تفـعيل الاسـم الوقتي للقناة/الكروب ✓**")
-        await group_loop()
-    else:
-        return await edit_delete(event, "**يمكنك استعمال الاسم الوقتي في الكروب او في القناة فقط**")
+    if speedrunminecraft in DE:
+        return await edit_or_reply(event, "⌔∮ لا يمكن النشر في هذه المجموعة")
 
-@Qrh9.on(admin_cmd(pattern="كروب صورة وقتي"))
-async def _(event):
-    ison = gvarstatus("digitalgrouppic")
-    if event.is_group or event.is_channel:
-        if ison is not None and ison == str(event.chat_id):
-            return await edit_delete(event, "**الصورة الوقتية شغالة للكروب/القناة**")
-        chid = event.chat_id
-        addgvar("digitalgrouppic", str(chid))
-        await edit_delete(event, "**تم تفعيل الصورة الوقتية للكروب/ القناة ✓**")
-        await digitalgrouppicloop()
-    else:
-        return await edit_delete(event, "**يمكنك استعمال الصورة الوقتية في كروب او قناة**")
+    interval = int(event.pattern_match.group(2)) if event.pattern_match.group(2) else 60
+    mode = event.pattern_match.group(3) or "طبيعي"
 
-@Qrh9.on(admin_cmd(pattern=f"{namew8t}(?:\s|$)([\s\S]*)"))
-async def _(event):
-    "To set your display name along with time"
-    if gvarstatus("autoname") is not None and gvarstatus("autoname") == "true":
-        return await edit_delete(event, "**الاسـم الـوقتي شغـال بالأصـل 🧸♥**")
-    addgvar("autoname", True)
-    await edit_delete(event, "**تم تفـعيل اسـم الـوقتي بنجـاح ✓**")
-    await autoname_loop()
+    if speedrunminecraft in rioishere:
+        return await edit_or_reply(event, f"⌔∮ النشر قيد التنفيذ بالفعل لهذه المجموعة: {speedrunminecraft}")
 
+    rioishere[speedrunminecraft] = reply
+    addgvar(f"nashr_{speedrunminecraft}", f"{interval}_{mode}")
 
-@Qrh9.on(admin_cmd(pattern=f"{biow8t}(?:\s|$)([\s\S]*)"))
-async def _(event):
-    "To update your bio along with time"
-    if gvarstatus("autobio") is not None and gvarstatus("autobio") == "true":
-        return await edit_delete(event, "**الـبايو الـوقتي شغـال بالأصـل 🧸♥**")
-    addgvar("autobio", True)
-    await edit_delete(event, "**تم تفـعيل البـايو الـوقتي بنجـاح ✓**")
-    await autobio_loop()
+    task = asyncio.create_task(posts(speedrunminecraft, reply, interval, mode))
+    ausa[speedrunminecraft] = task
 
+    await edit_or_reply(event, f"⌔∮ تم بدء النشر التلقائي لهذه المجموعة: {speedrunminecraft} كل {interval} ثانية، الوضع: {mode}")
 
 @Qrh9.ar_cmd(
-    pattern="انهاء ([\s\S]*)",
-    command=("انهاء", plugin_category),
+    pattern="نشر_انهاء (https?://[^\s]+)",
+    command=("نشر_انهاء", "utils"),
+    info={
+        "header": "إيقاف النشر التلقائي.",
+        "usage": "{tr}نشر_انهاء <رابط المجموعة>",
+    }
 )
-async def _(event):  # sourcery no-metrics
-    "To stop the functions of autoprofile plugin"
-    input_str = event.pattern_match.group(1)
-    if input_str == "الصورة الوقتية":
-        if gvarstatus("digitalpic") is not None and gvarstatus("digitalpic") == "true":
-            delgvar("digitalpic")
-            await event.client(
-                functions.photos.DeletePhotosRequest(
-                    await event.client.get_profile_photos("me", limit=1)
-                )
-            )
-            return await edit_delete(event, "**تم ايقاف الصورة الوقتية بنـجاح ✓ **")
-        return await edit_delete(event, "**لم يتم تفعيل الصورة الوقتية بالأصل 🧸♥**")
-    if input_str == "اسم وقتي":
-        if gvarstatus("autoname") is not None and gvarstatus("autoname") == "true":
-            delgvar("autoname")
-            await event.client(
-                functions.account.UpdateProfileRequest(last_name=DEFAULTUSER)
-            )
-            return await edit_delete(event, "**تم ايقاف  الاسم الوقتي بنـجاح ✓ **")
-        return await edit_delete(event, "**لم يتم تفعيل الاسم الوقتي بالأصل 🧸♥**")
-    if input_str == "بايو وقتي":
-        if gvarstatus("autobio") is not None and gvarstatus("autobio") == "true":
-            delgvar("autobio")
-            await event.client(
-                functions.account.UpdateProfileRequest(about=DEFAULTUSERBIO)
-            )
-            return await edit_delete(event, "**  تم ايقاف البايو الوقـتي بنـجاح ✓**")
-        return await edit_delete(event, "**لم يتم تفعيل البايو الوقتي 🧸♥**")
-    if input_str == "كروب صورة وقتي":
-        if gvarstatus("digitalgrouppic") is not None:
-            delgvar("digitalgrouppic")
-            return await edit_delete(event, "**  تم ايقاف صورة الكروب الوقتية بنجاح ✓**")
-        return await edit_delete(event, "**لم يتم تفعيل صورة الكروب/ القناة الوقتية بالأصل**")
-    if input_str == "كروب وقتي":
-        if get_auto_g() is not None:
-            del_auto_g()
-            return await edit_delete(event, "** تـم ايقاف الاسم الوقتي للكروب/القناة ✓**")
-        return await edit_delete(event, "** لم يتم تفعيل الاسم الوقتي للكروب/القناة بالأصل **")
-    END_CMDS = [
-        "الصورة الوقتية",
-        "اسم وقتي",
-        "بايو وقتي",
-        "كروب وقتي",
-        "كروب صورة وقتي",
-    ]
-    if input_str not in END_CMDS:
-        await edit_delete(
-            event,
-            f"عـذرا يجـب استـخدام الامـر بشـكل صحـيح 🧸♥",
-            parse_mode=_format.parse_pre,
-        )
+async def unpot(event):
+    speedrunminecraft = event.pattern_match.group(1).strip()
 
-async def automessage_loop():
-    AUTOMESSAGE_START = gvarstatus("automessage") == "true"
-    while AUTOMESSAGE_START:
-        current_time = datetime.now().strftime("%I:%M %p")  # Format time as "HH:MM AM/PM"
-        message = gvarstatus("automessage_text") or "تحديث الرسالة الوقتية"
-        updated_message = f"{message} {current_time}"
-        try:
-            # Edit the existing message using the edit_or_reply function
-            await edit_or_reply(updated_message)
-        except FloodWaitError as ex:
-            LOGS.warning(str(ex))
-            await asyncio.sleep(120)
-        await asyncio.sleep(60)  # Wait for 1 minute before updating the message again
-        AUTOMESSAGE_START = gvarstatus("automessage") == "true"
+    if speedrunminecraft in rioishere:
+        del rioishere[speedrunminecraft]
+        ausa[speedrunminecraft].cancel()
+        del ausa[speedrunminecraft]
+        delgvar(f"nashr_{speedrunminecraft}")
+        await edit_or_reply(event, f"⌔∮ تم إيقاف النشر لهذه المجموعة: {speedrunminecraft}")
+    else:
+        await edit_or_reply(event, f"⌔∮ لا يوجد نشر قيد التنفيذ لهذه المجموعة: {speedrunminecraft}")
 
-Qrh9.loop.create_task(digitalpicloop())
-Qrh9.loop.create_task(digitalgrouppicloop())
-Qrh9.loop.create_task(autoname_loop())
-Qrh9.loop.create_task(autobio_loop())
-Qrh9.loop.create_task(group_loop())
-Qrh9.loop.create_task(automessage_loop())
+@Qrh9.ar_cmd(
+    pattern="قائمة_النشر$",
+    command=("قائمة_النشر", "utils"),
+    info={
+        "header": "عرض قائمة المجموعات التي يتم النشر لها حاليًا",
+        "usage": "{tr}قائمة_النشر",
+    }
+)
+async def lis(event):
+    if rioishere:
+        active_groups = "\n".join(rioishere.keys())
+        await edit_or_reply(event, f"⌔∮ قائمة المجموعات التي يتم النشر لها حاليًا:\n{active_groups}")
+    else:
+        await edit_or_reply(event, "⌔∮ لا يوجد نشر قيد التنفيذ حاليًا")
+
+def wsasdas(message):
+    mystepsisistoooohot = ["\u200B", "\u200C", "\u200D", "\u2060"]
+    index = random.randint(0, len(message))
+    return message[:index] + random.choice(mystepsisistoooohot) + message[index:]
+
+async def restore_tasks():
+    tasks = gvarstatus()
+    for key, value in tasks.items():
+        if key.startswith("nashr_"):
+            speedrunminecraft = key.replace("nashr_", "")
+            interval, mode = value.split("_")
+            interval = int(interval)
+            reply = None  
+            task = asyncio.create_task(posts(speedrunminecraft, reply, interval, mode))
+            ausa[speedrunminecraft] = task
+
+Qrh9.loop.create_task(restore_tasks())
