@@ -51,6 +51,7 @@ async def stop_iz3aj(event):
     else:
         await edit_or_reply(event, "⌔∮ لا يوجد إزعاج مفعّل لهذا الشخص.")
 
+
 @Qrh9.on(events.NewMessage())
 async def iz3a(event):
     user_id = event.sender_id
@@ -63,10 +64,10 @@ async def iz3a(event):
             emoji = random.choice(emoje)
 
         try:
-            await Qrh9(SendReactionRequest(
+            await Qrh9.invoke(SendReactionRequest(
                 peer=event.chat_id,
                 msg_id=event.id,
-                reaction=[ReactionEmoji(emoticon=emoji)]
+                reaction=[emoji]
             ))
         except Exception as e:
             await edit_or_reply(event, f"خطأ: {str(e)}")
