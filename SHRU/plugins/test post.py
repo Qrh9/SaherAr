@@ -105,3 +105,5 @@ def wsasdas(message):
     mystepsisistoooohot = ["\u200B", "\u200C", "\u200D", "\u2060"]  
     index = random.randint(0, len(message))
     return message[:index] + random.choice(mystepsisistoooohot) + message[index:]
+
+#loop
