@@ -1,6 +1,5 @@
 from telethon import events
 from telethon.tl.functions.messages import SendReactionRequest
-from telethon.tl.types import ReactionEmoji
 from SHRU import Qrh9
 import random
 from ..Config import Config
