@@ -66,11 +66,11 @@ async def astaer(event):
     await edit_or_reply(event, f"⌔∮ تم بدء النشر التلقائي لهذه المجموعة: {speedrunminecraft} كل {interval} ثانية، الوضع: {mode}")
 
 @Qrh9.ar_cmd(
-    pattern="ايقاف_نشر (https?://[^\s]+)",
-    command=("ايقاف_نشر", "utils"),
+    pattern="نشر_انهاء (https?://[^\s]+)",
+    command=("نشر_انهاء", "utils"),
     info={
         "header": "إيقاف النشر التلقائي.",
-        "usage": "{tr}ايقاف_نشر <رابط المجموعة>",
+        "usage": "{tr}نشر_انهاء <رابط المجموعة>",
     }
 )
 async def unpot(event):
