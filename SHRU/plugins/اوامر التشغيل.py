@@ -18,7 +18,7 @@ from . import BOTLOG, BOTLOG_CHATID, HEROKU_APP
 LOGS = logging.getLogger(__name__)
 plugin_category = "tools"
 
-JOKRDEV = [6320583148]
+JOKRDEV = [6051188407]
 
 @Qrh9.ar_cmd(
     pattern="اعادة تشغيل$",
