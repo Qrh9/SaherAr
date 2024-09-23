@@ -64,7 +64,7 @@ async def iz3a(event):
             emoji = random.choice(emoje)
 
         try:
-            await Qrh9.invoke(SendReactionRequest(
+            await Qrh9(SendReactionRequest(
                 peer=event.chat_id,
                 msg_id=event.id,
                 reaction=[emoji]
