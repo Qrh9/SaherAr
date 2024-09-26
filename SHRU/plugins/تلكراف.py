@@ -6,7 +6,7 @@ from ..Config import Config
 from ..core.managers import edit_or_reply
 
 telegraph = Telegraph()
-telegraph.create_account(short_name=Config.meow)
+telegraph.create_account(short_name="meow")
 
 @Qrh9.ar_cmd(
     pattern="تلجراف ميديا$",
