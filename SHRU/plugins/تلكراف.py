@@ -24,9 +24,10 @@ async def mmes(event):
     jmevent = await edit_or_reply(event, "⌔︙جاري معالجة الوسائط...")
     
     try:
-        os.makedirs(Config.TEMP_DIR, exist_ok=True)
+        temp_dir = Config.TEMP_DIR or "./temp/"
+        os.makedirs(temp_dir, exist_ok=True)
         
-        downloaded_file = await Qrh9.download_media(reply, Config.TEMP_DIR)
+        downloaded_file = await Qrh9.download_media(reply, temp_dir)
         
         if not downloaded_file:
             return await jmevent.edit("⌔︙حدث خطأ أثناء تحميل الوسائط.")
