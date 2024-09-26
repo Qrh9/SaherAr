@@ -1,6 +1,5 @@
 import os
 from telegraph import Telegraph, upload_file, exceptions
-from telethon import events
 from SHRU import Qrh9
 from ..Config import Config
 from ..core.managers import edit_or_reply
@@ -25,10 +24,15 @@ async def mmes(event):
     jmevent = await edit_or_reply(event, "⌔︙جاري معالجة الوسائط...")
     
     try:
-        downloaded_file = await event.client.download_media(reply, Config.TEMP_DIR)
+        os.makedirs(Config.TEMP_DIR, exist_ok=True)
+        
+        downloaded_file = await Qrh9.download_media(reply, Config.TEMP_DIR)
         
         if not downloaded_file:
             return await jmevent.edit("⌔︙حدث خطأ أثناء تحميل الوسائط.")
+        
+        if os.path.getsize(downloaded_file) > 5 * 1024 * 1024:
+            return await jmevent.edit("⌔︙الملف يتجاوز الحد المسموح به من التليغراف (5MB).")
         
         paths = upload_file(downloaded_file)
         
