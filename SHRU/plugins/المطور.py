@@ -48,8 +48,8 @@ async def amireallyalive(event):
         cat_caption += f"✛━━━━━━━━━━━━━✛\n"
         cat_caption += f"- المطور الاساسي:@morffn\n"
         cat_caption += f"- المطور  :@allnught\n"
-        cat_caption += f"- المطور  :@\n"
-        cat_caption += f"- المطور  :@\n"
+        cat_caption += f"- المطور  :@v_d_m\n"
+        cat_caption += f"- المطور  :@ll1ilt بس بالاسم مطور\n"
         cat_caption += f"- المطور  :@\n"
         cat_caption += f"✛━━━━━━━━━━━━━✛\n"
         await Qrh9.send_file(
