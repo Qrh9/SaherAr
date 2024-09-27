@@ -64,7 +64,11 @@ async def iz3a(event):
             await Qrh9(functions.messages.SendReactionRequest(
                 peer=event.chat_id,
                 msg_id=event.id,
-                reaction=[types.ReactionEmoji(emoticon=emoji)]
+                big=True,  
+                add_to_recent=True,
+                reaction=[types.ReactionEmoji(
+                    emoticon=emoji
+                )]
             ))
         except Exception as e:
             await edit_or_reply(event, f"⌔∮ خطأ: {str(e)}")
