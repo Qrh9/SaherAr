@@ -46,15 +46,16 @@ async def amireallyalive(event):
         PIC = random.choice(A_IMG)
         cat_caption = f"مطورين الساحر\n"
         cat_caption += f"✛━━━━━━━━━━━━━✛\n"
-        cat_caption += f"- المطور الاساسي :@morffn\n"
+        cat_caption += f"- المطور الاساسي:@morffn\n"
         cat_caption += f"- المطور  :@allnught\n"
         cat_caption += f"- المطور  :@\n"
         cat_caption += f"- المطور  :@\n"
         cat_caption += f"- المطور  :@\n"
         cat_caption += f"✛━━━━━━━━━━━━━✛\n"
-        await event.client.send_file(
-            event.chat_id, PIC, caption=cat_caption, reply_to=reply_to_id
-        )
+        await Qrh9.send_file(
+    event.chat_id, PIC, caption=cat_caption, reply_to=reply_to_id
+)
+
 
 @Qrh9.tgbot.on(CallbackQuery(data=re.compile(b"stats")))
 async def on_plug_in_callback_query_handler(event):
