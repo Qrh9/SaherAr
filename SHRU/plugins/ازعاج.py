@@ -63,7 +63,7 @@ async def iz3a(event):
             await Qrh9(functions.messages.SendReactionRequest(
                 peer=event.chat_id,
                 msg_id=event.id,
-                big=True,  
+                big=False,  
                 add_to_recent=True,
                 reaction=[types.ReactionEmoji(
                     emoticon=emoji
