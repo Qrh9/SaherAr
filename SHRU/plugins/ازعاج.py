@@ -1,19 +1,18 @@
 import random
-from telethon import events
-from telethon import functions, types
+from telethon import events, functions, types
 from SHRU import Qrh9
 from ..Config import Config
 from ..core.managers import edit_or_reply
 
 iz3aj_active = {}
-emoje = ["😂", "🤯", "👍", "😅"]
+emoje = ["😂", "🤯", "👍", "😅", "💋"]
 
 @Qrh9.ar_cmd(
     pattern="ازعاج (.*)",
     command=("ازعاج", "fun"),
     info={
         "header": "إزعاج شخص ما باستخدام الايموجي",
-        "usage": "{tr}ازعاج <emoji>",
+        "usage": "{tr}ازعاج <emoji> بالرد على رسالة.",
     }
 )
 async def start_iz3aj(event):
@@ -35,7 +34,7 @@ async def start_iz3aj(event):
     command=("حذف_ازعاج", "fun"),
     info={
         "header": "لإلغاء إزعاج شخص ما.",
-        "usage": "{tr}حذف_ازعاج",
+        "usage": "{tr}حذف_ازعاج بالرد على رسالة الشخص.",
     }
 )
 async def stop_iz3aj(event):
