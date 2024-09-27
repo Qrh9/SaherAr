@@ -1,6 +1,5 @@
 from telethon import events
 from telethon import functions
-from telethon.tl.functions.messages import SendReactionRequest
 from SHRU import Qrh9
 import random
 from ..Config import Config
