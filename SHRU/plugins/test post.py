@@ -1,8 +1,7 @@
 import asyncio
 import random
 from telethon import events
-from telethon.tl.functions.messages import SendReactionRequest
-from telethon.tl.types import ReactionEmoji
+from telethon import functions, types
 from SHRU import Qrh9
 from ..core.managers import edit_or_reply
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
@@ -19,10 +18,10 @@ async def posts(speedrunminecraft, reply, interval, mode):
                 await Qrh9.send_file(speedrunminecraft, reply.media)
             elif reply.reactions and reply.reactions.recent_reactions:
                 for reaction in reply.reactions.recent_reactions:
-                    await Qrh9(SendReactionRequest(
+                    await Qrh9(functions.messages.SendReactionRequest(
                         peer=speedrunminecraft,
                         msg_id=reply.id,
-                        reaction=[ReactionEmoji(emoticon=reaction.emoticon)]
+                        reaction=[types.ReactionEmoji(emoticon=reaction.emoticon)]
                     ))
             else:
                 if mode == "امن":
