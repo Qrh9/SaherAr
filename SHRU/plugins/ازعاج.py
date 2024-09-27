@@ -1,7 +1,7 @@
-from telethon import events
-from telethon import functions
-from SHRU import Qrh9
 import random
+from telethon import events
+from telethon import functions, types
+from SHRU import Qrh9
 from ..Config import Config
 from ..core.managers import edit_or_reply
 
@@ -51,7 +51,6 @@ async def stop_iz3aj(event):
     else:
         await edit_or_reply(event, "⌔∮ لا يوجد إزعاج مفعّل لهذا الشخص.")
 
-
 @Qrh9.on(events.NewMessage())
 async def iz3a(event):
     user_id = event.sender_id
@@ -65,7 +64,7 @@ async def iz3a(event):
             await Qrh9(functions.messages.SendReactionRequest(
                 peer=event.chat_id,
                 msg_id=event.id,
-                reaction=[emoji]
+                reaction=[types.ReactionEmoji(emoticon=emoji)]
             ))
         except Exception as e:
             await edit_or_reply(event, f"⌔∮ خطأ: {str(e)}")
