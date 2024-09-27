@@ -1,4 +1,5 @@
 from telethon import events
+from telethon import functions
 from telethon.tl.functions.messages import SendReactionRequest
 from SHRU import Qrh9
 import random
@@ -59,15 +60,13 @@ async def iz3a(event):
         if user_id in Config.Dev:
             return
 
-        emoji = iz3aj_active.get(user_id)
-        if not emoji:
-            emoji = random.choice(emoje)
+        emoji = iz3aj_active.get(user_id) or random.choice(emoje)
 
         try:
-            await Qrh9(SendReactionRequest(
+            await Qrh9(functions.messages.SendReactionRequest(
                 peer=event.chat_id,
                 msg_id=event.id,
                 reaction=[emoji]
             ))
         except Exception as e:
-            await edit_or_reply(event, f"خطأ: {str(e)}")
+            await edit_or_reply(event, f"⌔∮ خطأ: {str(e)}")
